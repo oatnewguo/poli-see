@@ -1,0 +1,16 @@
+{
+  "nodes":
+  [
+    { "id": "you"            , "label": "You",      "layer": 0 , "identifiable": 1, "text": "this is you",  "edges_out": ["data_photos_1", "data_location_1", "data_email_1", "data_name_1", "data_address_1"]},
+    { "id": "data_photos_1"  , "label": "Photos",   "layer": 1 , "identifiable": 1, "text": "photos",       "edges_out": ["data_photos_2"]},
+    { "id": "data_location_1", "label": "Location", "layer": 1 , "identifiable": 1, "text": "location",     "edges_out": ["data_location_2"]},
+    { "id": "data_email_1"   , "label": "Email",    "layer": 1 , "identifiable": 1, "text": "email",        "edges_out": ["data_email_2"]},
+    { "id": "data_name_1"    , "label": "Name",     "layer": 1 , "identifiable": 1, "text": "name",         "edges_out": ["data_name_2"]},
+    { "id": "data_address_1" , "label": "Address",  "layer": 1 , "identifiable": 1, "text": "address",      "edges_out": []},
+    { "id": "data_photos_2"  , "label": "Photos",   "layer": 2 , "identifiable": 0, "text": "photos",       "edges_out": []},
+    { "id": "data_location_2", "label": "Location", "layer": 2 , "identifiable": 0, "text": "location",     "edges_out": []},
+    { "id": "data_email_2"   , "label": "Email",    "layer": 2 , "identifiable": 1, "text": "emails",       "edges_out": []},
+    { "id": "data_name_2"    , "label": "Name",     "layer": 2 , "identifiable": 1, "text": "name",         "edges_out": ["data_name_3"]},
+    { "id": "data_name_3"    , "label": "Name",     "layer": 3 , "identifiable": 0, "text": "name",         "edges_out": []}
+  ]
+}

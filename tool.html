@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8"/>
+<title>D3 tool</title>
+
+</head>
+
+<body>
+
+<svg></svg>
+
+<script src="d3/d3.min.js"></script>
+<script>
+
+/*
+TASKS
+gray out links if destination is unidentifiable
+edges within concentric circles as way of distinguishing transformations and transfers
+each parent gets 1/n of the circle for organizing children
+  what if we devise a clever algorithm based on both how many children a parent has and how many are in a layer total?
+
+!spacing
+!hover for info
+!what are edges?
+color arcs for uses
+arrows
+make a set of icons
+*/
+
+// arrays for nodes and links
+var nodes;
+var links;
+
+// initialize display dimensions
+const display_radius = 300;
+const center_x = display_radius;
+const center_y = display_radius;
+
+// initialize layers array containing important information on the layer level
+var layers =
+[
+  { radius: 0,                    node_radius: 30, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
+  { radius: display_radius * .4,  node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
+  { radius: display_radius * .7,  node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
+  { radius: display_radius * .95, node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined }
+];
+
+// colors and images - this will be pretty extensive later, so it might be moved to a .json file
+const color_layers_fill = "#EEEEFF";
+const color_layers_outline = "#B6B6DA";
+const width_layers_outline = "2";
+
+const color_nodes_fill_identifiable = "#B6B6DA";
+const color_nodes_fill_unidentifiable = "#B6B6B6";
+const img_nodes_identifiable = "images/icon_test_identifiable.png";
+const img_nodes_unidentifiable = "images/icon_test_unidentifiable.png";
+const img_nodes_you = "images/icon_test_you.png";
+const color_nodes_outline_identifiable = "#9696BA";
+const color_nodes_outline_unidentifiable = "#969696";
+const width_nodes_outline = "2";
+
+const color_links_identifiable = "#9696BA";
+const color_links_unidentifiable = "#969696";
+const width_links = "3";
+
+// return the proper fill color of a node
+function getNodeFillColor(node)
+{
+  if(node.identifiable == 1)
+  {
+    return color_nodes_fill_identifiable;
+  }
+  return color_nodes_fill_unidentifiable;
+}
+
+// return the proper image of a node
+function getNodeImage(node)
+{
+  if(node.layer == 0)
+  {
+    return img_nodes_you;
+  }
+  if(node.identifiable == 1)
+  {
+    return img_nodes_identifiable;
+  }
+  return img_nodes_unidentifiable;
+}
+
+// return the outline color of a node
+function getNodeOutlineColor(node)
+{
+  if(node.identifiable == 1)
+  {
+    return color_nodes_outline_identifiable;
+  }
+  return color_nodes_outline_unidentifiable;
+}
+
+// return the color of a link
+function getLinkColor(link)
+{
+  if(getNodeById(link.destination).identifiable == 1)
+  {
+    return color_links_identifiable;
+  }
+  return color_links_unidentifiable;
+}
+
+// return the node with a given id from a list of nodes
+// this is a bit inefficient, as it requires passing a copy of the array nodes as an argument (if I understand JavaScript correctly)
+function getNodeById(node_id)
+{
+  return nodes.find(function(node) { return node.id == node_id; });
+}
+
+// create variable for svg and set size
+var svg = d3.select("svg");
+svg
+  .attr("width", display_radius * 2)
+  .attr("height", display_radius * 2);
+
+// append circles for layers
+for(var i = 3; i > 0; i--)
+{
+  layers[i].svg_background = svg
+    .append("circle")
+    .attr("cx", center_x)
+    .attr("cy", center_y)
+    .attr("r", layers[i].radius)
+    .attr("fill", color_layers_fill)
+    .attr("stroke", color_layers_outline)
+    .attr("stroke-width", width_layers_outline);
+}
+
+// load data from .json file
+d3.json("data/data.json").then(function(data)
+{
+  // initialize nodes and links arrays
+  nodes = data.nodes;
+  links = [];
+
+  // set important properties of nodes and links
+  for(var i = 0; i < 4; i++)
+  {
+    // split nodes into layers
+    layers[i].nodes = nodes.filter(function(node) { return node.layer == i; });
+
+    // iterate through all nodes, layer by layer
+    var num_nodes_in_layer = layers[i].nodes.length;
+    for(var j = 0; j < num_nodes_in_layer; j++)
+    {
+      // fill links array with link objects based on the .json data
+      var current_node = layers[i].nodes[j];
+      for(var k = 0; k < current_node.edges_out.length; k++)
+      {
+        links.push({ source: current_node.id, destination: current_node.edges_out[k] });
+      }
+
+      // calculate position of nodes
+      var angle = 2 * Math.PI / num_nodes_in_layer * j;
+      if(i == 0)
+      {
+        var distance_from_center = 0;
+      }
+      else
+      {
+        var distance_from_center = layers[i].radius - layers[i].node_radius * 2;
+      }
+
+      current_node.x = center_x + Math.cos(angle) * (distance_from_center);
+      current_node.y = center_y + Math.sin(angle) * (distance_from_center);
+
+      // set the radius of nodes - had to do this for now because of an issue accessing the layers list variable from within mouse event anonymous functions
+      current_node.radius = layers[i].node_radius;
+    }
+  }
+
+  // append lines for links - has some messed up variables right now
+  var svg_links = svg.selectAll(".link")
+    .data(links)
+    .enter()
+    .append("g")
+    .classed("link", true);
+
+  var svg_links_lines = svg_links
+    .append("line")
+    .attr("x1", function(link) { return getNodeById(link.source).x })
+    .attr("y1", function(link) { return getNodeById(link.source).y })
+    .attr("x2", function(link) { return getNodeById(link.destination).x })
+    .attr("y2", function(link) { return getNodeById(link.destination).y })
+    .attr("stroke", getLinkColor)
+    .attr("stroke-width", width_links);
+
+  // display more information when the cursor hovers over links
+  svg_links_lines
+    .on("mouseenter", function(link)
+    {
+      svg
+        .append("text")
+        .attr("id", "hover_message")
+        .attr("x", function() { return (getNodeById(link.source).x + getNodeById(link.destination).x) / 2 })
+        .attr("y", function() { return (getNodeById(link.source).y + getNodeById(link.destination).y) / 2 })
+        .text("hello");
+    })
+    .on("mouseleave", function(link)
+    {
+      d3.select("#hover_message").remove();
+    });
+
+  // append nodes layer by layer
+  for(var i = 0; i < 4; i++)
+  {
+    // append svg gs for nodes
+    layers[i].svg_nodes = svg.selectAll(".node_layer_" + i)
+      .data(layers[i].nodes)
+      .enter()
+      .append("g")
+      .classed("node_layer_" + i, true);
+
+    // append circles for nodes - would it make more sense to do this as a pattern rather than background circle and front image? And if so, how to get a background fill in addition to image as background pattern in case image can't load (not pressing concern)
+    /*layers[i].svg_circles = layers[i].svg_nodes
+      .append("circle")
+      .attr("cx", function(node) { return node.x })
+      .attr("cy", function(node) { return node.y })
+      .attr("r", function(node) { return layers[i].node_radius })
+      .attr("fill", getNodeFillColor)
+      .attr("stroke", getNodeOutlineColor)
+      .attr("stroke-width", width_nodes_outline);*/
+
+    // append images for nodes
+    layers[i].svg_imgs = layers[i].svg_nodes
+      .append("image")
+      .attr("xlink:href", getNodeImage)
+      .attr("x", function(node) { return node.x - layers[i].node_radius })
+      .attr("y", function(node) { return node.y - layers[i].node_radius })
+      .attr("width", layers[i].node_radius * 2)
+      .attr("height", layers[i].node_radius * 2);
+
+    // display more information when the cursor hovers over nodes - currently messed up because of svg groups
+    /*layers[i].svg_circles
+      .on("mouseenter", function(node)
+      {
+        svg
+          .append("text")
+          .attr("id", "hover_message")
+          .attr("x", node.x + node.radius * 1.5 )
+          .attr("y", node.y )
+          .text(node.text);
+        d3.select(this)
+          .transition()
+          .attr("r", node.radius * 1.5);
+      })
+      .on("mouseleave", function(node)
+      {
+        d3.select("#hover_message").remove();
+        d3.select(this)
+          .transition()
+          .attr("r", node.radius);
+      });*/
+
+    //right now, issue with getting image and circle to both grow - when you figure it out, get rid of appending text with images
+    layers[i].svg_imgs
+      .on("mouseenter", function(node)
+      {
+        svg
+          .append("text")
+          .attr("id", "hover_message")
+          .attr("x", node.x + node.radius * 1.5 )
+          .attr("y", node.y )
+          .text(node.text);
+        d3.select(this)
+          .transition()
+          .attr("x", function(node) { return node.x - node.radius * 1.5 })
+          .attr("y", function(node) { return node.y - node.radius * 1.5 })
+          .attr("height", node.radius * 3)
+          .attr("width", node.radius * 3);
+      })
+      .on("mouseleave", function(node)
+      {
+        d3.select("#hover_message").remove();
+        d3.select(this)
+          .transition()
+          .attr("x", function(node) { return node.x - node.radius })
+          .attr("y", function(node) { return node.y - node.radius })
+          .attr("width", node.radius * 2)
+          .attr("height", node.radius * 2);
+      });
+  }
+});
+
+</script>
+
+</body>
+</html>
