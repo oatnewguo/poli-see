@@ -9,7 +9,9 @@
 
 <body>
 
-<svg></svg>
+<svg>
+  <defs></defs>
+</svg>
 
 <script src="d3/d3.min.js"></script>
 <script>
@@ -47,33 +49,23 @@ var layers =
   { radius: display_radius * .95, node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined }
 ];
 
-// objects for colors, images, and widths
+// objects for colors, patterns, and widths
 var colors;
-var images;
+var patterns;
 var widths;
 
 // return the proper fill color of a node
-function getNodeFillColor(node)
-{
-  if(node.identifiable == 1)
-  {
-    return colors.nodes_fill_identifiable;
-  }
-  return colors.nodes_fill_unidentifiable;
-}
-
-// return the proper image of a node
-function getNodeImage(node)
+function getNodeFillPattern(node)
 {
   if(node.layer == 0)
   {
-    return images.nodes_you;
+    return "url(#node_you)";
   }
   if(node.identifiable == 1)
   {
-    return images.nodes_identifiable;
+    return "url(#node_identifiable)";
   }
-  return images.nodes_unidentifiable;
+  return "url(#node_unidentifiable)";
 }
 
 // return the outline color of a node
@@ -116,9 +108,9 @@ d3.json("data/data.json").then(function(data)
   nodes = data.nodes;
   links = [];
 
-  // initialize colors, images, and widths objects
+  // initialize colors, patterns, and widths objects
   colors = data.colors;
-  images = data.images;
+  patterns = data.patterns;
   widths = data.widths;
 
   // set important properties of nodes and links
@@ -156,6 +148,30 @@ d3.json("data/data.json").then(function(data)
       current_node.radius = layers[i].node_radius;
     }
   }
+
+  var svg_patterns = svg.select("defs").selectAll("pattern")
+    .data(patterns)
+    .enter()
+    .append("pattern")
+    .attr("id", function(pattern) { return pattern.id })
+    .attr("width", "1")
+    .attr("height", "1")
+    .attr("patternContentUnits", "objectBoundingBox");
+
+  svg_patterns
+    .append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".49")
+    .attr("fill", function(pattern) { return pattern.background_color });
+
+  svg_patterns
+    .append("image")
+    .attr("x", "0")
+    .attr("y", "0")
+    .attr("width", "1")
+    .attr("height", "1")
+    .attr("xlink:href", function(pattern) { return pattern.image });
 
   // append circles for layers
   for(var i = 3; i > 0; i--)
@@ -213,26 +229,17 @@ d3.json("data/data.json").then(function(data)
       .classed("node_layer_" + i, true);
 
     // append circles for nodes - would it make more sense to do this as a pattern rather than background circle and front image? And if so, how to get a background fill in addition to image as background pattern in case image can't load (not pressing concern)
-    /*layers[i].svg_circles = layers[i].svg_nodes
+    layers[i].svg_circles = layers[i].svg_nodes
       .append("circle")
       .attr("cx", function(node) { return node.x })
       .attr("cy", function(node) { return node.y })
       .attr("r", function(node) { return layers[i].node_radius })
-      .attr("fill", getNodeFillColor)
+      .attr("fill", getNodeFillPattern)
       .attr("stroke", getNodeOutlineColor)
-      .attr("stroke-width", widths.nodes_outline);*/
-
-    // append images for nodes
-    layers[i].svg_imgs = layers[i].svg_nodes
-      .append("image")
-      .attr("xlink:href", getNodeImage)
-      .attr("x", function(node) { return node.x - layers[i].node_radius })
-      .attr("y", function(node) { return node.y - layers[i].node_radius })
-      .attr("width", layers[i].node_radius * 2)
-      .attr("height", layers[i].node_radius * 2);
+      .attr("stroke-width", widths.nodes_outline);
 
     // display more information when the cursor hovers over nodes - currently messed up because of svg groups
-    /*layers[i].svg_circles
+    layers[i].svg_circles
       .on("mouseenter", function(node)
       {
         svg
@@ -251,34 +258,6 @@ d3.json("data/data.json").then(function(data)
         d3.select(this)
           .transition()
           .attr("r", node.radius);
-      });*/
-
-    //right now, issue with getting image and circle to both grow - when you figure it out, get rid of appending text with images
-    layers[i].svg_imgs
-      .on("mouseenter", function(node)
-      {
-        svg
-          .append("text")
-          .attr("id", "hover_message")
-          .attr("x", node.x + node.radius * 1.5 )
-          .attr("y", node.y )
-          .text(node.text);
-        d3.select(this)
-          .transition()
-          .attr("x", function(node) { return node.x - node.radius * 1.5 })
-          .attr("y", function(node) { return node.y - node.radius * 1.5 })
-          .attr("height", node.radius * 3)
-          .attr("width", node.radius * 3);
-      })
-      .on("mouseleave", function(node)
-      {
-        d3.select("#hover_message").remove();
-        d3.select(this)
-          .transition()
-          .attr("x", function(node) { return node.x - node.radius })
-          .attr("y", function(node) { return node.y - node.radius })
-          .attr("width", node.radius * 2)
-          .attr("height", node.radius * 2);
       });
   }
 });

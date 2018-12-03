@@ -18,20 +18,18 @@
   {
     "layers_fill": "#EEEEFF",
     "layers_outline": "#B6B6DA",
-    "nodes_fill_identifiable": "#B6B6DA",
-    "nodes_fill_unidentifiable": "#B6B6B6",
     "nodes_outline_identifiable": "#9696BA",
     "nodes_outline_unidentifiable": "#969696",
     "links_identifiable": "#9696BA",
     "links_unidentifiable": "#969696"
   },
 
-  "images":
-  {
-    "nodes_identifiable": "images/icon_test_identifiable.png",
-    "nodes_unidentifiable": "images/icon_test_unidentifiable.png",
-    "nodes_you": "images/icon_test_you.png"
-  },
+  "patterns":
+  [
+    {"id": "node_identifiable", "image":"images/icon_test_identifiable.png", "background_color": "#B6B6DA"},
+    {"id": "node_unidentifiable", "image": "images/icon_test_unidentifiable.png", "background_color": "#B6B6B6"},
+    {"id": "node_you", "image": "images/icon_test_you.png", "background_color": "#B6B6DA"}
+  ],
 
   "widths":
   {
