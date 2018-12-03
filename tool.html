@@ -149,6 +149,7 @@ d3.json("data/data.json").then(function(data)
     }
   }
 
+  // add patterns for node fills - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
   var svg_patterns = svg.select("defs").selectAll("pattern")
     .data(patterns)
     .enter()
@@ -158,6 +159,7 @@ d3.json("data/data.json").then(function(data)
     .attr("height", "1")
     .attr("patternContentUnits", "objectBoundingBox");
 
+  // radius is .49 so it doesn't appear on the very edge of the image that goes on top
   svg_patterns
     .append("circle")
     .attr("cx", ".5")
@@ -228,7 +230,7 @@ d3.json("data/data.json").then(function(data)
       .append("g")
       .classed("node_layer_" + i, true);
 
-    // append circles for nodes - would it make more sense to do this as a pattern rather than background circle and front image? And if so, how to get a background fill in addition to image as background pattern in case image can't load (not pressing concern)
+    // append circles for nodes
     layers[i].svg_circles = layers[i].svg_nodes
       .append("circle")
       .attr("cx", function(node) { return node.x })
