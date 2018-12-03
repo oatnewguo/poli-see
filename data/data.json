@@ -12,5 +12,31 @@
     { "id": "data_email_2"   , "label": "Email",    "layer": 2 , "identifiable": 1, "text": "emails",       "edges_out": []},
     { "id": "data_name_2"    , "label": "Name",     "layer": 2 , "identifiable": 1, "text": "name",         "edges_out": ["data_name_3"]},
     { "id": "data_name_3"    , "label": "Name",     "layer": 3 , "identifiable": 0, "text": "name",         "edges_out": []}
-  ]
+  ],
+
+  "colors":
+  {
+    "layers_fill": "#EEEEFF",
+    "layers_outline": "#B6B6DA",
+    "nodes_fill_identifiable": "#B6B6DA",
+    "nodes_fill_unidentifiable": "#B6B6B6",
+    "nodes_outline_identifiable": "#9696BA",
+    "nodes_outline_unidentifiable": "#969696",
+    "links_identifiable": "#9696BA",
+    "links_unidentifiable": "#969696"
+  },
+
+  "images":
+  {
+    "nodes_identifiable": "images/icon_test_identifiable.png",
+    "nodes_unidentifiable": "images/icon_test_unidentifiable.png",
+    "nodes_you": "images/icon_test_you.png"
+  },
+
+  "widths":
+  {
+    "layers_outline": "2",
+    "nodes_outline": "2",
+    "links": "3"
+  }
 }

@@ -47,32 +47,19 @@ var layers =
   { radius: display_radius * .95, node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined }
 ];
 
-// colors and images - this will be pretty extensive later, so it might be moved to a .json file
-const color_layers_fill = "#EEEEFF";
-const color_layers_outline = "#B6B6DA";
-const width_layers_outline = "2";
-
-const color_nodes_fill_identifiable = "#B6B6DA";
-const color_nodes_fill_unidentifiable = "#B6B6B6";
-const img_nodes_identifiable = "images/icon_test_identifiable.png";
-const img_nodes_unidentifiable = "images/icon_test_unidentifiable.png";
-const img_nodes_you = "images/icon_test_you.png";
-const color_nodes_outline_identifiable = "#9696BA";
-const color_nodes_outline_unidentifiable = "#969696";
-const width_nodes_outline = "2";
-
-const color_links_identifiable = "#9696BA";
-const color_links_unidentifiable = "#969696";
-const width_links = "3";
+// objects for colors, images, and widths
+var colors;
+var images;
+var widths;
 
 // return the proper fill color of a node
 function getNodeFillColor(node)
 {
   if(node.identifiable == 1)
   {
-    return color_nodes_fill_identifiable;
+    return colors.nodes_fill_identifiable;
   }
-  return color_nodes_fill_unidentifiable;
+  return colors.nodes_fill_unidentifiable;
 }
 
 // return the proper image of a node
@@ -80,13 +67,13 @@ function getNodeImage(node)
 {
   if(node.layer == 0)
   {
-    return img_nodes_you;
+    return images.nodes_you;
   }
   if(node.identifiable == 1)
   {
-    return img_nodes_identifiable;
+    return images.nodes_identifiable;
   }
-  return img_nodes_unidentifiable;
+  return images.nodes_unidentifiable;
 }
 
 // return the outline color of a node
@@ -94,9 +81,9 @@ function getNodeOutlineColor(node)
 {
   if(node.identifiable == 1)
   {
-    return color_nodes_outline_identifiable;
+    return colors.nodes_outline_identifiable;
   }
-  return color_nodes_outline_unidentifiable;
+  return colors.nodes_outline_unidentifiable;
 }
 
 // return the color of a link
@@ -104,9 +91,9 @@ function getLinkColor(link)
 {
   if(getNodeById(link.destination).identifiable == 1)
   {
-    return color_links_identifiable;
+    return colors.links_identifiable;
   }
-  return color_links_unidentifiable;
+  return colors.links_unidentifiable;
 }
 
 // return the node with a given id from a list of nodes
@@ -122,25 +109,17 @@ svg
   .attr("width", display_radius * 2)
   .attr("height", display_radius * 2);
 
-// append circles for layers
-for(var i = 3; i > 0; i--)
-{
-  layers[i].svg_background = svg
-    .append("circle")
-    .attr("cx", center_x)
-    .attr("cy", center_y)
-    .attr("r", layers[i].radius)
-    .attr("fill", color_layers_fill)
-    .attr("stroke", color_layers_outline)
-    .attr("stroke-width", width_layers_outline);
-}
-
 // load data from .json file
 d3.json("data/data.json").then(function(data)
 {
   // initialize nodes and links arrays
   nodes = data.nodes;
   links = [];
+
+  // initialize colors, images, and widths objects
+  colors = data.colors;
+  images = data.images;
+  widths = data.widths;
 
   // set important properties of nodes and links
   for(var i = 0; i < 4; i++)
@@ -178,7 +157,20 @@ d3.json("data/data.json").then(function(data)
     }
   }
 
-  // append lines for links - has some messed up variables right now
+  // append circles for layers
+  for(var i = 3; i > 0; i--)
+  {
+    layers[i].svg_background = svg
+      .append("circle")
+      .attr("cx", center_x)
+      .attr("cy", center_y)
+      .attr("r", layers[i].radius)
+      .attr("fill", colors.layers_fill)
+      .attr("stroke", colors.layers_outline)
+      .attr("stroke-width", widths.layers_outline);
+  }
+
+  // append lines for links
   var svg_links = svg.selectAll(".link")
     .data(links)
     .enter()
@@ -192,7 +184,7 @@ d3.json("data/data.json").then(function(data)
     .attr("x2", function(link) { return getNodeById(link.destination).x })
     .attr("y2", function(link) { return getNodeById(link.destination).y })
     .attr("stroke", getLinkColor)
-    .attr("stroke-width", width_links);
+    .attr("stroke-width", widths.links);
 
   // display more information when the cursor hovers over links
   svg_links_lines
@@ -228,7 +220,7 @@ d3.json("data/data.json").then(function(data)
       .attr("r", function(node) { return layers[i].node_radius })
       .attr("fill", getNodeFillColor)
       .attr("stroke", getNodeOutlineColor)
-      .attr("stroke-width", width_nodes_outline);*/
+      .attr("stroke-width", widths.nodes_outline);*/
 
     // append images for nodes
     layers[i].svg_imgs = layers[i].svg_nodes
