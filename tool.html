@@ -16,24 +16,12 @@
 <script src="d3/d3.min.js"></script>
 <script>
 
-/*
-TASKS
-gray out links if destination is unidentifiable
-edges within concentric circles as way of distinguishing transformations and transfers
-each parent gets 1/n of the circle for organizing children
-  what if we devise a clever algorithm based on both how many children a parent has and how many are in a layer total?
-
-!spacing
-!hover for info
-!what are edges?
-color arcs for uses
-arrows
-make a set of icons
-*/
-
 // arrays for nodes and links
-var nodes;
-var links;
+var nodes_data;
+var links_data;
+
+// node-mapping object for generating tree
+var root;
 
 // initialize display dimensions
 const display_radius = 300;
@@ -43,16 +31,24 @@ const center_y = display_radius;
 // initialize layers array containing important information on the layer level
 var layers =
 [
-  { radius: 0,                    node_radius: 30, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
-  { radius: display_radius * .4,  node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
-  { radius: display_radius * .7,  node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
-  { radius: display_radius * .95, node_radius: 20, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined }
+  { radius: 0,                    nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
+  { radius: display_radius * .4,  nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
+  { radius: display_radius * .67, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
+  { radius: display_radius * .95, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined }
 ];
 
 // objects for colors, patterns, and widths
 var colors;
 var patterns;
 var widths;
+var node_radii;
+
+// return the node with a given id from a list of nodes
+// this is a bit inefficient, as it requires passing a copy of the array nodes as an argument (if I understand JavaScript correctly)
+function getNodeById(node_id)
+{
+  return nodes_data.find(function(node) { return node.id == node_id; });
+}
 
 // return the proper fill color of a node
 function getNodeFillPattern(node)
@@ -88,11 +84,10 @@ function getLinkColor(link)
   return colors.links_unidentifiable;
 }
 
-// return the node with a given id from a list of nodes
-// this is a bit inefficient, as it requires passing a copy of the array nodes as an argument (if I understand JavaScript correctly)
-function getNodeById(node_id)
+// return the radius of a node
+function getNodeRadius(node)
 {
-  return nodes.find(function(node) { return node.id == node_id; });
+  return node_radii.layers[node.layer];
 }
 
 // create variable for svg and set size
@@ -101,56 +96,65 @@ svg
   .attr("width", display_radius * 2)
   .attr("height", display_radius * 2);
 
+// add a g in the middle of the svg
+var g = svg.append("g").attr("transform", "translate(" + display_radius + "," + display_radius + ")");
+
 // load data from .json file
 d3.json("data/data.json").then(function(data)
 {
   // initialize nodes and links arrays
-  nodes = data.nodes;
-  links = [];
+  nodes_data = data.nodes;
+  links_data = [];
 
   // initialize colors, patterns, and widths objects
   colors = data.colors;
   patterns = data.patterns;
   widths = data.widths;
+  node_radii = data.node_radii;
 
-  // set important properties of nodes and links
-  for(var i = 0; i < 4; i++)
+  // create variable for tree and set basic properties
+  var tree = d3.tree()
+    .size([2 * Math.PI, display_radius * .8])
+    .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+
+  // functions fills in root and children for tree
+  function makeRoot(root)
   {
-    // split nodes into layers
-    layers[i].nodes = nodes.filter(function(node) { return node.layer == i; });
-
-    // iterate through all nodes, layer by layer
-    var num_nodes_in_layer = layers[i].nodes.length;
-    for(var j = 0; j < num_nodes_in_layer; j++)
+    if(root.edges_out.length == 0)
     {
-      // fill links array with link objects based on the .json data
-      var current_node = layers[i].nodes[j];
-      for(var k = 0; k < current_node.edges_out.length; k++)
-      {
-        links.push({ source: current_node.id, destination: current_node.edges_out[k] });
-      }
-
-      // calculate position of nodes
-      var angle = 2 * Math.PI / num_nodes_in_layer * j;
-      if(i == 0)
-      {
-        var distance_from_center = 0;
-      }
-      else
-      {
-        var distance_from_center = layers[i].radius - layers[i].node_radius * 2;
-      }
-
-      current_node.x = center_x + Math.cos(angle) * (distance_from_center);
-      current_node.y = center_y + Math.sin(angle) * (distance_from_center);
-
-      // set the radius of nodes - had to do this for now because of an issue accessing the layers list variable from within mouse event anonymous functions
-      current_node.radius = layers[i].node_radius;
+      return { id: root.id };
+    }
+    else
+    {
+      return { id: root.id, children: root.edges_out.map(function(child_id) { return makeRoot(getNodeById(child_id)); }) };
     }
   }
 
+  // map nodes and create a d3 tree
+  root = tree(d3.hierarchy(makeRoot(nodes_data[0])));//currently assumes first node is center, but we should fix this later
+  tree_nodes = root.descendants();
+
+  // iterate through nodes to gather links and set node coordinates
+  for(var i = 0; i < nodes_data.length; i++)
+  {
+    // fill links array with link objects based on the .json data
+    var current_node = nodes_data[i];
+    for(var j = 0; j < current_node.edges_out.length; j++)
+    {
+      links_data.push({ source: current_node.id, destination: current_node.edges_out[j] });
+    }
+
+    // set the coordinates of nodes based on the coordinates of nodes in the generated tree, altered to make a radial tree
+    matching_tree_node = tree_nodes.find(function(node) { return node.data.id == current_node.id; });
+    current_node.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos(matching_tree_node.x -= Math.PI / 2);
+    current_node.y = matching_tree_node.y * Math.sin(matching_tree_node.x);
+
+    // set the radius of nodes
+    current_node.radius = getNodeRadius(current_node);
+  }
+
   // add patterns for node fills - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
-  var svg_patterns = svg.select("defs").selectAll("pattern")
+  var patterns = svg.select("defs").selectAll("pattern")
     .data(patterns)
     .enter()
     .append("pattern")
@@ -159,15 +163,16 @@ d3.json("data/data.json").then(function(data)
     .attr("height", "1")
     .attr("patternContentUnits", "objectBoundingBox");
 
-  // radius is .49 so it doesn't appear on the very edge of the image that goes on top
-  svg_patterns
+  // add circles to patterns - radius is .49 so that it doesn't appear on the very edge of the image that goes on top
+  patterns
     .append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".49")
     .attr("fill", function(pattern) { return pattern.background_color });
 
-  svg_patterns
+  // add images to patterns
+  patterns
     .append("image")
     .attr("x", "0")
     .attr("y", "0")
@@ -178,24 +183,23 @@ d3.json("data/data.json").then(function(data)
   // append circles for layers
   for(var i = 3; i > 0; i--)
   {
-    layers[i].svg_background = svg
+    layers[i].svg_background = g
       .append("circle")
-      .attr("cx", center_x)
-      .attr("cy", center_y)
       .attr("r", layers[i].radius)
       .attr("fill", colors.layers_fill)
       .attr("stroke", colors.layers_outline)
       .attr("stroke-width", widths.layers_outline);
   }
 
-  // append lines for links
-  var svg_links = svg.selectAll(".link")
-    .data(links)
+  // append links
+  var links = g.selectAll(".link")
+    .data(links_data)
     .enter()
     .append("g")
     .classed("link", true);
 
-  var svg_links_lines = svg_links
+  // add lines to links
+  var links_lines = links
     .append("line")
     .attr("x1", function(link) { return getNodeById(link.source).x })
     .attr("y1", function(link) { return getNodeById(link.source).y })
@@ -205,10 +209,10 @@ d3.json("data/data.json").then(function(data)
     .attr("stroke-width", widths.links);
 
   // display more information when the cursor hovers over links
-  svg_links_lines
+  links_lines
     .on("mouseenter", function(link)
     {
-      svg
+      g
         .append("text")
         .attr("id", "hover_message")
         .attr("x", function() { return (getNodeById(link.source).x + getNodeById(link.destination).x) / 2 })
@@ -220,48 +224,39 @@ d3.json("data/data.json").then(function(data)
       d3.select("#hover_message").remove();
     });
 
-  // append nodes layer by layer
-  for(var i = 0; i < 4; i++)
-  {
-    // append svg gs for nodes
-    layers[i].svg_nodes = svg.selectAll(".node_layer_" + i)
-      .data(layers[i].nodes)
-      .enter()
-      .append("g")
-      .classed("node_layer_" + i, true);
+  // append nodes
+  var nodes = g.selectAll(".node")
+    .data(nodes_data)
+    .enter().append("g")
+    .attr("transform", function(node) { return "translate(" + node.x + "," + node.y + ")" });
 
-    // append circles for nodes
-    layers[i].svg_circles = layers[i].svg_nodes
-      .append("circle")
-      .attr("cx", function(node) { return node.x })
-      .attr("cy", function(node) { return node.y })
-      .attr("r", function(node) { return layers[i].node_radius })
-      .attr("fill", getNodeFillPattern)
-      .attr("stroke", getNodeOutlineColor)
-      .attr("stroke-width", widths.nodes_outline);
+  // add circles to nodes
+  var nodes_circles = nodes.append("circle")
+    .attr("r", getNodeRadius)
+    .attr("fill", getNodeFillPattern)
+    .attr("stroke", getNodeOutlineColor)
+    .attr("stroke-width", widths.nodes_outline);
 
-    // display more information when the cursor hovers over nodes - currently messed up because of svg groups
-    layers[i].svg_circles
-      .on("mouseenter", function(node)
-      {
-        svg
-          .append("text")
-          .attr("id", "hover_message")
-          .attr("x", node.x + node.radius * 1.5 )
-          .attr("y", node.y )
-          .text(node.text);
-        d3.select(this)
-          .transition()
-          .attr("r", node.radius * 1.5);
-      })
-      .on("mouseleave", function(node)
-      {
-        d3.select("#hover_message").remove();
-        d3.select(this)
-          .transition()
-          .attr("r", node.radius);
-      });
-  }
+  // display more information when the cursor hovers over nodes
+  nodes_circles
+    .on("mouseenter", function(node)
+    {
+      g
+        .append("text")
+        .attr("id", "hover_message")
+        .attr("transform", "translate(" + (node.x + node.radius * 1.5) + "," + (node.y - node.radius) + ")")
+        .text(node.text);
+      d3.select(this)
+        .transition()
+        .attr("r", node.radius * 1.5);
+    })
+    .on("mouseleave", function(node)
+    {
+      d3.select("#hover_message").remove();
+      d3.select(this)
+        .transition()
+        .attr("r", node.radius);
+    });
 });
 
 </script>
