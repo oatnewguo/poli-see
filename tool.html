@@ -105,7 +105,7 @@ var svg = d3.select("#canvas")
 var g = svg.append("g")
   .attr("transform", "translate(" + display_radius + "," + display_radius + ")");
 
-var node_info_div = d3.select("#node_info");
+var sidebar = d3.select("#node_info");
 
 // load data from .json file
 d3.json("data/data.json").then(function(data)
@@ -121,7 +121,7 @@ d3.json("data/data.json").then(function(data)
   node_radii = data.node_radii;
 
   // set properties for node info div
-  node_info_div
+  sidebar
     .style("border", widths.node_info_div_outline + "px solid " + colors.node_info_div_outline)
     .style("background-color", colors.node_info_div_fill)
     .style("width", display_radius + "px")
@@ -247,28 +247,37 @@ d3.json("data/data.json").then(function(data)
     .attr("stroke", getNodeOutlineColor)
     .attr("stroke-width", widths.nodes_outline);
 
-  // display more information when the cursor hovers over nodes
+  // display more information in the sidebar when the cursor hovers over nodes
   nodes_circles
     .on("mouseenter", function(node)
     {
-      node_info_div.select("h1")
+      // set the sidebar text according to the node
+      sidebar.select("h1")
         .text(node.label);
-      node_info_div.select("p")
+      sidebar.select("p")
         .text(node.text);
-      node_info_div
+
+      // make the sidebar visible
+      sidebar
         .classed("hidden", false);
-      node_info_div
+      sidebar
         .classed("visible", true);
+
+      // make the node that the cursor is over grow larger
       d3.select(this)
         .transition()
         .attr("r", node.radius * 1.5);
     })
+    // hide the sidebar when the cursor leaves a node
     .on("mouseleave", function(node)
     {
-      node_info_div
+      // make the sidebar hidden
+      sidebar
         .classed("visible", false);
-      node_info_div
+      sidebar
         .classed("hidden", true);
+
+      // make the node that the cursor was over shrink back
       d3.select(this)
         .transition()
         .attr("r", node.radius);
