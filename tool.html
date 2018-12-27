@@ -158,22 +158,20 @@ d3.json("data/data.json").then(function(data)
     .data(patterns)
     .enter()
     .append("pattern")
-    .attr("id", function(pattern) { return pattern.id })
-    .attr("width", "1")
-    .attr("height", "1")
-    .attr("patternContentUnits", "objectBoundingBox");
+      .attr("id", function(pattern) { return pattern.id })
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
 
   // add circles to patterns - radius is .49 so that it doesn't appear on the very edge of the image that goes on top
-  patterns
-    .append("circle")
+  patterns.append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".49")
     .attr("fill", function(pattern) { return pattern.background_color });
 
   // add images to patterns
-  patterns
-    .append("image")
+  patterns.append("image")
     .attr("x", "0")
     .attr("y", "0")
     .attr("width", "1")
@@ -183,8 +181,7 @@ d3.json("data/data.json").then(function(data)
   // append circles for layers
   for(var i = 3; i > 0; i--)
   {
-    layers[i].svg_background = g
-      .append("circle")
+    layers[i].svg_background = g.append("circle")
       .attr("r", layers[i].radius)
       .attr("fill", colors.layers_fill)
       .attr("stroke", colors.layers_outline)
@@ -196,11 +193,10 @@ d3.json("data/data.json").then(function(data)
     .data(links_data)
     .enter()
     .append("g")
-    .classed("link", true);
+      .classed("link", true);
 
   // add lines to links
-  var links_lines = links
-    .append("line")
+  var links_lines = links.append("line")
     .attr("x1", function(link) { return getNodeById(link.source).x })
     .attr("y1", function(link) { return getNodeById(link.source).y })
     .attr("x2", function(link) { return getNodeById(link.destination).x })
@@ -212,8 +208,7 @@ d3.json("data/data.json").then(function(data)
   links_lines
     .on("mouseenter", function(link)
     {
-      g
-        .append("text")
+      g.append("text")
         .attr("id", "hover_message")
         .attr("x", function() { return (getNodeById(link.source).x + getNodeById(link.destination).x) / 2 })
         .attr("y", function() { return (getNodeById(link.source).y + getNodeById(link.destination).y) / 2 })
@@ -228,7 +223,7 @@ d3.json("data/data.json").then(function(data)
   var nodes = g.selectAll(".node")
     .data(nodes_data)
     .enter().append("g")
-    .attr("transform", function(node) { return "translate(" + node.x + "," + node.y + ")" });
+      .attr("transform", function(node) { return "translate(" + node.x + "," + node.y + ")" });
 
   // add circles to nodes
   var nodes_circles = nodes.append("circle")
@@ -241,11 +236,17 @@ d3.json("data/data.json").then(function(data)
   nodes_circles
     .on("mouseenter", function(node)
     {
-      g
-        .append("text")
+      var hover_message = g.append("g")
         .attr("id", "hover_message")
-        .attr("transform", "translate(" + (node.x + node.radius * 1.5) + "," + (node.y - node.radius) + ")")
-        .text(node.text);
+        .attr("transform", "translate(" + (node.x + node.radius * 1.5 + 5) + "," + (node.y) + ")");
+      hover_message.append("polygon")
+        .attr("points", "0,0 10,-10 10,-50 210,-50 210,50 10,50 10,10")
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .attr("stroke-width", "2");
+      hover_message.append("text")
+        .text(node.text)
+        .attr("transform", "translate(15,-35)");
       d3.select(this)
         .transition()
         .attr("r", node.radius * 1.5);
