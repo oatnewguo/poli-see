@@ -1,0 +1,25 @@
+html
+{
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+#canvas
+{
+  float: left;
+}
+
+#node_info
+{
+  float: left;
+  padding: 0 10px 0 10px;
+}
+
+.hidden
+{
+  visibility: hidden;
+}
+
+.visible
+{
+  visibility: visible;
+}

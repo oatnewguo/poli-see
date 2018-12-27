@@ -4,14 +4,20 @@
 
 <meta charset="utf-8"/>
 <title>D3 tool</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
 
 </head>
 
 <body>
 
-<svg>
+<svg id="canvas">
   <defs></defs>
 </svg>
+
+<div id="node_info" class="hidden">
+  <h1></h1>
+  <p></p>
+</div>
 
 <script src="d3/d3.min.js"></script>
 <script>
@@ -91,13 +97,15 @@ function getNodeRadius(node)
 }
 
 // create variable for svg and set size
-var svg = d3.select("svg");
-svg
+var svg = d3.select("#canvas")
   .attr("width", display_radius * 2)
   .attr("height", display_radius * 2);
 
 // add a g in the middle of the svg
-var g = svg.append("g").attr("transform", "translate(" + display_radius + "," + display_radius + ")");
+var g = svg.append("g")
+  .attr("transform", "translate(" + display_radius + "," + display_radius + ")");
+
+var node_info_div = d3.select("#node_info");
 
 // load data from .json file
 d3.json("data/data.json").then(function(data)
@@ -111,6 +119,13 @@ d3.json("data/data.json").then(function(data)
   patterns = data.patterns;
   widths = data.widths;
   node_radii = data.node_radii;
+
+  // set properties for node info div
+  node_info_div
+    .style("border", widths.node_info_div_outline + "px solid " + colors.node_info_div_outline)
+    .style("background-color", colors.node_info_div_fill)
+    .style("width", display_radius + "px")
+    .style("height", (display_radius - 10) * 2 + "px");
 
   // create variable for tree and set basic properties
   var tree = d3.tree()
@@ -236,24 +251,24 @@ d3.json("data/data.json").then(function(data)
   nodes_circles
     .on("mouseenter", function(node)
     {
-      var hover_message = g.append("g")
-        .attr("id", "hover_message")
-        .attr("transform", "translate(" + (node.x + node.radius * 1.5 + 5) + "," + (node.y) + ")");
-      hover_message.append("polygon")
-        .attr("points", "0,0 10,-10 10,-50 210,-50 210,50 10,50 10,10")
-        .attr("fill", "white")
-        .attr("stroke", "black")
-        .attr("stroke-width", "2");
-      hover_message.append("text")
-        .text(node.text)
-        .attr("transform", "translate(15,-35)");
+      node_info_div.select("h1")
+        .text(node.label);
+      node_info_div.select("p")
+        .text(node.text);
+      node_info_div
+        .classed("hidden", false);
+      node_info_div
+        .classed("visible", true);
       d3.select(this)
         .transition()
         .attr("r", node.radius * 1.5);
     })
     .on("mouseleave", function(node)
     {
-      d3.select("#hover_message").remove();
+      node_info_div
+        .classed("visible", false);
+      node_info_div
+        .classed("hidden", true);
       d3.select(this)
         .transition()
         .attr("r", node.radius);

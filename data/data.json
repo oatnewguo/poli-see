@@ -28,7 +28,9 @@
     "nodes_outline_identifiable": "#9696BA",
     "nodes_outline_unidentifiable": "#969696",
     "links_identifiable": "#9696BA",
-    "links_unidentifiable": "#969696"
+    "links_unidentifiable": "#969696",
+    "node_info_div_fill": "#EEEEFF",
+    "node_info_div_outline": "#B6B6DA"
   },
 
   "patterns":
@@ -42,7 +44,8 @@
   {
     "layers_outline": "2",
     "nodes_outline": "2",
-    "links": "3"
+    "links": "3",
+    "node_info_div_outline": "2"
   },
 
   "node_radii":
