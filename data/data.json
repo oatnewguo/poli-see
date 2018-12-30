@@ -1,24 +1,24 @@
 {
   "nodes":
   [
-    { "id": "you"       , "label": "You",      "layer": 0 , "identifiable": 1, "text": "this is you", "edges_out": ["photos_1", "location_1", "email_1", "name_1", "address_1"]},
-    { "id": "photos_1"  , "label": "Photos",   "layer": 1 , "identifiable": 1, "text": "photos",      "edges_out": ["photos_2"]},
-    { "id": "location_1", "label": "Location", "layer": 1 , "identifiable": 1, "text": "location",    "edges_out": ["location_2"]},
-    { "id": "email_1"   , "label": "Email",    "layer": 1 , "identifiable": 1, "text": "email",       "edges_out": ["email_2"]},
-    { "id": "name_1"    , "label": "Name",     "layer": 1 , "identifiable": 1, "text": "name",        "edges_out": ["name_2"]},
-    { "id": "address_1" , "label": "Address",  "layer": 1 , "identifiable": 1, "text": "address",     "edges_out": []},
-    { "id": "photos_2"  , "label": "Photos",   "layer": 2 , "identifiable": 0, "text": "photos",      "edges_out": []},
-    { "id": "location_2", "label": "Location", "layer": 2 , "identifiable": 0, "text": "location",    "edges_out": ["location_3"]},
-    { "id": "location_3", "label": "Location", "layer": 3 , "identifiable": 0, "text": "location",    "edges_out": []},
-    { "id": "email_2"   , "label": "Email",    "layer": 2 , "identifiable": 1, "text": "email",       "edges_out": ["email_3","email_4","email_5","email_6"]},
-    { "id": "email_3"   , "label": "Email",    "layer": 3 , "identifiable": 0, "text": "email",       "edges_out": []},
-    { "id": "email_4"   , "label": "Email",    "layer": 3 , "identifiable": 0, "text": "email",       "edges_out": []},
-    { "id": "email_5"   , "label": "Email",    "layer": 3 , "identifiable": 0, "text": "email",       "edges_out": []},
-    { "id": "email_6"   , "label": "Email",    "layer": 3 , "identifiable": 0, "text": "email",       "edges_out": []},
-    { "id": "name_2"    , "label": "Name",     "layer": 2 , "identifiable": 1, "text": "name",        "edges_out": ["name_3","name_4","name_5"]},
-    { "id": "name_3"    , "label": "Name",     "layer": 3 , "identifiable": 0, "text": "name",        "edges_out": []},
-    { "id": "name_4"    , "label": "Name",     "layer": 3 , "identifiable": 0, "text": "name",        "edges_out": []},
-    { "id": "name_5"    , "label": "Name",     "layer": 3 , "identifiable": 0, "text": "name",        "edges_out": []}
+    { "id": "you"       , "edges_out": ["photos_1", "location_1", "email_1", "name_1", "address_1"], "layer": 0, "identifiable": true,  "label": "You",      "text": "this is you"},
+    { "id": "photos_1"  , "edges_out": ["photos_2"],                                                 "layer": 1, "identifiable": true,  "label": "Photos",   "text": "photos"},
+    { "id": "location_1", "edges_out": ["location_2"],                                               "layer": 1, "identifiable": true,  "label": "Location", "text": "location"},
+    { "id": "email_1"   , "edges_out": ["email_2"],                                                  "layer": 1, "identifiable": true,  "label": "Email",    "text": "email"},
+    { "id": "name_1"    , "edges_out": ["name_2"],                                                   "layer": 1, "identifiable": true,  "label": "Name",     "text": "name"},
+    { "id": "address_1" , "edges_out": [],                                                           "layer": 1, "identifiable": true,  "label": "Address",  "text": "address"},
+    { "id": "photos_2"  , "edges_out": [],                                                           "layer": 2, "identifiable": false, "label": "Photos",   "text": "photos"},
+    { "id": "location_2", "edges_out": ["location_3"],                                               "layer": 2, "identifiable": false, "label": "Location", "text": "location"},
+    { "id": "location_3", "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Location", "text": "location"},
+    { "id": "email_2"   , "edges_out": ["email_3.1","email_3.2","email_3.3","email_3.4"],            "layer": 2, "identifiable": true,  "label": "Email",    "text": "email"},
+    { "id": "email_3.1" , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Email",    "text": "email"},
+    { "id": "email_3.2" , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Email",    "text": "email"},
+    { "id": "email_3.3" , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Email",    "text": "email"},
+    { "id": "email_3.4" , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Email",    "text": "email"},
+    { "id": "name_2"    , "edges_out": ["name_3.1","name_3.2","name_3.3"],                           "layer": 2, "identifiable": true,  "label": "Name",     "text": "name"},
+    { "id": "name_3.1"  , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Name",     "text": "name"},
+    { "id": "name_3.2"  , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Name",     "text": "name"},
+    { "id": "name_3.3"  , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Name",     "text": "name"}
   ],
 
   "colors":

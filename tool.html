@@ -71,7 +71,7 @@ function getNodeFillPattern(node)
   {
     return "url(#node_you)";
   }
-  if(node.identifiable == 1)
+  if(node.identifiable)
   {
     return "url(#node_identifiable)";
   }
@@ -81,7 +81,7 @@ function getNodeFillPattern(node)
 // return the outline color of a node
 function getNodeOutlineColor(node)
 {
-  if(node.identifiable == 1)
+  if(node.identifiable)
   {
     return colors.node_outline_identifiable;
   }
@@ -91,7 +91,7 @@ function getNodeOutlineColor(node)
 // return the color of a link
 function getLinkColor(link)
 {
-  if(getNodeById(link.destination).identifiable == 1)
+  if(getNodeById(link.destination).identifiable)
   {
     return colors.link_identifiable;
   }
@@ -157,6 +157,8 @@ d3.json("data/data.json").then(function(data)
   patterns = data.patterns;
   widths = data.widths;
   node_radii = data.node_radii;
+
+
 
   // set properties for node info div
   sidebar
