@@ -23,14 +23,15 @@
 
   "colors":
   {
-    "layers_fill": "#EEEEFF",
-    "layers_outline": "#B6B6DA",
-    "nodes_outline_identifiable": "#9696BA",
-    "nodes_outline_unidentifiable": "#969696",
-    "links_identifiable": "#9696BA",
-    "links_unidentifiable": "#969696",
+    "layer_fill": "#EEEEFF",
+    "layer_outline": "#B6B6DA",
+    "node_outline_identifiable": "#9696BA",
+    "node_outline_unidentifiable": "#969696",
+    "link_identifiable": "#9696BA",
+    "link_unidentifiable": "#969696",
     "node_info_div_fill": "#EEEEFF",
-    "node_info_div_outline": "#B6B6DA"
+    "node_info_div_outline": "#B6B6DA",
+    "node_outline_click_focus": "#FFFF00"
   },
 
   "patterns":
@@ -42,10 +43,11 @@
 
   "widths":
   {
-    "layers_outline": "2",
-    "nodes_outline": "2",
-    "links": "3",
-    "node_info_div_outline": "2"
+    "layer_outline": "2",
+    "node_outline": "2",
+    "link": "3",
+    "node_info_div_outline": "2",
+    "node_outline_click_focus": "4"
   },
 
   "node_radii":
