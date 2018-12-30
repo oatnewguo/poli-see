@@ -107,40 +107,40 @@ function getNodeRadius(node)
 // functions fills in root and children for tree
 function makeRoot(root)
 {
-if(root.edges_out.length == 0)
-{
-  return { id: root.id };
-}
-else
-{
-  return { id: root.id, children: root.edges_out.map(function(child_id) { return makeRoot(getNodeById(child_id)); }) };
-}
+  if(root.edges_out.length == 0)
+  {
+    return { id: root.id };
+  }
+  else
+  {
+    return { id: root.id, children: root.edges_out.map(function(child_id) { return makeRoot(getNodeById(child_id)); }) };
+  }
 }
 
 // update the sidebar based on a d3-selected node
 function updateSidebar(node_selection)
 {
-// set the sidebar text
-sidebar.select("h1")
-  .text(node_selection.datum().label);
-sidebar.select("p")
-  .text(node_selection.datum().text);
+  // set the sidebar text
+  sidebar.select("h1")
+    .text(node_selection.datum().label);
+  sidebar.select("p")
+    .text(node_selection.datum().text);
 
-// make the sidebar visible
-sidebar
-  .classed("hidden", false);
-sidebar
-  .classed("visible", true);
+  // make the sidebar visible
+  sidebar
+    .classed("hidden", false);
+  sidebar
+    .classed("visible", true);
 }
 
 // hide the sidebar
 function hideSidebar()
 {
-// make the sidebar hidden
-sidebar
-  .classed("visible", false);
-sidebar
-  .classed("hidden", true);
+  // make the sidebar hidden
+  sidebar
+    .classed("visible", false);
+  sidebar
+    .classed("hidden", true);
 }
 
 
