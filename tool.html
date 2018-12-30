@@ -34,20 +34,11 @@ const display_radius = 300;
 const center_x = display_radius;
 const center_y = display_radius;
 
-// initialize layers array containing important information on the layer level
-var layers =
-[
-  { radius: 0,                    nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
-  { radius: display_radius * .4,  nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
-  { radius: display_radius * .67, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined },
-  { radius: display_radius * .95, nodes: [], svg_nodes: [], svg_circles: [], svg_imgs: [], svg_background: undefined }
-];
-
-// objects for colors, patterns, and widths
+// objects for colors, patterns, widths, and radii
 var colors;
 var patterns;
 var widths;
-var node_radii;
+var layer_radii = [0, .4, .67, .95].map(function(x) { return x * display_radius; });
 
 // variable for currently selected node
 var clicked_node = null;
@@ -236,8 +227,8 @@ d3.json("data/data.json").then(function(data)
   // append circles for layers
   for(var i = 3; i > 0; i--)
   {
-    layers[i].svg_background = g.append("circle")
-      .attr("r", layers[i].radius)
+    g.append("circle")
+      .attr("r", layer_radii[i])
       .attr("fill", colors.layer_fill)
       .attr("stroke", colors.layer_outline)
       .attr("stroke-width", widths.layer_outline);
@@ -261,8 +252,9 @@ d3.json("data/data.json").then(function(data)
     .attr("stroke", getLinkColor)
     .attr("stroke-width", widths.link);
 
-  // display more information when the cursor hovers over links
+  // mouse interactions for links
   links_lines
+    // display more information when the cursor hovers over links
     .on("mouseenter", function(d)
     {
       g.append("text")
@@ -271,6 +263,7 @@ d3.json("data/data.json").then(function(data)
         .attr("y", function() { return (getNodeById(d.source).y + getNodeById(d.destination).y) / 2 })
         .text("hello");
     })
+    // hide information when the cursor leaves a link
     .on("mouseleave", function(d)
     {
       d3.select("#hover_message").remove();
@@ -293,6 +286,7 @@ d3.json("data/data.json").then(function(data)
     .attr("stroke-width", widths.node_outline)
     .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle" });
 
+  // mouse interactions for nodes
   nodes_circles
     // display more information in the sidebar when the cursor hovers over nodes
     .on("mouseenter", function(d)
