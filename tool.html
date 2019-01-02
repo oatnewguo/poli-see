@@ -146,237 +146,240 @@ function hideSidebar()
 
 
 // load data from .json file
-d3.json("data/data.json").then(function(data)
+d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
 {
-  // initialize nodes and links arrays
-  nodes_data = data.nodes;
-  links_data = [];
-
-  // initialize colors, patterns, and widths objects
-  colors = data.colors;
-  patterns = data.patterns;
-  widths = data.widths;
-  node_radii = data.node_radii;
-
-
-
-  // set properties for node info div
-  sidebar
-    .style("border", widths.node_info_div_outline + "px solid " + colors.node_info_div_outline)
-    .style("background-color", colors.node_info_div_fill)
-    .style("width", display_radius + "px")
-    .style("height", (display_radius - 10) * 2 + "px");
-
-
-
-  // create variable for tree and set basic properties
-  var tree = d3.tree()
-    .size([2 * Math.PI, display_radius * .8])
-    .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
-
-  // map nodes and create a d3 tree
-  root = tree(d3.hierarchy(makeRoot(nodes_data[0])));//currently assumes first node is center, but we should fix this later
-  tree_nodes = root.descendants();
-
-  // iterate through nodes to gather links and set node coordinates
-  for(var i = 0; i < nodes_data.length; i++)
+  d3.json("data/appearance.json").then(function(appearance_data)
   {
-    // fill links array with link objects based on the .json data
-    var n = nodes_data[i];
-    for(var j = 0; j < n.edges_out.length; j++)
+    // initialize nodes and links arrays
+    nodes_data = policy_encoding_data;
+    links_data = [];
+
+    // initialize colors, patterns, and widths objects
+    colors = appearance_data.colors;
+    patterns = appearance_data.patterns;
+    widths = appearance_data.widths;
+    node_radii = appearance_data.node_radii;
+
+
+
+    // set properties for node info div
+    sidebar
+      .style("border", widths.node_info_div_outline + "px solid " + colors.node_info_div_outline)
+      .style("background-color", colors.node_info_div_fill)
+      .style("width", display_radius + "px")
+      .style("height", (display_radius - 10) * 2 + "px");
+
+
+
+    // create variable for tree and set basic properties
+    var tree = d3.tree()
+      .size([2 * Math.PI, display_radius * .8])
+      .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+
+    // map nodes and create a d3 tree
+    root = tree(d3.hierarchy(makeRoot(nodes_data.find(function(node) { return node.layer == 0; }))));
+    tree_nodes = root.descendants();
+
+    // iterate through nodes to gather links and set node coordinates
+    for(var i = 0; i < nodes_data.length; i++)
     {
-      links_data.push({ source: n.id, destination: n.edges_out[j] });
+      // fill links array with link objects based on the .json data
+      var n = nodes_data[i];
+      for(var j = 0; j < n.edges_out.length; j++)
+      {
+        links_data.push({ source: n.id, destination: n.edges_out[j] });
+      }
+
+      // set the coordinates of nodes based on the coordinates of nodes in the generated tree, altered to make a radial tree
+      matching_tree_node = tree_nodes.find(function(node) { return node.data.id == n.id; });
+      n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos(matching_tree_node.x -= Math.PI / 2);
+      n.y = matching_tree_node.y * Math.sin(matching_tree_node.x);
+
+      // set the radius of nodes
+      n.radius = getNodeRadius(n);
     }
 
-    // set the coordinates of nodes based on the coordinates of nodes in the generated tree, altered to make a radial tree
-    matching_tree_node = tree_nodes.find(function(node) { return node.data.id == n.id; });
-    n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos(matching_tree_node.x -= Math.PI / 2);
-    n.y = matching_tree_node.y * Math.sin(matching_tree_node.x);
-
-    // set the radius of nodes
-    n.radius = getNodeRadius(n);
-  }
 
 
+    // add patterns for node fills - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
+    var patterns = svg.select("defs").selectAll("pattern")
+      .data(patterns)
+      .enter()
+      .append("pattern")
+        .attr("id", function(d) { return d.id })
+        .attr("width", "1")
+        .attr("height", "1")
+        .attr("patternContentUnits", "objectBoundingBox");
 
-  // add patterns for node fills - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
-  var patterns = svg.select("defs").selectAll("pattern")
-    .data(patterns)
-    .enter()
-    .append("pattern")
-      .attr("id", function(d) { return d.id })
+    // add circles to patterns - radius is .49 so that it doesn't appear on the very edge of the image that goes on top
+    patterns.append("circle")
+      .attr("cx", ".5")
+      .attr("cy", ".5")
+      .attr("r", ".49")
+      .attr("fill", function(d) { return d.background_color });
+
+    // add images to patterns
+    patterns.append("image")
+      .attr("x", "0")
+      .attr("y", "0")
       .attr("width", "1")
       .attr("height", "1")
-      .attr("patternContentUnits", "objectBoundingBox");
-
-  // add circles to patterns - radius is .49 so that it doesn't appear on the very edge of the image that goes on top
-  patterns.append("circle")
-    .attr("cx", ".5")
-    .attr("cy", ".5")
-    .attr("r", ".49")
-    .attr("fill", function(d) { return d.background_color });
-
-  // add images to patterns
-  patterns.append("image")
-    .attr("x", "0")
-    .attr("y", "0")
-    .attr("width", "1")
-    .attr("height", "1")
-    .attr("xlink:href", function(d) { return d.image });
+      .attr("xlink:href", function(d) { return d.image });
 
 
 
-  // append circles for layers
-  for(var i = 3; i > 0; i--)
-  {
-    g.append("circle")
-      .attr("r", layer_radii[i])
-      .attr("fill", colors.layer_fill)
-      .attr("stroke", colors.layer_outline)
-      .attr("stroke-width", widths.layer_outline);
-  }
-
-
-
-  // append links
-  var links = g.selectAll(".link")
-    .data(links_data)
-    .enter()
-    .append("g")
-      .classed("link", true);
-
-  // add lines to links
-  var links_lines = links.append("line")
-    .attr("x1", function(d) { return getNodeById(d.source).x })
-    .attr("y1", function(d) { return getNodeById(d.source).y })
-    .attr("x2", function(d) { return getNodeById(d.destination).x })
-    .attr("y2", function(d) { return getNodeById(d.destination).y })
-    .attr("stroke", getLinkColor)
-    .attr("stroke-width", widths.link);
-
-  // mouse interactions for links
-  links_lines
-    // display more information when the cursor hovers over links
-    .on("mouseenter", function(d)
+    // append circles for layers
+    for(var i = 3; i > 0; i--)
     {
-      g.append("text")
-        .attr("id", "hover_message")
-        .attr("x", function() { return (getNodeById(d.source).x + getNodeById(d.destination).x) / 2 })
-        .attr("y", function() { return (getNodeById(d.source).y + getNodeById(d.destination).y) / 2 })
-        .text("hello");
-    })
-    // hide information when the cursor leaves a link
-    .on("mouseleave", function(d)
-    {
-      d3.select("#hover_message").remove();
-    });
+      g.append("circle")
+        .attr("r", layer_radii[i])
+        .attr("fill", colors.layer_fill)
+        .attr("stroke", colors.layer_outline)
+        .attr("stroke-width", widths.layer_outline);
+    }
 
 
 
-  // append nodes
-  var nodes = g.selectAll(".node")
-    .data(nodes_data)
-    .enter().append("g")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
-      .attr("id", function(d) { return d.id });
+    // append links
+    var links = g.selectAll(".link")
+      .data(links_data)
+      .enter()
+      .append("g")
+        .classed("link", true);
 
-  // add circles to nodes
-  var nodes_circles = nodes.append("circle")
-    .attr("r", getNodeRadius)
-    .attr("fill", getNodeFillPattern)
-    .attr("stroke", getNodeOutlineColor)
-    .attr("stroke-width", widths.node_outline)
-    .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle" });
+    // add lines to links
+    var links_lines = links.append("line")
+      .attr("x1", function(d) { return getNodeById(d.source).x })
+      .attr("y1", function(d) { return getNodeById(d.source).y })
+      .attr("x2", function(d) { return getNodeById(d.destination).x })
+      .attr("y2", function(d) { return getNodeById(d.destination).y })
+      .attr("stroke", getLinkColor)
+      .attr("stroke-width", widths.link);
 
-  // mouse interactions for nodes
-  nodes_circles
-    // display more information in the sidebar when the cursor hovers over nodes
-    .on("mouseenter", function(d)
-    {
-      var node_selection = d3.select(this);
-
-      updateSidebar(node_selection);
-
-      // increase the size of the node that the cursor is over
-      node_selection
-        .transition()
-        .attr("r", d.radius * 1.5);
-    })
-    // update the sidebar when the cursor leaves a node
-    .on("mouseleave", function(d)
-    {
-      var node_selection = d3.select(this);
-
-      // if there is no clicked node, then hide the sidebar
-      if(clicked_node == null)
+    // mouse interactions for links
+    links_lines
+      // display more information when the cursor hovers over links
+      .on("mouseenter", function(d)
       {
-        hideSidebar();
+        g.append("text")
+          .attr("id", "hover_message")
+          .attr("x", function() { return (getNodeById(d.source).x + getNodeById(d.destination).x) / 2 })
+          .attr("y", function() { return (getNodeById(d.source).y + getNodeById(d.destination).y) / 2 })
+          .text("hello");
+      })
+      // hide information when the cursor leaves a link
+      .on("mouseleave", function(d)
+      {
+        d3.select("#hover_message").remove();
+      });
 
-        // decrease the size of the node that the cursor was over, back to normal
+
+
+    // append nodes
+    var nodes = g.selectAll(".node")
+      .data(nodes_data)
+      .enter().append("g")
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
+        .attr("id", function(d) { return d.id });
+
+    // add circles to nodes
+    var nodes_circles = nodes.append("circle")
+      .attr("r", getNodeRadius)
+      .attr("fill", getNodeFillPattern)
+      .attr("stroke", getNodeOutlineColor)
+      .attr("stroke-width", widths.node_outline)
+      .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle" });
+
+    // mouse interactions for nodes
+    nodes_circles
+      // display more information in the sidebar when the cursor hovers over nodes
+      .on("mouseenter", function(d)
+      {
+        var node_selection = d3.select(this);
+
+        updateSidebar(node_selection);
+
+        // increase the size of the node that the cursor is over
         node_selection
           .transition()
-          .attr("r", d.radius);
-      }
-      // if there is a clicked node, then update the sidebar to display information about the clicked node
-      else
+          .attr("r", d.radius * 1.5);
+      })
+      // update the sidebar when the cursor leaves a node
+      .on("mouseleave", function(d)
       {
-        updateSidebar(clicked_node);
+        var node_selection = d3.select(this);
 
-        // unless the node that the cursor was over was the clicked node, ddecrease its size back to normal
-        if(clicked_node.attr("id") != node_selection.attr("id"))
+        // if there is no clicked node, then hide the sidebar
+        if(clicked_node == null)
         {
-          // make the node that the cursor was over shrink back
+          hideSidebar();
+
+          // decrease the size of the node that the cursor was over, back to normal
           node_selection
             .transition()
             .attr("r", d.radius);
         }
-      }
-    })
-    // retain focus on a node when it is clicked
-    .on("click", function(d)
-    {
-      var new_clicked_node = d3.select(this);
+        // if there is a clicked node, then update the sidebar to display information about the clicked node
+        else
+        {
+          updateSidebar(clicked_node);
 
-      // if there is no old clicked node, then focus on the new clicked node
-      if(clicked_node == null)
+          // unless the node that the cursor was over was the clicked node, ddecrease its size back to normal
+          if(clicked_node.attr("id") != node_selection.attr("id"))
+          {
+            // make the node that the cursor was over shrink back
+            node_selection
+              .transition()
+              .attr("r", d.radius);
+          }
+        }
+      })
+      // retain focus on a node when it is clicked
+      .on("click", function(d)
       {
-        // change outline of new clicked node to indicate focus
-        new_clicked_node
-          .attr("stroke", colors.node_outline_click_focus)
-          .attr("stroke-width", widths.node_outline_click_focus);
+        var new_clicked_node = d3.select(this);
 
-        clicked_node = new_clicked_node;
-      }
-      // if there is an old clicked node that is not the new clicked node, then focus away from the old and on the new
-      else if(clicked_node.attr("id") != new_clicked_node.attr("id"))
-      {
-        updateSidebar(new_clicked_node);
+        // if there is no old clicked node, then focus on the new clicked node
+        if(clicked_node == null)
+        {
+          // change outline of new clicked node to indicate focus
+          new_clicked_node
+            .attr("stroke", colors.node_outline_click_focus)
+            .attr("stroke-width", widths.node_outline_click_focus);
 
-        // change outline of old clicked node back to normal, and decrease size back to normal
-        clicked_node
-          .attr("stroke", getNodeOutlineColor)
-          .attr("stroke-width", widths.node_outline)
-          .transition()
-          .attr("r", clicked_node.datum().radius);
+          clicked_node = new_clicked_node;
+        }
+        // if there is an old clicked node that is not the new clicked node, then focus away from the old and on the new
+        else if(clicked_node.attr("id") != new_clicked_node.attr("id"))
+        {
+          updateSidebar(new_clicked_node);
 
-        // change outline of new clicked node to indicate focus
-        new_clicked_node
-          .attr("stroke", colors.node_outline_click_focus)
-          .attr("stroke-width", widths.node_outline_click_focus);
+          // change outline of old clicked node back to normal, and decrease size back to normal
+          clicked_node
+            .attr("stroke", getNodeOutlineColor)
+            .attr("stroke-width", widths.node_outline)
+            .transition()
+            .attr("r", clicked_node.datum().radius);
 
-        clicked_node = new_clicked_node;
-      }
-      // if the new clicked node is the old clicked node, then focus away from it
-      else
-      {
-        // change outline of clicked node back to normal
-        clicked_node
-          .attr("stroke", getNodeOutlineColor)
-          .attr("stroke-width", widths.node_outline);
+          // change outline of new clicked node to indicate focus
+          new_clicked_node
+            .attr("stroke", colors.node_outline_click_focus)
+            .attr("stroke-width", widths.node_outline_click_focus);
 
-        clicked_node = null;
-      }
-    });
+          clicked_node = new_clicked_node;
+        }
+        // if the new clicked node is the old clicked node, then focus away from it
+        else
+        {
+          // change outline of clicked node back to normal
+          clicked_node
+            .attr("stroke", getNodeOutlineColor)
+            .attr("stroke-width", widths.node_outline);
+
+          clicked_node = null;
+        }
+      });
+  });
 });
 
 </script>
