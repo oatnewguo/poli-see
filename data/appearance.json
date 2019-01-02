@@ -19,17 +19,15 @@
     {"id": "node_you", "image": "images/icon_test_you.png", "background_color": "#B6B6DA"}
   ],
 
-  "widths":
+  "dimensions":
   {
-    "layer_outline": "2",
-    "node_outline": "2",
-    "link": "3",
-    "node_info_div_outline": "2",
-    "node_outline_click_focus": "4"
-  },
-
-  "node_radii":
-  {
-    "layers": [30, 20, 20, 20]
+    "layer_outline_width": 2,
+    "node_outline_width": 2,
+    "link_width": 3,
+    "node_info_div_outline_width": 2,
+    "node_outline_click_focus_width": 4,
+    "node_radii_by_layers": [30, 20, 20, 20],
+    "arrow_marker_length": 12,
+    "arrow_marker_width": 8
   }
 }

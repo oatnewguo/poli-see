@@ -14,7 +14,7 @@
   { "id": "email_3.3" , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Email",    "text": "email"},
   { "id": "email_3.4" , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Email",    "text": "email"},
   { "id": "name_2"    , "edges_out": ["name_3.1","name_3.2","name_3.3"],                           "layer": 2, "identifiable": true,  "label": "Name",     "text": "name"},
-  { "id": "name_3.1"  , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Name",     "text": "name"},
+  { "id": "name_3.1"  , "edges_out": [],                                                           "layer": 3, "identifiable": true, "label": "Name",     "text": "name"},
   { "id": "name_3.2"  , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Name",     "text": "name"},
   { "id": "name_3.3"  , "edges_out": [],                                                           "layer": 3, "identifiable": false, "label": "Name",     "text": "name"}
 ]

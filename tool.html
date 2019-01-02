@@ -34,10 +34,10 @@ const display_radius = 300;
 const center_x = display_radius;
 const center_y = display_radius;
 
-// objects for colors, patterns, widths, and radii
+// objects for colors, patterns, and dimensions
 var colors;
 var patterns;
-var widths;
+var dimensions;
 var layer_radii = [0, .4, .67, .95].map(function(x) { return x * display_radius; });
 
 // variable for currently selected node
@@ -88,6 +88,12 @@ function getNodeOutlineColor(node)
   return colors.node_outline_unidentifiable;
 }
 
+// return the radius of a node
+function getNodeRadius(node)
+{
+  return dimensions.node_radii_by_layers[node.layer];
+}
+
 // return the color of a link
 function getLinkColor(link)
 {
@@ -98,10 +104,38 @@ function getLinkColor(link)
   return colors.link_unidentifiable;
 }
 
-// return the radius of a node
-function getNodeRadius(node)
+// return the marker for the arrow of a link
+function getLinkMarker(link)
 {
-  return node_radii.layers[node.layer];
+  if(getNodeById(link.destination).identifiable)
+  {
+    return "url(#marker_identifiable)";
+  }
+  return "url(#marker_unidentifiable)";
+}
+
+// return the x-value of the end of a link (edge of the destination node, minus distance for the arrow head)
+function getLinkX2(link)
+{
+  var source = getNodeById(link.source);
+  var dest = getNodeById(link.destination);
+  var theta = Math.atan((source.y - dest.y) / (source.x - dest.x));
+  if(dest.x < source.x)
+    return dest.x + ((dest.radius + dimensions.arrow_marker_length) * Math.cos(theta));
+  else
+    return dest.x - ((dest.radius + dimensions.arrow_marker_length) * Math.cos(theta));
+}
+
+// return the y-value of the end of a link (edge of the destination node, minus distance for the arrow head)
+function getLinkY2(link)
+{
+  var source = getNodeById(link.source);
+  var dest = getNodeById(link.destination);
+  var theta = Math.atan((source.y - dest.y) / (source.x - dest.x));
+  if(dest.x < source.x)
+    return dest.y + ((dest.radius + dimensions.arrow_marker_length) * Math.sin(theta));
+  else
+    return dest.y - ((dest.radius + dimensions.arrow_marker_length) * Math.sin(theta));
 }
 
 // functions fills in root and children for tree
@@ -154,17 +188,16 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
     nodes_data = policy_encoding_data;
     links_data = [];
 
-    // initialize colors, patterns, and widths objects
+    // initialize colors, patterns, and dimensions objects
     colors = appearance_data.colors;
     patterns = appearance_data.patterns;
-    widths = appearance_data.widths;
-    node_radii = appearance_data.node_radii;
+    dimensions = appearance_data.dimensions;
 
 
 
     // set properties for node info div
     sidebar
-      .style("border", widths.node_info_div_outline + "px solid " + colors.node_info_div_outline)
+      .style("border", dimensions.node_info_div_outline_width + "px solid " + colors.node_info_div_outline)
       .style("background-color", colors.node_info_div_fill)
       .style("width", display_radius + "px")
       .style("height", (display_radius - 10) * 2 + "px");
@@ -199,6 +232,31 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
       n.radius = getNodeRadius(n);
     }
 
+    // add markers for arrows
+    svg.select("defs").append("marker")
+      .attr("id", "marker_identifiable")
+      .attr("refX", 0)
+      .attr("refY", dimensions.arrow_marker_width / 2)
+      .attr("markerWidth", dimensions.arrow_marker_length)
+      .attr("markerHeight", dimensions.arrow_marker_width)
+      .attr("orient", "auto")
+      .attr("markerUnits", "userSpaceOnUse")
+      .append("path")
+        .attr("d", "M 0 0 L " + dimensions.arrow_marker_length + " " + (dimensions.arrow_marker_width / 2) + " L 0 " + dimensions.arrow_marker_width + " Z")
+        .attr("fill", colors.link_identifiable);
+
+    svg.select("defs").append("marker")
+      .attr("id", "marker_unidentifiable")
+      .attr("refX", 0)
+      .attr("refY", dimensions.arrow_marker_width / 2)
+      .attr("markerWidth", dimensions.arrow_marker_length)
+      .attr("markerHeight", dimensions.arrow_marker_width)
+      .attr("orient", "auto")
+      .attr("markerUnits", "userSpaceOnUse")
+      .append("path")
+        .attr("d", "M 0 0 L " + dimensions.arrow_marker_length + " " + (dimensions.arrow_marker_width / 2) + " L 0 " + dimensions.arrow_marker_width + " Z")
+        .attr("fill", colors.link_unidentifiable);
+
 
 
     // add patterns for node fills - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
@@ -206,7 +264,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
       .data(patterns)
       .enter()
       .append("pattern")
-        .attr("id", function(d) { return d.id })
+        .attr("id", function(d) { return d.id; })
         .attr("width", "1")
         .attr("height", "1")
         .attr("patternContentUnits", "objectBoundingBox");
@@ -216,7 +274,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
       .attr("cx", ".5")
       .attr("cy", ".5")
       .attr("r", ".49")
-      .attr("fill", function(d) { return d.background_color });
+      .attr("fill", function(d) { return d.background_color; });
 
     // add images to patterns
     patterns.append("image")
@@ -224,7 +282,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
       .attr("y", "0")
       .attr("width", "1")
       .attr("height", "1")
-      .attr("xlink:href", function(d) { return d.image });
+      .attr("xlink:href", function(d) { return d.image; });
 
 
 
@@ -235,7 +293,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
         .attr("r", layer_radii[i])
         .attr("fill", colors.layer_fill)
         .attr("stroke", colors.layer_outline)
-        .attr("stroke-width", widths.layer_outline);
+        .attr("stroke-width", dimensions.layer_outline_width);
     }
 
 
@@ -249,12 +307,13 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
 
     // add lines to links
     var links_lines = links.append("line")
-      .attr("x1", function(d) { return getNodeById(d.source).x })
-      .attr("y1", function(d) { return getNodeById(d.source).y })
-      .attr("x2", function(d) { return getNodeById(d.destination).x })
-      .attr("y2", function(d) { return getNodeById(d.destination).y })
+      .attr("x1", function(d) { return getNodeById(d.source).x; })
+      .attr("y1", function(d) { return getNodeById(d.source).y; })
+      .attr("x2", getLinkX2)
+      .attr("y2", getLinkY2)
       .attr("stroke", getLinkColor)
-      .attr("stroke-width", widths.link);
+      .attr("stroke-width", dimensions.link_width)
+      .attr("marker-end", getLinkMarker);
 
     // mouse interactions for links
     links_lines
@@ -263,8 +322,8 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
       {
         g.append("text")
           .attr("id", "hover_message")
-          .attr("x", function() { return (getNodeById(d.source).x + getNodeById(d.destination).x) / 2 })
-          .attr("y", function() { return (getNodeById(d.source).y + getNodeById(d.destination).y) / 2 })
+          .attr("x", function() { return (getNodeById(d.source).x + getNodeById(d.destination).x) / 2; })
+          .attr("y", function() { return (getNodeById(d.source).y + getNodeById(d.destination).y) / 2; })
           .text("hello");
       })
       // hide information when the cursor leaves a link
@@ -279,16 +338,16 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
     var nodes = g.selectAll(".node")
       .data(nodes_data)
       .enter().append("g")
-        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" })
-        .attr("id", function(d) { return d.id });
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+        .attr("id", function(d) { return d.id; });
 
     // add circles to nodes
     var nodes_circles = nodes.append("circle")
       .attr("r", getNodeRadius)
       .attr("fill", getNodeFillPattern)
       .attr("stroke", getNodeOutlineColor)
-      .attr("stroke-width", widths.node_outline)
-      .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle" });
+      .attr("stroke-width", dimensions.node_outline_width)
+      .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle"; });
 
     // mouse interactions for nodes
     nodes_circles
@@ -345,7 +404,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
           // change outline of new clicked node to indicate focus
           new_clicked_node
             .attr("stroke", colors.node_outline_click_focus)
-            .attr("stroke-width", widths.node_outline_click_focus);
+            .attr("stroke-width", dimensions.node_outline_click_focus_width);
 
           clicked_node = new_clicked_node;
         }
@@ -357,14 +416,14 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
           // change outline of old clicked node back to normal, and decrease size back to normal
           clicked_node
             .attr("stroke", getNodeOutlineColor)
-            .attr("stroke-width", widths.node_outline)
+            .attr("stroke-width", dimensions.node_outline_width)
             .transition()
             .attr("r", clicked_node.datum().radius);
 
           // change outline of new clicked node to indicate focus
           new_clicked_node
             .attr("stroke", colors.node_outline_click_focus)
-            .attr("stroke-width", widths.node_outline_click_focus);
+            .attr("stroke-width", dimensions.node_outline_click_focus_width);
 
           clicked_node = new_clicked_node;
         }
@@ -374,7 +433,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
           // change outline of clicked node back to normal
           clicked_node
             .attr("stroke", getNodeOutlineColor)
-            .attr("stroke-width", widths.node_outline);
+            .attr("stroke-width", dimensions.node_outline_width);
 
           clicked_node = null;
         }
