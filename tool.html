@@ -30,30 +30,43 @@ var links_data;
 var root;
 
 // initialize display dimensions
-const display_radius = 300;
-const center_x = display_radius;
-const center_y = display_radius;
+var display_radius;
 
 // objects for colors, patterns, and dimensions
-var colors;
-var patterns;
-var dimensions;
-var layer_radii = [0, .4, .67, .95].map(function(x) { return x * display_radius; });
+var colors_data;
+var patterns_data;
+var dimensions_data;
+var layer_radii;
 
 // variable for currently selected node
 var clicked_node = null;
 
-// create variable for svg and set size
-var svg = d3.select("#canvas")
-  .attr("width", display_radius * 2)
-  .attr("height", display_radius * 2);
+// svg to contain the main body of the graph
+var svg = d3.select("#canvas");
 
-// add a g in the middle of the svg
-var g = svg.append("g")
-  .attr("transform", "translate(" + display_radius + "," + display_radius + ")");
+// g to be placed at center of the graph
+var g = svg.append("g");
 
-// variable for sidebar displaying additional information about nodes
+// div sidebar to display additional information about nodes
 var sidebar = d3.select("#node_info");
+
+// D3 tree to organize nodes
+var tree = d3.tree();
+
+// patterns to fill nodes
+var patterns;
+
+// links to connect nodes
+var links;
+
+// lines to display links
+var links_lines;
+
+// nodes to represent personal data
+var nodes;
+
+// circles to display nodes
+var nodes_circles;
 
 
 
@@ -83,15 +96,15 @@ function getNodeOutlineColor(node)
 {
   if(node.identifiable)
   {
-    return colors.node_outline_identifiable;
+    return colors_data.node_outline_identifiable;
   }
-  return colors.node_outline_unidentifiable;
+  return colors_data.node_outline_unidentifiable;
 }
 
 // return the radius of a node
 function getNodeRadius(node)
 {
-  return dimensions.node_radii_by_layers[node.layer];
+  return dimensions_data.node_radii_by_layers[node.layer];
 }
 
 // return the color of a link
@@ -99,9 +112,9 @@ function getLinkColor(link)
 {
   if(getNodeById(link.destination).identifiable)
   {
-    return colors.link_identifiable;
+    return colors_data.link_identifiable;
   }
-  return colors.link_unidentifiable;
+  return colors_data.link_unidentifiable;
 }
 
 // return the marker for the arrow of a link
@@ -121,9 +134,9 @@ function getLinkX2(link)
   var dest = getNodeById(link.destination);
   var theta = Math.atan((source.y - dest.y) / (source.x - dest.x));
   if(dest.x < source.x)
-    return dest.x + ((dest.radius + dimensions.arrow_marker_length) * Math.cos(theta));
+    return dest.x + ((dest.radius + dimensions_data.arrow_marker_length) * Math.cos(theta));
   else
-    return dest.x - ((dest.radius + dimensions.arrow_marker_length) * Math.cos(theta));
+    return dest.x - ((dest.radius + dimensions_data.arrow_marker_length) * Math.cos(theta));
 }
 
 // return the y-value of the end of a link (edge of the destination node, minus distance for the arrow head)
@@ -133,9 +146,9 @@ function getLinkY2(link)
   var dest = getNodeById(link.destination);
   var theta = Math.atan((source.y - dest.y) / (source.x - dest.x));
   if(dest.x < source.x)
-    return dest.y + ((dest.radius + dimensions.arrow_marker_length) * Math.sin(theta));
+    return dest.y + ((dest.radius + dimensions_data.arrow_marker_length) * Math.sin(theta));
   else
-    return dest.y - ((dest.radius + dimensions.arrow_marker_length) * Math.sin(theta));
+    return dest.y - ((dest.radius + dimensions_data.arrow_marker_length) * Math.sin(theta));
 }
 
 // functions fills in root and children for tree
@@ -184,29 +197,29 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
 {
   d3.json("data/appearance.json").then(function(appearance_data)
   {
-    // initialize nodes and links arrays
+    // copy data from policy encoding .json file
     nodes_data = policy_encoding_data;
     links_data = [];
 
-    // initialize colors, patterns, and dimensions objects
-    colors = appearance_data.colors;
-    patterns = appearance_data.patterns;
-    dimensions = appearance_data.dimensions;
+    // copy data from appearance .json file
+    colors_data = appearance_data.colors;
+    patterns_data = appearance_data.patterns;
+    dimensions_data = appearance_data.dimensions;
 
-
-
-    // set properties for node info div
+    // set display variables
+    layer_radii = [0, .4, .67, .95].map(function(x) { return x * dimensions_data.display_radius; });
+    svg
+      .attr("width", dimensions_data.display_radius * 2)
+      .attr("height", dimensions_data.display_radius * 2);
+    g
+      .attr("transform", "translate(" + dimensions_data.display_radius + "," + dimensions_data.display_radius + ")");
     sidebar
-      .style("border", dimensions.node_info_div_outline_width + "px solid " + colors.node_info_div_outline)
-      .style("background-color", colors.node_info_div_fill)
-      .style("width", display_radius + "px")
-      .style("height", (display_radius - 10) * 2 + "px");
-
-
-
-    // create variable for tree and set basic properties
-    var tree = d3.tree()
-      .size([2 * Math.PI, display_radius * .8])
+      .style("border", dimensions_data.node_info_div_outline_width + "px solid " + colors_data.node_info_div_outline)
+      .style("background-color", colors_data.node_info_div_fill)
+      .style("width", dimensions_data.display_radius + "px")
+      .style("height", (dimensions_data.display_radius - 10) * 2 + "px");
+    tree
+      .size([2 * Math.PI, dimensions_data.display_radius * .8])
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
     // map nodes and create a d3 tree
@@ -236,32 +249,32 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
     svg.select("defs").append("marker")
       .attr("id", "marker_identifiable")
       .attr("refX", 0)
-      .attr("refY", dimensions.arrow_marker_width / 2)
-      .attr("markerWidth", dimensions.arrow_marker_length)
-      .attr("markerHeight", dimensions.arrow_marker_width)
+      .attr("refY", dimensions_data.arrow_marker_width / 2)
+      .attr("markerWidth", dimensions_data.arrow_marker_length)
+      .attr("markerHeight", dimensions_data.arrow_marker_width)
       .attr("orient", "auto")
       .attr("markerUnits", "userSpaceOnUse")
       .append("path")
-        .attr("d", "M 0 0 L " + dimensions.arrow_marker_length + " " + (dimensions.arrow_marker_width / 2) + " L 0 " + dimensions.arrow_marker_width + " Z")
-        .attr("fill", colors.link_identifiable);
+        .attr("d", "M 0 0 L " + dimensions_data.arrow_marker_length + " " + (dimensions_data.arrow_marker_width / 2) + " L 0 " + dimensions_data.arrow_marker_width + " Z")
+        .attr("fill", colors_data.link_identifiable);
 
     svg.select("defs").append("marker")
       .attr("id", "marker_unidentifiable")
       .attr("refX", 0)
-      .attr("refY", dimensions.arrow_marker_width / 2)
-      .attr("markerWidth", dimensions.arrow_marker_length)
-      .attr("markerHeight", dimensions.arrow_marker_width)
+      .attr("refY", dimensions_data.arrow_marker_width / 2)
+      .attr("markerWidth", dimensions_data.arrow_marker_length)
+      .attr("markerHeight", dimensions_data.arrow_marker_width)
       .attr("orient", "auto")
       .attr("markerUnits", "userSpaceOnUse")
       .append("path")
-        .attr("d", "M 0 0 L " + dimensions.arrow_marker_length + " " + (dimensions.arrow_marker_width / 2) + " L 0 " + dimensions.arrow_marker_width + " Z")
-        .attr("fill", colors.link_unidentifiable);
+        .attr("d", "M 0 0 L " + dimensions_data.arrow_marker_length + " " + (dimensions_data.arrow_marker_width / 2) + " L 0 " + dimensions_data.arrow_marker_width + " Z")
+        .attr("fill", colors_data.link_unidentifiable);
 
 
 
-    // add patterns for node fills - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
-    var patterns = svg.select("defs").selectAll("pattern")
-      .data(patterns)
+    // append patterns - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
+    patterns = svg.select("defs").selectAll("pattern")
+      .data(patterns_data)
       .enter()
       .append("pattern")
         .attr("id", function(d) { return d.id; })
@@ -291,28 +304,28 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
     {
       g.append("circle")
         .attr("r", layer_radii[i])
-        .attr("fill", colors.layer_fill)
-        .attr("stroke", colors.layer_outline)
-        .attr("stroke-width", dimensions.layer_outline_width);
+        .attr("fill", colors_data.layer_fill)
+        .attr("stroke", colors_data.layer_outline)
+        .attr("stroke-width", dimensions_data.layer_outline_width);
     }
 
 
 
     // append links
-    var links = g.selectAll(".link")
+    links = g.selectAll(".link")
       .data(links_data)
       .enter()
       .append("g")
         .classed("link", true);
 
     // add lines to links
-    var links_lines = links.append("line")
+    links_lines = links.append("line")
       .attr("x1", function(d) { return getNodeById(d.source).x; })
       .attr("y1", function(d) { return getNodeById(d.source).y; })
       .attr("x2", getLinkX2)
       .attr("y2", getLinkY2)
       .attr("stroke", getLinkColor)
-      .attr("stroke-width", dimensions.link_width)
+      .attr("stroke-width", dimensions_data.link_width)
       .attr("marker-end", getLinkMarker);
 
     // mouse interactions for links
@@ -335,18 +348,18 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
 
 
     // append nodes
-    var nodes = g.selectAll(".node")
+    nodes = g.selectAll(".node")
       .data(nodes_data)
       .enter().append("g")
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
         .attr("id", function(d) { return d.id; });
 
     // add circles to nodes
-    var nodes_circles = nodes.append("circle")
+    nodes_circles = nodes.append("circle")
       .attr("r", getNodeRadius)
       .attr("fill", getNodeFillPattern)
       .attr("stroke", getNodeOutlineColor)
-      .attr("stroke-width", dimensions.node_outline_width)
+      .attr("stroke-width", dimensions_data.node_outline_width)
       .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle"; });
 
     // mouse interactions for nodes
@@ -361,7 +374,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
         // increase the size of the node that the cursor is over
         node_selection
           .transition()
-          .attr("r", d.radius * 1.5);
+          .attr("r", d.radius * 1.3);
       })
       // update the sidebar when the cursor leaves a node
       .on("mouseleave", function(d)
@@ -403,8 +416,8 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
         {
           // change outline of new clicked node to indicate focus
           new_clicked_node
-            .attr("stroke", colors.node_outline_click_focus)
-            .attr("stroke-width", dimensions.node_outline_click_focus_width);
+            .attr("stroke", colors_data.node_outline_click_focus)
+            .attr("stroke-width", dimensions_data.node_outline_click_focus_width);
 
           clicked_node = new_clicked_node;
         }
@@ -416,14 +429,14 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
           // change outline of old clicked node back to normal, and decrease size back to normal
           clicked_node
             .attr("stroke", getNodeOutlineColor)
-            .attr("stroke-width", dimensions.node_outline_width)
+            .attr("stroke-width", dimensions_data.node_outline_width)
             .transition()
             .attr("r", clicked_node.datum().radius);
 
           // change outline of new clicked node to indicate focus
           new_clicked_node
-            .attr("stroke", colors.node_outline_click_focus)
-            .attr("stroke-width", dimensions.node_outline_click_focus_width);
+            .attr("stroke", colors_data.node_outline_click_focus)
+            .attr("stroke-width", dimensions_data.node_outline_click_focus_width);
 
           clicked_node = new_clicked_node;
         }
@@ -433,7 +446,7 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
           // change outline of clicked node back to normal
           clicked_node
             .attr("stroke", getNodeOutlineColor)
-            .attr("stroke-width", dimensions.node_outline_width);
+            .attr("stroke-width", dimensions_data.node_outline_width);
 
           clicked_node = null;
         }
