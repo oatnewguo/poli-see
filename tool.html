@@ -26,12 +26,6 @@
 var nodes_data;
 var links_data;
 
-// node-mapping object for generating tree
-var root;
-
-// initialize display dimensions
-var display_radius;
-
 // objects for colors, patterns, and dimensions
 var colors_data;
 var patterns_data;
@@ -49,6 +43,9 @@ var g = svg.append("g");
 
 // div sidebar to display additional information about nodes
 var sidebar = d3.select("#node_info");
+
+// node-mapping object to generate tree
+var root;
 
 // D3 tree to organize nodes
 var tree = d3.tree();
