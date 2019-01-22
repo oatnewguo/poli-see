@@ -67,8 +67,7 @@ var nodes_circles;
 
 
 
-// return the node with a given id from a list of nodes
-// this is a bit inefficient, as it requires passing a copy of the array nodes as an argument (if I understand JavaScript correctly)
+// return the node with a given id
 function getNodeById(node_id)
 {
   return nodes_data.find(function(node) { return node.id == node_id; });
