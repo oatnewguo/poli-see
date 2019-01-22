@@ -246,18 +246,6 @@ function main()
 
 
 
-  for(var i = 0; i < nodes_data.length; i++)
-  {
-    var n = nodes_data[i];
-    if(n.layer == 0)
-      n.parent = null;
-
-    for(var j = 0; j < n.successors.length; j++)
-    {
-      getNodeById(n.successors[j]).parent = n.id;
-    }
-  }
-
   // map nodes and create a d3 tree
   root = tree(d3.hierarchy(createTree(nodes_data.find(function(node) { return node.layer == 0; }))));
   tree_nodes = root.descendants();
