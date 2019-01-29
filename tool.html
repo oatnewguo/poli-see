@@ -76,15 +76,14 @@ function getNodeById(node_id)
 // return the proper fill pattern of a node
 function getNodeFillPattern(node)
 {
-  if(node.layer == 0)
-  {
-    return "url(#node_you)";
-  }
+  var url = "#" + node.type;
+
   if(node.identifiable)
-  {
-    return "url(#node_identifiable)";
-  }
-  return "url(#node_unidentifiable)";
+    url += "_identifiable";
+  else
+    url += "_unidentifiable";
+
+  return "url(" + url + ")";
 }
 
 // return the outline color of a node
@@ -246,6 +245,17 @@ function main()
 
 
 
+  // create one identifiable and one unidentifiable version of each pattern
+  var num_patterns = patterns_data.length;
+  for(var i = 0; i < num_patterns; i++)
+  {
+    patterns_data.push({id: patterns_data[i].id + "_unidentifiable", image: patterns_data[i].image, fill_color: colors_data.node_fill_unidentifiable});
+    patterns_data[i].id = patterns_data[i].id + "_identifiable";
+    patterns_data[i].fill_color = colors_data.node_fill_identifiable;
+  }
+
+
+
   // map nodes and create a d3 tree
   root = tree(d3.hierarchy(createTree(nodes_data.find(function(node) { return node.layer == 0; }))));
   tree_nodes = root.descendants();
@@ -308,20 +318,20 @@ function main()
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
 
-  // add circles to patterns - radius is .49 so that it doesn't appear on the very edge of the image that goes on top
+  // add circles to patterns
   patterns.append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
-    .attr("r", ".49")
-    .attr("fill", function(d) { return d.background_color; });
+    .attr("r", ".5")
+    .attr("fill", function(d) { return d.fill_color; });
 
   // add images to patterns
   patterns.append("image")
-    .attr("x", "0")
-    .attr("y", "0")
-    .attr("width", "1")
-    .attr("height", "1")
-    .attr("xlink:href", function(d) { return d.image; });
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", function(d) { return d.image; });
 
 
 
@@ -481,7 +491,7 @@ function main()
 
 
 
-// load data from .json file
+// load data from .json files
 d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
 {
   d3.json("data/appearance.json").then(function(appearance_data)

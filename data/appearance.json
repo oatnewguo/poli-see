@@ -3,10 +3,12 @@
   {
     "layer_fill": "#EEEEFF",
     "layer_outline": "#B6B6DA",
-    "node_outline_identifiable": "#9696BA",
-    "node_outline_unidentifiable": "#969696",
-    "link_identifiable": "#9696BA",
-    "link_unidentifiable": "#969696",
+    "node_outline_identifiable": "#66668A",
+    "node_outline_unidentifiable": "#666666",
+    "node_fill_identifiable": "#9696BA",
+    "node_fill_unidentifiable": "#969696",
+    "link_identifiable": "#66668A",
+    "link_unidentifiable": "#666666",
     "node_info_div_fill": "#EEEEFF",
     "node_info_div_outline": "#B6B6DA",
     "node_outline_click_focus": "#FFFF00"
@@ -14,9 +16,11 @@
 
   "patterns":
   [
-    {"id": "node_identifiable", "image":"images/icon_test_identifiable.png", "background_color": "#B6B6DA"},
-    {"id": "node_unidentifiable", "image": "images/icon_test_unidentifiable.png", "background_color": "#B6B6B6"},
-    {"id": "node_you", "image": "images/icon_test_you.png", "background_color": "#B6B6DA"}
+    {"id": "basic", "image": "images/icons/basic.svg"},
+    {"id": "contact", "image":"images/icons/contact.svg"},
+    {"id": "location", "image":"images/icons/location.svg"},
+    {"id": "photos", "image":"images/icons/photos.svg"},
+    {"id": "user", "image":"images/icons/user.svg"}
   ],
 
   "dimensions":
