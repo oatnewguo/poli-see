@@ -11,12 +11,16 @@
 <body>
 
 <svg id="canvas">
-  <defs></defs>
+  <defs id="node_pattern_defs"></defs>
+  <defs id="link_pattern_defs"></defs>
+  <defs id="use_pattern_defs"></defs>
+  <defs id="other_defs"></defs>
 </svg>
 
-<div id="node_info" class="hidden">
+<div id="sidebar" class="hidden">
   <h1></h1>
   <p></p>
+  <h2></h2>
 </div>
 
 <script src="d3/d3.min.js"></script>
@@ -26,9 +30,13 @@
 var nodes_data;
 var links_data = [];
 
-// objects for colors, patterns, and dimensions
+// arrays for node, link, and use types
+var node_types_data;
+var link_types_data;
+var use_types_data;
+
+// objects for colors and dimensions
 var colors_data;
-var patterns_data;
 var dimensions_data;
 var layer_radii;
 
@@ -42,7 +50,7 @@ var svg = d3.select("#canvas");
 var g = svg.append("g");
 
 // div sidebar to display additional information about nodes
-var sidebar = d3.select("#node_info");
+var sidebar = d3.select("#sidebar");
 
 // node-mapping object to generate tree
 var root;
@@ -50,8 +58,14 @@ var root;
 // D3 tree to organize nodes
 var tree = d3.tree();
 
-// patterns to fill nodes
-var patterns;
+// node fill patterns
+var node_patterns;
+
+// link icon fill patterns
+var link_patterns;
+
+// use icon fill patterns
+var use_patterns;
 
 // links to connect nodes
 var links;
@@ -71,6 +85,24 @@ var nodes_circles;
 function getNodeById(node_id)
 {
   return nodes_data.find(function(node) { return node.id == node_id; });
+}
+
+// return the node type with a given id
+function getNodeTypeById(node_type_id)
+{
+  return node_types_data.find(function(node_type) { return node_type.id == node_type_id; });
+}
+
+// return the link type with a given id
+function getLinkTypeById(link_type_id)
+{
+  return link_types_data.find(function(link_type) { return link_type.id == link_type_id; });
+}
+
+// return the use type with a given id
+function getUseTypeById(use_type_id)
+{
+  return use_types_data.find(function(use_type) { return use_type.id == use_type_id; });
 }
 
 // return the proper fill pattern of a node
@@ -175,7 +207,7 @@ function createTree(root)
     // iterate through successors
     for(var i = 0; i < successors.length; i++)
     {
-      var successor_node = getNodeById(successors[i]);
+      var successor_node = getNodeById(successors[i].id);
       var successor_branch = createTree(successor_node);
 
       // if the successor is in a higher layer than the root, then add it as a child
@@ -200,11 +232,33 @@ function createTree(root)
 // update the sidebar based on a d3-selected node
 function updateSidebar(node_selection)
 {
+  var d = node_selection.datum();
+
   // set the sidebar text
   sidebar.select("h1")
-    .text(node_selection.datum().label);
+    .text(d.label);
   sidebar.select("p")
-    .text(node_selection.datum().text);
+    .text(d.text);
+  sidebar.select("h2")
+    .text(d.data_handler + " can use this data to...");
+
+  // add uses to the sidebar. !! CURRENTLY MUCH IS HARD-CODED, FIX SOON
+  var use_divs = sidebar.selectAll("div")
+    .data(d.uses)
+    .enter().append("div");
+  var use_svgs = use_divs.append("svg")
+    .attr("width", "40px")
+    .attr("height", "40px");
+  use_svgs.append("circle")
+    .attr("r", "15px")
+    .attr("cx", "20px")
+    .attr("cy", "20px")
+    .attr("fill", function(d) { return "url(#" + d + ")"})
+    .attr("stroke", "black")
+    .attr("stroke-width", 2);
+
+  use_divs.append("span")
+    .text(function(d) { return getUseTypeById(d).label; });
 
   // make the sidebar visible
   sidebar
@@ -245,13 +299,13 @@ function main()
 
 
 
-  // create one identifiable and one unidentifiable version of each pattern
-  var num_patterns = patterns_data.length;
-  for(var i = 0; i < num_patterns; i++)
+  // create one identifiable and one unidentifiable version of each node icon
+  var num_node_types = node_types_data.length;
+  for(var i = 0; i < num_node_types; i++)
   {
-    patterns_data.push({id: patterns_data[i].id + "_unidentifiable", image: patterns_data[i].image, fill_color: colors_data.node_fill_unidentifiable});
-    patterns_data[i].id = patterns_data[i].id + "_identifiable";
-    patterns_data[i].fill_color = colors_data.node_fill_identifiable;
+    node_types_data.push({id: node_types_data[i].id + "_unidentifiable", image: node_types_data[i].image, fill_color: colors_data.node_fill_unidentifiable});
+    node_types_data[i].id = node_types_data[i].id + "_identifiable";
+    node_types_data[i].fill_color = colors_data.node_fill_identifiable;
   }
 
 
@@ -267,7 +321,8 @@ function main()
     var n = nodes_data[i];
     for(var j = 0; j < n.successors.length; j++)
     {
-      links_data.push({ source: n.id, destination: n.successors[j] });
+      var s = n.successors[j];
+      links_data.push({ source: n.id, destination: s.id, type: s.type, text: s.text });
     }
 
     // set the coordinates of nodes based on the coordinates of nodes in the generated tree, altered to make a radial tree
@@ -282,7 +337,7 @@ function main()
 
 
   // append markers for arrows
-  svg.select("defs").append("marker")
+  svg.select("#other_defs").append("marker")
     .attr("id", "marker_identifiable")
     .attr("refX", 0)
     .attr("refY", dimensions_data.arrow_marker_width / 2)
@@ -294,7 +349,7 @@ function main()
       .attr("d", "M 0 0 L " + dimensions_data.arrow_marker_length + " " + (dimensions_data.arrow_marker_width / 2) + " L 0 " + dimensions_data.arrow_marker_width + " Z")
       .attr("fill", colors_data.link_identifiable);
 
-  svg.select("defs").append("marker")
+  svg.select("#other_defs").append("marker")
     .attr("id", "marker_unidentifiable")
     .attr("refX", 0)
     .attr("refY", dimensions_data.arrow_marker_width / 2)
@@ -308,9 +363,9 @@ function main()
 
 
 
-  // append patterns - currently a pattern is an svg image on top of an svg circle (the circle is in case an image doesn't load), but this may be changed if we want to use a set of .svg icons instead of .png images
-  patterns = svg.select("defs").selectAll("pattern")
-    .data(patterns_data)
+  // append patterns for node icons
+  node_patterns = svg.select("#node_pattern_defs").selectAll("pattern")
+    .data(node_types_data)
     .enter()
     .append("pattern")
       .attr("id", function(d) { return d.id; })
@@ -318,15 +373,69 @@ function main()
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
 
-  // add circles to patterns
-  patterns.append("circle")
+  // add circles to node patterns
+  node_patterns.append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
     .attr("fill", function(d) { return d.fill_color; });
 
-  // add images to patterns
-  patterns.append("image")
+  // add images to node patterns
+  node_patterns.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", function(d) { return d.image; });
+
+
+
+  // append patterns for link icons
+  link_patterns = svg.select("#link_pattern_defs").selectAll("pattern")
+    .data(link_types_data)
+    .enter()
+    .append("pattern")
+      .attr("id", function(d) { return d.id; })
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
+
+  // add circles to link patterns
+  link_patterns.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", "black");
+
+  // add images to link patterns
+  link_patterns.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", function(d) { return d.image; });
+
+
+
+  // append patterns for use icons
+  use_patterns = svg.select("#use_pattern_defs").selectAll("pattern")
+    .data(use_types_data)
+    .enter()
+    .append("pattern")
+      .attr("id", function(d) { return d.id; })
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
+
+  // add circles to use patterns
+  use_patterns.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", function(d) { return d.fill_color; });
+
+  // add images to use patterns
+  use_patterns.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
@@ -371,9 +480,9 @@ function main()
     {
       g.append("text")
         .attr("id", "hover_message")
-        .attr("x", function() { return (getNodeById(d.source).x + getNodeById(d.destination).x) / 2; })
-        .attr("y", function() { return (getNodeById(d.source).y + getNodeById(d.destination).y) / 2; })
-        .text("hello");
+        .attr("x", (getNodeById(d.source).x + getNodeById(d.destination).x) / 2)
+        .attr("y", (getNodeById(d.source).y + getNodeById(d.destination).y) / 2)
+        .text(d.text);
     })
     // hide information when the cursor leaves a link
     .on("mouseleave", function(d)
@@ -497,11 +606,13 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
   d3.json("data/appearance.json").then(function(appearance_data)
   {
     // copy data from policy encoding .json file
-    nodes_data = policy_encoding_data;
+    nodes_data = policy_encoding_data.nodes;
+    node_types_data = policy_encoding_data.node_types;
+    link_types_data = policy_encoding_data.link_types;
+    use_types_data = policy_encoding_data.use_types;
 
     // copy data from appearance .json file
     colors_data = appearance_data.colors;
-    patterns_data = appearance_data.patterns;
     dimensions_data = appearance_data.dimensions;
 
     main();

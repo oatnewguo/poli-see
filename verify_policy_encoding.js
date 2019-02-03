@@ -13,6 +13,11 @@ RULES
 10. Each node must have a boolean value for identifiable.
 11. Each node must have a non-empty string value for label.
 12. Each node must have a string value for text (it can be an empty string).
+!! UNCHECKED!! Each node must have a type in node_types (how to deal with "other"?)
+!! UNCHECKED!! Each link must have a type in link_types (how to deal with "other"?)
+!! UNCHECKED!! Each use must be in use_types (how to deal with "other"?)
+!! UNCHECKED!! ids cannot be shared across node_types, link_types, or use_types (but I believe overlap between these and nodes is okay, but maybe it's best to discourage this anyway)
+!! UNCHECKED!! image paths should lead to valid images
 
 */
 
