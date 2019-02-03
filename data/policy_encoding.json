@@ -246,6 +246,9 @@
     },
     { "id": "node_user",
       "image":"images/node_icons/user.svg"
+    },
+    { "id": "node_other",
+      "image":"images/generic_icon.svg"
     }
   ],
 
@@ -254,55 +257,45 @@
   "link_types":
   [
     { "id": "link_transformation_aggregate",
-      "label": "This data can be transformed through aggregation with other people's data.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_transformation_anonymize",
-      "label": "This data can be transformed through anonymization.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_transformation_model",
-      "label": "This data can be transformed through the generation of inferences or models.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_transformation_identify",
-      "label": "This anonymous data can be transformed through identification of you.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_collection_explicit",
-      "label": "This data can be collected when you explicitly provide it to the collecting party.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_collection_activity",
-      "label": "This data can be collected automatically from your activity involving the collecting party.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_collection_implicit",
-      "label": "This data can be collected when you create or share content not explicitly with the collecting party.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_collection_communication_others",
-      "label": "This data can be collected from your connections and communications with others involving the collecting party.",
       "image": "images/generic_icon.svg"
     },
     { "id": "link_collection_communication_direct",
-      "label": "This data can be collected from your communications with the collecting party.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_collection_publically_available",
-      "label": "This data can be collected from publically available sources.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_sharing_explicit_consent",
-      "label": "This data can be shared with your explicit consent.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_sharing_sell",
-      "label": "This data can be sold to other parties.",
       "image":"images/generic_icon.svg"
     },
     { "id": "link_sharing_legal",
-      "label": "This data can be shared when required by law.",
+      "image":"images/generic_icon.svg"
+    },
+    { "id": "link_other",
       "image":"images/generic_icon.svg"
     }
   ],
@@ -365,6 +358,11 @@
       "label": "Conduct research not related to services",
       "image":"images/generic_icon.svg",
       "fill_color": "gold"
+    },
+    { "id": "use_other",
+      "label": "Fulfill some other purpose",
+      "image":"images/generic_icon.svg",
+      "fill_color": "red"
     }
   ]
 }
