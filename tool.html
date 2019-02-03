@@ -106,7 +106,7 @@ function getUseTypeById(use_type_id)
 }
 
 // return the proper fill pattern of a node
-function getNodeFillPattern(node)
+function getNodePattern(node)
 {
   var url = "#" + node.type;
 
@@ -114,6 +114,22 @@ function getNodeFillPattern(node)
     url += "_identifiable";
   else
     url += "_unidentifiable";
+
+  return "url(" + url + ")";
+}
+
+// return the proper fill pattern of a link icon, given its id
+function getLinkPatternById(link_id)
+{
+  var url = "#" + link_id;
+
+  return "url(" + url + ")";
+}
+
+// return the proper fill pattern of a use icon, given its id
+function getUsePatternById(use_id)
+{
+  var url = "#" + use_id;
 
   return "url(" + url + ")";
 }
@@ -243,19 +259,23 @@ function updateSidebar(node_selection)
     .text(d.data_handler + " can use this data to...");
 
   // add uses to the sidebar. !! CURRENTLY MUCH IS HARD-CODED, FIX SOON
+  sidebar.selectAll("div")
+    .data(d.uses)
+    .exit()
+    .remove();
   var use_divs = sidebar.selectAll("div")
     .data(d.uses)
     .enter().append("div");
   var use_svgs = use_divs.append("svg")
-    .attr("width", "40px")
-    .attr("height", "40px");
+    .attr("width", (dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width) * 2)
+    .attr("height", (dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width) * 2);
   use_svgs.append("circle")
-    .attr("r", "15px")
-    .attr("cx", "20px")
-    .attr("cy", "20px")
-    .attr("fill", function(d) { return "url(#" + d + ")"})
-    .attr("stroke", "black")
-    .attr("stroke-width", 2);
+    .attr("r", dimensions_data.use_icon_radius)
+    .attr("cx", dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width)
+    .attr("cy", dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width)
+    .attr("fill", getUsePatternById)
+    .attr("stroke", colors_data.use_icon_outine)
+    .attr("stroke-width", dimensions_data.use_icon_outline_width);
 
   use_divs.append("span")
     .text(function(d) { return getUseTypeById(d).label; });
@@ -502,7 +522,7 @@ function main()
   // add circles to nodes
   nodes_circles = nodes.append("circle")
     .attr("r", getNodeRadius)
-    .attr("fill", getNodeFillPattern)
+    .attr("fill", getNodePattern)
     .attr("stroke", getNodeOutlineColor)
     .attr("stroke-width", dimensions_data.node_outline_width)
     .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle"; });

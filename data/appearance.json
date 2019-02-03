@@ -5,26 +5,28 @@
     "layer_outline": "#B6B6DA",
     "node_outline_identifiable": "#66668A",
     "node_outline_unidentifiable": "#666666",
+    "node_outline_click_focus": "#FFFF00",
     "node_fill_identifiable": "#9696BA",
     "node_fill_unidentifiable": "#969696",
     "link_identifiable": "#66668A",
     "link_unidentifiable": "#666666",
+    "use_icon_outine": "#000000",
     "node_info_div_fill": "#EEEEFF",
-    "node_info_div_outline": "#B6B6DA",
-    "node_outline_click_focus": "#FFFF00"
+    "node_info_div_outline": "#B6B6DA"
   },
 
   "dimensions":
   {
     "display_radius": 360,
     "layer_outline_width": 2,
-    "node_outline_width": 2,
-    "link_width": 6,
-    "node_info_div_outline_width": 2,
-    "node_outline_click_focus_width": 4,
     "node_radii_by_layers": [30, 20, 20, 20],
-    "use_icon_radius": 15,
+    "node_outline_width": 2,
+    "node_outline_click_focus_width": 4,
+    "link_width": 6,
     "arrow_marker_length": 20,
-    "arrow_marker_width": 16
+    "arrow_marker_width": 16,
+    "use_icon_radius": 15,
+    "use_icon_outline_width": 2,
+    "node_info_div_outline_width": 2
   }
 }
