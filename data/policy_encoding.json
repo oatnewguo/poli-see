@@ -232,11 +232,23 @@
 
   "node_types":
   [
+    { "id": "node_account",
+      "image": "images/node_icons/account.svg"
+    },
+    { "id": "node_activity",
+      "image": "images/node_icons/activity.svg"
+    },
     { "id": "node_basic",
       "image": "images/node_icons/basic.svg"
     },
     { "id": "node_contact",
       "image":"images/node_icons/contact.svg"
+    },
+    { "id": "node_device",
+      "image":"images/node_icons/device.svg"
+    },
+    { "id": "node_financial",
+      "image":"images/node_icons/financial.svg"
     },
     { "id": "node_location",
       "image":"images/node_icons/location.svg"
@@ -246,6 +258,9 @@
     },
     { "id": "node_user",
       "image":"images/node_icons/user.svg"
+    },
+    { "id": "node_user-generated_content",
+      "image":"images/node_icons/user-generated_content.svg"
     },
     { "id": "node_other",
       "image":"images/generic_icon.svg"
@@ -257,43 +272,16 @@
   "link_types":
   [
     { "id": "link_transformation_aggregate",
-      "image":"images/generic_icon.svg"
+      "image":"images/link_icons/aggregate.svg"
     },
     { "id": "link_transformation_anonymize",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_transformation_model",
-      "image":"images/generic_icon.svg"
+      "image":"images/link_icons/anonymize.svg"
     },
     { "id": "link_transformation_identify",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_collection_explicit",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_collection_activity",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_collection_implicit",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_collection_communication_others",
-      "image": "images/generic_icon.svg"
-    },
-    { "id": "link_collection_communication_direct",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_collection_publically_available",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_sharing_explicit_consent",
-      "image":"images/generic_icon.svg"
+      "image":"images/link_icons/identify.svg"
     },
     { "id": "link_sharing_sell",
-      "image":"images/generic_icon.svg"
-    },
-    { "id": "link_sharing_legal",
-      "image":"images/generic_icon.svg"
+      "image":"images/link_icons/sell.svg"
     },
     { "id": "link_other",
       "image":"images/generic_icon.svg"
@@ -311,32 +299,32 @@
     },
     { "id": "use_detect_malicious",
       "label": "Detect and prevent malicious activity",
-      "image":"images/generic_icon.svg",
+      "image":"images/use_icons/detect_malicious.svg",
       "fill_color": "gold"
     },
     { "id": "use_detect_violations",
       "label": "Detect and prevent violations of the terms of service",
-      "image":"images/generic_icon.svg",
+      "image":"images/use_icons/detect_violations.svg",
       "fill_color": "gold"
     },
     { "id": "use_legal",
       "label": "Conduct audits and respond to legal requirements",
-      "image":"images/generic_icon.svg",
+      "image":"images/use_icons/legal.svg",
       "fill_color": "gold"
     },
     { "id": "use_personalize_marketing",
       "label": "Personalize marketing and ads",
-      "image":"images/generic_icon.svg",
+      "image":"images/use_icons/personalize_marketing.svg",
       "fill_color": "gold"
     },
     { "id": "use_personalize_services",
       "label": "Personalize services and content",
-      "image":"images/generic_icon.svg",
+      "image":"images/use_icons/personalize_services.svg",
       "fill_color": "gold"
     },
     { "id": "use_promotions",
       "label": "Allow you to participate in sweepstakes, contests, and other promotions",
-      "image":"images/generic_icon.svg",
+      "image":"images/use_icons/promotions.svg",
       "fill_color": "gold"
     },
     { "id": "use_provide_services",
@@ -344,19 +332,14 @@
       "image": "images/use_icons/provide_services.svg",
       "fill_color": "green"
     },
-    { "id": "use_research_current_services",
-      "label": "Conduct research and development on current services",
-      "image":"images/generic_icon.svg",
-      "fill_color": "gold"
-    },
-    { "id": "use_research_new_services",
-      "label": "Conduct research and development on new services",
-      "image":"images/generic_icon.svg",
+    { "id": "use_research_services",
+      "label": "Conduct research and development on services",
+      "image":"images/use_icons/research_services.svg",
       "fill_color": "gold"
     },
     { "id": "use_research_other",
       "label": "Conduct research not related to services",
-      "image":"images/generic_icon.svg",
+      "image":"images/use_icons/research_other.svg",
       "fill_color": "gold"
     },
     { "id": "use_other",
