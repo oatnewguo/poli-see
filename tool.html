@@ -11,6 +11,9 @@
 
 <body>
 
+<h1></h1>
+<p></p>
+
 <svg id="canvas">
   <defs id="node_pattern_defs"></defs>
   <defs id="link_pattern_defs"></defs>
@@ -31,6 +34,10 @@
 
 <script src="d3/d3.min.js"></script>
 <script>
+
+// variables for title and intro text
+var title;
+var intro_text;
 
 // arrays for nodes and links
 var nodes_data;
@@ -336,6 +343,12 @@ function hideSidebars()
 
 function main()
 {
+  // set title and intro text
+  d3.select("h1")
+    .text(title);
+  d3.select("p")
+    .text(intro_text);
+
   // set display variables
   layer_radii = dimensions_data.layer_radii_proportions.map(function(x) { return x * dimensions_data.display_radius; });
   svg
@@ -681,6 +694,8 @@ d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
   d3.json("data/appearance.json").then(function(appearance_data)
   {
     // copy data from policy encoding .json file
+    title = policy_encoding_data.title;
+    intro_text = policy_encoding_data.intro_text;
     nodes_data = policy_encoding_data.nodes;
     node_types_data = policy_encoding_data.node_types;
     link_types_data = policy_encoding_data.link_types;
