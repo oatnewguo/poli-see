@@ -254,8 +254,16 @@ function updateNodeSidebar(node_selection)
     .text(d.label);
   node_sidebar.select("p")
     .text(d.text);
-  node_sidebar.select("h2")
-    .text(d.data_handler + " can use this data to...");
+  if(d.layer == 0)
+  {
+    node_sidebar.select("h2")
+    .text("");
+  }
+  else
+  {
+    node_sidebar.select("h2")
+      .text(d.data_handler + " can use this data to...");
+  }
 
   // add uses to the sidebar
   node_sidebar.selectAll("div")
