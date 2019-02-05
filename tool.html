@@ -25,6 +25,7 @@
 </div>
 
 <div id="link_sidebar" class="sidebar" style="display: none;">
+  <svg></svg>
   <p></p>
 </div>
 
@@ -117,15 +118,15 @@ function getNodePattern(node)
   return "url(" + url + ")";
 }
 
-// return the proper fill pattern of a link icon, given its id
-function getLinkPatternById(link_id)
+// return the proper icon fill pattern of a link
+function getLinkPattern(link)
 {
-  var url = "#" + link_id;
+  var url = "#" + link.type;
 
   return "url(" + url + ")";
 }
 
-// return the proper fill pattern of a use icon, given its id
+// return the proper icon fill pattern of a use, given its id
 function getUsePatternById(use_id)
 {
   var url = "#" + use_id;
@@ -265,22 +266,25 @@ function updateNodeSidebar(node_selection)
       .text(d.data_handler + " can use this data to...");
   }
 
-  // add uses to the sidebar
+  // add use divs to the sidebar
   node_sidebar.selectAll("div")
     .data(d.uses)
     .exit()
     .remove();
   var use_divs = node_sidebar.selectAll("div")
     .data(d.uses)
-    .enter().append("div");
+    .enter().append("div")
+      .style("border-bottom", dimensions_data.node_sidebar_outline_width + "px solid " + colors_data.node_sidebar_outline);
 
+  // add icons and text to the use divs
+  var icon_radius_with_outline = dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width;
   var use_svgs = use_divs.append("svg")
-    .attr("width", (dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width) * 2)
-    .attr("height", (dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width) * 2);
+    .attr("width", icon_radius_with_outline * 2)
+    .attr("height", icon_radius_with_outline * 2);
   use_svgs.append("circle")
     .attr("r", dimensions_data.use_icon_radius)
-    .attr("cx", dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width)
-    .attr("cy", dimensions_data.use_icon_radius + dimensions_data.use_icon_outline_width)
+    .attr("cx", icon_radius_with_outline)
+    .attr("cy", icon_radius_with_outline)
     .attr("fill", getUsePatternById)
     .attr("stroke", colors_data.use_icon_outine)
     .attr("stroke-width", dimensions_data.use_icon_outline_width);
@@ -296,6 +300,19 @@ function updateNodeSidebar(node_selection)
 function updateLinkSidebar(link_selection)
 {
   var d = link_selection.datum();
+
+  // set the icon for the link sidebar
+  var icon_radius_with_outline = dimensions_data.link_icon_radius + dimensions_data.link_icon_outline_width;
+  link_sidebar.select("svg")
+    .attr("width", icon_radius_with_outline * 2)
+    .attr("height", icon_radius_with_outline * 2)
+    .append("circle")
+      .attr("r", dimensions_data.link_icon_radius)
+      .attr("cx", icon_radius_with_outline)
+      .attr("cy", icon_radius_with_outline)
+      .attr("fill", getLinkPattern(d))
+      .attr("stroke", colors_data.link_icon_outine)
+      .attr("stroke-width", dimensions_data.link_icon_outline_width);
 
   // set the sidebar text
   link_sidebar.select("p")

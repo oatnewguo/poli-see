@@ -4,11 +4,11 @@
     { "id": "you",
       "successors":
       [
-        {"id": "photos_1",   "type": "link_collection_explicit", "text": "We collect your profile picture when you send it to us."},
-        {"id": "location_1", "type": "link_collection_explicit", "text": "We collect your location when you send it to us."},
-        {"id": "email_1",    "type": "link_collection_explicit", "text": "We collect your email when you send it to us."},
-        {"id": "age_1.1",    "type": "link_collection_explicit", "text": "We collect your age when you send it to us."},
-        {"id": "address_1",  "type": "link_collection_explicit", "text": "We collect your address when you send it to us."}
+        {"id": "photos_1",   "type": "link_other", "text": "We collect your profile picture when you send it to us."},
+        {"id": "location_1", "type": "link_other", "text": "We collect your location when you send it to us."},
+        {"id": "email_1",    "type": "link_other", "text": "We collect your email when you send it to us."},
+        {"id": "age_1.1",    "type": "link_other", "text": "We collect your age when you send it to us."},
+        {"id": "address_1",  "type": "link_other", "text": "We collect your address when you send it to us."}
       ],
       "layer": 0,
       "type": "node_user",
@@ -21,7 +21,7 @@
     { "id": "photos_1",
       "successors":
       [
-        {"id": "photos_3", "type": "link_sharing_explicit_consent", "text": "We share your profile picture when you tell us to."}
+        {"id": "photos_3", "type": "link_anonymize", "text": "We may share your profile picture, anonymized."}
       ],
       "layer": 1,
       "type": "node_photos",
@@ -34,7 +34,7 @@
     { "id": "location_1",
       "successors":
       [
-        {"id": "location_2", "type": "link_sharing_explicit_consent", "text": "We share your location when you tell us to."}
+        {"id": "location_2", "type": "link_aggregate", "text": "We may share your location, aggregated."}
       ],
       "layer": 1,
       "type": "node_location",
@@ -47,7 +47,7 @@
     { "id": "email_1",
       "successors":
       [
-        {"id": "email_2", "type": "link_sharing_explicit_consent", "text": "We share your email when you tell us to."}
+        {"id": "email_2", "type": "link_other", "text": "We may share your email."}
       ],
       "layer": 1,
       "type": "node_contact",
@@ -60,9 +60,9 @@
     { "id": "age_1.1",
       "successors":
       [
-        {"id": "age_1.2", "type": "link_transformation_anonymize", "text": "We may anonymize your age."},
-        {"id": "age_2",   "type": "link_sharing_explicit_consent", "text": "We share your age when you tell us to."},
-        {"id": "age_3.1", "type": "link_sharing_explicit_consent", "text": "We share your age when you tell us to."}
+        {"id": "age_1.2", "type": "link_anonymize", "text": "We may anonymize your age."},
+        {"id": "age_2",   "type": "link_other", "text": "We may share your age."},
+        {"id": "age_3.1", "type": "link_other", "text": "We may share your age."}
       ],
       "layer": 1,
       "type": "node_basic",
@@ -75,7 +75,7 @@
     { "id": "age_1.2",
       "successors":
       [
-        {"id": "age_3.4", "type": "link_sharing_explicit_consent", "text": "We share your age when you tell us to."}
+        {"id": "age_3.4", "type": "link_other", "text": "We may share your age."}
       ],
       "layer": 1,
       "type": "node_basic",
@@ -108,7 +108,7 @@
     { "id": "location_2",
       "successors":
       [
-        {"id": "location_3", "type": "link_sharing_explicit_consent", "text": "We share your location when you tell us to."}
+        {"id": "location_3", "type": "link_other", "text": "We may share your location."}
       ],
       "layer": 2,
       "type": "node_location",
@@ -130,9 +130,9 @@
     { "id": "email_2",
       "successors":
       [
-        {"id": "email_3.1", "type": "link_sharing_explicit_consent", "text": "We share your email when you tell us to."},
-        {"id": "email_3.2", "type": "link_sharing_explicit_consent", "text": "We share your email when you tell us to."},
-        {"id": "email_3.3", "type": "link_sharing_explicit_consent", "text": "We share your email when you tell us to."}
+        {"id": "email_3.1", "type": "link_other", "text": "We may share your email."},
+        {"id": "email_3.2", "type": "link_other", "text": "We may share your email."},
+        {"id": "email_3.3", "type": "link_other", "text": "We may share your email."}
       ],
       "layer": 2,
       "type": "node_contact",
@@ -146,7 +146,7 @@
       "successors": [],
       "layer": 3,
       "type": "node_contact",
-      "identifiable": false,
+      "identifiable": true,
       "label": "Email",
       "uses": ["use_provide_services"],
       "data_handler": "47 puffins",
@@ -156,7 +156,7 @@
       "successors": [],
       "layer": 3,
       "type": "node_contact",
-      "identifiable": false,
+      "identifiable": true,
       "label": "Email",
       "uses": ["use_provide_services"],
       "data_handler": "Leprechauns",
@@ -166,7 +166,7 @@
       "successors": [],
       "layer": 3,
       "type": "node_contact",
-      "identifiable": false,
+      "identifiable": true,
       "label": "Email",
       "uses": ["use_provide_services"],
       "data_handler": "David Oxtoby",
@@ -175,8 +175,8 @@
     { "id": "age_2",
       "successors":
       [
-        {"id": "age_3.2", "type": "link_sharing_explicit_consent", "text": "We share your age when you tell us to."},
-        {"id": "age_3.3", "type": "link_sharing_explicit_consent", "text": "We share your age when you tell us to."}
+        {"id": "age_3.2", "type": "link_aggregate", "text": "We may share your age, aggregated."},
+        {"id": "age_3.3", "type": "link_aggregate", "text": "We may share your age, aggregated."}
       ],
       "layer": 2,
       "type": "node_basic",
@@ -271,16 +271,16 @@
 
   "link_types":
   [
-    { "id": "link_transformation_aggregate",
+    { "id": "link_aggregate",
       "image":"images/link_icons/aggregate.svg"
     },
-    { "id": "link_transformation_anonymize",
+    { "id": "link_anonymize",
       "image":"images/link_icons/anonymize.svg"
     },
-    { "id": "link_transformation_identify",
+    { "id": "link_identify",
       "image":"images/link_icons/identify.svg"
     },
-    { "id": "link_sharing_sell",
+    { "id": "link_sell",
       "image":"images/link_icons/sell.svg"
     },
     { "id": "link_other",
