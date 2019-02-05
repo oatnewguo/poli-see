@@ -13,3 +13,13 @@ html
   float: left;
   padding: 0 10px 0 10px;
 }
+
+.node circle
+{
+  cursor: pointer;
+}
+
+.link line
+{
+  cursor: pointer;
+}

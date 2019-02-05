@@ -503,8 +503,7 @@ function main()
   // append links
   links = g.selectAll(".link")
     .data(links_data)
-    .enter()
-    .append("g")
+    .enter().append("g")
       .classed("link", true)
       .attr("id", function(d) { return getNodeById(d.source).id + "->" + getNodeById(d.destination).id; });
 
@@ -553,16 +552,16 @@ function main()
     .data(nodes_data)
     .enter().append("g")
       .classed("node", true)
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-      .attr("id", function(d) { return d.id; });
+      .attr("id", function(d) { return d.id; })
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
   // add circles to nodes
   nodes_circles = nodes.append("circle")
+    .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle"; })
     .attr("r", getNodeRadius)
     .attr("fill", getNodePattern)
     .attr("stroke", getNodeOutlineColor)
-    .attr("stroke-width", dimensions_data.node_outline_width)
-    .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle"; });
+    .attr("stroke-width", dimensions_data.node_outline_width);
 
   // mouse interactions for nodes
   nodes_circles
