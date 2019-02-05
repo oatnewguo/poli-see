@@ -11,8 +11,10 @@
     "link_identifiable": "#66668A",
     "link_unidentifiable": "#666666",
     "use_icon_outine": "#000000",
-    "node_info_div_fill": "#EEEEFF",
-    "node_info_div_outline": "#B6B6DA"
+    "node_sidebar_fill": "#EEEEFF",
+    "node_sidebar_outline": "#B6B6DA",
+    "link_sidebar_fill": "#EEEEFF",
+    "link_sidebar_outline": "#B6B6DA"
   },
 
   "dimensions":
@@ -27,6 +29,7 @@
     "arrow_marker_width": 16,
     "use_icon_radius": 15,
     "use_icon_outline_width": 2,
-    "node_info_div_outline_width": 2
+    "node_sidebar_outline_width": 2,
+    "link_sidebar_outline_width": 2
   }
 }

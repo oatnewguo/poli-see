@@ -8,18 +8,8 @@ html
   float: left;
 }
 
-#sidebar
+.sidebar
 {
   float: left;
   padding: 0 10px 0 10px;
-}
-
-.hidden
-{
-  visibility: hidden;
-}
-
-.visible
-{
-  visibility: visible;
 }
