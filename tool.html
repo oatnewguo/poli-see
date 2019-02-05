@@ -50,14 +50,11 @@ var clicked_element = null;
 
 // svg to contain the main body of the graph
 var svg = d3.select("#canvas");
-
 // g to be placed at center of the graph
 var g = svg.append("g");
 
-// div sidebar to display additional information about nodes
+// div sidebars to display additional information about nodes and links
 var node_sidebar = d3.select("#node_sidebar");
-
-// div sidebar to display additional information about links
 var link_sidebar = d3.select("#link_sidebar");
 
 // node-mapping object to generate tree
@@ -66,24 +63,18 @@ var root;
 // D3 tree to organize nodes
 var tree = d3.tree();
 
-// node fill patterns
+// node, link icon, and use icon fill patterns
 var node_patterns;
-
-// link icon fill patterns
 var link_patterns;
-
-// use icon fill patterns
 var use_patterns;
 
 // links to connect nodes
 var links;
-
 // lines to display links
 var links_lines;
 
 // nodes to represent personal data
 var nodes;
-
 // circles to display nodes
 var nodes_circles;
 
@@ -321,7 +312,7 @@ function hideSidebars()
 function main()
 {
   // set display variables
-  layer_radii = [0, .4, .67, .95].map(function(x) { return x * dimensions_data.display_radius; });
+  layer_radii = dimensions_data.layer_radii_proportions.map(function(x) { return x * dimensions_data.display_radius; });
   svg
     .attr("width", dimensions_data.display_radius * 2)
     .attr("height", dimensions_data.display_radius * 2);
