@@ -295,6 +295,8 @@ function updateNodeSidebar(node_selection)
   use_divs.append("span")
     .text(function(d) { return getUseTypeById(d).label; });
 
+  node_sidebar.append("p").text("fjdalfjdlksajfldsajfds");
+
   // show the sidebar
   node_sidebar
     .style("display", "block");
@@ -303,7 +305,7 @@ function updateNodeSidebar(node_selection)
 // update the link sidebar based on a d3-selected node
 function updateLinkSidebar(link_selection)
 {
-  var d = link_selection.datum();
+  var datum = link_selection.datum();
 
   // set the icon for the link sidebar
   var icon_radius_with_outline = dimensions_data.link_icon_radius + dimensions_data.link_icon_outline_width;
@@ -314,13 +316,13 @@ function updateLinkSidebar(link_selection)
       .attr("r", dimensions_data.link_icon_radius)
       .attr("cx", icon_radius_with_outline)
       .attr("cy", icon_radius_with_outline)
-      .attr("fill", getLinkPattern(d))
+      .attr("fill", getLinkPattern(datum))
       .attr("stroke", colors_data.link_icon_outine)
       .attr("stroke-width", dimensions_data.link_icon_outline_width);
 
   // set the sidebar text
   link_sidebar.select("p")
-    .text(d.text);
+    .text(datum.text);
 
   // show the sidebar
   link_sidebar
@@ -341,18 +343,15 @@ function hideSidebars()
 function main()
 {
   // set title and intro text
-  d3.select("h1")
-    .text(title);
-  d3.select("p")
-    .text(intro_text);
+  d3.select("h1").text(title);
+  d3.select("p").text(intro_text);
 
   // set display variables
   layer_radii = dimensions_data.layer_radii_proportions.map(function(x) { return x * dimensions_data.display_radius; });
   svg
     .attr("width", dimensions_data.display_radius * 2)
     .attr("height", dimensions_data.display_radius * 2);
-  g
-    .attr("transform", "translate(" + dimensions_data.display_radius + "," + dimensions_data.display_radius + ")");
+  g.attr("transform", "translate(" + dimensions_data.display_radius + "," + dimensions_data.display_radius + ")");
   node_sidebar
     .style("border", dimensions_data.node_sidebar_outline_width + "px solid " + colors_data.node_sidebar_outline)
     .style("background-color", colors_data.node_sidebar_fill)
