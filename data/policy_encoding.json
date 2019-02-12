@@ -17,7 +17,7 @@
       "identifiable": true,
       "label": "You",
       "uses": [],
-      "data_handler": "Wentao Inc.",
+      "data_handler": "",
       "text": "this is you"
     },
     { "id": "photos_1",
@@ -245,6 +245,9 @@
     },
     { "id": "node_contact",
       "image":"images/node_icons/contact.svg"
+    },
+    { "id": "node_cookie",
+      "image":"images/node_icons/cookie.svg"
     },
     { "id": "node_device",
       "image":"images/node_icons/device.svg"

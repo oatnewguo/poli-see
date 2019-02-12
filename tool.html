@@ -255,14 +255,14 @@ function createTree(root)
 // update the node sidebar based on a d3-selected node
 function updateNodeSidebar(node_selection)
 {
-  var d = node_selection.datum();
+  var datum = node_selection.datum();
 
   // set the sidebar text
   node_sidebar.select("h1")
-    .text(d.label);
+    .text(datum.label);
   node_sidebar.select("p")
-    .text(d.text);
-  if(d.layer == 0)
+    .text(datum.text);
+  if(datum.layer == 0)
   {
     node_sidebar.select("h2")
     .text("");
@@ -270,16 +270,13 @@ function updateNodeSidebar(node_selection)
   else
   {
     node_sidebar.select("h2")
-      .text(d.data_handler + " can use this data to...");
+      .text(datum.data_handler + " can use this data to...");
   }
 
   // add use divs to the sidebar
-  node_sidebar.selectAll("div")
-    .data(d.uses)
-    .exit()
-    .remove();
+  node_sidebar.selectAll("div").remove();
   var use_divs = node_sidebar.selectAll("div")
-    .data(d.uses)
+    .data(datum.uses)
     .enter().append("div")
       .style("border-bottom", dimensions_data.node_sidebar_outline_width + "px solid " + colors_data.node_sidebar_outline);
 
@@ -689,7 +686,7 @@ function main()
 
 
 // load data from .json files
-d3.json("data/policy_encoding.json").then(function(policy_encoding_data)
+d3.json("data/extra_policies/steam_policy_encoding.json").then(function(policy_encoding_data)
 {
   d3.json("data/appearance.json").then(function(appearance_data)
   {

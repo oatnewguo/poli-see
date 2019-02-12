@@ -1,0 +1,317 @@
+{
+  "title": "Steam Privacy Policy",
+  "intro_text": "Valve respects the privacy of its online visitors and customers of its products and services and complies with applicable laws for the protection of your privacy, including, without limitation, the European Union General Data Protection Regulation (\"GDPR\") and the Swiss and EU Privacy Shield Frameworks.",
+  "nodes":
+  [
+    { "id": "you",
+      "successors":
+      [
+        {"id": "account_1", "type": "link_other", "text": ""},
+        {"id": "financial_1", "type": "link_other", "text": ""},
+        {"id": "other_1", "type": "link_other", "text": ""},
+        {"id": "steam_client_activity_1.1", "type": "link_other", "text": ""},
+        {"id": "games_activity_1.1", "type": "link_other", "text": ""},
+        {"id": "cookies_1", "type": "link_other", "text": ""},
+        {"id": "google_analytics_2", "type": "link_other", "text": ""},
+        {"id": "detect_violations_1", "type": "link_other", "text": ""},
+        {"id": "posts_3", "type": "link_other", "text": ""}
+      ],
+      "layer": 0,
+      "type": "node_user",
+      "identifiable": true,
+      "label": "You",
+      "uses": [],
+      "data_handler": "",
+      "text": "This circle represents you. All the other circles represent data that we collect about you."
+    },
+    { "id": "account_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_account",
+      "identifiable": true,
+      "label": "Basic Account Data",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
+      "data_handler": "Steam",
+      "text": "When setting up an Account, Valve will collect your email address and country of residence. You are also required to choose a user name and a password. The provision of this information is necessary to register a Steam User Account. During setup of your account, the account is automatically assigned a number (the \"Steam ID\") that is later used to reference your user account without directly exposing Personally Identifying Information about you. We do not require you to provide or use your real name for the setup of a Steam User Account."
+    },
+    { "id": "financial_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_financial",
+      "identifiable": true,
+      "label": "Transaction and Payment Data",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
+      "data_handler": "Steam",
+      "text": "In order to make a transaction on Steam (e.g. to purchase Subscriptions for Content and Services or to fund your Steam Wallet), you may need to provide payment data to Valve to enable the transaction. If you pay by credit card, you need to provide typical credit card information (name, address, credit card number, expiration date and security code) to Valve, which Valve will process and transmit to the payment service provider of your choice to enable the transaction and perform anti-fraud checks. Likewise, Valve will receive data from your payment service provider for the same reasons."
+    },
+    { "id": "other_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_other",
+      "identifiable": true,
+      "label": "Other Data You Explicitly Submit",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
+      "data_handler": "Steam",
+      "text": "We will collect and process Personal Data whenever you explicitly provide it to us or send it as part of communication with others on Steam, e.g. in Steam Community Forums, chats, or when you provide feedback or other user generated content."
+    },
+    { "id": "steam_client_activity_1.1",
+      "successors":
+      [
+        {"id": "steam_client_activity_1.2", "type": "link_anonymize", "text": "We may anonymize this data."}
+      ],
+      "layer": 1,
+      "type": "node_activity",
+      "identifiable": true,
+      "label": "Your Use of the Steam Client and Websites",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
+      "data_handler": "Steam",
+      "text": "We collect a variety of information through your general interaction with the websites, Content and Services offered by Steam. Personal Data we collect may include, but is not limited to, browser and device information, data collected through automated electronic interactions and application usage data. Likewise, we will track your process across our websites and applications to verify that you are not a bot and to optimize our services."
+    },
+    { "id": "games_activity_1.1",
+      "successors":
+      [
+        {"id": "games_activity_1.2", "type": "link_anonymize", "text": "We may anonymize this data."}
+      ],
+      "layer": 1,
+      "type": "node_activity",
+      "identifiable": true,
+      "label": "Your Use of Games and other Subscriptions",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
+      "data_handler": "Steam",
+      "text": "In order to provide you with services, we need to collect, store and use various information about your activity in our Content and Services. \"Content-Related Information\" includes your Steam ID, as well as what is usually referred to as \"game statistics\". By game statistics we mean information about your games' preferences, progress in the games, playtime, as well as information about the device you are using, including what operating system you are using, device settings, unique device identifiers, and crash data."
+    },
+    { "id": "cookies_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_cookie",
+      "identifiable": true,
+      "label": "Tracking Data and Cookies",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
+      "data_handler": "Steam",
+      "text": "We use \"Cookies\", which are text files placed on your computer, to help us analyze how users use our services, and similar technologies (e.g. web beacons, pixels, ad tags and device identifiers) to recognize you and/or your device(s) on, off and across different devices and our services, as well as to improve the services we are offering, to improve marketing, analytics or website functionality. The use of Cookies is standard on the internet. Although most web browsers automatically accept cookies, the decision of whether to accept or not is yours. You may adjust your browser settings to prevent the reception of cookies, or to provide notification whenever a cookie is sent to you. You may refuse the use of cookies by selecting the appropriate settings on your browser. The management of the use of cookies for each browser is further detailed on the following help page: https://support.steampowered.com/kb_article.php?ref=9076-QYOJ-0930. However, please note that if you do this, you may not be able to access the full functionality of our websites. When you visit any of our services, our servers log your global IP address, which is a number that is automatically assigned to the network your computer is part of."
+    },
+    { "id": "google_analytics_2",
+      "successors":
+      [
+
+      ],
+      "layer": 2,
+      "type": "node_cookie",
+      "identifiable": true,
+      "label": "Google Analytics",
+      "uses": ["use_research_services"],
+      "data_handler": "Steam",
+      "text": "This website uses Google Analytics, a web analytics service provided by Google, Inc. (\"Google\"). Google Analytics uses \"cookies\", which are text files placed on visitors' computers, to help the website operators analyze how visitors use the site. The information generated by the cookie about the visitors' use of the website will generally be transmitted to and stored by Google on servers in the United States. On this website, IP anonymization has been activated. The IP addresses of users visiting Steam will be shortened. Only in exceptional cases will a complete IP address be transferred to a Google server in the United States and shortened there. Google will not associate the IP address transferred in the context of Google Analytics with any other data held by Google. You may refuse the use of cookies by selecting the appropriate settings on your browser. However, please note that in this case you may not be able to use the full functionality of this website. Furthermore, users can prevent the collection of data about their use of the website (including their IP address) generated by the cookie, and the processing of data by Google, by downloading and installing the browser plug-in through the following link: http://tools.google.com/dlpage/gaoptout?hl=en."
+    },
+    { "id": "detect_violations_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_other",
+      "identifiable": true,
+      "label": "Information Required to Detect Violations",
+      "uses": ["use_detect_violations"],
+      "data_handler": "Steam",
+      "text": "We collect certain data that is required for our detection, investigation and prevention of fraud, cheating and other violations of the SSA and applicable laws (\"Violations\"). This data is used only for the purposes of detection, investigation, prevention and, where applicable, acting on of such Violations and stored only for the minimum amount of time needed for this purpose. If the data indicates that a Violation has occurred, we will further store the data for the establishment, exercise or defense of legal claims during the applicable statute of limitations or until a legal case related to it has been resolved. Please note that the specific data stored for this purpose may not be disclosed to you if the disclosure will compromise the mechanism through which we detect, investigate and prevent such Violations."
+    },
+    { "id": "posts_3",
+      "successors":
+      [
+
+      ],
+      "layer": 3,
+      "type": "node_user-generated_content",
+      "identifiable": true,
+      "label": "Posts on Forums and Other Chat Areas",
+      "uses": [],
+      "data_handler": "The public",
+      "text": "The Steam community includes message boards, forums and/or chat areas, where users can exchange ideas and communicate with each other. When posting a message to a board, forum or chat area, please be aware that the information is being made publicly available online; therefore, you are doing so at your own risk. If your Personal Data is posted on one of our community forums against your will, please use the reporting function and the Steam help site to request its removal."
+    },
+    { "id": "steam_client_activity_1.2",
+      "successors":
+      [
+        {"id": "steam_client_activity_3", "type": "link_other", "text": "Valve may share anonymous data, aggregated or not, with third parties."}
+      ],
+      "layer": 1,
+      "type": "node_activity",
+      "identifiable": false,
+      "label": "Your Use of the Steam Client and Websites",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_research_services", "use_research_other", "use_other"],
+      "data_handler": "Steam",
+      "text": "We collect a variety of information through your general interaction with the websites, Content and Services offered by Steam. Personal Data we collect may include, but is not limited to, browser and device information, data collected through automated electronic interactions and application usage data. Likewise, we will track your process across our websites and applications to verify that you are not a bot and to optimize our services."
+    },
+    { "id": "games_activity_1.2",
+      "successors":
+      [
+        {"id": "games_activity_3", "type": "link_other", "text": "Valve may share anonymous data, aggregated or not, with third parties."}
+      ],
+      "layer": 1,
+      "type": "node_activity",
+      "identifiable": false,
+      "label": "Your Use of Games and other Subscriptions",
+      "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_research_services", "use_research_other", "use_other"],
+      "data_handler": "Steam",
+      "text": "In order to provide you with services, we need to collect, store and use various information about your activity in our Content and Services. \"Content-Related Information\" includes your Steam ID, as well as what is usually referred to as \"game statistics\". By game statistics we mean information about your games' preferences, progress in the games, playtime, as well as information about the device you are using, including what operating system you are using, device settings, unique device identifiers, and crash data."
+    },
+    { "id": "steam_client_activity_3",
+      "successors":
+      [],
+      "layer": 3,
+      "type": "node_activity",
+      "identifiable": false,
+      "label": "Your Use of the Steam Client and Websites",
+      "uses": ["use_other"],
+      "data_handler": "Steam",
+      "text": "We collect a variety of information through your general interaction with the websites, Content and Services offered by Steam. Personal Data we collect may include, but is not limited to, browser and device information, data collected through automated electronic interactions and application usage data. Likewise, we will track your process across our websites and applications to verify that you are not a bot and to optimize our services."
+    },
+    { "id": "games_activity_3",
+      "successors":
+      [],
+      "layer": 3,
+      "type": "node_activity",
+      "identifiable": false,
+      "label": "Your Use of Games and other Subscriptions",
+      "uses": ["use_other"],
+      "data_handler": "Steam",
+      "text": "In order to provide you with services, we need to collect, store and use various information about your activity in our Content and Services. \"Content-Related Information\" includes your Steam ID, as well as what is usually referred to as \"game statistics\". By game statistics we mean information about your games' preferences, progress in the games, playtime, as well as information about the device you are using, including what operating system you are using, device settings, unique device identifiers, and crash data."
+    }
+  ],
+
+
+
+  "node_types":
+  [
+    { "id": "node_account",
+      "image": "images/node_icons/account.svg"
+    },
+    { "id": "node_activity",
+      "image": "images/node_icons/activity.svg"
+    },
+    { "id": "node_basic",
+      "image": "images/node_icons/basic.svg"
+    },
+    { "id": "node_contact",
+      "image":"images/node_icons/contact.svg"
+    },
+    { "id": "node_cookie",
+      "image":"images/node_icons/cookie.svg"
+    },
+    { "id": "node_device",
+      "image":"images/node_icons/device.svg"
+    },
+    { "id": "node_financial",
+      "image":"images/node_icons/financial.svg"
+    },
+    { "id": "node_location",
+      "image":"images/node_icons/location.svg"
+    },
+    { "id": "node_photos",
+      "image":"images/node_icons/photos.svg"
+    },
+    { "id": "node_user",
+      "image":"images/node_icons/user.svg"
+    },
+    { "id": "node_user-generated_content",
+      "image":"images/node_icons/user-generated_content.svg"
+    },
+    { "id": "node_other",
+      "image":"images/generic_icon.svg"
+    }
+  ],
+
+
+
+  "link_types":
+  [
+    { "id": "link_aggregate",
+      "image":"images/link_icons/aggregate.svg"
+    },
+    { "id": "link_anonymize",
+      "image":"images/link_icons/anonymize.svg"
+    },
+    { "id": "link_identify",
+      "image":"images/link_icons/identify.svg"
+    },
+    { "id": "link_sell",
+      "image":"images/link_icons/sell.svg"
+    },
+    { "id": "link_other",
+      "image":"images/generic_icon.svg"
+    }
+  ],
+
+
+
+  "use_types":
+  [
+    { "id": "use_communicate",
+      "label": "Communicate with you",
+      "image":"images/use_icons/communicate.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_detect_malicious",
+      "label": "Detect and prevent malicious activity",
+      "image":"images/use_icons/detect_malicious.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_detect_violations",
+      "label": "Detect and prevent violations of the terms of service",
+      "image":"images/use_icons/detect_violations.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_legal",
+      "label": "Conduct audits and respond to legal requirements",
+      "image":"images/use_icons/legal.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_personalize_marketing",
+      "label": "Personalize marketing and ads",
+      "image":"images/use_icons/personalize_marketing.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_personalize_services",
+      "label": "Personalize services and content",
+      "image":"images/use_icons/personalize_services.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_promotions",
+      "label": "Allow you to participate in sweepstakes, contests, and other promotions",
+      "image":"images/use_icons/promotions.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_provide_services",
+      "label": "Provide services to you",
+      "image": "images/use_icons/provide_services.svg",
+      "fill_color": "green"
+    },
+    { "id": "use_research_services",
+      "label": "Conduct research and development on services",
+      "image":"images/use_icons/research_services.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_research_other",
+      "label": "Conduct research not related to services",
+      "image":"images/use_icons/research_other.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_other",
+      "label": "Fulfill some other purpose",
+      "image":"images/generic_icon.svg",
+      "fill_color": "red"
+    }
+  ]
+}
