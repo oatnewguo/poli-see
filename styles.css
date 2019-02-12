@@ -3,15 +3,21 @@ html
   font-family: Helvetica, Arial, sans-serif;
 }
 
-#canvas
+.tool_container
 {
-  float: left;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.tool_container *
+{
+  white-space: normal;
 }
 
 .sidebar
 {
-  float: left;
   padding: 0 10px 0 10px;
+  overflow: scroll;
 }
 
 .node circle

@@ -14,22 +14,24 @@
 <h1></h1>
 <p></p>
 
-<svg id="canvas">
-  <defs id="node_pattern_defs"></defs>
-  <defs id="link_pattern_defs"></defs>
-  <defs id="use_pattern_defs"></defs>
-  <defs id="other_defs"></defs>
-</svg>
+<div class="tool_container">
+  <svg id="canvas">
+    <defs id="node_pattern_defs"></defs>
+    <defs id="link_pattern_defs"></defs>
+    <defs id="use_pattern_defs"></defs>
+    <defs id="other_defs"></defs>
+  </svg>
 
-<div id="node_sidebar" class="sidebar" style="display: none;">
-  <h1></h1>
-  <p></p>
-  <h2></h2>
-</div>
+  <div id="node_sidebar" class="sidebar" style="display: none;">
+    <h1></h1>
+    <p></p>
+    <h2></h2>
+  </div>
 
-<div id="link_sidebar" class="sidebar" style="display: none;">
-  <svg></svg>
-  <p></p>
+  <div id="link_sidebar" class="sidebar" style="display: none;">
+    <svg></svg>
+    <p></p>
+  </div>
 </div>
 
 <script src="d3/d3.min.js"></script>
@@ -297,7 +299,7 @@ function updateNodeSidebar(node_selection)
 
   // show the sidebar
   node_sidebar
-    .style("display", "block");
+    .style("display", "inline-block");
 }
 
 // update the link sidebar based on a d3-selected node
@@ -324,7 +326,7 @@ function updateLinkSidebar(link_selection)
 
   // show the sidebar
   link_sidebar
-    .style("display", "block");
+    .style("display", "inline-block");
 }
 
 // hide the sidebars
