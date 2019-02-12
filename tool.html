@@ -19,7 +19,6 @@
     <defs id="node_pattern_defs"></defs>
     <defs id="link_pattern_defs"></defs>
     <defs id="use_pattern_defs"></defs>
-    <defs id="other_defs"></defs>
   </svg>
 
   <div id="node_sidebar" class="sidebar" style="display: none;">
@@ -81,7 +80,7 @@ var use_patterns;
 // links to connect nodes
 var links;
 // lines to display links
-var links_lines;
+var links_polylines;
 
 // nodes to represent personal data
 var nodes;
@@ -169,38 +168,33 @@ function getLinkColor(link)
   return colors_data.link_unidentifiable;
 }
 
-// return the marker for the arrow of a link
-function getLinkMarker(link)
-{
-  if(getNodeById(link.destination).identifiable)
-  {
-    return "url(#marker_identifiable)";
-  }
-  return "url(#marker_unidentifiable)";
-}
-
-// return the x-value of the end of a link (edge of the destination node, minus distance for the arrow head)
-function getLinkX2(link)
+//
+function createLinkPolyline(link)
 {
   var source = getNodeById(link.source);
   var dest = getNodeById(link.destination);
-  var theta = Math.atan((source.y - dest.y) / (source.x - dest.x));
-  if(dest.x < source.x)
-    return dest.x + ((dest.radius + dimensions_data.arrow_marker_length) * Math.cos(theta));
-  else
-    return dest.x - ((dest.radius + dimensions_data.arrow_marker_length) * Math.cos(theta));
+  var length = Math.sqrt( Math.pow((dest.x - source.x), 2) + Math.pow((dest.y - source.y), 2)) -
+    dest.radius;
+  var length_to_head = length - dimensions_data.link_arrowhead_length;
+  var w1 = dimensions_data.link_width / 2;
+  var w2 = dimensions_data.link_arrowhead_width / 2;
+  return "0 0, " +
+    w1 + " 0, " +
+    w1 + " " + length_to_head + ", " +
+    w2 + " " + length_to_head + ", " +
+    "0 " + length + ", " +
+    -w2 + " " + length_to_head + ", " +
+    -w1 + " " + length_to_head + ", " +
+    -w1 + " 0, 0 0";
 }
 
-// return the y-value of the end of a link (edge of the destination node, minus distance for the arrow head)
-function getLinkY2(link)
+//
+function getLinkRotationDegrees(link)
 {
   var source = getNodeById(link.source);
   var dest = getNodeById(link.destination);
-  var theta = Math.atan((source.y - dest.y) / (source.x - dest.x));
-  if(dest.x < source.x)
-    return dest.y + ((dest.radius + dimensions_data.arrow_marker_length) * Math.sin(theta));
-  else
-    return dest.y - ((dest.radius + dimensions_data.arrow_marker_length) * Math.sin(theta));
+  var theta = Math.atan2((source.y - dest.y), (source.x - dest.x));
+  return theta * 180 / Math.PI + 90;
 }
 
 // create a stick with the child at the bottom and a specified number of parents preceding
@@ -405,33 +399,6 @@ function main()
 
 
 
-  // append markers for arrows
-  svg.select("#other_defs").append("marker")
-    .attr("id", "marker_identifiable")
-    .attr("refX", 0)
-    .attr("refY", dimensions_data.arrow_marker_width / 2)
-    .attr("markerWidth", dimensions_data.arrow_marker_length)
-    .attr("markerHeight", dimensions_data.arrow_marker_width)
-    .attr("orient", "auto")
-    .attr("markerUnits", "userSpaceOnUse")
-    .append("path")
-      .attr("d", "M 0 0 L " + dimensions_data.arrow_marker_length + " " + (dimensions_data.arrow_marker_width / 2) + " L 0 " + dimensions_data.arrow_marker_width + " Z")
-      .attr("fill", colors_data.link_identifiable);
-
-  svg.select("#other_defs").append("marker")
-    .attr("id", "marker_unidentifiable")
-    .attr("refX", 0)
-    .attr("refY", dimensions_data.arrow_marker_width / 2)
-    .attr("markerWidth", dimensions_data.arrow_marker_length)
-    .attr("markerHeight", dimensions_data.arrow_marker_width)
-    .attr("orient", "auto")
-    .attr("markerUnits", "userSpaceOnUse")
-    .append("path")
-      .attr("d", "M 0 0 L " + dimensions_data.arrow_marker_length + " " + (dimensions_data.arrow_marker_width / 2) + " L 0 " + dimensions_data.arrow_marker_width + " Z")
-      .attr("fill", colors_data.link_unidentifiable);
-
-
-
   // append patterns for node icons
   node_patterns = svg.select("#node_pattern_defs").selectAll("pattern")
     .data(node_types_data)
@@ -530,20 +497,21 @@ function main()
     .data(links_data)
     .enter().append("g")
       .classed("link", true)
-      .attr("id", function(d) { return getNodeById(d.source).id + "->" + getNodeById(d.destination).id; });
+      .attr("id", function(d) { return getNodeById(d.source).id + "->" + getNodeById(d.destination).id; })
+      .attr("transform", function(d)
+      {
+        var s = getNodeById(d.source);
+        return "translate(" + s.x + "," + s.y + ")";
+      });
 
   // add lines to links
-  links_lines = links.append("line")
-    .attr("x1", function(d) { return getNodeById(d.source).x; })
-    .attr("y1", function(d) { return getNodeById(d.source).y; })
-    .attr("x2", getLinkX2)
-    .attr("y2", getLinkY2)
-    .attr("stroke", getLinkColor)
-    .attr("stroke-width", dimensions_data.link_width)
-    .attr("marker-end", getLinkMarker);
+  links_polylines = links.append("polyline")
+    .attr("points", createLinkPolyline)
+    .attr("fill", getLinkColor)
+    .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; });
 
   // mouse interactions for links
-  links_lines
+  links_polylines
     // display more information when the cursor hovers over links
     .on("mouseenter", function(d)
     {
