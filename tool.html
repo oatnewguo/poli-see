@@ -185,13 +185,13 @@ function getLinkOutlineColor(link)
   return colors_data.link_outline_unidentifiable;
 }
 
-//
+// return a string containing the points for a link polyline arrow
 function createLinkPolyline(link)
 {
   var source = getNodeById(link.source);
   var dest = getNodeById(link.destination);
   var length = Math.sqrt( Math.pow((dest.x - source.x), 2) + Math.pow((dest.y - source.y), 2)) -
-    dest.radius;
+    dest.radius - dimensions_data.node_outline_width - 3;
   var length_to_head = length - dimensions_data.link_arrowhead_length;
   var w1 = dimensions_data.link_width / 2;
   var w2 = dimensions_data.link_arrowhead_width / 2;
@@ -205,7 +205,8 @@ function createLinkPolyline(link)
     -w1 + " 0, 0 0";
 }
 
-//
+// return the degrees by which a link needs to be rotated counterclockwise from pointing straight down in order to
+// point in the right direction
 function getLinkRotationDegrees(link)
 {
   var source = getNodeById(link.source);
