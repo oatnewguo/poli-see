@@ -36,6 +36,13 @@
 <script src="d3/d3.min.js"></script>
 <script>
 
+// enumerated constants for types of elements
+const element_types =
+{
+  NODE: "node",
+  LINK: "link"
+}
+
 // variables for title and intro text
 var title;
 var intro_text;
@@ -54,8 +61,8 @@ var colors_data;
 var dimensions_data;
 var layer_radii;
 
-// variable for currently selected node or link
-var clicked_element = null;
+// variable for currently selected element
+var clicked_elt = null;
 
 // svg to contain the main body of the graph
 var svg = d3.select("#canvas");
@@ -79,7 +86,7 @@ var use_patterns;
 
 // links to connect nodes
 var links;
-// lines to display links
+// polylines to display links
 var links_polylines;
 
 // nodes to represent personal data
@@ -158,14 +165,24 @@ function getNodeRadius(node)
   return dimensions_data.node_radii_by_layers[node.layer];
 }
 
-// return the color of a link
-function getLinkColor(link)
+// return the fill color of a link
+function getLinkFillColor(link)
 {
   if(getNodeById(link.destination).identifiable)
   {
-    return colors_data.link_identifiable;
+    return colors_data.link_fill_identifiable;
   }
-  return colors_data.link_unidentifiable;
+  return colors_data.link_fill_unidentifiable;
+}
+
+// return the outline color of a link
+function getLinkOutlineColor(link)
+{
+  if(getNodeById(link.destination).identifiable)
+  {
+    return colors_data.link_outline_identifiable;
+  }
+  return colors_data.link_outline_unidentifiable;
 }
 
 //
@@ -248,31 +265,29 @@ function createTree(root)
   }
 }
 
-// update the node sidebar based on a d3-selected node
-function updateNodeSidebar(node_selection)
+// update the node sidebar based on a node's data
+function updateNodeSidebar(n_data)
 {
-  var datum = node_selection.datum();
-
   // set the sidebar text
   node_sidebar.select("h1")
-    .text(datum.label);
+    .text(n_data.label);
   node_sidebar.select("p")
-    .text(datum.text);
-  if(datum.layer == 0)
+    .text(n_data.text);
+  if(n_data.layer == 0)
   {
     node_sidebar.select("h2")
-    .text("");
+      .text("");
   }
   else
   {
     node_sidebar.select("h2")
-      .text(datum.data_handler + " can use this data to...");
+      .text(n_data.data_handler + " can use this data to...");
   }
 
   // add use divs to the sidebar
   node_sidebar.selectAll("div").remove();
   var use_divs = node_sidebar.selectAll("div")
-    .data(datum.uses)
+    .data(n_data.uses)
     .enter().append("div")
       .style("border-bottom", dimensions_data.node_sidebar_outline_width + "px solid " + colors_data.node_sidebar_outline);
 
@@ -296,11 +311,9 @@ function updateNodeSidebar(node_selection)
     .style("display", "inline-block");
 }
 
-// update the link sidebar based on a d3-selected node
-function updateLinkSidebar(link_selection)
+// update the link sidebar based on a link's data
+function updateLinkSidebar(l_data)
 {
-  var datum = link_selection.datum();
-
   // set the icon for the link sidebar
   var icon_radius_with_outline = dimensions_data.link_icon_radius + dimensions_data.link_icon_outline_width;
   link_sidebar.select("svg")
@@ -310,17 +323,30 @@ function updateLinkSidebar(link_selection)
       .attr("r", dimensions_data.link_icon_radius)
       .attr("cx", icon_radius_with_outline)
       .attr("cy", icon_radius_with_outline)
-      .attr("fill", getLinkPattern(datum))
+      .attr("fill", getLinkPattern(l_data))
       .attr("stroke", colors_data.link_icon_outine)
       .attr("stroke-width", dimensions_data.link_icon_outline_width);
 
   // set the sidebar text
   link_sidebar.select("p")
-    .text(datum.text);
+    .text(l_data.text);
 
   // show the sidebar
   link_sidebar
     .style("display", "inline-block");
+}
+
+// update either the node or the link sidebar based on an input element
+function updateSidebar(elt)
+{
+  if(elt.type == element_types.NODE)
+  {
+    updateNodeSidebar(elt.data);
+  }
+  else if(elt.type == element_types.LINK)
+  {
+    updateLinkSidebar(elt.data);
+  }
 }
 
 // hide the sidebars
@@ -330,6 +356,125 @@ function hideSidebars()
     .style("display", "none");
   link_sidebar
     .style("display", "none");
+}
+
+// if the input element is a node, then gradually increase its radius to 1.3 times its normal value
+function increaseNodeRadius(elt)
+{
+  if(elt.type == element_types.NODE)
+  {
+    elt.selection
+      .transition()
+      .attr("r", elt.data.radius * 1.3);
+  }
+}
+
+// if the input element is a node, then gradually decrease its radius to its normal value
+function decreaseNodeRadius(elt)
+{
+  if(elt.type == element_types.NODE)
+  {
+    elt.selection
+      .transition()
+      .attr("r", elt.data.radius);
+  }
+}
+
+// change the input element's outline to indicate focus
+function focusElementOutline(elt)
+{
+  elt.selection
+    .attr("stroke", colors_data.click_focus_outline)
+    .attr("stroke-width", dimensions_data.click_focus_outline_width);
+}
+
+// change the input element's outline to not indicate focus
+function unfocusElementOutline(elt)
+{
+  if(elt.type == element_types.NODE)
+  {
+    elt.selection
+      .attr("stroke", getNodeOutlineColor)
+      .attr("stroke-width", dimensions_data.node_outline_width);
+  }
+  else if(clicked_elt.type == element_types.LINK)
+  {
+    clicked_elt.selection
+      .attr("stroke", getLinkOutlineColor)
+      .attr("stroke-width", dimensions_data.link_outline_width);
+  }
+}
+
+// handle interactions when the cursor enters an interactive element
+function onMouseEnter(elt)
+{
+  // display the correct sidebar
+  hideSidebars();
+  updateSidebar(elt);
+
+  // if the cursor is over a node, then increase the node's size
+  increaseNodeRadius(elt);
+}
+
+// handle interactions when the cursor leaves an interactive element
+function onMouseLeave(elt)
+{
+  // hide the sidebar
+  hideSidebars();
+
+  // if there is no clicked element, then if the cursor was over a node, just decrease the node's size back to normal
+  if(clicked_elt == null)
+  {
+    decreaseNodeRadius(elt);
+  }
+  // if there is a clicked element, then update the sidebar to display information about the clicked element
+  else
+  {
+    updateSidebar(clicked_elt);
+
+    // if the cursor was over a node, then unless the node is the clicked element, decrease its size back to normal
+    if(elt.data.id != clicked_elt.data.id)
+    {
+      decreaseNodeRadius(elt);
+    }
+  }
+}
+
+// handle interactions when the cursor clicks on an interactive element
+function onClick(elt)
+{
+  // if there is no old clicked element, then focus on the new clicked element
+  if(clicked_elt == null)
+  {
+    // change the outline of the new clicked element to indicate focus
+    focusElementOutline(elt);
+
+    clicked_elt = elt;
+  }
+  // if there is an old clicked element that is not the new clicked element, then focus away from the old and on the new
+  else if(elt.data.id != clicked_elt.data.id)
+  {
+    // display the correct sidebar
+    hideSidebars();
+    updateSidebar(elt);
+
+    // change the outline of the old clicked element back to normal, and decrease its size back to normal if it was a node
+    unfocusElementOutline(clicked_elt);
+    decreaseNodeRadius(clicked_elt);
+
+    // change outline of new clicked element to indicate focus
+    focusElementOutline(elt);
+
+    clicked_elt = elt;
+  }
+  // if the new clicked element is the old clicked element, then focus away from it
+  else
+  {
+    // change outline of clicked element back to normal
+    unfocusElementOutline(elt);
+
+    clicked_elt = null;
+  }
 }
 
 
@@ -385,7 +530,7 @@ function main()
     for(var j = 0; j < n.successors.length; j++)
     {
       var s = n.successors[j];
-      links_data.push({ source: n.id, destination: s.id, type: s.type, text: s.text });
+      links_data.push({ id: n.id + "->" + s.id, source: n.id, destination: s.id, type: s.type, text: s.text });
     }
 
     // set the coordinates of nodes based on the coordinates of nodes in the generated tree, altered to make a radial tree
@@ -497,7 +642,6 @@ function main()
     .data(links_data)
     .enter().append("g")
       .classed("link", true)
-      .attr("id", function(d) { return getNodeById(d.source).id + "->" + getNodeById(d.destination).id; })
       .attr("transform", function(d)
       {
         var s = getNodeById(d.source);
@@ -507,36 +651,19 @@ function main()
   // add lines to links
   links_polylines = links.append("polyline")
     .attr("points", createLinkPolyline)
-    .attr("fill", getLinkColor)
-    .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; });
+    .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
+    .attr("fill", getLinkFillColor)
+    .attr("stroke", getLinkOutlineColor)
+    .attr("stroke-width", dimensions_data.link_outline_width);
 
   // mouse interactions for links
   links_polylines
     // display more information when the cursor hovers over links
-    .on("mouseenter", function(d)
-    {
-      var link_selection = d3.select(this);
-
-      hideSidebars();
-      updateLinkSidebar(link_selection);
-    })
+    .on("mouseenter", function(d) { onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)}); })
     // hide information when the cursor leaves a link
-    .on("mouseleave", function(d)
-    {
-      var link_selection = d3.select(this);
-
-      // if there is no clicked element, then hide the sidebar
-      if(clicked_element == null)
-      {
-        hideSidebars();
-      }
-      // if there is a clicked element, then update the sidebar to display information about the clicked element
-      else
-      {
-        hideSidebars();
-        updateNodeSidebar(clicked_element);
-      }
-    });
+    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, selection:d3.select(this)}); })
+    // retain focus on an element when it is clicked
+    .on("click", function(d) { onClick({type:element_types.LINK, data:d, selection:d3.select(this)}); });
 
 
 
@@ -545,12 +672,10 @@ function main()
     .data(nodes_data)
     .enter().append("g")
       .classed("node", true)
-      .attr("id", function(d) { return d.id; })
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
   // add circles to nodes
   nodes_circles = nodes.append("circle")
-    .attr("id", function(d) { return d3.select(this.parentElement).attr("id") + "_circle"; })
     .attr("r", getNodeRadius)
     .attr("fill", getNodePattern)
     .attr("stroke", getNodeOutlineColor)
@@ -559,95 +684,11 @@ function main()
   // mouse interactions for nodes
   nodes_circles
     // display more information in the node sidebar when the cursor hovers over nodes
-    .on("mouseenter", function(d)
-    {
-      var node_selection = d3.select(this);
-
-      hideSidebars();
-      updateNodeSidebar(node_selection);
-
-      // increase the size of the node that the cursor is over
-      node_selection
-        .transition()
-        .attr("r", d.radius * 1.3);
-    })
+    .on("mouseenter", function(d) { onMouseEnter({type:element_types.NODE, data:d, selection:d3.select(this)}); })
     // update the node sidebar when the cursor leaves a node
-    .on("mouseleave", function(d)
-    {
-      var node_selection = d3.select(this);
-
-      // if there is no clicked element, then hide the sidebar
-      if(clicked_element == null)
-      {
-        hideSidebars();
-
-        // decrease the size of the node that the cursor was over, back to normal
-        node_selection
-          .transition()
-          .attr("r", d.radius);
-      }
-      // if there is a clicked element, then update the sidebar to display information about the clicked element
-      else
-      {
-        hideSidebars();
-        updateNodeSidebar(clicked_element);
-
-        // unless the eleme t that the cursor was over was the clicked element, decrease its size back to normal
-        if(clicked_element.attr("id") != node_selection.attr("id"))
-        {
-          // make the node that the cursor was over shrink back
-          node_selection
-            .transition()
-            .attr("r", d.radius);
-        }
-      }
-    })
+    .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, selection:d3.select(this)}); })
     // retain focus on an element when it is clicked
-    .on("click", function(d)
-    {
-      var new_clicked_element = d3.select(this);
-
-      // if there is no old clicked element, then focus on the new clicked element
-      if(clicked_element == null)
-      {
-        // change outline of new clicked element to indicate focus
-        new_clicked_element
-          .attr("stroke", colors_data.node_outline_click_focus)
-          .attr("stroke-width", dimensions_data.node_outline_click_focus_width);
-
-        clicked_element = new_clicked_element;
-      }
-      // if there is an old clicked element that is not the new clicked element, then focus away from the old and on the new
-      else if(clicked_element.attr("id") != new_clicked_element.attr("id"))
-      {
-        hideSidebars();
-        updateNodeSidebar(new_clicked_element);
-
-        // change outline of old clicked element back to normal, and decrease size back to normal
-        clicked_element
-          .attr("stroke", getNodeOutlineColor)
-          .attr("stroke-width", dimensions_data.node_outline_width)
-          .transition()
-          .attr("r", clicked_element.datum().radius);
-
-        // change outline of new clicked element to indicate focus
-        new_clicked_element
-          .attr("stroke", colors_data.node_outline_click_focus)
-          .attr("stroke-width", dimensions_data.node_outline_click_focus_width);
-
-        clicked_element = new_clicked_element;
-      }
-      // if the new clicked element is the old clicked element, then focus away from it
-      else
-      {
-        // change outline of clicked element back to normal
-        clicked_element
-          .attr("stroke", getNodeOutlineColor)
-          .attr("stroke-width", dimensions_data.node_outline_width);
-
-        clicked_element = null;
-      }
-    });
+    .on("click", function(d) { onClick({type:element_types.NODE, data:d, selection:d3.select(this)}); });
 }
 
 
