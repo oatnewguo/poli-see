@@ -6,15 +6,15 @@
     { "id": "you",
       "successors":
       [
-        {"id": "account_1", "type": "link_other", "text": ""},
-        {"id": "financial_1", "type": "link_other", "text": ""},
-        {"id": "other_1", "type": "link_other", "text": ""},
-        {"id": "steam_client_activity_1.1", "type": "link_other", "text": ""},
-        {"id": "games_activity_1.1", "type": "link_other", "text": ""},
-        {"id": "cookies_1", "type": "link_other", "text": ""},
-        {"id": "google_analytics_2", "type": "link_other", "text": ""},
-        {"id": "detect_violations_1", "type": "link_other", "text": ""},
-        {"id": "posts_3", "type": "link_other", "text": ""}
+        {"id": "account_1", "type": "link_share", "text": ""},
+        {"id": "financial_1", "type": "link_share", "text": ""},
+        {"id": "other_1", "type": "link_share", "text": ""},
+        {"id": "steam_client_activity_1.1", "type": "link_collect", "text": ""},
+        {"id": "games_activity_1.1", "type": "link_collect", "text": ""},
+        {"id": "cookies_1", "type": "link_collect", "text": ""},
+        {"id": "google_analytics_2", "type": "link_collect", "text": ""},
+        {"id": "detect_violations_1", "type": "link_collect", "text": ""},
+        {"id": "posts_3", "type": "link_collect", "text": ""}
       ],
       "layer": 0,
       "type": "node_user",
@@ -144,7 +144,7 @@
     { "id": "steam_client_activity_1.2",
       "successors":
       [
-        {"id": "steam_client_activity_3", "type": "link_other", "text": "Valve may share anonymous data, aggregated or not, with third parties."}
+        {"id": "steam_client_activity_3", "type": "link_share", "text": "Valve may share anonymous data, aggregated or not, with third parties."}
       ],
       "layer": 1,
       "type": "node_activity",
@@ -157,7 +157,7 @@
     { "id": "games_activity_1.2",
       "successors":
       [
-        {"id": "games_activity_3", "type": "link_other", "text": "Valve may share anonymous data, aggregated or not, with third parties."}
+        {"id": "games_activity_3", "type": "link_share", "text": "Valve may share anonymous data, aggregated or not, with third parties."}
       ],
       "layer": 1,
       "type": "node_activity",
@@ -243,11 +243,20 @@
     { "id": "link_anonymize",
       "image":"images/link_icons/anonymize.svg"
     },
+    { "id": "link_collect",
+      "image":"images/link_icons/collect.svg"
+    },
     { "id": "link_identify",
       "image":"images/link_icons/identify.svg"
     },
+    { "id": "link_infer",
+      "image":"images/link_icons/infer.svg"
+    },
     { "id": "link_sell",
       "image":"images/link_icons/sell.svg"
+    },
+    { "id": "link_share",
+      "image":"images/link_icons/share.svg"
     },
     { "id": "link_other",
       "image":"images/generic_icon.svg"
@@ -258,6 +267,11 @@
 
   "use_types":
   [
+    { "id": "use_ads",
+      "label": "Advertise to you",
+      "image":"images/use_icons/ads.svg",
+      "fill_color": "gold"
+    },
     { "id": "use_communicate",
       "label": "Communicate with you",
       "image":"images/use_icons/communicate.svg",
@@ -311,6 +325,11 @@
     { "id": "use_other",
       "label": "Fulfill some other purpose",
       "image":"images/generic_icon.svg",
+      "fill_color": "red"
+    },
+    { "id": "use_unknown",
+      "label": "Use unknown!",
+      "image":"images/use_icons/unknown.svg",
       "fill_color": "red"
     }
   ]
