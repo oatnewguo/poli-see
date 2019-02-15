@@ -496,12 +496,14 @@ function main()
     .style("border", dimensions_data.node_sidebar_outline_width + "px solid " + colors_data.node_sidebar_outline)
     .style("background-color", colors_data.node_sidebar_fill)
     .style("width", dimensions_data.display_radius + "px")
-    .style("height", (dimensions_data.display_radius - 10) * 2 + "px");
+    .style("height", (dimensions_data.display_radius - dimensions_data.node_sidebar_padding - dimensions_data.node_sidebar_outline_width) * 2 + "px")
+    .style("padding", dimensions_data.node_sidebar_padding + "px");
   link_sidebar
     .style("border", dimensions_data.link_sidebar_outline_width + "px solid " + colors_data.link_sidebar_outline)
     .style("background-color", colors_data.link_sidebar_fill)
     .style("width", dimensions_data.display_radius + "px")
-    .style("height", (dimensions_data.display_radius - 10) * 2 + "px");
+    .style("height", (dimensions_data.display_radius - dimensions_data.link_sidebar_padding - dimensions_data.link_sidebar_outline_width) * 2 + "px")
+    .style("padding", dimensions_data.link_sidebar_padding + "px");
   tree
     .size([2 * Math.PI, dimensions_data.display_radius * .8])
     .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });

@@ -16,8 +16,12 @@ html
 
 .sidebar
 {
-  padding: 0 10px 0 10px;
   overflow: scroll;
+}
+
+.sidebar h1
+{
+  margin-top: 0;
 }
 
 .node circle
