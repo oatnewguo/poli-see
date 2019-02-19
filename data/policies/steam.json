@@ -6,8 +6,8 @@
     { "id": "you",
       "successors":
       [
-        {"id": "account_1", "type": "link_share", "text": ""},
-        {"id": "financial_1", "type": "link_share", "text": ""},
+        {"id": "account_1", "type": "link_share", "text": "When setting up an Account, Valve will collect your email address and country of residence. You are also required to choose a user name and a password. The provision of this information is necessary to register a Steam User Account. During setup of your account, the account is automatically assigned a number (the \"Steam ID\") that is later used to reference your user account without directly exposing Personally Identifying Information about you."},
+        {"id": "financial_1", "type": "link_share", "text": "In order to make a transaction on Steam (e.g. to purchase Subscriptions for Content and Services or to fund your Steam Wallet), you may need to provide payment data to Valve to enable the transaction."},
         {"id": "other_1", "type": "link_share", "text": ""},
         {"id": "steam_client_activity_1.1", "type": "link_collect", "text": ""},
         {"id": "games_activity_1.1", "type": "link_collect", "text": ""},
@@ -35,7 +35,7 @@
       "label": "Basic Account Data",
       "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
       "data_handler": "Steam",
-      "text": "When setting up an Account, Valve will collect your email address and country of residence. You are also required to choose a user name and a password. The provision of this information is necessary to register a Steam User Account. During setup of your account, the account is automatically assigned a number (the \"Steam ID\") that is later used to reference your user account without directly exposing Personally Identifying Information about you. We do not require you to provide or use your real name for the setup of a Steam User Account."
+      "text": "Email address, country of residence, user name, password, and Steam ID."
     },
     { "id": "financial_1",
       "successors":
@@ -48,7 +48,7 @@
       "label": "Transaction and Payment Data",
       "uses": ["use_provide_services", "use_legal", "use_personalize_marketing", "use_personalize_services", "use_other"],
       "data_handler": "Steam",
-      "text": "In order to make a transaction on Steam (e.g. to purchase Subscriptions for Content and Services or to fund your Steam Wallet), you may need to provide payment data to Valve to enable the transaction. If you pay by credit card, you need to provide typical credit card information (name, address, credit card number, expiration date and security code) to Valve, which Valve will process and transmit to the payment service provider of your choice to enable the transaction and perform anti-fraud checks. Likewise, Valve will receive data from your payment service provider for the same reasons."
+      "text": "Payment data, potentially including credit card information (name, address, credit card number, expiration date and security code)."
     },
     { "id": "other_1",
       "successors":
@@ -137,7 +137,7 @@
       "type": "node_user-generated_content",
       "identifiable": true,
       "label": "Posts on Forums and Other Chat Areas",
-      "uses": [],
+      "uses": ["use_unknown"],
       "data_handler": "The public",
       "text": "The Steam community includes message boards, forums and/or chat areas, where users can exchange ideas and communicate with each other. When posting a message to a board, forum or chat area, please be aware that the information is being made publicly available online; therefore, you are doing so at your own risk. If your Personal Data is posted on one of our community forums against your will, please use the reporting function and the Steam help site to request its removal."
     },
@@ -174,8 +174,8 @@
       "type": "node_activity",
       "identifiable": false,
       "label": "Your Use of the Steam Client and Websites",
-      "uses": ["use_other"],
-      "data_handler": "Steam",
+      "uses": ["use_unknown"],
+      "data_handler": "Third parties",
       "text": "We collect a variety of information through your general interaction with the websites, Content and Services offered by Steam. Personal Data we collect may include, but is not limited to, browser and device information, data collected through automated electronic interactions and application usage data. Likewise, we will track your process across our websites and applications to verify that you are not a bot and to optimize our services."
     },
     { "id": "games_activity_3",
@@ -185,8 +185,8 @@
       "type": "node_activity",
       "identifiable": false,
       "label": "Your Use of Games and other Subscriptions",
-      "uses": ["use_other"],
-      "data_handler": "Steam",
+      "uses": ["use_unknown"],
+      "data_handler": "Third parties",
       "text": "In order to provide you with services, we need to collect, store and use various information about your activity in our Content and Services. \"Content-Related Information\" includes your Steam ID, as well as what is usually referred to as \"game statistics\". By game statistics we mean information about your games' preferences, progress in the games, playtime, as well as information about the device you are using, including what operating system you are using, device settings, unique device identifiers, and crash data."
     }
   ],
@@ -238,27 +238,35 @@
   "link_types":
   [
     { "id": "link_aggregate",
+      "label": "Data Aggregation",
       "image":"images/link_icons/aggregate.svg"
     },
     { "id": "link_anonymize",
+      "label": "Data Anonymization",
       "image":"images/link_icons/anonymize.svg"
     },
     { "id": "link_collect",
+      "label": "Data Collection",
       "image":"images/link_icons/collect.svg"
     },
     { "id": "link_identify",
+      "label": "Data Identification",
       "image":"images/link_icons/identify.svg"
     },
     { "id": "link_infer",
+      "label": "Data Inference",
       "image":"images/link_icons/infer.svg"
     },
     { "id": "link_sell",
+      "label": "Data Selling",
       "image":"images/link_icons/sell.svg"
     },
     { "id": "link_share",
+      "label": "Data Sharing",
       "image":"images/link_icons/share.svg"
     },
     { "id": "link_other",
+      "label": "Other",
       "image":"images/generic_icon.svg"
     }
   ],

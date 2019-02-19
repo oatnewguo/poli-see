@@ -299,18 +299,18 @@ function updateNodeSidebar(n_data)
 {
   // set the sidebar text
   node_sidebar.select("h1")
-    .text(n_data.label);
+    .html(n_data.label);
   node_sidebar.select("p")
-    .text(n_data.text);
+    .html(n_data.text);
   if(n_data.layer == 0)
   {
     node_sidebar.select("h2")
-      .text("");
+      .html("");
   }
   else
   {
     node_sidebar.select("h2")
-      .text(n_data.data_handler + " can use this data to...");
+      .html(n_data.data_handler + " can use this data to...");
   }
 
   // add use divs to the sidebar
@@ -333,7 +333,7 @@ function updateNodeSidebar(n_data)
     .attr("stroke", colors_data.use_icon_outine)
     .attr("stroke-width", dimensions_data.use_icon_outline_width);
   use_divs.append("span")
-    .text(function(d) { return getUseTypeById(d).label; });
+    .html(function(d) { return getUseTypeById(d).label; });
 
   // show the sidebar
   node_sidebar_container
@@ -368,7 +368,7 @@ function updateLinkSidebar(l_data)
 
   // set the sidebar text
   link_sidebar.select("p")
-    .text(l_data.text);
+    .html(l_data.text);
 
   // show the sidebar
   link_sidebar_container
@@ -521,8 +521,8 @@ function onClick(elt)
 function main()
 {
   // set title and intro text
-  d3.select("h1").text(title);
-  d3.select("p").text(intro_text);
+  d3.select("h1").html(title);
+  d3.select("p").html(intro_text);
 
   // set display variables and elements
   {
@@ -782,7 +782,7 @@ function main()
 
 
 // load data from .json files
-d3.json("data/extra_policies/steam_policy_encoding.json").then(function(policy_encoding_data)
+d3.json("data/policies/steam.json").then(function(policy_encoding_data)
 {
   d3.json("data/appearance.json").then(function(appearance_data)
   {
