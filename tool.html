@@ -21,15 +21,26 @@
     <defs id="use_pattern_defs"></defs>
   </svg>
 
-  <div id="node_sidebar" class="sidebar" style="display: none;">
-    <h1></h1>
-    <p></p>
-    <h2></h2>
+  <div id="node_sidebar_container" class="sidebar_container" style="display: none">
+    <div id="node_sidebar" class="sidebar">
+      <h1></h1>
+      <p></p>
+      <h2></h2>
+    </div>
   </div>
 
-  <div id="link_sidebar" class="sidebar" style="display: none;">
-    <svg></svg>
-    <p></p>
+  <div id="link_sidebar_container" class="sidebar_container" style="display: none">
+    <svg id="link_sidebar_summary">
+      <polyline></polyline>
+      <circle></circle>
+      <circle></circle>
+    </svg>
+    <div id="link_sidebar" class="sidebar">
+      <svg>
+        <circle></circle>
+      </svg>
+      <p></p>
+    </div>
   </div>
 </div>
 
@@ -69,9 +80,16 @@ var svg = d3.select("#canvas");
 // g to be placed at center of the graph
 var g = svg.append("g");
 
+// div containers to contain sidebars and potentially other display elements accompanying sidebars
+var node_sidebar_container = d3.select("#node_sidebar_container");
+var link_sidebar_container = d3.select("#link_sidebar_container");
+
 // div sidebars to display additional information about nodes and links
 var node_sidebar = d3.select("#node_sidebar");
 var link_sidebar = d3.select("#link_sidebar");
+
+// svg for link sidebar summary
+var link_sidebar_summary = d3.select("#link_sidebar_summary");
 
 // node-mapping object to generate tree
 var root;
@@ -162,7 +180,11 @@ function getNodeOutlineColor(node)
 // return the radius of a node
 function getNodeRadius(node)
 {
-  return dimensions_data.node_radii_by_layers[node.layer];
+  if(node.layer == 0)
+  {
+    return dimensions_data.center_node_radius;
+  }
+  return dimensions_data.node_radius;
 }
 
 // return the fill color of a link
@@ -185,13 +207,19 @@ function getLinkOutlineColor(link)
   return colors_data.link_outline_unidentifiable;
 }
 
-// return a string containing the points for a link polyline arrow
-function createLinkPolyline(link)
+// return a string containing the points for a link polyline arrow pointing down, given a link's data
+function createLinkPolylineFromLink(link)
 {
   var source = getNodeById(link.source);
   var dest = getNodeById(link.destination);
-  var length = Math.sqrt( Math.pow((dest.x - source.x), 2) + Math.pow((dest.y - source.y), 2)) -
-    dest.radius - dimensions_data.node_outline_width - 3;
+  return createLinkPolylineFromValues(source.x, source.y, dest.x, dest.y,
+    dest.radius + dimensions_data.node_outline_width + 3);
+}
+
+// return a string containing the points for a link polyline arrow pointing down, given necessary values
+function createLinkPolylineFromValues(source_x, source_y, dest_x, dest_y, subtract_len)
+{
+  var length = Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
   var length_to_head = length - dimensions_data.link_arrowhead_length;
   var w1 = dimensions_data.link_width / 2;
   var w2 = dimensions_data.link_arrowhead_width / 2;
@@ -308,32 +336,42 @@ function updateNodeSidebar(n_data)
     .text(function(d) { return getUseTypeById(d).label; });
 
   // show the sidebar
-  node_sidebar
+  node_sidebar_container
     .style("display", "inline-block");
 }
 
 // update the link sidebar based on a link's data
 function updateLinkSidebar(l_data)
 {
+  var source_data = getNodeById(l_data.source);
+  var dest_data = getNodeById(l_data.destination);
+
+  var node_radius_with_outline = dimensions_data.node_radius + dimensions_data.node_outline_width;
+
+  // update the link summary
+  link_sidebar_summary.select("polyline")
+      .attr("points", createLinkPolylineFromValues(node_radius_with_outline, node_radius_with_outline,
+        dimensions_data.display_radius - node_radius_with_outline, node_radius_with_outline,
+        dimensions_data.link_icon_radius + dimensions_data.link_icon_outline_width + 3))
+      .attr("fill", getLinkFillColor(l_data))
+      .attr("stroke", getLinkOutlineColor(l_data));
+  link_sidebar_summary.select("circle")
+      .attr("fill", getNodePattern(source_data))
+      .attr("stroke", getNodeOutlineColor(source_data));
+  link_sidebar_summary.select("circle:nth-child(3)")
+      .attr("fill", getNodePattern(dest_data))
+      .attr("stroke", getNodeOutlineColor(dest_data));
+
   // set the icon for the link sidebar
-  var icon_radius_with_outline = dimensions_data.link_icon_radius + dimensions_data.link_icon_outline_width;
-  link_sidebar.select("svg")
-    .attr("width", icon_radius_with_outline * 2)
-    .attr("height", icon_radius_with_outline * 2)
-    .append("circle")
-      .attr("r", dimensions_data.link_icon_radius)
-      .attr("cx", icon_radius_with_outline)
-      .attr("cy", icon_radius_with_outline)
-      .attr("fill", getLinkPattern(l_data))
-      .attr("stroke", colors_data.link_icon_outine)
-      .attr("stroke-width", dimensions_data.link_icon_outline_width);
+  link_sidebar.select("circle")
+    .attr("fill", getLinkPattern(l_data));
 
   // set the sidebar text
   link_sidebar.select("p")
     .text(l_data.text);
 
   // show the sidebar
-  link_sidebar
+  link_sidebar_container
     .style("display", "inline-block");
 }
 
@@ -353,9 +391,9 @@ function updateSidebar(elt)
 // hide the sidebars
 function hideSidebars()
 {
-  node_sidebar
+  node_sidebar_container
     .style("display", "none");
-  link_sidebar
+  link_sidebar_container
     .style("display", "none");
 }
 
@@ -486,28 +524,75 @@ function main()
   d3.select("h1").text(title);
   d3.select("p").text(intro_text);
 
-  // set display variables
-  layer_radii = dimensions_data.layer_radii_proportions.map(function(x) { return x * dimensions_data.display_radius; });
-  svg
-    .attr("width", dimensions_data.display_radius * 2)
-    .attr("height", dimensions_data.display_radius * 2);
-  g.attr("transform", "translate(" + dimensions_data.display_radius + "," + dimensions_data.display_radius + ")");
-  node_sidebar
-    .style("border", dimensions_data.node_sidebar_outline_width + "px solid " + colors_data.node_sidebar_outline)
-    .style("background-color", colors_data.node_sidebar_fill)
-    .style("width", dimensions_data.display_radius + "px")
-    .style("height", (dimensions_data.display_radius - dimensions_data.node_sidebar_padding - dimensions_data.node_sidebar_outline_width) * 2 + "px")
-    .style("padding", dimensions_data.node_sidebar_padding + "px");
-  link_sidebar
-    .style("border", dimensions_data.link_sidebar_outline_width + "px solid " + colors_data.link_sidebar_outline)
-    .style("background-color", colors_data.link_sidebar_fill)
-    .style("width", dimensions_data.display_radius + "px")
-    .style("height", (dimensions_data.display_radius - dimensions_data.link_sidebar_padding - dimensions_data.link_sidebar_outline_width) * 2 + "px")
-    .style("padding", dimensions_data.link_sidebar_padding + "px");
-  tree
-    .size([2 * Math.PI, dimensions_data.display_radius * .8])
-    .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+  // set display variables and elements
+  {
+    let display_radius = dimensions_data.display_radius;
 
+    let node_sidebar_extra_space = 2 * (dimensions_data.node_sidebar_padding +
+      dimensions_data.node_sidebar_outline_width);
+    let node_sidebar_width = display_radius - node_sidebar_extra_space;
+    let node_sidebar_height = 2 * display_radius - node_sidebar_extra_space;
+
+    let link_sidebar_summary_height = 2 * (dimensions_data.node_radius + dimensions_data.node_outline_width);
+    let link_sidebar_extra_space = 2 * (dimensions_data.link_sidebar_padding +
+      dimensions_data.link_sidebar_outline_width);
+    let link_sidebar_width = display_radius - link_sidebar_extra_space;
+    let link_sidebar_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_summary_height;
+
+    let node_radius_with_outline = dimensions_data.node_radius + dimensions_data.node_outline_width;
+    let link_icon_radius_with_outline = dimensions_data.link_icon_radius + dimensions_data.link_icon_outline_width;
+
+    layer_radii = dimensions_data.layer_radii_proportions.map(function(x) { return x * display_radius; });
+    svg
+      .attr("width", 2 * display_radius)
+      .attr("height", 2 * display_radius);
+    g.attr("transform", "translate(" + display_radius + "," + display_radius + ")");
+
+    node_sidebar
+      .style("border", dimensions_data.node_sidebar_outline_width + "px solid " + colors_data.node_sidebar_outline)
+      .style("background-color", colors_data.node_sidebar_fill)
+      .style("width", node_sidebar_width + "px")
+      .style("height", node_sidebar_height + "px")
+      .style("padding", dimensions_data.node_sidebar_padding + "px");
+
+    link_sidebar
+      .style("border", dimensions_data.link_sidebar_outline_width + "px solid " + colors_data.link_sidebar_outline)
+      .style("background-color", colors_data.link_sidebar_fill)
+      .style("width", link_sidebar_width + "px")
+      .style("height", link_sidebar_height + "px")
+      .style("padding", dimensions_data.link_sidebar_padding + "px");
+
+    link_sidebar_summary
+      .attr("width", display_radius + "px")
+      .attr("height", link_sidebar_summary_height);
+    link_sidebar_summary.select("polyline")
+        .attr("transform", "translate(" + node_radius_with_outline + "," + node_radius_with_outline + ") rotate(270)")
+        .attr("stroke-width", dimensions_data.link_outline_width);
+    link_sidebar_summary.select("circle")
+        .attr("r", dimensions_data.node_radius)
+        .attr("cx", node_radius_with_outline)
+        .attr("cy", node_radius_with_outline)
+        .attr("stroke-width", dimensions_data.node_outline_width);
+    link_sidebar_summary.select("circle:nth-child(3)")
+        .attr("r", dimensions_data.node_radius)
+        .attr("cx", dimensions_data.display_radius - node_radius_with_outline)
+        .attr("cy", node_radius_with_outline)
+        .attr("stroke-width", dimensions_data.node_outline_width);
+
+    link_sidebar.select("svg")
+      .attr("width", link_icon_radius_with_outline * 2)
+      .attr("height", link_icon_radius_with_outline * 2)
+      .select("circle")
+        .attr("r", dimensions_data.link_icon_radius)
+        .attr("cx", link_icon_radius_with_outline)
+        .attr("cy", link_icon_radius_with_outline)
+        .attr("stroke", colors_data.link_icon_outine)
+        .attr("stroke-width", dimensions_data.link_icon_outline_width);
+
+    tree
+      .size([2 * Math.PI, .8 * display_radius])
+      .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+  }
 
 
   // create one identifiable and one unidentifiable version of each node icon
@@ -536,7 +621,7 @@ function main()
       links_data.push({ id: n.id + "->" + s.id, source: n.id, destination: s.id, type: s.type, text: s.text });
     }
 
-    // set the coordinates of nodes based on the coordinates of nodes in the generated tree, altered to make a radial tree
+    // set the coordinates of nodes to the coordinates of nodes in the tree, altered to make a radial tree
     matching_tree_node = tree_nodes.find(function(node) { return node.data.id == n.id; });
     n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos(matching_tree_node.x -= Math.PI / 2);
     n.y = matching_tree_node.y * Math.sin(matching_tree_node.x);
@@ -653,7 +738,7 @@ function main()
 
   // add lines to links
   links_polylines = links.append("polyline")
-    .attr("points", createLinkPolyline)
+    .attr("points", createLinkPolylineFromLink)
     .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
     .attr("fill", getLinkFillColor)
     .attr("stroke", getLinkOutlineColor)

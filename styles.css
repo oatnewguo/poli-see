@@ -24,6 +24,16 @@ html
   margin-top: 0;
 }
 
+.sidebar_container
+{
+  line-height: 0;
+}
+
+.sidebar_container *
+{
+  line-height: initial;
+}
+
 .node circle
 {
   cursor: pointer;
