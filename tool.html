@@ -70,7 +70,7 @@ var use_types_data;
 // objects for colors and dimensions
 var colors_data;
 var dimensions_data;
-var layer_radii;
+var layer_outline_radii;
 
 // variable for currently selected element
 var clicked_elt = null;
@@ -542,7 +542,7 @@ function main()
     let node_radius_with_outline = dimensions_data.node_radius + dimensions_data.node_outline_width;
     let link_icon_radius_with_outline = dimensions_data.link_icon_radius + dimensions_data.link_icon_outline_width;
 
-    layer_radii = dimensions_data.layer_radii_proportions.map(function(x) { return x * display_radius; });
+    layer_outline_radii = dimensions_data.layer_outline_radii_proportions.map(function(x) { return x * display_radius; });
     svg
       .attr("width", 2 * display_radius)
       .attr("height", 2 * display_radius);
@@ -590,7 +590,7 @@ function main()
         .attr("stroke-width", dimensions_data.link_icon_outline_width);
 
     tree
-      .size([2 * Math.PI, .8 * display_radius])
+      .size([2 * Math.PI, display_radius])
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
   }
 
@@ -628,6 +628,11 @@ function main()
     n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos(matching_tree_node.x -= Math.PI / 2);
     n.y = matching_tree_node.y * Math.sin(matching_tree_node.x);
 
+    if(n.layer != 0)
+    {
+      n.x = n.x * dimensions_data.layer_radii_proportions[n.layer] / (n.layer / 3);
+      n.y = n.y * dimensions_data.layer_radii_proportions[n.layer] / (n.layer / 3);
+    }
     // set the radius of nodes
     n.radius = getNodeRadius(n);
   }
@@ -719,7 +724,7 @@ function main()
   for(let i = 3; i > 0; i--)
   {
     g.append("circle")
-      .attr("r", layer_radii[i])
+      .attr("r", layer_outline_radii[i])
       .attr("fill", colors_data.layer_fill)
       .attr("stroke", colors_data.layer_outline)
       .attr("stroke-width", dimensions_data.layer_outline_width);
