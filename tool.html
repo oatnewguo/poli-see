@@ -596,12 +596,14 @@ function main()
 
 
   // create one identifiable and one unidentifiable version of each node icon
-  var num_node_types = node_types_data.length;
-  for(var i = 0; i < num_node_types; i++)
   {
-    node_types_data.push({id: node_types_data[i].id + "_unidentifiable", image: node_types_data[i].image, fill_color: colors_data.node_fill_unidentifiable});
-    node_types_data[i].id = node_types_data[i].id + "_identifiable";
-    node_types_data[i].fill_color = colors_data.node_fill_identifiable;
+    let num_node_types = node_types_data.length;
+    for(let i = 0; i < num_node_types; i++)
+    {
+      node_types_data.push({id: node_types_data[i].id + "_unidentifiable", image: node_types_data[i].image, fill_color: colors_data.node_fill_unidentifiable});
+      node_types_data[i].id = node_types_data[i].id + "_identifiable";
+      node_types_data[i].fill_color = colors_data.node_fill_identifiable;
+    }
   }
 
 
@@ -611,13 +613,13 @@ function main()
   tree_nodes = root.descendants();
 
   // iterate through nodes to gather links and set node coordinates
-  for(var i = 0; i < nodes_data.length; i++)
+  for(let i = 0; i < nodes_data.length; i++)
   {
     // fill links array with link objects based on the .json data
-    var n = nodes_data[i];
-    for(var j = 0; j < n.successors.length; j++)
+    let n = nodes_data[i];
+    for(let j = 0; j < n.successors.length; j++)
     {
-      var s = n.successors[j];
+      let s = n.successors[j];
       links_data.push({ id: n.id + "->" + s.id, source: n.id, destination: s.id, type: s.type, text: s.text });
     }
 
@@ -714,7 +716,7 @@ function main()
 
 
   // append circles for layers
-  for(var i = 3; i > 0; i--)
+  for(let i = 3; i > 0; i--)
   {
     g.append("circle")
       .attr("r", layer_radii[i])
@@ -732,7 +734,7 @@ function main()
       .classed("link", true)
       .attr("transform", function(d)
       {
-        var s = getNodeById(d.source);
+        let s = getNodeById(d.source);
         return "translate(" + s.x + "," + s.y + ")";
       });
 
