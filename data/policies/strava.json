@@ -35,7 +35,8 @@
       [
         {"id": "all_aggregated_1", "type": "link_aggregate", "text": "Strava may aggregate the information you and others make available in connection with the Services and post it publicly or share it with third parties. To do this, we remove certain account information, such as your name, and combine the resulting information with similar information from other Strava athletes."},
         {"id": "all_2.1", "type": "link_share", "text": "Strava may share your information with third parties who provide services to Strava."},
-        {"id": "all_2.2", "type": "link_share", "text": "When you choose to use third party apps, plugins, or websites that integrate with the Services, or when you use Strava features that are offered in conjunction with third parties such as a sponsored challenge, they may receive your information and content."}
+        {"id": "all_2.2", "type": "link_share", "text": "When you choose to use third party apps, plugins, or websites that integrate with the Services, or when you use Strava features that are offered in conjunction with third parties such as a sponsored challenge, they may receive your information and content."},
+        {"id": "all_3", "type": "link_share", "text": "As a social network, Strava shares your information with other Strava members and the public in accordance with your privacy controls."}
       ],
       "layer": 1,
       "type": "node_all",
@@ -102,6 +103,19 @@
       "uses": ["use_unknown"],
       "data_handler": "Third party apps, plugins, or websites",
       "text": "Information and content, including your photos and your activity data (including private activities)."
+    },
+    { "id": "all_3",
+      "successors":
+      [],
+      "layer": 3,
+      "type": "node_all",
+      "identifiable": true,
+      "all_data": true,
+      "all_data_base": false,
+      "label": "Any Information Strava Collects",
+      "uses": ["use_unknown"],
+      "data_handler": "Other Strava members and non-members",
+      "text": "Your information and content."
     },
     { "id": "account_1",
       "successors":
