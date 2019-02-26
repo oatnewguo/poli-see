@@ -117,8 +117,8 @@ var links_polylines_selection;
 
 // central node
 var central_node;
-// the base node containing all data collected
-var all_data_base_node;
+// id of the base node containing all data collected
+var base_all_data_node_id;
 // array of links that should be drawn in the background
 var background_links = [];
 // selection of links background links
@@ -636,7 +636,10 @@ function main()
     for(let j = 0; j < n.successors.length; j++)
     {
       let s = n.successors[j];
-      links.push({ id: n.id + "->" + s.id, source: n.id, destination: s.id, type: s.type, text: s.text });
+      if(s.id != base_all_data_node_id)
+      {
+        links.push({ id: n.id + "->" + s.id, source: n.id, destination: s.id, type: s.type, text: s.text });
+      }
     }
 
     // set the coordinates of nodes to the coordinates of nodes in the tree, altered to make a radial tree
@@ -653,12 +656,8 @@ function main()
     // set the radius of nodes
     n.radius = getNodeRadius(n);
 
-    // if the base all_data node is found, then record it
-    if(n.all_data_base)
-    {
-      all_data_base_node = n;
-    }
-    else if(n.layer == 0)
+    // if the node is the central node, record it
+    if(n.layer == 0)
     {
       central_node = n;
     }
@@ -671,8 +670,8 @@ function main()
     let n = getNodeById(central_node.successors[i].id);
     if(n.layer == 1 && ! n.all_data)
     {
-      background_links.push({ id: n.id + "->" + all_data_base_node.id, source: n.id,
-                              destination: all_data_base_node.id, type: null, text: null });
+      background_links.push({ id: n.id + "->" + base_all_data_node_id, source: n.id,
+                              destination: base_all_data_node_id, type: null, text: null });
     }
   }
 
@@ -856,6 +855,7 @@ d3.json("data/policies/strava.json").then(function(policy_encoding)
     // copy data from policy encoding .json file
     title = policy_encoding.title;
     intro_text = policy_encoding.intro_text;
+    base_all_data_node_id = policy_encoding.base_all_data_node_id;
     nodes = policy_encoding.nodes;
     node_types = policy_encoding.node_types;
     link_types = policy_encoding.link_types;
