@@ -36,9 +36,12 @@
       <circle></circle>
     </svg>
     <div id="link_sidebar" class="sidebar">
-      <svg>
-        <circle></circle>
-      </svg>
+      <div>
+        <svg>
+          <circle></circle>
+        </svg>
+        <h1 style="display: inline-block"></h1>
+      </div>
       <p></p>
     </div>
   </div>
@@ -351,7 +354,7 @@ function updateNodeSidebar(n)
     .style("display", "inline-block");
 }
 
-// update the link sidebar based on a link's data
+// update the link sidebar based on a link
 function updateLinkSidebar(l)
 {
   var source = getNodeById(l.source);
@@ -377,7 +380,9 @@ function updateLinkSidebar(l)
   link_sidebar_selection.select("circle")
     .attr("fill", getLinkPattern(l));
 
-  // set the sidebar text
+  // set the icon for the link sidebar
+  link_sidebar_selection.select("h1")
+    .html(getLinkTypeById(l.type).label);
   link_sidebar_selection.select("p")
     .html(l.text);
 
