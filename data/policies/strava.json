@@ -1,0 +1,571 @@
+{
+  "title": "Strava Privacy Policy",
+  "intro_text": "Your privacy is very important to us. This visualization of our privacy policy explains the information we collect, how we use and share it, how to manage your privacy controls and your rights in connection with Strava’s websites and the related mobile applications and services (collectively, the “Services”). To view the full privacy policy, click <a href=\"https://www.strava.com/legal/privacy\">here</a>.",
+  "nodes":
+  [
+    { "id": "you",
+      "successors":
+      [
+        {"id": "all_1", "type": "link_collect", "text": "I'm not sure if this link should be here, but it's easier to have it here for now. -Wentao"},
+        {"id": "account_1", "type": "link_collect", "text": "Strava collects basic account information to help secure and provide you with access to our Services."},
+        {"id": "profile_1", "type": "link_collect", "text": "Strava collects activity information when you choose to upload content, join a challenge, add your equipment usage, view others’ activities, or otherwise use the Services."},
+        {"id": "contacts_1", "type": "link_share", "text": "You can choose to add your contacts’ information by connecting your contacts from your mobile device or social networking accounts to Strava. In accordance with your instructions, Strava may then access and store your contacts’ information in order to identify connections and help you connect with them."},
+        {"id": "connected_devices_1", "type": "link_collect", "text": "Strava collects information from devices and apps you connect to Strava."},
+        {"id": "health_1", "type": "link_collect", "text": "Strava may collect health information. Before you can upload health information to Strava, you must give your explicit consent to the processing of that health information by Strava."},
+        {"id": "content_1", "type": "link_share", "text": "Strava gathers information from content you share on the Services, including when you participate in partner events or create segments or routes."},
+        {"id": "financial_1", "type": "link_share", "text": "When you make a payment on Strava, you may provide payment information to Strava."},
+        {"id": "financial_2", "type": "link_share", "text": "When you make a payment on Strava, you may provide payment information to third parties."},
+        {"id": "location_1", "type": "link_collect", "text": "Strava collects and processes location information when you sign up for and use the Services."},
+        {"id": "third-party_accounts_1", "type": "link_collect", "text": "When you sign up and log in to the Services using accounts you create with third-party products and services, such as Facebook or Google (collectively, “Third-Party Accounts”), Strava may collect information provided to Strava under the Third-Party Account provider's privacy policies. You can generally control the information that we receive from these sources using the privacy controls in your Third-Party Account."},
+        {"id": "contact_1", "type": "link_share", "text": "You can choose to provide us with your contact information so we can better respond to your support requests and comments."},
+        {"id": "info_from_others_1", "type": "link_collect", "text": "Strava obtains additional third party information about our members from marketers, partners, researchers, and others. We may combine information that we collect from you with information obtained from other members, third parties and information derived from any other subscription, product, or service we provide. We may also collect information about you from other members such as when they give you kudos or comment on your activities."},
+        {"id": "device_1", "type": "link_collect", "text": "Strava collects device information that provides us with technical information when you access or use the Services."},
+        {"id": "logs_1", "type": "link_collect", "text": "Strava uses log files to collect additional information."}
+      ],
+      "layer": 0,
+      "type": "node_user",
+      "identifiable": true,
+      "label": "You",
+      "uses": [],
+      "data_handler": "",
+      "text": "This circle represents you. All the other circles represent data that we collect about you."
+    },
+    { "id": "all_1",
+      "successors":
+      [
+        {"id": "all_aggregated_1", "type": "link_aggregate", "text": "Strava may aggregate the information you and others make available in connection with the Services and post it publicly or share it with third parties. To do this, we remove certain account information, such as your name, and combine the resulting information with similar information from other Strava athletes."},
+        {"id": "all_2.1", "type": "link_share", "text": "Strava may share your information with third parties who provide services to Strava."},
+        {"id": "all_2.2", "type": "link_share", "text": "When you choose to use third party apps, plugins, or websites that integrate with the Services, or when you use Strava features that are offered in conjunction with third parties such as a sponsored challenge, they may receive your information and content."}
+      ],
+      "layer": 1,
+      "type": "node_all",
+      "identifiable": true,
+      "all_data": true,
+      "all_data_base": true,
+      "label": "Any Information Strava Collects",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": ""
+    },
+    { "id": "all_aggregated_1",
+      "successors":
+      [
+        {"id": "all_aggregated_2", "type": "link_sell", "text": "Strava may use, sell, license, and share aggregated information with third parties for research, business or other purposes such as to improve walking, running or riding in cities via Strava Metro or to help our partners understand more about athletes, including the people who use their products and services."}
+      ],
+      "layer": 1,
+      "type": "node_all",
+      "identifiable": false,
+      "all_data": true,
+      "all_data_base": false,
+      "label": "Aggregated Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_research_other", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
+    },
+    { "id": "all_aggregated_2",
+      "successors":
+      [
+
+      ],
+      "layer": 2,
+      "type": "node_all",
+      "identifiable": false,
+      "all_data": true,
+      "all_data_base": false,
+      "label": "Aggregated Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_research_other", "use_legal"],
+      "data_handler": "Third parties",
+      "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
+    },
+    { "id": "all_2.1",
+      "successors":
+      [],
+      "layer": 2,
+      "type": "node_all",
+      "identifiable": true,
+      "all_data": true,
+      "all_data_base": false,
+      "label": "Information Necessary to Perform Limited Functions",
+      "uses": ["use_provide_services"],
+      "data_handler": "Third-party service providers",
+      "text": "Information necessary to provide services to Strava such as supporting and improving the Services, promoting the Services, processing payments, or fulfilling orders. Service providers will only have access to the information necessary to perform these limited functions on our behalf and are required to protect and secure your information."
+    },
+    { "id": "all_2.2",
+      "successors":
+      [],
+      "layer": 2,
+      "type": "node_all",
+      "identifiable": true,
+      "all_data": true,
+      "all_data_base": false,
+      "label": "Any Information Strava Collects",
+      "uses": ["use_unknown"],
+      "data_handler": "Third party apps, plugins, or websites",
+      "text": "Information and content, including your photos and your activity data (including private activities)."
+    },
+    { "id": "account_1",
+      "successors":
+      [
+        {"id": "account_2", "type": "link_share", "text": "Subject to your privacy controls, your username will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
+      ],
+      "layer": 1,
+      "type": "node_account",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Basic Account Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Name, email address, date of birth, gender, username and password."
+    },
+    { "id": "account_2",
+      "successors":
+      [],
+      "layer": 2,
+      "type": "node_account",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Username",
+      "uses": ["use_unknown"],
+      "data_handler": "Strava members",
+      "text": ""
+    },
+    { "id": "profile_1",
+      "successors":
+      [
+        {"id": "profile_2", "type": "link_share", "text": "Subject to your privacy controls, your profile and activities will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."},
+        {"id": "profile_3", "type": "link_share", "text": "Strava may make certain profile information available to non-members on the web."}
+      ],
+      "layer": 1,
+      "type": "node_basic",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Profile, Activity and Use Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Pictures, activities (including date, time and geo-location information as well as your speed and pace) and posts, and other information about your use of the Services."
+    },
+    { "id": "profile_2",
+      "successors":
+      [],
+      "layer": 2,
+      "type": "node_basic",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Profile and Activity Information",
+      "uses": ["use_unknown"],
+      "data_handler": "Strava members",
+      "text": ""
+    },
+    { "id": "profile_3",
+      "successors":
+      [],
+      "layer": 3,
+      "type": "node_basic",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Public Profile",
+      "uses": ["use_unknown"],
+      "data_handler": "Non-members",
+      "text": "Name and some profile information."
+    },
+    { "id": "contacts_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_connections",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Your Contacts’ Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Information about your contacts on your mobile device or social networking accounts."
+    },
+    { "id": "connected_devices_1",
+      "successors":
+      [
+        {"id": "connected_devices_2", "type": "link_share", "text": "Subject to your privacy controls, the devices you use will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
+      ],
+      "layer": 1,
+      "type": "node_device",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Connected Devices and Apps",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Information from devices and apps you connect to Strava. For example, you may connect your Garmin watch or Flywheel account to Strava and information from these devices and apps will be passed along to Strava."
+    },
+    { "id": "connected_devices_2",
+      "successors":
+      [],
+      "layer": 2,
+      "type": "node_device",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Connected Devices",
+      "uses": ["use_unknown"],
+      "data_handler": "Strava members",
+      "text": ""
+    },
+    { "id": "health_1",
+      "successors":
+      [
+        {"id": "health_inferred_1", "type": "link_infer", "text": "Certain health information may be inferred from various indicators."}
+      ],
+      "layer": 1,
+      "type": "node_health",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Health Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Health information from sources such as heart rate, power, cadence, height and weight and other indicators. You can withdraw your consent to Strava processing your health information at any time."
+    },
+    { "id": "health_inferred_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_health",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Inferred Health Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Health information inferred from other data."
+    },
+    { "id": "content_1",
+      "successors":
+      [
+        {"id": "content_2", "type": "link_share", "text": "Subject to your privacy controls, the kudos and comments you give and receive will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
+      ],
+      "layer": 1,
+      "type": "node_user-generated_content",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Content You Share",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Photos, posts, comments, kudos and other content you share on the Services."
+    },
+    { "id": "content_2",
+      "successors":
+      [],
+      "layer": 2,
+      "type": "node_user-generated_content",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Kudos and Comments",
+      "uses": ["use_unknown"],
+      "data_handler": "Strava members",
+      "text": "Kudos and comments you give and receive."
+    },
+    { "id": "financial_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_financial",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Payment Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Payment card and other payment details. We do not store your credit card information."
+    },
+    { "id": "financial_2",
+      "successors":
+      [
+
+      ],
+      "layer": 2,
+      "type": "node_financial",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Payment Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Payment Card Industry compliant third-party payment services",
+      "text": "Payment card and other payment details."
+    },
+    { "id": "location_1",
+      "successors":
+      [
+        {"id": "location_3", "type": "link_share", "text": "Strava may share your precise location information on Strava with non-members, in accordance with your privacy controls."}
+      ],
+      "layer": 1,
+      "type": "node_location",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Location Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Non-members",
+      "text": "Physical location of your device including, data such as speed and direction. You can tell us about important locations, such as your home or work address, by enabling a Privacy Zone in your settings. We will make private any portion of your activity that starts or ends in your Privacy Zone. Processing of your location data is essential to the Services which we provide and a necessary part of our performance of the agreement we have with you."
+    },
+    { "id": "location_3",
+      "successors":
+      [],
+      "layer": 3,
+      "type": "node_location",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Location Information",
+      "uses": ["use_unknown"],
+      "data_handler": "The public",
+      "text": "Precise location information, such as a route or segment."
+    },
+    { "id": "third-party_accounts_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_basic",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Third-Party Account Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Information that you have agreed to make available such as your name, email address, profile information and preferences with the applicable Third-Party Account."
+    },
+    { "id": "contact_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_contact",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Contact Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": ""
+    },
+    { "id": "info_from_others_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_other",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Information from Others",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Information about you from third parties and other members."
+    },
+    { "id": "device_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_device",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Device Information",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
+    },
+    { "id": "logs_1",
+      "successors":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_activity",
+      "identifiable": true,
+      "all_data": false,
+      "all_data_base": false,
+      "label": "Log Files",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
+    }
+  ],
+
+
+
+  "node_types":
+  [
+    { "id": "node_account",
+      "image": "images/node_icons/account.svg"
+    },
+    { "id": "node_activity",
+      "image": "images/node_icons/activity.svg"
+    },
+    { "id": "node_all",
+      "image": "images/node_icons/all.svg"
+    },
+    { "id": "node_basic",
+      "image": "images/node_icons/basic.svg"
+    },
+    { "id": "node_connections",
+      "image":"images/node_icons/connections.svg"
+    },
+    { "id": "node_contact",
+      "image":"images/node_icons/contact.svg"
+    },
+    { "id": "node_cookie",
+      "image":"images/node_icons/cookie.svg"
+    },
+    { "id": "node_device",
+      "image":"images/node_icons/device.svg"
+    },
+    { "id": "node_financial",
+      "image":"images/node_icons/financial.svg"
+    },
+    { "id": "node_health",
+      "image":"images/node_icons/health.svg"
+    },
+    { "id": "node_location",
+      "image":"images/node_icons/location.svg"
+    },
+    { "id": "node_photos",
+      "image":"images/node_icons/photos.svg"
+    },
+    { "id": "node_user",
+      "image":"images/node_icons/user.svg"
+    },
+    { "id": "node_user-generated_content",
+      "image":"images/node_icons/user-generated_content.svg"
+    },
+    { "id": "node_other",
+      "image":"images/generic_icon.svg"
+    }
+  ],
+
+
+
+  "link_types":
+  [
+    { "id": "link_aggregate",
+      "label": "Aggregate",
+      "image":"images/link_icons/aggregate.svg"
+    },
+    { "id": "link_anonymize",
+      "label": "Anonymize",
+      "image":"images/link_icons/anonymize.svg"
+    },
+    { "id": "link_collect",
+      "label": "Collect",
+      "image":"images/link_icons/collect.svg"
+    },
+    { "id": "link_identify",
+      "label": "Identify",
+      "image":"images/link_icons/identify.svg"
+    },
+    { "id": "link_infer",
+      "label": "Infer",
+      "image":"images/link_icons/infer.svg"
+    },
+    { "id": "link_sell",
+      "label": "Sell",
+      "image":"images/link_icons/sell.svg"
+    },
+    { "id": "link_share",
+      "label": "Share",
+      "image":"images/link_icons/share.svg"
+    },
+    { "id": "link_other",
+      "label": "Other",
+      "image":"images/generic_icon.svg"
+    }
+  ],
+
+
+
+  "use_types":
+  [
+    { "id": "use_ads",
+      "label": "Advertise or market to you",
+      "image":"images/use_icons/ads.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_communicate",
+      "label": "Communicate with you",
+      "image":"images/use_icons/communicate.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_detect_malicious",
+      "label": "Detect and prevent malicious activity",
+      "image":"images/use_icons/detect_malicious.svg",
+      "fill_color": "green"
+    },
+    { "id": "use_detect_violations",
+      "label": "Detect and prevent violations of the terms of service",
+      "image":"images/use_icons/detect_violations.svg",
+      "fill_color": "green"
+    },
+    { "id": "use_legal",
+      "label": "Conduct audits and respond to legal requirements",
+      "image":"images/use_icons/legal.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_personalize_marketing",
+      "label": "Personalize marketing and ads",
+      "image":"images/use_icons/personalize_marketing.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_personalize_services",
+      "label": "Personalize services and content",
+      "image":"images/use_icons/personalize_services.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_promotions",
+      "label": "Allow you to participate in sweepstakes, contests, and other promotions",
+      "image":"images/use_icons/promotions.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_provide_services",
+      "label": "Provide services to you",
+      "image": "images/use_icons/provide_services.svg",
+      "fill_color": "green"
+    },
+    { "id": "use_research_services",
+      "label": "Conduct research and development on services",
+      "image":"images/use_icons/research_services.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_research_other",
+      "label": "Conduct research not related to services",
+      "image":"images/use_icons/research_other.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_other",
+      "label": "Fulfill some other purpose",
+      "image":"images/generic_icon.svg",
+      "fill_color": "red"
+    },
+    { "id": "use_unknown",
+      "label": "Use unknown!",
+      "image":"images/use_icons/unknown.svg",
+      "fill_color": "red"
+    }
+  ]
+}
