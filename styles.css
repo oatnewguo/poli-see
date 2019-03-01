@@ -35,6 +35,24 @@ html
   line-height: initial;
 }
 
+.use-container
+{
+  display: flex;
+  padding: 5px 0 5px 0;
+}
+
+.use-container svg
+{
+  flex-shrink: 0;
+}
+
+.use-container p
+{
+  flex-basis: 100%;
+  margin: 0 0 0 5px;
+  align-self: center;
+}
+
 .node circle
 {
   cursor: pointer;
