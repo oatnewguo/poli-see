@@ -43,6 +43,7 @@
     "node_sidebar_outline_width": 2,
     "node_sidebar_padding": 15,
     "link_sidebar_outline_width": 2,
-    "link_sidebar_padding": 15
+    "link_sidebar_padding": 15,
+    "link_sidebar_summary_margin_bottom": 10
   }
 }

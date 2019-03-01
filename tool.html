@@ -36,7 +36,7 @@
       <circle></circle>
     </svg>
     <div id="link_sidebar" class="sidebar">
-      <div class="link-sidebar-header-container">
+      <div id="link-sidebar-header-container">
         <svg>
           <circle></circle>
         </svg>
@@ -560,7 +560,8 @@ function main()
     let link_sidebar_extra_space = 2 * (dimensions.link_sidebar_padding +
       dimensions.link_sidebar_outline_width);
     let link_sidebar_width = display_radius - link_sidebar_extra_space;
-    let link_sidebar_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_summary_height;
+    let link_sidebar_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_summary_height -
+      dimensions.link_sidebar_summary_margin_bottom;
 
     let node_radius_with_outline = dimensions.node_radius + dimensions.node_outline_width;
     let link_icon_radius_with_outline = dimensions.link_icon_radius + dimensions.link_icon_outline_width;
@@ -587,7 +588,8 @@ function main()
 
     link_sidebar_summary_selection
       .attr("width", display_radius + "px")
-      .attr("height", link_sidebar_summary_height);
+      .attr("height", link_sidebar_summary_height)
+      .style("margin-bottom", dimensions.link_sidebar_summary_margin_bottom);
     link_sidebar_summary_selection.select("polyline")
         .attr("transform", "translate(" + node_radius_with_outline + "," + node_radius_with_outline + ") rotate(270)")
         .attr("stroke-width", dimensions.link_outline_width);
