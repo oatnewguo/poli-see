@@ -36,7 +36,7 @@
       <circle></circle>
     </svg>
     <div id="link_sidebar" class="sidebar">
-      <div id="link-sidebar-header-container">
+      <div id="link_sidebar_header_container">
         <svg>
           <circle></circle>
         </svg>
@@ -554,13 +554,13 @@ function main()
     let node_sidebar_extra_space = 2 * (dimensions.node_sidebar_padding +
       dimensions.node_sidebar_outline_width);
     let node_sidebar_width = display_radius - node_sidebar_extra_space;
-    let node_sidebar_height = 2 * display_radius - node_sidebar_extra_space;
+    let node_sidebar_max_height = 2 * display_radius - node_sidebar_extra_space;
 
     let link_sidebar_summary_height = 2 * (dimensions.node_radius + dimensions.node_outline_width);
     let link_sidebar_extra_space = 2 * (dimensions.link_sidebar_padding +
       dimensions.link_sidebar_outline_width);
     let link_sidebar_width = display_radius - link_sidebar_extra_space;
-    let link_sidebar_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_summary_height -
+    let link_sidebar_max_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_summary_height -
       dimensions.link_sidebar_summary_margin_bottom;
 
     let node_radius_with_outline = dimensions.node_radius + dimensions.node_outline_width;
@@ -576,14 +576,14 @@ function main()
       .style("border", dimensions.node_sidebar_outline_width + "px solid " + colors.node_sidebar_outline)
       .style("background-color", colors.node_sidebar_fill)
       .style("width", node_sidebar_width + "px")
-      .style("max-height", node_sidebar_height + "px")
+      .style("max-height", node_sidebar_max_height + "px")
       .style("padding", dimensions.node_sidebar_padding + "px");
 
     link_sidebar_selection
       .style("border", dimensions.link_sidebar_outline_width + "px solid " + colors.link_sidebar_outline)
       .style("background-color", colors.link_sidebar_fill)
       .style("width", link_sidebar_width + "px")
-      .style("max-height", link_sidebar_height + "px")
+      .style("max-height", link_sidebar_max_height + "px")
       .style("padding", dimensions.link_sidebar_padding + "px");
 
     link_sidebar_summary_selection
