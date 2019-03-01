@@ -27,6 +27,7 @@ html
 .sidebar_container
 {
   line-height: 0;
+  vertical-align: top;
 }
 
 .sidebar_container *

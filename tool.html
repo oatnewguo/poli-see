@@ -572,14 +572,14 @@ function main()
       .style("border", dimensions.node_sidebar_outline_width + "px solid " + colors.node_sidebar_outline)
       .style("background-color", colors.node_sidebar_fill)
       .style("width", node_sidebar_width + "px")
-      .style("height", node_sidebar_height + "px")
+      .style("max-height", node_sidebar_height + "px")
       .style("padding", dimensions.node_sidebar_padding + "px");
 
     link_sidebar_selection
       .style("border", dimensions.link_sidebar_outline_width + "px solid " + colors.link_sidebar_outline)
       .style("background-color", colors.link_sidebar_fill)
       .style("width", link_sidebar_width + "px")
-      .style("height", link_sidebar_height + "px")
+      .style("max-height", link_sidebar_height + "px")
       .style("padding", dimensions.link_sidebar_padding + "px");
 
     link_sidebar_summary_selection
