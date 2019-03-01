@@ -53,6 +53,18 @@ html
   align-self: center;
 }
 
+.link-sidebar-header-container
+{
+  display: flex;
+}
+
+.link-sidebar-header-container h1
+{
+  margin: 0;
+  margin: 0 0 0 10px;
+  align-self: center;
+}
+
 .node circle
 {
   cursor: pointer;

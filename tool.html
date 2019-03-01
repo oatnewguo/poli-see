@@ -36,7 +36,7 @@
       <circle></circle>
     </svg>
     <div id="link_sidebar" class="sidebar">
-      <div>
+      <div class="link-sidebar-header-container">
         <svg>
           <circle></circle>
         </svg>
@@ -385,11 +385,9 @@ function updateLinkSidebar(l)
       .attr("fill", getNodePattern(dest))
       .attr("stroke", getNodeOutlineColor(dest));
 
-  // set the icon for the link sidebar
+  // set the icon and title for the link sidebar
   link_sidebar_selection.select("circle")
     .attr("fill", getLinkPattern(l));
-
-  // set the icon for the link sidebar
   link_sidebar_selection.select("h1")
     .html(getLinkTypeById(l.type).label);
   link_sidebar_selection.select("p")
