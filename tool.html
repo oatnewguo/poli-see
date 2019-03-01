@@ -57,6 +57,8 @@ const element_types =
   LINK: "link"
 }
 
+const NUM_LAYERS = 4;
+
 // variables for title and intro text
 var title;
 var intro_text;
@@ -117,6 +119,8 @@ var links_polylines_selection;
 
 // central node
 var central_node;
+// array of primary nodes, direct successors of the central node in layer 1
+var primary_nodes = [];
 // id of the base node containing all data collected
 var base_all_data_node_id;
 // array of links that should be drawn in the background
@@ -269,37 +273,37 @@ function createStick(child, num_parents)
 // recursively create a tree, given the root
 function createTree(root)
 {
-  // make a copy of the root's successors
-  var successors = root.successors.slice();
+  // make a copy of the root's successor links
+  var successor_links = root.successor_links.slice();
 
-  // if there are no successors, then return the root as a leaf
-  if(successors.length == 0)
+  // if there are no successor links, then return the root as a leaf
+  if(successor_links.length == 0)
   {
     return { id: root.id, children: [], siblings: [] };
   }
-  // else if there are successors, then return the root's branch
+  // else if there are successor links, then return the root's branch
   else
   {
     var children = [];
     var siblings = [];
 
-    // iterate through successors
-    for(var i = 0; i < successors.length; i++)
+    // iterate through successor links
+    for(var i = 0; i < successor_links.length; i++)
     {
-      var successor_node = getNodeById(successors[i].id);
-      var successor_branch = createTree(successor_node);
+      var s = getNodeById(successor_links[i].successor_id);
+      var s_branch = createTree(s);
 
       // if the successor is in a higher layer than the root, then add it as a child
-      if(successor_node.layer > root.layer)
-        children.push(createStick(successor_branch, successor_node.layer - root.layer - 1));
+      if(s.layer > root.layer)
+        children.push(createStick(s_branch, s.layer - root.layer - 1));
       // else if the successor is in the same layer as the root, then add it as a sibling
-      else if(successor_node.layer == root.layer)
-        siblings.push(createTree(successor_node));
+      else if(s.layer == root.layer)
+        siblings.push(createTree(s));
 
       // add the successor's siblings as children of the root
-      for(var j = 0; j < successor_branch.siblings.length; j++)
+      for(var j = 0; j < s_branch.siblings.length; j++)
       {
-        children.push(createStick(successor_branch.siblings[j], successor_node.layer - root.layer - 1));
+        children.push(createStick(s_branch.siblings[j], s.layer - root.layer - 1));
       }
     }
 
@@ -624,25 +628,58 @@ function main()
 
 
 
-  // map nodes and create a d3 tree
-  root = tree(d3.hierarchy(createTree(nodes.find(function(node) { return node.layer == 0; }))));
-  tree_nodes = root.descendants();
-
-  // iterate through nodes to gather links, set node coordinates, and record special nodes
+  // iterate through nodes to record special nodes, change node layers to essentially create a second sub-layer in
+  // layer 1, and create links
   for(let i = 0; i < nodes.length; i++)
   {
-    // fill links array with link objects based on the .json data
     let n = nodes[i];
-    for(let j = 0; j < n.successors.length; j++)
+
+    // if the node is the central node, record it, and add its successor links in layer 1 to the array of primary nodes
+    if(n.layer == 0)
     {
-      let s = n.successors[j];
-      if(s.id != base_all_data_node_id)
+      central_node = n;
+      for(let j = 0; j < n.successor_links.length; j++)
       {
-        links.push({ id: n.id + "->" + s.id, source: n.id, destination: s.id, type: s.type, text: s.text });
+        let s = getNodeById(n.successor_links[j].successor_id);
+        if(s.layer == 1)
+        {
+          primary_nodes.push(s);
+        }
       }
     }
 
-    // set the coordinates of nodes to the coordinates of nodes in the tree, altered to make a radial tree
+    // set the radius of nodes
+    n.radius = getNodeRadius(n);
+
+    // move each node one node outward to accommodate for second sub-layer within layer 1 (center node and primary
+    // nodes will later be moved back)
+    n.layer += 1;
+
+    // fill links array with link objects based on the .json data
+    for(let j = 0; j < n.successor_links.length; j++)
+    {
+      let l = n.successor_links[j];
+      if(l.successor_id != base_all_data_node_id)
+      {
+        links.push({ source: n.id, destination: l.successor_id, type: l.type, text: l.text });
+      }
+    }
+  }
+
+  // move central node and primary nodes back to their original layer
+  central_node.layer -= 1;
+  primary_nodes.map(n => n.layer -= 1);
+
+
+
+  // map nodes and create a d3 tree
+  root = tree(d3.hierarchy(createTree(central_node)));
+  tree_nodes = root.descendants();
+
+  // set the coordinates of nodes to the coordinates of nodes in the tree, altered to make a radial tree
+  for(let i = 0; i < nodes.length; i++)
+  {
+    let n = nodes[i];
     matching_tree_node = tree_nodes.find(function(node) { return node.data.id == n.id; });
     n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos(matching_tree_node.x -= Math.PI / 2);
     n.y = matching_tree_node.y * Math.sin(matching_tree_node.x);
@@ -650,28 +687,20 @@ function main()
     // adjust the distance of nodes from the center, according to specified dimensions
     if(n.layer != 0)
     {
-      n.x = n.x * dimensions.layer_radii_proportions[n.layer] / (n.layer / 3);
-      n.y = n.y * dimensions.layer_radii_proportions[n.layer] / (n.layer / 3);
-    }
-    // set the radius of nodes
-    n.radius = getNodeRadius(n);
-
-    // if the node is the central node, record it
-    if(n.layer == 0)
-    {
-      central_node = n;
+      n.x = n.x * dimensions.layer_radii_proportions[n.layer] / (n.layer / NUM_LAYERS);
+      n.y = n.y * dimensions.layer_radii_proportions[n.layer] / (n.layer / NUM_LAYERS);
     }
   }
 
-  // record the central node, and create links from primary nodes, which are successors of the central node in layer 1
-  // excluding nodes containing all data collected, to the base all_data node
-  for(let i = 0; i < central_node.successors.length; i++)
+
+
+  // create background links from primary nodes to the base all_data node
+  for(let i = 0; i < primary_nodes.length; i++)
   {
-    let n = getNodeById(central_node.successors[i].id);
-    if(n.layer == 1 && ! n.all_data)
+    let n = primary_nodes[i];
+    if(! n.all_data)
     {
-      background_links.push({ id: n.id + "->" + base_all_data_node_id, source: n.id,
-                              destination: base_all_data_node_id, type: null, text: null });
+      background_links.push({ source: n.id, destination: base_all_data_node_id, type: null, text: null });
     }
   }
 
@@ -770,18 +799,18 @@ function main()
 
 
 
-  //
+  // append background links
   background_links_selection = g_selection.selectAll(".background_link")
     .data(background_links)
     .enter().append("g")
       .classed("background_link", true)
       .attr("transform", function(d)
       {
-        let s = getNodeById(d.source);
-        return "translate(" + s.x + "," + s.y + ")";
+        let source = getNodeById(d.source);
+        return "translate(" + source.x + "," + source.y + ")";
       });
 
-  // add lines to links
+  // add lines to background links
   background_links_polylines_selection = background_links_selection.append("polyline")
     .attr("points", createLinkPolylineFromLink)
     .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
@@ -798,8 +827,8 @@ function main()
       .classed("link", true)
       .attr("transform", function(d)
       {
-        let s = getNodeById(d.source);
-        return "translate(" + s.x + "," + s.y + ")";
+        let source = getNodeById(d.source);
+        return "translate(" + source.x + "," + source.y + ")";
       });
 
   // add lines to links
