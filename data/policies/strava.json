@@ -1,6 +1,6 @@
 {
   "title": "Strava Privacy Policy",
-  "intro_text": "Your privacy is very important to us. This visualization of our privacy policy explains the information we collect, how we use and share it, how to manage your privacy controls and your rights in connection with Strava’s websites and the related mobile applications and services (collectively, the “Services”). To view the full privacy policy, click <a href=\"https://www.strava.com/legal/privacy\">here</a>.",
+  "intro_text": "Your privacy is very important to us. This visualization of our privacy policy explains the information we collect, how we use and share it, how to manage your privacy controls and your rights in connection with Strava’s websites and the related mobile applications and services (collectively, the “Services”). To view the full privacy policy, click <a href=\"https://www.strava.com/legal/privacy\">here</a>. To learn about how we protect information, click <a href=\"https://www.strava.com/legal/privacy#how-we-protect-information\">here</a>. To learn about managing your settings, click <a href=\"https://www.strava.com/legal/privacy#managing-your-settings\">here</a>.",
   "base_all_data_node_id": "all_1",
   "nodes":
   [
@@ -20,7 +20,8 @@
         {"successor_id": "third-party_accounts_1", "type": "link_collect", "text": "When you sign up and log in to the Services using accounts you create with third-party products and services, such as Facebook or Google (collectively, “Third-Party Accounts”), Strava may collect information provided to Strava under the Third-Party Account provider's privacy policies. You can generally control the information that we receive from these sources using the privacy controls in your Third-Party Account."},
         {"successor_id": "contact_1", "type": "link_share", "text": "You can choose to provide us with your contact information so we can better respond to your support requests and comments."},
         {"successor_id": "info_from_others_1", "type": "link_collect", "text": "Strava obtains additional third party information about our members from marketers, partners, researchers, and others. We may combine information that we collect from you with information obtained from other members, third parties and information derived from any other subscription, product, or service we provide. We may also collect information about you from other members such as when they give you kudos or comment on your activities."},
-        {"successor_id": "device_1", "type": "link_collect", "text": "Strava collects device information that provides us with technical information when you access or use the Services."}
+        {"successor_id": "device_1", "type": "link_collect", "text": "Strava collects device information that provides us with technical information when you access or use the Services."},
+        {"successor_id": "information_necessary_for_services_1", "type": "link_collect", "text": "Strava may collect information necessary for third-parties to provide services to Strava."}
       ],
       "layer": 0,
       "type": "node_user",
@@ -36,9 +37,11 @@
       "successor_links":
       [
         {"successor_id": "all_aggregated_1", "type": "link_aggregate", "text": "Strava may aggregate the information you and others make available in connection with the Services and post it publicly or share it with third parties. To do this, we remove certain account information, such as your name, and combine the resulting information with similar information from other Strava athletes."},
-        {"successor_id": "all_2.1", "type": "link_share", "text": "Strava may share your information with third parties who provide services to Strava."},
-        {"successor_id": "all_2.2", "type": "link_share", "text": "When you choose to use third party apps, plugins, or websites that integrate with the Services, or when you use Strava features that are offered in conjunction with third parties such as a sponsored challenge, they may receive your information and content."},
-        {"successor_id": "all_3", "type": "link_share", "text": "As a social network, Strava shares your information with other Strava members and the public in accordance with your privacy controls."}
+        {"successor_id": "all_2.1", "type": "link_share", "text": "When you choose to use third party apps, plugins, or websites that integrate with the Services, or when you use Strava features that are offered in conjunction with third parties such as a sponsored challenge, they may receive your information and content."},
+        {"successor_id": "all_3", "type": "link_share", "text": "As a social network, Strava shares your information with other Strava members and the public in accordance with your privacy controls."},
+        {"successor_id": "all_2.2", "type": "link_share", "text": "We may share your information with affiliates under common control with us, who are required to comply with the terms of this Privacy Policy with regard to your information. If Strava becomes involved in a business combination, securities offering, bankruptcy, reorganization, dissolution or other similar transaction, we may share or transfer your information in connection with such transaction."},
+        {"successor_id": "all_2.3", "type": "link_share", "text": "We may preserve and share your information with third parties for legal requirements."},
+        {"successor_id": "all_2.4", "type": "link_share", "text": "We may share your information with third parties when we forward Digital Millennium Copyright Act (DMCA) notifications, which will be forwarded as submitted to us without any deletions."}
       ],
       "layer": 1,
       "type": "node_all",
@@ -88,19 +91,6 @@
       "identifiable": true,
       "options": false,
       "all_data": true,
-      "label": "Information Necessary to Perform Limited Functions",
-      "uses": ["use_provide_services"],
-      "data_handler": "Third-party service providers",
-      "text": "Information necessary to provide services to Strava such as supporting and improving the Services, promoting the Services, processing payments, or fulfilling orders. Service providers will only have access to the information necessary to perform these limited functions on our behalf and are required to protect and secure your information."
-    },
-    { "id": "all_2.2",
-      "successor_links":
-      [],
-      "layer": 2,
-      "type": "node_all",
-      "identifiable": true,
-      "options": false,
-      "all_data": true,
       "label": "Any Information Strava Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third party apps, plugins, or websites",
@@ -118,6 +108,45 @@
       "uses": ["use_unknown"],
       "data_handler": "Other Strava members and non-members",
       "text": "Your information and content."
+    },
+    { "id": "all_2.2",
+      "successor_links":
+      [],
+      "layer": 2,
+      "type": "node_all",
+      "identifiable": true,
+      "options": false,
+      "all_data": true,
+      "label": "Any Information Strava Collects",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Affiliates under common control with Strava",
+      "text": ""
+    },
+    { "id": "all_2.3",
+      "successor_links":
+      [],
+      "layer": 2,
+      "type": "node_all",
+      "identifiable": true,
+      "options": false,
+      "all_data": true,
+      "label": "Any Information Strava Collects",
+      "uses": ["use_unknown"],
+      "data_handler": "Third parties, including law enforcement, public or governmental agencies, or private litigants, within or outside your country of residence",
+      "text": "Your information, if we determine disclosure is allowed by the law or reasonably necessary to comply with the law, including to respond to court orders, warrants, subpoenas, or other legal or regulatory process. We may also retain, preserve or disclose your information if we determine that disclosure is reasonably necessary or appropriate to prevent any person from death or serious bodily injury, to address issues of national security or other issues of public importance, to prevent or detect violations of our Terms of Service or fraud or abuse of Strava or its members, or to protect our operations or our property or other legal rights, including by disclosure to our legal counsel and other consultants and third parties in connection with actual or potential litigation."
+    },
+    { "id": "all_2.4",
+      "successor_links":
+      [],
+      "layer": 2,
+      "type": "node_all",
+      "identifiable": true,
+      "options": false,
+      "all_data": true,
+      "label": "Any Information Strava Collects",
+      "uses": ["use_unknown"],
+      "data_handler": "Third parties",
+      "text": "We may share your information with third parties when we forward Digital Millennium Copyright Act (DMCA) notifications, which will be forwarded as submitted to us without any deletions."
     },
     { "id": "account_1",
       "successor_links":
@@ -423,6 +452,34 @@
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
       "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
+    },
+    { "id": "information_necessary_for_services_1",
+      "successor_links":
+      [
+        {"successor_id": "information_necessary_for_services_2", "type": "link_share", "text": "Strava may share your information with third parties who provide services to Strava."}
+      ],
+      "layer": 1,
+      "type": "node_other",
+      "identifiable": true,
+      "options": false,
+      "all_data": false,
+      "label": "Information Necessary to Perform Limited Functions",
+      "uses": [],
+      "data_handler": "Strava",
+      "text": "Information necessary for third-parties to provide services to Strava."
+    },
+    { "id": "information_necessary_for_services_2",
+      "successor_links":
+      [],
+      "layer": 2,
+      "type": "node_other",
+      "identifiable": true,
+      "options": false,
+      "all_data": false,
+      "label": "Information Necessary to Perform Limited Functions",
+      "uses": ["use_provide_services"],
+      "data_handler": "Third-party service providers",
+      "text": "Information necessary to provide services to Strava such as supporting and improving the Services, promoting the Services, processing payments, or fulfilling orders. Service providers will only have access to the information necessary to perform these limited functions on our behalf and are required to protect and secure your information."
     }
   ],
 
