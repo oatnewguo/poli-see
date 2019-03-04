@@ -1,6 +1,6 @@
 {
-  "title": "Runkeeper Privacy Policy",
-  "intro_text": "We value the trust that you place in us by sharing your personal data with us. ASICS takes your privacy seriously and is committed to handling your personal data in a way that is fair and worthy of that trust. ASICS will take all reasonable steps to protect your information from misuse and keep it secure. We believe it is important to inform you about how we will use your personal data. Therefore, we encourage you to read this privacy policy carefully. To view the full privacy policy, click <a href=\"https://runkeeper.com/privacypolicy\">here</a>.",
+  "title": "ASICS Privacy Policy",
+  "intro_text": "We value the trust that you place in us by sharing your personal data with us. ASICS takes your privacy seriously and is committed to handling your personal data in a way that is fair and worthy of that trust. ASICS will take all reasonable steps to protect your information from misuse and keep it secure. We believe it is important to inform you about how we will use your personal data. Therefore, we encourage you to read this privacy policy carefully. To view the full privacy policy, click <a href=\"https://ASICS.com/privacypolicy\">here</a>.",
   "base_all_data_node_id": "all_1",
   "nodes":
   [
@@ -49,7 +49,7 @@
       "identifiable": true,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
       "data_handler": "ASICS",
       "text": ""
@@ -64,7 +64,7 @@
       "identifiable": false,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects, Aggregated",
+      "label": "Any Information ASICS Collects, Aggregated",
       "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
       "data_handler": "ASICS",
       "text": ""
@@ -79,7 +79,7 @@
       "identifiable": false,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects, Aggregated",
+      "label": "Any Information ASICS Collects, Aggregated",
       "uses": ["use_unknown"],
       "data_handler": "ASICS",
       "text": ""
@@ -94,7 +94,7 @@
       "identifiable": true,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
       "data_handler": "Data controllers within the ASICS Group",
       "text": ""
@@ -109,7 +109,7 @@
       "identifiable": true,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_unknown"],
       "data_handler": "Service Providers and Processor",
       "text": "We engage third party vendors, agents, service providers, and affiliated entities to provide services to us on our behalf, such as support for the internal operations of our websites, online stores (including payment processors and third parties we use of sending your orders to your home address), Services (e.g., technical support processing), as well as related offline product support services, data storage and other services."
@@ -124,7 +124,7 @@
       "identifiable": true,
       "options": true,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_unknown"],
       "data_handler": "Partners",
       "text": ""
@@ -139,7 +139,7 @@
       "identifiable": true,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties in case of legal requirement",
       "text": "Personal data we are required by law to disclose."
@@ -154,7 +154,7 @@
       "identifiable": true,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "text": "Personal data we disclose as part of any merger, sale, transfer of ASICS’ assets, acquisition, bankruptcy, or similar event."
@@ -169,7 +169,7 @@
       "identifiable": true,
       "options": true,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "text": "Information for which you have requested or consented that we disclose."
@@ -182,9 +182,9 @@
       "identifiable": true,
       "options": false,
       "all_data": true,
-      "label": "Any Information Strava Collects",
+      "label": "Any Information ASICS Collects",
       "uses": ["use_unknown"],
-      "data_handler": "Other Strava members and non-members",
+      "data_handler": "Other ASICS members and non-members",
       "text": "Your information and content."
     },
     { "id": "contact_1",
