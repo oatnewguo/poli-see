@@ -19,6 +19,7 @@
     <defs id="node_pattern_defs"></defs>
     <defs id="link_pattern_defs"></defs>
     <defs id="use_pattern_defs"></defs>
+    <defs id="other_pattern_defs"></defs>
   </svg>
 
   <div id="node_sidebar_container" class="sidebar_container" style="display: none">
@@ -100,20 +101,17 @@ var root;
 // D3 tree to organize nodes
 var tree = d3.tree();
 
-// node, link icon, and use icon fill patterns
+// icon fill patterns
 var node_patterns;
 var link_patterns;
 var use_patterns;
+var other_patterns;
 
 // selection of nodes to represent personal data
 var nodes_selection;
-// selection of circles to display nodes
-var nodes_circles_selection;
 
 // selection of links to connect nodes
 var links_selection;
-// selection of polylines to display links
-var links_polylines_selection;
 
 // central node
 var central_node;
@@ -125,8 +123,6 @@ var base_all_data_node_id;
 var background_links = [];
 // selection of links background links
 var background_links_selection;
-// selection of polylines to display background links
-var background_links_polylines_selection;
 
 
 
@@ -423,7 +419,7 @@ function increaseNodeRadius(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection
+    elt.selection.select("circle")
       .transition()
       .attr("r", elt.data.radius * 1.3);
   }
@@ -434,7 +430,7 @@ function decreaseNodeRadius(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection
+    elt.selection.select("circle")
       .transition()
       .attr("r", elt.data.radius);
   }
@@ -445,13 +441,13 @@ function focusElementOutline(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection
+    elt.selection.select("circle")
       .attr("stroke", appearance.node.outline_color_focus)
       .attr("stroke-width", appearance.node.outline_width_focus);
   }
   else
   {
-    elt.selection
+    elt.selection.select("polyline")
       .attr("stroke", appearance.link.outline_color_focus)
       .attr("stroke-width", appearance.link.outline_width_focus);
   }
@@ -462,13 +458,13 @@ function unfocusElementOutline(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection
+    elt.selection.select("circle")
       .attr("stroke", getNodeOutlineColor)
       .attr("stroke-width", appearance.node.outline_width);
   }
   else if(clicked_elt.type == element_types.LINK)
   {
-    clicked_elt.selection
+    clicked_elt.selection.select("polyline")
       .attr("stroke", getLinkOutlineColor)
       .attr("stroke-width", appearance.link.outline_width);
   }
@@ -799,6 +795,29 @@ function main()
 
 
 
+  other_patterns = svg_selection.select("#other_pattern_defs").append("pattern")
+    .attr("id", "other_options")
+    .attr("width", "1")
+    .attr("height", "1")
+    .attr("patternContentUnits", "objectBoundingBox");
+
+  // add circles to use patterns
+  other_patterns.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", appearance.options_icon.fill_color);
+
+  // add images to use patterns
+  other_patterns.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", "images/options_icon.svg");
+
+
+
   // append circles for layers
   for(let i = 3; i > 0; i--)
   {
@@ -823,7 +842,7 @@ function main()
       });
 
   // add lines to background links
-  background_links_polylines_selection = background_links_selection.append("polyline")
+  background_links_selection.append("polyline")
     .attr("points", createLinkPolylineFromLink)
     .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
     .attr("fill", appearance.link.fill_color_background)
@@ -844,7 +863,7 @@ function main()
       });
 
   // add lines to links
-  links_polylines_selection = links_selection.append("polyline")
+  links_selection.append("polyline")
     .attr("points", createLinkPolylineFromLink)
     .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
     .attr("fill", getLinkFillColor)
@@ -852,7 +871,7 @@ function main()
     .attr("stroke-width", appearance.link.outline_width);
 
   // mouse interactions for links
-  links_polylines_selection
+  links_selection
     // display more information when the cursor hovers over links
     .on("mouseenter", function(d) { onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)}); })
     // hide information when the cursor leaves a link
@@ -870,22 +889,23 @@ function main()
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
   // add circles to nodes
-  nodes_circles_selection = nodes_selection.append("circle")
+  nodes_selection.append("circle")
     .attr("r", getNodeRadius)
     .attr("fill", getNodePattern)
     .attr("stroke", getNodeOutlineColor)
     .attr("stroke-width", appearance.node.outline_width);
 
   // add options icon to nodes that contain options
-  nodes_selection.filter(d => d.options == true).append("image")
-    .attr("x", 5)
-    .attr("y", 5)
-    .attr("width", 20)
-    .attr("height", 20)
-    .attr("xlink:href", "images/options_icon.svg");
+  nodes_selection.filter(d => d.options == true).append("circle")
+    .attr("cx", appearance.options_icon.cx)
+    .attr("cy", appearance.options_icon.cy)
+    .attr("r", appearance.options_icon.radius)
+    .attr("fill", "url(#other_options)")
+    .attr("stroke", getNodeOutlineColor)
+    .attr("stroke-width", appearance.options_icon.outline_width);
 
   // mouse interactions for nodes
-  nodes_circles_selection
+  nodes_selection
     // display more information in the node sidebar when the cursor hovers over nodes
     .on("mouseenter", function(d) { onMouseEnter({type:element_types.NODE, data:d, selection:d3.select(this)}); })
     // update the node sidebar when the cursor leaves a node
