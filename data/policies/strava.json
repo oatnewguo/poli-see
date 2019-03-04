@@ -7,7 +7,7 @@
     { "id": "you",
       "successor_links":
       [
-        {"successor_id": "all_1", "type": "link_collect", "text": "I'm not sure if this link should be here, but it's easier to have it here for now. -Wentao"},
+        {"successor_id": "all_1", "type": "link_collect", "text": ""},
         {"successor_id": "account_1", "type": "link_collect", "text": "Strava collects basic account information to help secure and provide you with access to our Services."},
         {"successor_id": "profile_1", "type": "link_collect", "text": "Strava collects activity information when you choose to upload content, join a challenge, add your equipment usage, view others’ activities, or otherwise use the Services."},
         {"successor_id": "contacts_1", "type": "link_share", "text": "You can choose to add your contacts’ information by connecting your contacts from your mobile device or social networking accounts to Strava. In accordance with your instructions, Strava may then access and store your contacts’ information in order to identify connections and help you connect with them."},
