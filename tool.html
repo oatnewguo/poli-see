@@ -345,7 +345,7 @@ function setUpPatterns()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", function(d) { return d.fill_color; });
+    .attr("fill", function(d) { return appearance.use_icon.fill_color_by_concern_level[d.concern_level]; });
   use_icon_patterns.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
@@ -706,7 +706,7 @@ function main()
     let options_icon_in_sidebar_radius_with_outline = appearance.options_icon_in_sidebar.radius +
       appearance.options_icon_in_sidebar.outline_width;
 
-    background_circles_radii = appearance.background_circle.radii_proportions.map(function(x) { return x * display_radius; });
+    background_circles_radii = appearance.background_circle.radius_proportions.map(function(x) { return x * display_radius; });
     svg_selection
       .attr("width", 2 * display_radius)
       .attr("height", 2 * display_radius);

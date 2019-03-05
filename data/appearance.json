@@ -5,7 +5,7 @@
   },
   "background_circle":
   {
-    "radii_proportions": [0.0, 0.7, 0.84, 0.98],
+    "radius_proportions": [0.0, 0.7, 0.84, 0.98],
     "outline_width": 2,
     "fill_color": "#EEEEFF",
     "outline_color": "#B6B6DA"
@@ -57,6 +57,7 @@
   {
     "radius": 15,
     "outline_width": 2,
+    "fill_color_by_concern_level": ["#008A00", "#EECC00", "#B60000"],
     "outline_color": "#000000"
   },
   "options_icon_on_node":
