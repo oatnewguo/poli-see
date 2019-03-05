@@ -426,6 +426,20 @@ function createTree(root)
 // update the node sidebar based on a node
 function updateNodeSidebar(n)
 {
+  // set color of node sidebar according to most concerning data use
+  var max_concern_level = 0;
+  for(let i = 0; i < n.uses.length; i++)
+  {
+    let c = getUseTypeById(n.uses[i]).concern_level;
+    if(c > max_concern_level)
+    {
+      max_concern_level = c;
+    }
+  }
+  node_sidebar_selection
+    .style("background-color", appearance.node_sidebar.fill_color_by_concern_level[max_concern_level])
+    .style("border-color", appearance.node_sidebar.outline_color_by_concern_level[max_concern_level]);
+
   // set basic sidebar text
   node_sidebar_selection.select("h1")
     .html(n.label);
@@ -713,8 +727,7 @@ function main()
     g_selection.attr("transform", "translate(" + display_radius + "," + display_radius + ")");
 
     node_sidebar_selection
-      .style("border", appearance.node_sidebar.outline_width + "px solid " + appearance.node_sidebar.outline_color)
-      .style("background-color", appearance.node_sidebar.fill_color)
+      .style("border", appearance.node_sidebar.outline_width + "px solid")
       .style("width", node_sidebar_width + "px")
       .style("max-height", node_sidebar_max_height + "px")
       .style("padding", appearance.node_sidebar.padding + "px");

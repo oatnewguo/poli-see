@@ -80,8 +80,8 @@
   {
     "padding": 15,
     "outline_width": 2,
-    "fill_color": "#EEEEFF",
-    "outline_color": "#B6B6DA"
+    "fill_color_by_concern_level": ["#EEFFEE", "#FFF8EE", "#FFEEEE"],
+    "outline_color_by_concern_level": ["#008A00", "#EECC00", "#B60000"]
   },
   "link_sidebar":
   {
