@@ -18,6 +18,7 @@ RULES
 !! UNCHECKED!! Each use must be in use_types (how to deal with "other"?)
 !! UNCHECKED!! Each object must have a unique id (even across different arrays). (there are probably problems in the code when "_identifiable" and "_unidentifiable" are added to node ids.)
 !! UNCHECKED!! image paths should lead to valid images
+!! UNCHECKED!! Ids must not contain the string "->"
 
 */
 

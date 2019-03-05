@@ -803,7 +803,7 @@ function main()
       let l = n.successor_links[j];
       if(l.successor_id != base_all_data_node_id)
       {
-        links.push({ source: n.id, destination: l.successor_id, type: l.type, text: l.text });
+        links.push({ id: n.id + "->" + l.successor_id, source: n.id, destination: l.successor_id, type: l.type, text: l.text });
       }
     }
   }
