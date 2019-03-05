@@ -18,10 +18,9 @@
   },
   "node":
   {
-    "central_node":
-    {
-      "radius": 40
-    },
+    "radius": 18,
+    "central_node_radius": 40,
+    "all_data_node_radius": 22,
     "radius": 18,
     "distance_from_center_proportions": [0.0, 0.4, 0.6, 0.77, 0.91],
     "outline_width": 2,

@@ -215,7 +215,11 @@ function getNodeRadius(n)
 {
   if(n.layer == 0)
   {
-    return appearance.node.central_node.radius;
+    return appearance.node.central_node_radius;
+  }
+  else if(n.all_data)
+  {
+    return appearance.node.all_data_node_radius;
   }
   return appearance.node.radius;
 }
