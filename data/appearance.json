@@ -10,6 +10,12 @@
     "fill_color": "#EEEEFF",
     "outline_color": "#B6B6DA"
   },
+  "layer_title":
+  {
+    "space_in_pi_radians": 0.15,
+    "font_size": 18,
+    "color": "#66668A"
+  },
   "node":
   {
     "central_node":

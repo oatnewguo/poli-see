@@ -71,9 +71,10 @@ const element_types =
 
 const NUM_LAYERS = 4;
 
-// variables for title and intro text
+// variables for title, intro text, and name of the primary data-collecting entity
 var title;
 var intro_text;
+var primary_entity_name;
 
 // arrays for nodes and links
 var nodes;
@@ -111,6 +112,9 @@ var node_sidebar_uses_container_selection = node_sidebar_selection.select("#node
 
 // selection of svg for link sidebar summary
 var link_sidebar_summary_selection = link_sidebar_container_selection.select("#link_sidebar_summary");
+
+// radii of background circles
+var background_circles_radii;
 
 // node-mapping object to generate tree
 var root;
@@ -702,7 +706,7 @@ function main()
     let options_icon_in_sidebar_radius_with_outline = appearance.options_icon_in_sidebar.radius +
       appearance.options_icon_in_sidebar.outline_width;
 
-    layer_outline_radii = appearance.background_circle.radii_proportions.map(function(x) { return x * display_radius; });
+    background_circles_radii = appearance.background_circle.radii_proportions.map(function(x) { return x * display_radius; });
     svg_selection
       .attr("width", 2 * display_radius)
       .attr("height", 2 * display_radius);
@@ -764,7 +768,7 @@ function main()
         .attr("stroke-width", appearance.link_icon.outline_width);
 
     tree
-      .size([2 * Math.PI, display_radius])
+      .size([(2 - appearance.layer_title.space_in_pi_radians) * Math.PI, display_radius])
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
   }
 
@@ -822,9 +826,10 @@ function main()
   for(let i = 0; i < nodes.length; i++)
   {
     let n = nodes[i];
+    let offset = appearance.layer_title.space_in_pi_radians / 2 * Math.PI;
     matching_tree_node = tree_nodes.find(function(node) { return node.data.id == n.id; });
-    n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos(matching_tree_node.x -= Math.PI / 2);
-    n.y = matching_tree_node.y * Math.sin(matching_tree_node.x);
+    n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos((matching_tree_node.x -= Math.PI / 2) + offset);
+    n.y = matching_tree_node.y * Math.sin(matching_tree_node.x + offset);
 
     // adjust the distance of nodes from the center, according to specified dimensions
     if(n.layer != 0)
@@ -848,14 +853,45 @@ function main()
 
 
 
-  // append circles for layers
+  // append background circles for layers
   for(let i = 3; i > 0; i--)
   {
+    let r = background_circles_radii[i];
+
     g_selection.append("circle")
-      .attr("r", layer_outline_radii[i])
+      .attr("r", r)
       .attr("fill", appearance.background_circle.fill_color)
       .attr("stroke", appearance.background_circle.outline_color)
       .attr("stroke-width", appearance.background_circle.outline_width);
+
+    let r_for_text = r - appearance.layer_title.font_size;
+    let text;
+    if(i == 3)
+    {
+      text = "Public";
+    }
+    else if(i == 2)
+    {
+      text = "Affiliates of " + primary_entity_name;
+    }
+    else
+    {
+      text = primary_entity_name;
+    }
+
+    g_selection.append("path")
+      .attr("id", "text_layer_" + i)
+      .attr("d", "M-" + r_for_text + ",0 a" + r_for_text + "," + r_for_text + " 0 0 1 " + (2 * r_for_text) + ",0")
+      .attr("fill", "none");
+    g_selection.append("text")
+      .classed("layer_title", true)
+      .attr("text-anchor", "middle")
+      .style("font-size", appearance.layer_title.font_size + "px")
+      .style("fill", appearance.layer_title.color)
+      .append("textPath")
+        .html(text)
+        .attr("xlink:href", "#text_layer_" + i)
+        .attr("startOffset", "50%");
   }
 
 
@@ -954,6 +990,7 @@ d3.json("data/policies/asics.json").then(function(policy_json)
     // copy data from policy encoding .json file
     title = policy_json.title;
     intro_text = policy_json.intro_text;
+    primary_entity_name = policy_json.primary_entity_name;
     base_all_data_node_id = policy_json.base_all_data_node_id;
     nodes = policy_json.nodes;
     node_types = policy_json.node_types;
