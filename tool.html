@@ -477,7 +477,8 @@ function updateNodeSidebar(n)
     .data(n.uses)
     .enter().append("div")
       .classed("use-container", true)
-      .style("border-bottom", appearance.node_sidebar.outline_width + "px solid " + appearance.node_sidebar.outline_color);
+      .style("border-bottom", appearance.node_sidebar.outline_width + "px solid " +
+        appearance.node_sidebar.outline_color_by_concern_level[max_concern_level]);
 
   // remove bottom border from last use div
   node_sidebar_uses_container_selection.select("div:last-child")
