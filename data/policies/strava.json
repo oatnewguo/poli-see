@@ -614,6 +614,11 @@
       "image":"images/use_icons/ads.svg",
       "fill_color": "gold"
     },
+    { "id": "use_business",
+      "label": "Conduct business operations",
+      "image":"images/use_icons/business.svg",
+      "fill_color": "gold"
+    },
     { "id": "use_communicate",
       "label": "Communicate with you",
       "image":"images/use_icons/communicate.svg",
