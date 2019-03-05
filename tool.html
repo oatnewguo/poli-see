@@ -26,7 +26,18 @@
     <div id="node_sidebar" class="sidebar">
       <h1></h1>
       <p></p>
-      <h2></h2>
+      <div id="node_sidebar_options_container">
+        <svg>
+          <circle></circle>
+        </svg>
+        <div>
+          <h2></h2>
+          <p></p>
+        </div>
+      </div>
+      <div id="node_sidebar_uses_container">
+        <h2></h2>
+      </div>
     </div>
   </div>
 
@@ -89,11 +100,17 @@ var node_sidebar_container_selection = d3.select("#node_sidebar_container");
 var link_sidebar_container_selection = d3.select("#link_sidebar_container");
 
 // selections of div sidebars to display additional information about nodes and links
-var node_sidebar_selection = d3.select("#node_sidebar");
-var link_sidebar_selection = d3.select("#link_sidebar");
+var node_sidebar_selection = node_sidebar_container_selection.select("#node_sidebar");
+var link_sidebar_selection = link_sidebar_container_selection.select("#link_sidebar");
+
+// selection of div for node options information
+var node_sidebar_options_container_selection = node_sidebar_selection.select("#node_sidebar_options_container");
+
+// selection of div for node uses
+var node_sidebar_uses_container_selection = node_sidebar_selection.select("#node_sidebar_uses_container");
 
 // selection of svg for link sidebar summary
-var link_sidebar_summary_selection = d3.select("#link_sidebar_summary");
+var link_sidebar_summary_selection = link_sidebar_container_selection.select("#link_sidebar_summary");
 
 // node-mapping object to generate tree
 var root;
@@ -255,6 +272,102 @@ function getLinkRotationDegrees(l)
   return theta * 180 / Math.PI + 90;
 }
 
+// set up patterns to fill nodes, link icons, use icons, and other svg elements
+function setUpPatterns()
+{
+  // create one identifiable and one unidentifiable version of each node icon
+  {
+    let num_node_types = node_types.length;
+    for(let i = 0; i < num_node_types; i++)
+    {
+      node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image, fill_color: appearance.node.fill_color_unidentifiable});
+      node_types[i].id = node_types[i].id + "_identifiable";
+      node_types[i].fill_color = appearance.node.fill_color_identifiable;
+    }
+  }
+
+  // node patterns
+  node_patterns = svg_selection.select("#node_pattern_defs").selectAll("pattern")
+    .data(node_types)
+    .enter()
+    .append("pattern")
+      .attr("id", function(d) { return d.id; })
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
+  node_patterns.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", function(d) { return d.fill_color; });
+  node_patterns.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", function(d) { return d.image; });
+
+  // link icon patterns
+  link_icon_patterns = svg_selection.select("#link_pattern_defs").selectAll("pattern")
+    .data(link_types)
+    .enter()
+    .append("pattern")
+      .attr("id", function(d) { return d.id; })
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
+  link_icon_patterns.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", "black");
+  link_icon_patterns.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", function(d) { return d.image; });
+
+  // use icon patterns
+  use_icon_patterns = svg_selection.select("#use_pattern_defs").selectAll("pattern")
+    .data(use_types)
+    .enter()
+    .append("pattern")
+      .attr("id", function(d) { return d.id; })
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
+  use_icon_patterns.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", function(d) { return d.fill_color; });
+  use_icon_patterns.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", function(d) { return d.image; });
+
+  // other patterns
+  other_patterns = svg_selection.select("#other_pattern_defs").append("pattern")
+    .attr("id", "other_options")
+    .attr("width", "1")
+    .attr("height", "1")
+    .attr("patternContentUnits", "objectBoundingBox");
+  other_patterns.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", appearance.options_icon_on_node.fill_color);
+  other_patterns.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", "images/options_icon.svg");
+}
+
 // create a stick with the child at the bottom and a specified number of parents preceding
 function createStick(child, num_parents)
 {
@@ -309,32 +422,47 @@ function createTree(root)
 // update the node sidebar based on a node
 function updateNodeSidebar(n)
 {
-  // set the sidebar text
+  // set basic sidebar text
   node_sidebar_selection.select("h1")
     .html(n.label);
   node_sidebar_selection.select("p")
     .html(n.text);
+
+  // set information about options regarding the node
+  if(n.options)
+  {
+    node_sidebar_options_container_selection.select("p")
+      .html(n.options_text);
+
+    node_sidebar_options_container_selection.style("display", "flex");
+  }
+  else
+  {
+    node_sidebar_options_container_selection.style("display", "none");
+  }
+
+  // set information about the data handler
   if(n.layer == 0)
   {
-    node_sidebar_selection.select("h2")
+    node_sidebar_uses_container_selection.select("h2")
       .html("");
   }
   else
   {
-    node_sidebar_selection.select("h2")
+    node_sidebar_uses_container_selection.select("h2")
       .html(n.data_handler + " can use this data to...");
   }
 
   // add use divs to the sidebar
-  node_sidebar_selection.selectAll("div").remove();
-  var use_divs_selection = node_sidebar_selection.selectAll("div")
+  node_sidebar_uses_container_selection.selectAll("div").remove();
+  var use_divs_selection = node_sidebar_uses_container_selection.selectAll("div")
     .data(n.uses)
     .enter().append("div")
       .classed("use-container", true)
       .style("border-bottom", appearance.node_sidebar.outline_width + "px solid " + appearance.node_sidebar.outline_color);
 
   // remove bottom border from last use div
-  node_sidebar_selection.select("div:last-child")
+  node_sidebar_uses_container_selection.select("div:last-child")
     .style("border-bottom", "none");
 
   // add icons and text to the use divs
@@ -550,6 +678,9 @@ function main()
   d3.select("h1").html(title);
   d3.select("p").html(intro_text);
 
+  // set up patterns for background fills
+  setUpPatterns();
+
   // set display variables and elements
   {
     let display_radius = appearance.display.radius;
@@ -568,6 +699,8 @@ function main()
 
     let node_radius_with_outline = appearance.node.radius + appearance.node.outline_width;
     let link_icon_radius_with_outline = appearance.link_icon.radius + appearance.link_icon.outline_width;
+    let options_icon_in_sidebar_radius_with_outline = appearance.options_icon_in_sidebar.radius +
+      appearance.options_icon_in_sidebar.outline_width;
 
     layer_outline_radii = appearance.background_circle.radii_proportions.map(function(x) { return x * display_radius; });
     svg_selection
@@ -581,6 +714,19 @@ function main()
       .style("width", node_sidebar_width + "px")
       .style("max-height", node_sidebar_max_height + "px")
       .style("padding", appearance.node_sidebar.padding + "px");
+
+    node_sidebar_options_container_selection.select("svg")
+      .attr("width", 2 * options_icon_in_sidebar_radius_with_outline)
+      .attr("height", 2 * options_icon_in_sidebar_radius_with_outline);
+    node_sidebar_options_container_selection.select("h2")
+      .html("You have some control over this data.");
+    node_sidebar_options_container_selection.select("circle")
+      .attr("cx", options_icon_in_sidebar_radius_with_outline)
+      .attr("cy", options_icon_in_sidebar_radius_with_outline)
+      .attr("r", appearance.options_icon_in_sidebar.radius)
+      .attr("fill", "url(#other_options)")
+      .attr("stroke", appearance.options_icon_in_sidebar.outline_color)
+      .attr("stroke-width", appearance.options_icon_in_sidebar.outline_width);
 
     link_sidebar_selection
       .style("border", appearance.link_sidebar.outline_width + "px solid " + appearance.link_sidebar.outline_color)
@@ -608,8 +754,8 @@ function main()
         .attr("stroke-width", appearance.node.outline_width);
 
     link_sidebar_selection.select("svg")
-      .attr("width", link_icon_radius_with_outline * 2)
-      .attr("height", link_icon_radius_with_outline * 2)
+      .attr("width", 2 * link_icon_radius_with_outline)
+      .attr("height", 2 * link_icon_radius_with_outline)
       .select("circle")
         .attr("r", appearance.link_icon.radius)
         .attr("cx", link_icon_radius_with_outline)
@@ -620,18 +766,6 @@ function main()
     tree
       .size([2 * Math.PI, display_radius])
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
-  }
-
-
-  // create one identifiable and one unidentifiable version of each node icon
-  {
-    let num_node_types = node_types.length;
-    for(let i = 0; i < num_node_types; i++)
-    {
-      node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image, fill_color: appearance.node.fill_color_unidentifiable});
-      node_types[i].id = node_types[i].id + "_identifiable";
-      node_types[i].fill_color = appearance.node.fill_color_identifiable;
-    }
   }
 
 
@@ -714,110 +848,6 @@ function main()
 
 
 
-  // append patterns for node icons
-  node_patterns = svg_selection.select("#node_pattern_defs").selectAll("pattern")
-    .data(node_types)
-    .enter()
-    .append("pattern")
-      .attr("id", function(d) { return d.id; })
-      .attr("width", "1")
-      .attr("height", "1")
-      .attr("patternContentUnits", "objectBoundingBox");
-
-  // add circles to node patterns
-  node_patterns.append("circle")
-    .attr("cx", ".5")
-    .attr("cy", ".5")
-    .attr("r", ".5")
-    .attr("fill", function(d) { return d.fill_color; });
-
-  // add images to node patterns
-  node_patterns.append("image")
-    .attr("x", ".2")
-    .attr("y", ".2")
-    .attr("width", ".6")
-    .attr("height", ".6")
-    .attr("href", function(d) { return d.image; });
-
-
-
-  // append patterns for link icons
-  link_patterns = svg_selection.select("#link_pattern_defs").selectAll("pattern")
-    .data(link_types)
-    .enter()
-    .append("pattern")
-      .attr("id", function(d) { return d.id; })
-      .attr("width", "1")
-      .attr("height", "1")
-      .attr("patternContentUnits", "objectBoundingBox");
-
-  // add circles to link patterns
-  link_patterns.append("circle")
-    .attr("cx", ".5")
-    .attr("cy", ".5")
-    .attr("r", ".5")
-    .attr("fill", "black");
-
-  // add images to link patterns
-  link_patterns.append("image")
-    .attr("x", ".2")
-    .attr("y", ".2")
-    .attr("width", ".6")
-    .attr("height", ".6")
-    .attr("href", function(d) { return d.image; });
-
-
-
-  // append patterns for use icons
-  use_patterns = svg_selection.select("#use_pattern_defs").selectAll("pattern")
-    .data(use_types)
-    .enter()
-    .append("pattern")
-      .attr("id", function(d) { return d.id; })
-      .attr("width", "1")
-      .attr("height", "1")
-      .attr("patternContentUnits", "objectBoundingBox");
-
-  // add circles to use patterns
-  use_patterns.append("circle")
-    .attr("cx", ".5")
-    .attr("cy", ".5")
-    .attr("r", ".5")
-    .attr("fill", function(d) { return d.fill_color; });
-
-  // add images to use patterns
-  use_patterns.append("image")
-    .attr("x", ".2")
-    .attr("y", ".2")
-    .attr("width", ".6")
-    .attr("height", ".6")
-    .attr("href", function(d) { return d.image; });
-
-
-
-  other_patterns = svg_selection.select("#other_pattern_defs").append("pattern")
-    .attr("id", "other_options")
-    .attr("width", "1")
-    .attr("height", "1")
-    .attr("patternContentUnits", "objectBoundingBox");
-
-  // add circles to use patterns
-  other_patterns.append("circle")
-    .attr("cx", ".5")
-    .attr("cy", ".5")
-    .attr("r", ".5")
-    .attr("fill", appearance.options_icon.fill_color);
-
-  // add images to use patterns
-  other_patterns.append("image")
-    .attr("x", ".2")
-    .attr("y", ".2")
-    .attr("width", ".6")
-    .attr("height", ".6")
-    .attr("href", "images/options_icon.svg");
-
-
-
   // append circles for layers
   for(let i = 3; i > 0; i--)
   {
@@ -897,12 +927,12 @@ function main()
 
   // add options icon to nodes that contain options
   nodes_selection.filter(d => d.options == true).append("circle")
-    .attr("cx", appearance.options_icon.cx)
-    .attr("cy", appearance.options_icon.cy)
-    .attr("r", appearance.options_icon.radius)
+    .attr("cx", appearance.options_icon_on_node.cx)
+    .attr("cy", appearance.options_icon_on_node.cy)
+    .attr("r", appearance.options_icon_on_node.radius)
     .attr("fill", "url(#other_options)")
-    .attr("stroke", getNodeOutlineColor)
-    .attr("stroke-width", appearance.options_icon.outline_width);
+    .attr("stroke", appearance.options_icon_on_node.outline_color)
+    .attr("stroke-width", appearance.options_icon_on_node.outline_width);
 
   // mouse interactions for nodes
   nodes_selection

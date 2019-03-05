@@ -35,6 +35,37 @@ html
   line-height: initial;
 }
 
+#node_sidebar_options_container
+{
+  display: flex;
+  margin-bottom: 10px;
+}
+
+#node_sidebar_options_container svg
+{
+  flex-shrink: 0;
+}
+
+#node_sidebar_options_container div
+{
+  margin: 0 0 0 10px;
+}
+
+#node_sidebar_options_container h2
+{
+  margin: 0 0 5px 0;
+}
+
+#node_sidebar_options_container p
+{
+  margin: 0;
+}
+
+#node_sidebar_uses_container h2
+{
+  margin: 0 0 5px 0;
+}
+
 .use-container
 {
   display: flex;
@@ -65,7 +96,6 @@ html
 
 #link_sidebar_header_container h1
 {
-  margin: 0;
   margin: 0 0 0 10px;
   align-self: center;
 }

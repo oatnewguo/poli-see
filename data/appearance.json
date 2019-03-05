@@ -53,13 +53,21 @@
     "outline_width": 2,
     "outline_color": "#000000"
   },
-  "options_icon":
+  "options_icon_on_node":
   {
     "radius": 10,
     "cx": 15,
     "cy": 15,
     "outline_width": 2,
-    "fill_color": "#FFF"
+    "fill_color": "#FFFFFF",
+    "outline_color": "#000000"
+  },
+  "options_icon_in_sidebar":
+  {
+    "radius": 20,
+    "outline_width": 2,
+    "fill_color": "#FFFFFF",
+    "outline_color": "#000000"
   },
   "node_sidebar":
   {
