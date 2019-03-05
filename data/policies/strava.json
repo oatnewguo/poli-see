@@ -22,6 +22,7 @@
         {"successor_id": "contact_1", "type": "link_share", "text": "You can choose to provide us with your contact information so we can better respond to your support requests and comments."},
         {"successor_id": "info_from_others_1", "type": "link_collect", "text": "Strava obtains additional third party information about our members from marketers, partners, researchers, and others. We may combine information that we collect from you with information obtained from other members, third parties and information derived from any other subscription, product, or service we provide. We may also collect information about you from other members such as when they give you kudos or comment on your activities."},
         {"successor_id": "device_1", "type": "link_collect", "text": "Strava collects device information that provides us with technical information when you access or use the Services."},
+        {"successor_id": "logs_1", "type": "link_collect", "text": "Strava uses log files to collect additional information."},
         {"successor_id": "information_necessary_for_services_1", "type": "link_collect", "text": "Strava may collect information necessary for third-parties to provide services to Strava."}
       ],
       "layer": 0,
@@ -84,7 +85,7 @@
       "options": true,
       "options_text": "Please visit your <a href=\"https://www.strava.com/settings/privacy\" target=\"_blank\">privacy controls</a> if you object to Strava sharing this information.",
       "label": "Aggregated Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_research_other", "use_legal"],
+      "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
     },
@@ -141,8 +142,8 @@
       "options_text": "",
       "label": "Any Information Strava Collects",
       "uses": ["use_unknown"],
-      "data_handler": "Third parties, including law enforcement, public or governmental agencies, or private litigants, within or outside your country of residence",
-      "text": "Your information, if we determine disclosure is allowed by the law or reasonably necessary to comply with the law, including to respond to court orders, warrants, subpoenas, or other legal or regulatory process. We may also retain, preserve or disclose your information if we determine that disclosure is reasonably necessary or appropriate to prevent any person from death or serious bodily injury, to address issues of national security or other issues of public importance, to prevent or detect violations of our Terms of Service or fraud or abuse of Strava or its members, or to protect our operations or our property or other legal rights, including by disclosure to our legal counsel and other consultants and third parties in connection with actual or potential litigation."
+      "data_handler": "Third parties, including law enforcement, public or governmental agencies, or private litigants, within or outside your country of residence,",
+      "text": "Your information, if we determine disclosure is allowed by the law or reasonably necessary to comply with the law, or if disclosure is reasonably necessary or appropriate to prevent any person from death or serious bodily injury, to address issues of national security or other issues of public importance, to prevent or detect violations of our Terms of Service or fraud or abuse of Strava or its members, or to protect our operations or our property or other legal rights."
     },
     { "id": "all_2.4",
       "successor_links":
@@ -156,7 +157,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
-      "text": "We may share your information with third parties when we forward Digital Millennium Copyright Act (DMCA) notifications, which will be forwarded as submitted to us without any deletions."
+      "text": "Your information, when we forward Digital Millennium Copyright Act (DMCA) notifications."
     },
     { "id": "account_1",
       "successor_links":
@@ -191,7 +192,6 @@
     { "id": "profile_1",
       "successor_links":
       [
-        {"successor_id": "logs_1", "type": "link_collect", "text": "Strava uses log files to collect additional information."},
         {"successor_id": "profile_2", "type": "link_share", "text": "Subject to your privacy controls, your profile and activities will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."},
         {"successor_id": "profile_3", "type": "link_share", "text": "Strava may make certain profile information available to non-members on the web."}
       ],
@@ -205,22 +205,6 @@
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
       "text": "Pictures, activities (including date, time and geo-location information as well as your speed and pace) and posts, and other information about your use of the Services."
-    },
-    { "id": "logs_1",
-      "successor_links":
-      [
-
-      ],
-      "layer": 1,
-      "type": "node_activity",
-      "all_data": false,
-      "identifiable": true,
-      "options": false,
-      "options_text": "",
-      "label": "Data from Log Files",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
     },
     { "id": "profile_2",
       "successor_links":
@@ -483,6 +467,22 @@
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
       "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
+    },
+    { "id": "logs_1",
+      "successor_links":
+      [
+
+      ],
+      "layer": 1,
+      "type": "node_activity",
+      "all_data": false,
+      "identifiable": true,
+      "options": false,
+      "options_text": "",
+      "label": "Data from Log Files",
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "data_handler": "Strava",
+      "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
     },
     { "id": "information_necessary_for_services_1",
       "successor_links":

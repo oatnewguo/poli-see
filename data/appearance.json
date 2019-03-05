@@ -22,7 +22,7 @@
     {
       "radius": 40
     },
-    "radius": 20,
+    "radius": 18,
     "distance_from_center_proportions": [0.0, 0.4, 0.6, 0.77, 0.91],
     "outline_width": 2,
     "outline_width_focus": 3,

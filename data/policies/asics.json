@@ -52,7 +52,7 @@
       "options": false,
       "options_text": "",
       "label": "Any Information ASICS Collects",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": ""
     },
@@ -68,7 +68,7 @@
       "options": false,
       "options_text": "",
       "label": "Any Information ASICS Collects, Aggregated",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": ""
     },
@@ -100,7 +100,7 @@
       "options": false,
       "options_text": "",
       "label": "Any Information ASICS Collects",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "Data controllers within the ASICS Group",
       "text": ""
     },
@@ -118,7 +118,7 @@
       "label": "Any Information ASICS Collects",
       "uses": ["use_unknown"],
       "data_handler": "Service Providers and Processor",
-      "text": "We engage third party vendors, agents, service providers, and affiliated entities to provide services to us on our behalf, such as support for the internal operations of our websites, online stores (including payment processors and third parties we use of sending your orders to your home address), Services (e.g., technical support processing), as well as related offline product support services, data storage and other services."
+      "text": "Information ASICS may share with third-party service providers. Our contracts with these service providers do not permit use of your information for their own (marketing) purposes. Consistent with applicable legal requirements, we take commercially reasonable steps to require third parties to adequately safeguard your personal data and only process it in accordance with our instructions."
     },
     { "id": "all_2.3",
       "successor_links":
@@ -196,7 +196,7 @@
       "options": false,
       "options_text": "",
       "label": "Contact Details",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "Your name, postal address and other contact details, such as your telephone number and e-mail address."
     },
@@ -212,7 +212,7 @@
       "options": false,
       "options_text": "",
       "label": "Account Data and Electronic Identification Data",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "Your ASICS ID account or other ASICS account (if you have made such an account with us) and other electronic identification data (such as IDFA, GAID, IP address, MAC address) and the data you add to your ASICS ID account or other ASICS account, such as your password, your date of birth, your gender, your language of preference, the time zone you live in, your picture and other information you may share with us."
     },
@@ -228,7 +228,7 @@
       "options": false,
       "options_text": "",
       "label": "Information Regarding Your Use of Our Online Services",
-      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "This may include data regarding the pages you visit, the products and services you like and the content of your abandoned shopping cart."
     },
@@ -244,7 +244,7 @@
       "options": false,
       "options_text": "",
       "label": "Your Purchases in Our Stores and Online",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "The data we collect if you purchase a product or use a Service in one of our stores or online, such as the amount and date of your purchase, the product you purchase or Service you use, location of the store, the website or app through which you make your purchase, payment method, payment status, discount, delivery method and delivery address."
     },
@@ -260,7 +260,7 @@
       "options": false,
       "options_text": "",
       "label": "Your Leisure Activities, Interest and Events",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "This includes information regarding events we organize or sponsor, including your interest in and registration to those events (including the date and place of the event and your personal targets), as well as your reason for running and other fitness activities, whether you prefer to run alone or with friends and what other sports you enjoy."
     },
@@ -276,7 +276,7 @@
       "options": false,
       "options_text": "",
       "label": "Your Training and Running Data",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "The training and running data that you fill out on or generate through the use of our Services or that you import from other apps or services from our partners or third parties, including your running experience and current running abilities (the distance you can run and the time that you can run it in), your training goal (aimed distance and race time), performance (distance and race time, records), training schedule (date, duration and type), your type of running (trail running, natural running or speed running) and your fitness activities."
     },
@@ -292,7 +292,7 @@
       "options": false,
       "options_text": "",
       "label": "Your Details Regarding Contests",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "The data we collect if you participate in a contest."
     },
@@ -308,7 +308,7 @@
       "options": false,
       "options_text": "",
       "label": "Your Reviews",
-      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "The opinions, experiences, preferences and interests, and product or event reviews that you publish on our websites or share with us online or through social media, such as your experiences and tips regarding gear, your race day and your training schedule."
     },
@@ -324,7 +324,7 @@
       "options": false,
       "options_text": "",
       "label": "Your Communication Data",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "Your requests, any complaints you may have and any other data that we receive if we communicate with you via e-mail, online or via social media."
     },
@@ -340,7 +340,7 @@
       "options": true,
       "options_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Activity Data and Other Information You Provide When Using the Services",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "Your foot and clothes size and other personal measurement information and activity data that you voluntarily share with us through the use of the Services, such as weight, height, heartrate, calories burned, steps taken, nutritional information, sleep activities, other activity data (type, duration and frequency of fitness activities, distance, speed, pace, step count) and injuries."
     },
@@ -356,7 +356,7 @@
       "options": true,
       "options_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Running Specifics",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "Your current running shoe, which running type you are and the level of your running."
     },
@@ -372,7 +372,7 @@
       "options": true,
       "options_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Test and Measurement Results",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "Measurement data we collect if you participate in one of our tests or measurement programs, such as Foot ID, Motion ID, Running Lab, 3D foot shape measurement, leg alignment measurement, body composition measurement, leg strength test, running form test, aerobic test and similar measurement programs and tests. Measurement data that we collect during our tests may also include heartrate, blood pressure, oxygen level in blood, fat and muscle mass weight and percentage, BMI, BMR, strength and endurance."
     },
@@ -388,7 +388,7 @@
       "options": true,
       "options_text": "We will only use location data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Location",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_other"],
+      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "text": "Exact information regarding your location, such as GPS, accelerometer, your running route (including precise location data that shows your geographical position)."
     }
@@ -490,6 +490,11 @@
     { "id": "use_ads",
       "label": "Advertise or market to you",
       "image":"images/use_icons/ads.svg",
+      "fill_color": "gold"
+    },
+    { "id": "use_business",
+      "label": "Conduct business operations",
+      "image":"images/use_icons/business.svg",
       "fill_color": "gold"
     },
     { "id": "use_communicate",
