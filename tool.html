@@ -710,13 +710,11 @@ function main()
 
     let node_sidebar_extra_space = 2 * (appearance.node_sidebar.padding +
       appearance.node_sidebar.outline_width);
-    let node_sidebar_width = display_radius - node_sidebar_extra_space;
     let node_sidebar_max_height = 2 * display_radius - node_sidebar_extra_space;
 
     let link_sidebar_summary_height = 2 * (appearance.node.radius + appearance.node.outline_width);
     let link_sidebar_extra_space = 2 * (appearance.link_sidebar.padding +
       appearance.link_sidebar.outline_width);
-    let link_sidebar_width = display_radius - link_sidebar_extra_space;
     let link_sidebar_max_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_summary_height -
       appearance.link_sidebar_graphic.margin_bottom;
 
@@ -733,7 +731,7 @@ function main()
 
     node_sidebar_selection
       .style("border", appearance.node_sidebar.outline_width + "px solid")
-      .style("width", node_sidebar_width + "px")
+      .style("width", appearance.node_sidebar.width + "px")
       .style("max-height", node_sidebar_max_height + "px")
       .style("padding", appearance.node_sidebar.padding + "px");
 
@@ -753,7 +751,7 @@ function main()
     link_sidebar_selection
       .style("border", appearance.link_sidebar.outline_width + "px solid " + appearance.link_sidebar.outline_color)
       .style("background-color", appearance.link_sidebar.fill_color)
-      .style("width", link_sidebar_width + "px")
+      .style("width", appearance.link_sidebar.width + "px")
       .style("max-height", link_sidebar_max_height + "px")
       .style("padding", appearance.link_sidebar.padding + "px");
 
@@ -1001,7 +999,7 @@ function main()
 
 
 // load data from .json files
-d3.json("data/policies/asics.json").then(function(policy_json)
+d3.json("data/policies/strava.json").then(function(policy_json)
 {
   d3.json("data/appearance.json").then(function(appearance_json)
   {
