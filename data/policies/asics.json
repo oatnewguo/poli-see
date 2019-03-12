@@ -399,49 +399,66 @@
   "node_types":
   [
     { "id": "node_account",
-      "image": "images/node_icons/account.svg"
+      "image": "images/node_icons/account.svg",
+      "all_data": false
     },
     { "id": "node_activity",
-      "image": "images/node_icons/activity.svg"
+      "image": "images/node_icons/activity.svg",
+      "all_data": false
     },
     { "id": "node_all",
-      "image": "images/node_icons/all.svg"
+      "image": "images/node_icons/all_identifiable.svg",
+      "image_identifiable": "images/node_icons/all_identifiable.svg",
+      "image_unidentifiable": "images/node_icons/all_unidentifiable.svg",
+      "all_data": true
     },
     { "id": "node_basic",
-      "image": "images/node_icons/basic.svg"
+      "image": "images/node_icons/basic.svg",
+      "all_data": false
     },
     { "id": "node_connections",
-      "image":"images/node_icons/connections.svg"
+      "image":"images/node_icons/connections.svg",
+      "all_data": false
     },
     { "id": "node_contact",
-      "image":"images/node_icons/contact.svg"
+      "image":"images/node_icons/contact.svg",
+      "all_data": false
     },
     { "id": "node_cookie",
-      "image":"images/node_icons/cookie.svg"
+      "image":"images/node_icons/cookie.svg",
+      "all_data": false
     },
     { "id": "node_device",
-      "image":"images/node_icons/device.svg"
+      "image":"images/node_icons/device.svg",
+      "all_data": false
     },
     { "id": "node_financial",
-      "image":"images/node_icons/financial.svg"
+      "image":"images/node_icons/financial.svg",
+      "all_data": false
     },
     { "id": "node_health",
-      "image":"images/node_icons/health.svg"
+      "image":"images/node_icons/health.svg",
+      "all_data": false
     },
     { "id": "node_location",
-      "image":"images/node_icons/location.svg"
+      "image":"images/node_icons/location.svg",
+      "all_data": false
     },
     { "id": "node_photos",
-      "image":"images/node_icons/photos.svg"
+      "image":"images/node_icons/photos.svg",
+      "all_data": false
     },
     { "id": "node_user",
-      "image":"images/node_icons/user.svg"
+      "image":"images/node_icons/user.svg",
+      "all_data": false
     },
     { "id": "node_user-generated_content",
-      "image":"images/node_icons/user-generated_content.svg"
+      "image":"images/node_icons/user-generated_content.svg",
+      "all_data": false
     },
     { "id": "node_other",
-      "image":"images/generic_icon.svg"
+      "image":"images/generic_icon.svg",
+      "all_data": false
     }
   ],
 

@@ -217,10 +217,6 @@ function getNodeRadius(n)
   {
     return appearance.node.central_node_radius;
   }
-  else if(n.all_data)
-  {
-    return appearance.node.all_data_node_radius;
-  }
   return appearance.node.radius;
 }
 
@@ -288,9 +284,19 @@ function setUpPatterns()
     let num_node_types = node_types.length;
     for(let i = 0; i < num_node_types; i++)
     {
-      node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image, fill_color: appearance.node.fill_color_unidentifiable});
-      node_types[i].id = node_types[i].id + "_identifiable";
-      node_types[i].fill_color = appearance.node.fill_color_identifiable;
+      if(node_types[i].all_data)
+      {
+        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image_unidentifiable, fill_color: appearance.node.fill_color_all_data});
+        node_types[i].id = node_types[i].id + "_identifiable";
+        node_types[i].image = node_types[i].image_identifiable;
+        node_types[i].fill_color = appearance.node.fill_color_all_data;
+      }
+      else
+      {
+        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image, fill_color: appearance.node.fill_color_unidentifiable});
+        node_types[i].id = node_types[i].id + "_identifiable";
+        node_types[i].fill_color = appearance.node.fill_color_identifiable;
+      }
     }
   }
 
