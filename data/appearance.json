@@ -48,7 +48,7 @@
   },
   "link_icon":
   {
-    "radius": 20,
+    "radius": 15,
     "outline_width": 2,
     "outline_color": "#000000"
   },
