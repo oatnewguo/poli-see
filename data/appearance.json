@@ -5,7 +5,7 @@
   },
   "background_circle":
   {
-    "radius_proportions": [0.0, 0.7, 0.84, 0.98],
+    "radius_proportions": [0.0, 0.76, 0.98],
     "outline_width": 2,
     "fill_color": "#EEEEFF",
     "outline_color": "#B6B6DA"
@@ -13,15 +13,16 @@
   "layer_title":
   {
     "space_in_pi_radians": 0.15,
-    "font_size": 18,
-    "color": "#66668A"
+    "font_size": 22,
+    "color": "#66668A",
+    "distance_from_edge": 5
   },
   "node":
   {
     "radius": 18,
     "central_node_radius": 40,
     "all_data_node_radius": 22,
-    "distance_from_center_proportions": [0.0, 0.4, 0.6, 0.77, 0.91],
+    "distance_from_center_proportions": [0.0, 0.4, 0.62, 0.87],
     "outline_width": 2,
     "outline_width_focus": 3,
     "fill_color_identifiable": "#9696BA",

@@ -106,7 +106,7 @@
     { "id": "all_3",
       "successor_links":
       [],
-      "layer": 3,
+      "layer": 2,
       "type": "node_all",
       "all_data": true,
       "identifiable": true,
@@ -223,7 +223,7 @@
     { "id": "profile_3",
       "successor_links":
       [],
-      "layer": 3,
+      "layer": 2,
       "type": "node_basic",
       "all_data": false,
       "identifiable": true,
@@ -393,7 +393,7 @@
     { "id": "location_3",
       "successor_links":
       [],
-      "layer": 3,
+      "layer": 2,
       "type": "node_location",
       "all_data": false,
       "identifiable": true,

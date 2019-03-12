@@ -69,7 +69,7 @@ const element_types =
   LINK: "link"
 }
 
-const NUM_LAYERS = 4;
+const NUM_LAYERS = 3;
 
 // variables for title, intro text, and name of the primary data-collecting entity
 var title;
@@ -870,7 +870,7 @@ function main()
 
 
   // append background circles for layers
-  for(let i = 3; i > 0; i--)
+  for(let i = NUM_LAYERS - 1; i > 0; i--)
   {
     let r = background_circles_radii[i];
 
@@ -880,15 +880,11 @@ function main()
       .attr("stroke", appearance.background_circle.outline_color)
       .attr("stroke-width", appearance.background_circle.outline_width);
 
-    let r_for_text = r - appearance.layer_title.font_size;
+    let r_for_text = r - appearance.layer_title.font_size - appearance.layer_title.distance_from_edge;
     let text;
-    if(i == 3)
+    if(i == 2)
     {
-      text = "Public";
-    }
-    else if(i == 2)
-    {
-      text = "Affiliates of " + primary_entity_name;
+      text = "Third parties";
     }
     else
     {
