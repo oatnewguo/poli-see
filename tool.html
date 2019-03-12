@@ -431,7 +431,7 @@ function createTree(root)
 // update the node sidebar based on a node
 function updateNodeSidebar(n)
 {
-  //
+  // set color of sidebar based on whether permitted use of data is known
   var fill_color;
   var outline_color;
   if(n.uses.some(id => getUseTypeById(id).unknown == true))
