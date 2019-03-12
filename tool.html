@@ -42,7 +42,7 @@
   </div>
 
   <div id="link_sidebar_container" class="sidebar_container" style="display: none">
-    <svg id="link_sidebar_summary">
+    <svg id="link_sidebar_graphic">
       <polyline></polyline>
       <circle></circle>
       <circle></circle>
@@ -110,8 +110,8 @@ var node_sidebar_options_container_selection = node_sidebar_selection.select("#n
 // selection of div for node uses
 var node_sidebar_uses_container_selection = node_sidebar_selection.select("#node_sidebar_uses_container");
 
-// selection of svg for link sidebar summary
-var link_sidebar_summary_selection = link_sidebar_container_selection.select("#link_sidebar_summary");
+// selection of svg for link sidebar graphic
+var link_sidebar_graphic_selection = link_sidebar_container_selection.select("#link_sidebar_graphic");
 
 // radii of background circles
 var background_circles_radii;
@@ -516,17 +516,17 @@ function updateLinkSidebar(l)
 
   var node_radius_with_outline = appearance.node.radius + appearance.node.outline_width;
 
-  // update the link summary
-  link_sidebar_summary_selection.select("polyline")
+  // update the link graphic
+  link_sidebar_graphic_selection.select("polyline")
       .attr("points", createLinkPolylineFromValues(node_radius_with_outline, node_radius_with_outline,
-        appearance.display.radius - node_radius_with_outline, node_radius_with_outline,
-        appearance.link_icon.radius + appearance.link_icon.outline_width + 3))
+        appearance.link_sidebar_graphic.distance_between_nodes + node_radius_with_outline, node_radius_with_outline,
+        node_radius_with_outline + 3))
       .attr("fill", getLinkFillColor(l))
       .attr("stroke", getLinkOutlineColor(l));
-  link_sidebar_summary_selection.select("circle")
+  link_sidebar_graphic_selection.select("circle")
       .attr("fill", getNodePattern(source))
       .attr("stroke", getNodeOutlineColor(source));
-  link_sidebar_summary_selection.select("circle:nth-child(3)")
+  link_sidebar_graphic_selection.select("circle:nth-child(3)")
       .attr("fill", getNodePattern(dest))
       .attr("stroke", getNodeOutlineColor(dest));
 
@@ -708,20 +708,20 @@ function main()
   {
     let display_radius = appearance.display.radius;
 
-    let node_sidebar_extra_space = 2 * (appearance.node_sidebar.padding +
-      appearance.node_sidebar.outline_width);
-    let node_sidebar_max_height = 2 * display_radius - node_sidebar_extra_space;
-
-    let link_sidebar_summary_height = 2 * (appearance.node.radius + appearance.node.outline_width);
-    let link_sidebar_extra_space = 2 * (appearance.link_sidebar.padding +
-      appearance.link_sidebar.outline_width);
-    let link_sidebar_max_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_summary_height -
-      appearance.link_sidebar_graphic.margin_bottom;
-
     let node_radius_with_outline = appearance.node.radius + appearance.node.outline_width;
     let link_icon_radius_with_outline = appearance.link_icon.radius + appearance.link_icon.outline_width;
     let options_icon_in_sidebar_radius_with_outline = appearance.options_icon_in_sidebar.radius +
       appearance.options_icon_in_sidebar.outline_width;
+
+    let node_sidebar_extra_space = 2 * (appearance.node_sidebar.padding +
+      appearance.node_sidebar.outline_width);
+    let node_sidebar_max_height = 2 * display_radius - node_sidebar_extra_space;
+
+    let link_sidebar_graphic_height = 2 * node_radius_with_outline;
+    let link_sidebar_extra_space = 2 * (appearance.link_sidebar.padding +
+      appearance.link_sidebar.outline_width);
+    let link_sidebar_max_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_graphic_height -
+      appearance.link_sidebar_graphic.margin_bottom;
 
     background_circles_radii = appearance.background_circle.radius_proportions.map(function(x) { return x * display_radius; });
     svg_selection
@@ -755,21 +755,21 @@ function main()
       .style("max-height", link_sidebar_max_height + "px")
       .style("padding", appearance.link_sidebar.padding + "px");
 
-    link_sidebar_summary_selection
-      .attr("width", display_radius + "px")
-      .attr("height", link_sidebar_summary_height)
+    link_sidebar_graphic_selection
+      .attr("width", (appearance.link_sidebar_graphic.distance_between_nodes + 2 * node_radius_with_outline) + "px")
+      .attr("height", link_sidebar_graphic_height)
       .style("margin-bottom", appearance.link_sidebar_graphic.margin_bottom);
-    link_sidebar_summary_selection.select("polyline")
+    link_sidebar_graphic_selection.select("polyline")
         .attr("transform", "translate(" + node_radius_with_outline + "," + node_radius_with_outline + ") rotate(270)")
         .attr("stroke-width", appearance.link.outline_width);
-    link_sidebar_summary_selection.select("circle")
+    link_sidebar_graphic_selection.select("circle")
         .attr("r", appearance.node.radius)
         .attr("cx", node_radius_with_outline)
         .attr("cy", node_radius_with_outline)
         .attr("stroke-width", appearance.node.outline_width);
-    link_sidebar_summary_selection.select("circle:nth-child(3)")
+    link_sidebar_graphic_selection.select("circle:nth-child(3)")
         .attr("r", appearance.node.radius)
-        .attr("cx", appearance.display.radius - node_radius_with_outline)
+        .attr("cx", appearance.link_sidebar_graphic.distance_between_nodes + node_radius_with_outline)
         .attr("cy", node_radius_with_outline)
         .attr("stroke-width", appearance.node.outline_width);
 

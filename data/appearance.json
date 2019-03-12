@@ -93,6 +93,7 @@
   },
   "link_sidebar_graphic":
   {
-    "margin_bottom": 10
+    "margin_bottom": 10,
+    "distance_between_nodes": 200
   }
 }
