@@ -328,7 +328,7 @@ function setUpPatterns()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", "black");
+    .attr("fill", appearance.link_icon.fill_color);
   link_icon_patterns.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
@@ -349,7 +349,8 @@ function setUpPatterns()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", function(d) { return appearance.use_icon.fill_color_by_concern_level[d.concern_level]; });
+    .attr("fill", function(d) { return d.unknown ? appearance.use_icon.fill_color_unknown
+                                                 : appearance.use_icon.fill_color_normal });
   use_icon_patterns.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
@@ -430,19 +431,23 @@ function createTree(root)
 // update the node sidebar based on a node
 function updateNodeSidebar(n)
 {
-  // set color of node sidebar according to most concerning data use
-  var max_concern_level = 0;
-  for(let i = 0; i < n.uses.length; i++)
+  //
+  var fill_color;
+  var outline_color;
+  if(n.uses.some(id => getUseTypeById(id).unknown == true))
   {
-    let c = getUseTypeById(n.uses[i]).concern_level;
-    if(c > max_concern_level)
-    {
-      max_concern_level = c;
-    }
+    fill_color = appearance.node_sidebar.fill_color_use_unknown;
+    outline_color = appearance.node_sidebar.outline_color_use_unknown;
+  }
+  else
+  {
+    fill_color = appearance.node_sidebar.fill_color_normal;
+    outline_color = appearance.node_sidebar.outline_color_normal;
   }
   node_sidebar_selection
-    .style("background-color", appearance.node_sidebar.fill_color_by_concern_level[max_concern_level])
-    .style("border-color", appearance.node_sidebar.outline_color_by_concern_level[max_concern_level]);
+    .style("background-color", fill_color)
+    .style("border-color", outline_color);
+
 
   // set basic sidebar text
   node_sidebar_selection.select("h1")
@@ -481,8 +486,7 @@ function updateNodeSidebar(n)
     .data(n.uses)
     .enter().append("div")
       .classed("use-container", true)
-      .style("border-bottom", appearance.node_sidebar.outline_width + "px solid " +
-        appearance.node_sidebar.outline_color_by_concern_level[max_concern_level]);
+      .style("border-bottom", appearance.node_sidebar.outline_width + "px solid " + outline_color);
 
   // remove bottom border from last use div
   node_sidebar_uses_container_selection.select("div:last-child")

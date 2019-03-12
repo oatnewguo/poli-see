@@ -50,13 +50,15 @@
   {
     "radius": 15,
     "outline_width": 2,
+    "fill_color": "#000000",
     "outline_color": "#000000"
   },
   "use_icon":
   {
     "radius": 15,
     "outline_width": 2,
-    "fill_color_by_concern_level": ["#008A00", "#EECC00", "#B60000"],
+    "fill_color_normal": "#000000",
+    "fill_color_unknown": "#E00000",
     "outline_color": "#000000"
   },
   "options_icon_on_node":
@@ -80,8 +82,10 @@
     "padding": 15,
     "width": 480,
     "outline_width": 2,
-    "fill_color_by_concern_level": ["#EEFFEE", "#FFF8EE", "#FFEEEE"],
-    "outline_color_by_concern_level": ["#008A00", "#EECC00", "#B60000"]
+    "fill_color_normal": "#EEEEFF",
+    "outline_color_normal": "#B6B6DA",
+    "fill_color_use_unknown": "#FFEEEE",
+    "outline_color_use_unknown": "#E00000"
   },
   "link_sidebar":
   {

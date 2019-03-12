@@ -490,72 +490,72 @@
     { "id": "use_ads",
       "label": "Advertise or market to you",
       "image":"images/use_icons/ads.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_business",
       "label": "Conduct business operations",
       "image":"images/use_icons/business.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_communicate",
       "label": "Communicate with you",
       "image":"images/use_icons/communicate.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_detect_malicious",
       "label": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.svg",
-      "concern_level": 0
+      "unknown": false
     },
     { "id": "use_detect_violations",
       "label": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.svg",
-      "concern_level": 0
+      "unknown": false
     },
     { "id": "use_legal",
       "label": "Conduct audits and respond to legal requirements",
       "image":"images/use_icons/legal.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_personalize_marketing",
       "label": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_personalize_services",
       "label": "Personalize services and content",
       "image":"images/use_icons/personalize_services.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_promotions",
       "label": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_provide_services",
       "label": "Provide services to you",
       "image": "images/use_icons/provide_services.svg",
-      "concern_level": 0
+      "unknown": false
     },
     { "id": "use_research_services",
       "label": "Conduct research and development on services",
       "image":"images/use_icons/research_services.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_research_other",
       "label": "Conduct research not related to services",
       "image":"images/use_icons/research_other.svg",
-      "concern_level": 1
+      "unknown": false
     },
     { "id": "use_other",
       "label": "Fulfill some other purpose",
       "image":"images/generic_icon.svg",
-      "concern_level": 2
+      "unknown": false
     },
     { "id": "use_unknown",
       "label": "Use unknown!",
       "image":"images/use_icons/unknown.svg",
-      "concern_level": 2
+      "unknown": true
     }
   ]
 }
