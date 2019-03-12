@@ -42,8 +42,8 @@
         {"successor_id": "all_2.2", "type": "link_share", "text": ""},
         {"successor_id": "all_2.3", "type": "link_share", "text": "Sometimes ASICS offers you a service or application in co-operation with partners. We may also disclose your personal data to those partners, but only where you have consented or requested that we do so."},
         {"successor_id": "all_2.4", "type": "link_share", "text": ""},
-        {"successor_id": "all_3.1", "type": "link_share", "text": ""},
-        {"successor_id": "all_3.2", "type": "link_share", "text": "We may also disclose information about you, including personal data to any other third parties, where you have consented or requested that we do so."}
+        {"successor_id": "all_2.5", "type": "link_share", "text": ""},
+        {"successor_id": "all_2.6", "type": "link_share", "text": "We may also disclose information about you, including personal data to any other third parties, where you have consented or requested that we do so."}
       ],
       "layer": 1,
       "type": "node_all",
@@ -152,7 +152,7 @@
       "data_handler": "Third parties in case of legal requirement",
       "text": "Personal data we are required by law to disclose."
     },
-    { "id": "all_3.1",
+    { "id": "all_2.5",
       "successor_links":
       [
 
@@ -168,7 +168,7 @@
       "data_handler": "Third parties",
       "text": "Personal data we disclose as part of any merger, sale, transfer of ASICS’ assets, acquisition, bankruptcy, or similar event."
     },
-    { "id": "all_3.2",
+    { "id": "all_2.6",
       "successor_links":
       [
 
