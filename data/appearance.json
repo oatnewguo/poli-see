@@ -7,14 +7,14 @@
   {
     "radius_proportions": [0.0, 0.76, 0.98],
     "outline_width": 2,
-    "fill_color": "#EEEEFF",
-    "outline_color": "#B6B6DA"
+    "fill_color": "#F4F4FF",
+    "outline_color": "#9090B0"
   },
   "layer_title":
   {
     "space_in_pi_radians": 0.15,
     "font_size": 22,
-    "color": "#66668A",
+    "color": "#404060",
     "distance_from_edge": 5
   },
   "node":
@@ -25,10 +25,10 @@
     "distance_from_center_proportions": [0.0, 0.4, 0.62, 0.87],
     "outline_width": 2,
     "outline_width_focus": 3,
-    "fill_color_identifiable": "#9696BA",
-    "fill_color_unidentifiable": "#969696",
-    "outline_color_identifiable": "#66668A",
-    "outline_color_unidentifiable": "#666666",
+    "fill_color_identifiable": "#66668A",
+    "fill_color_unidentifiable": "#A0A0A0",
+    "outline_color_identifiable": "#404060",
+    "outline_color_unidentifiable": "#707070",
     "outline_color_focus": "#FFFF00"
   },
   "link":
@@ -38,12 +38,12 @@
     "arrowhead_width": 10,
     "outline_width": 2,
     "outline_width_focus": 3,
-    "fill_color_identifiable": "#66668A",
-    "fill_color_unidentifiable": "#666666",
-    "fill_color_background": "#B6B6DA",
-    "outline_color_identifiable": "#66668A",
-    "outline_color_unidentifiable": "#666666",
-    "outline_color_background": "#B6B6DA",
+    "fill_color_identifiable": "#404060",
+    "fill_color_unidentifiable": "#707070",
+    "fill_color_background": "#C0C0E0",
+    "outline_color_identifiable": "#404060",
+    "outline_color_unidentifiable": "#707070",
+    "outline_color_background": "#C0C0E0",
     "outline_color_focus": "#FFFF00"
   },
   "link_icon":
@@ -58,7 +58,7 @@
     "radius": 15,
     "outline_width": 2,
     "fill_color_normal": "#000000",
-    "fill_color_unknown": "#E00000",
+    "fill_color_unknown": "#C00000",
     "outline_color": "#000000"
   },
   "options_icon_on_node":
@@ -82,18 +82,18 @@
     "padding": 15,
     "width": 480,
     "outline_width": 2,
-    "fill_color_normal": "#EEEEFF",
-    "outline_color_normal": "#B6B6DA",
-    "fill_color_use_unknown": "#FFEEEE",
-    "outline_color_use_unknown": "#E00000"
+    "fill_color_normal": "#F4F4FF",
+    "outline_color_normal": "#9090B0",
+    "fill_color_use_unknown": "#FFDBDB",
+    "outline_color_use_unknown": "#C00000"
   },
   "link_sidebar":
   {
     "padding": 15,
     "width": 480,
     "outline_width": 2,
-    "fill_color": "#EEEEFF",
-    "outline_color": "#B6B6DA"
+    "fill_color": "#F4F4FF",
+    "outline_color": "#9090B0"
   },
   "link_sidebar_graphic":
   {
