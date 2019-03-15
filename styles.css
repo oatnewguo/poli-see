@@ -29,6 +29,7 @@ html
 .sidebar
 {
   overflow: scroll;
+  word-wrap: break-word;
 }
 
 .sidebar > h1
