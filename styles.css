@@ -32,15 +32,19 @@ html
   word-wrap: break-word;
 }
 
-.sidebar > h1
-{
-  margin: 0;
-  font-size: 1.8em;
-}
-
 .sidebar > *
 {
   margin: 15px 0 0 0;
+}
+
+.sidebar > *:first-child
+{
+  margin: 0;
+}
+
+.sidebar h1
+{
+  font-size: 1.8em;
 }
 
 .sidebar_container

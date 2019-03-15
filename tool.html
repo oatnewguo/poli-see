@@ -611,6 +611,23 @@ function updateLinkSidebar(l)
   var source = getNodeById(l.source);
   var dest = getNodeById(l.destination);
 
+  // set color of sidebar based on whether data of destination node is identifiable or not
+  var fill_color;
+  var outline_color;
+  if(dest.identifiable)
+  {
+    fill_color = appearance.link_sidebar.fill_color_identifiable;
+    outline_color = appearance.link_sidebar.outline_color_identifiable;
+  }
+  else
+  {
+    fill_color = appearance.link_sidebar.fill_color_unidentifiable;
+    outline_color = appearance.link_sidebar.outline_color_unidentifiable;
+  }
+  link_sidebar_selection
+    .style("background-color", fill_color)
+    .style("border-color", outline_color);
+
   var node_radius_with_outline = appearance.node.radius + appearance.node.outline_width;
 
   // update the link graphic
@@ -846,8 +863,7 @@ function main()
       .attr("stroke-width", appearance.options_icon_in_sidebar.outline_width);
 
     link_sidebar_selection
-      .style("border", appearance.link_sidebar.outline_width + "px solid " + appearance.link_sidebar.outline_color)
-      .style("background-color", appearance.link_sidebar.fill_color)
+      .style("border", appearance.link_sidebar.outline_width + "px solid")
       .style("width", appearance.link_sidebar.width + "px")
       .style("max-height", link_sidebar_max_height + "px")
       .style("padding", appearance.link_sidebar.padding + "px");
