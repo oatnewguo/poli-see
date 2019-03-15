@@ -447,18 +447,18 @@ function createTree(root)
 // update the node sidebar based on a node
 function updateNodeSidebar(n)
 {
-  // set color of sidebar based on whether permitted use of data is known
+  // set color of sidebar based on whether data is identifiable or not
   var fill_color;
   var outline_color;
-  if(n.uses.some(id => getUseTypeById(id).unknown == true))
+  if(n.identifiable)
   {
-    fill_color = appearance.node_sidebar.fill_color_use_unknown;
-    outline_color = appearance.node_sidebar.outline_color_use_unknown;
+    fill_color = appearance.node_sidebar.fill_color_identifiable;
+    outline_color = appearance.node_sidebar.outline_color_identifiable;
   }
   else
   {
-    fill_color = appearance.node_sidebar.fill_color_normal;
-    outline_color = appearance.node_sidebar.outline_color_normal;
+    fill_color = appearance.node_sidebar.fill_color_unidentifiable;
+    outline_color = appearance.node_sidebar.outline_color_unidentifiable;
   }
   node_sidebar_selection
     .style("background-color", fill_color)

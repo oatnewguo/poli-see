@@ -82,10 +82,10 @@
     "padding": 15,
     "width": 480,
     "outline_width": 2,
-    "fill_color_normal": "#F4F4FF",
-    "outline_color_normal": "#9090B0",
-    "fill_color_use_unknown": "#FFDBDB",
-    "outline_color_use_unknown": "#C00000"
+    "fill_color_identifiable": "#F4F4FF",
+    "outline_color_identifiable": "#9090B0",
+    "fill_color_unidentifiable": "#F8F8F8",
+    "outline_color_unidentifiable": "#C0C0C0"
   },
   "link_sidebar":
   {
