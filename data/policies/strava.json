@@ -33,6 +33,7 @@
       "label": "You",
       "uses": [],
       "data_handler": "",
+      "data_handler_category": "",
       "text": "This circle represents you. All the other circles represent data that we collect about you."
     },
     { "id": "all_1",
@@ -55,6 +56,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": ""
     },
     { "id": "all_aggregated_1",
@@ -71,6 +73,7 @@
       "label": "Aggregated Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_research_other", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
     },
     { "id": "all_aggregated_2",
@@ -85,6 +88,7 @@
       "label": "Aggregated Information",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
+      "data_handler_category": "third parties",
       "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
     },
     { "id": "all_2.1",
@@ -99,6 +103,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_provide_services"],
       "data_handler": "Third-party service providers",
+      "data_handler_category": "third parties",
       "text": "Information necessary to provide services to Strava such as supporting and improving the Services, promoting the Services, processing payments, or fulfilling orders. Service providers will only have access to the information necessary to perform these limited functions on our behalf and are required to protect and secure your information."
     },
     { "id": "all_2.2",
@@ -113,6 +118,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third party apps, plugins, or websites",
+      "data_handler_category": "third parties",
       "text": "Information and content, including your photos and your activity data (including private activities)."
     },
     { "id": "all_2.3",
@@ -127,6 +133,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_unknown"],
       "data_handler": "Other Strava members and non-members",
+      "data_handler_category": "Strava members and non-members",
       "text": "Your information and content."
     },
     { "id": "all_2.4",
@@ -141,6 +148,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Affiliates under common control with Strava",
+      "data_handler_category": "affiliates",
       "text": ""
     },
     { "id": "all_2.5",
@@ -155,6 +163,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties, including law enforcement, public or governmental agencies, or private litigants, within or outside your country of residence,",
+      "data_handler_category": "third parties",
       "text": "Your information, if we determine disclosure is allowed by the law or reasonably necessary to comply with the law, or if disclosure is reasonably necessary or appropriate to prevent any person from death or serious bodily injury, to address issues of national security or other issues of public importance, to prevent or detect violations of our Terms of Service or fraud or abuse of Strava or its members, or to protect our operations or our property or other legal rights."
     },
     { "id": "all_2.6",
@@ -169,6 +178,7 @@
       "label": "Any Information Strava Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
+      "data_handler_category": "third parties",
       "text": "Your information, when we forward Digital Millennium Copyright Act (DMCA) notifications."
     },
     { "id": "account_1",
@@ -185,6 +195,7 @@
       "label": "Basic Account Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Name, email address, date of birth, gender, username and password."
     },
     { "id": "account_2",
@@ -199,6 +210,7 @@
       "label": "Username",
       "uses": ["use_unknown"],
       "data_handler": "Strava members",
+      "data_handler_category": "Strava members",
       "text": ""
     },
     { "id": "profile_1",
@@ -216,6 +228,7 @@
       "label": "Profile, Activity and Use Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Pictures, activities (including date, time and geo-location information as well as your speed and pace) and posts, and other information about your use of the Services."
     },
     { "id": "profile_2.1",
@@ -230,6 +243,7 @@
       "label": "Profile and Activity Information",
       "uses": ["use_unknown"],
       "data_handler": "Strava members",
+      "data_handler_category": "Strava members",
       "text": ""
     },
     { "id": "profile_2.2",
@@ -244,6 +258,7 @@
       "label": "Public Profile",
       "uses": ["use_unknown"],
       "data_handler": "Non-members",
+      "data_handler_category": "Strava non-members",
       "text": "Name and some profile information."
     },
     { "id": "contacts_1",
@@ -260,6 +275,7 @@
       "label": "Your Contacts’ Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Information about your contacts on your mobile device or social networking accounts."
     },
     { "id": "connected_devices_1",
@@ -276,6 +292,7 @@
       "label": "Connected Devices and Apps",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Information from devices and apps you connect to Strava. For example, you may connect your Garmin watch or Flywheel account to Strava and information from these devices and apps will be passed along to Strava."
     },
     { "id": "connected_devices_2",
@@ -290,6 +307,7 @@
       "label": "Connected Devices",
       "uses": ["use_unknown"],
       "data_handler": "Strava members",
+      "data_handler_category": "Strava members",
       "text": ""
     },
     { "id": "health_1",
@@ -306,6 +324,7 @@
       "label": "Health Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Health information from sources such as heart rate, power, cadence, height and weight and other indicators."
     },
     { "id": "health_inferred_1",
@@ -322,6 +341,7 @@
       "label": "Inferred Health Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Health information inferred from other data."
     },
     { "id": "content_1",
@@ -338,6 +358,7 @@
       "label": "Content You Share",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Photos, posts, comments, kudos and other content you share on the Services."
     },
     { "id": "content_2",
@@ -352,6 +373,7 @@
       "label": "Kudos and Comments",
       "uses": ["use_unknown"],
       "data_handler": "Strava members",
+      "data_handler_category": "Strava members",
       "text": "Kudos and comments you give and receive."
     },
     { "id": "financial_1",
@@ -368,6 +390,7 @@
       "label": "Payment Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Payment card and other payment details. We do not store your credit card information."
     },
     { "id": "financial_2",
@@ -384,6 +407,7 @@
       "label": "Payment Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Payment Card Industry compliant third-party payment services",
+      "data_handler_category": "third parties",
       "text": "Payment card and other payment details."
     },
     { "id": "location_1",
@@ -399,7 +423,8 @@
       "options_text": "You can tell us about important locations, such as your home or work address, by enabling a <a href=\"https://strava.com/settings/privacy\" target=\"_blank\">Privacy Zone</a> in your settings. We will make private any portion of your activity that starts or ends in your Privacy Zone.",
       "label": "Location Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Non-members",
+      "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Physical location of your device including, data such as speed and direction. Processing of your location data is essential to the Services which we provide and a necessary part of our performance of the agreement we have with you."
     },
     { "id": "location_2",
@@ -414,6 +439,7 @@
       "label": "Location Information",
       "uses": ["use_unknown"],
       "data_handler": "Strava members and non-members",
+      "data_handler_category": "Strava members and non-members",
       "text": "Precise location information, such as a route or segment."
     },
     { "id": "third-party_accounts_1",
@@ -430,6 +456,7 @@
       "label": "Third-Party Account Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Information that you have agreed to make available such as your name, email address, profile information and preferences with the applicable Third-Party Account."
     },
     { "id": "contact_1",
@@ -446,6 +473,7 @@
       "label": "Contact Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": ""
     },
     { "id": "info_from_others_1",
@@ -462,6 +490,7 @@
       "label": "Information from Others",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Information about you from third parties and other members."
     },
     { "id": "device_1",
@@ -478,6 +507,7 @@
       "label": "Device Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
     },
     { "id": "logs_1",
@@ -494,6 +524,7 @@
       "label": "Data from Log Files",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
+      "data_handler_category": "Strava",
       "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
     }
   ],
@@ -572,34 +603,58 @@
   [
     { "id": "link_aggregate",
       "label": "Aggregate",
+      "description": "Aggregated by ",
+      "add_name_of_current_handler": true,
+      "add_name_of_future_handler": false,
       "image":"images/link_icons/aggregate.svg"
     },
     { "id": "link_anonymize",
       "label": "Anonymize",
+      "description": "Anonymized by ",
+      "add_name_of_current_handler": true,
+      "add_name_of_future_handler": false,
       "image":"images/link_icons/anonymize.svg"
     },
     { "id": "link_collect",
       "label": "Collect",
+      "description": "Collected by ",
+      "add_name_of_current_handler": false,
+      "add_name_of_future_handler": true,
       "image":"images/link_icons/collect.svg"
     },
     { "id": "link_identify",
       "label": "Identify",
+      "description": "Identified by ",
+      "add_name_of_current_handler": true,
+      "add_name_of_future_handler": false,
       "image":"images/link_icons/identify.svg"
     },
     { "id": "link_infer",
       "label": "Infer",
+      "description": "Used to infer other data by ",
+      "add_name_of_current_handler": true,
+      "add_name_of_future_handler": false,
       "image":"images/link_icons/infer.svg"
     },
     { "id": "link_sell",
       "label": "Sell",
+      "description": "Sold to ",
+      "add_name_of_current_handler": false,
+      "add_name_of_future_handler": true,
       "image":"images/link_icons/sell.svg"
     },
     { "id": "link_share",
       "label": "Share",
+      "description": "Shared with ",
+      "add_name_of_current_handler": false,
+      "add_name_of_future_handler": true,
       "image":"images/link_icons/share.svg"
     },
     { "id": "link_other",
       "label": "Other",
+      "description": "Transformed or transferred in some other way",
+      "add_name_of_current_handler": false,
+      "add_name_of_future_handler": false,
       "image":"images/generic_icon.svg"
     }
   ],
@@ -609,72 +664,72 @@
   "use_types":
   [
     { "id": "use_ads",
-      "label": "Advertise or market to you",
+      "description": "Advertise or market to you",
       "image":"images/use_icons/ads.svg",
       "unknown": false
     },
     { "id": "use_business",
-      "label": "Conduct business operations",
+      "description": "Conduct business operations",
       "image":"images/use_icons/business.svg",
       "unknown": false
     },
     { "id": "use_communicate",
-      "label": "Communicate with you",
+      "description": "Communicate with you",
       "image":"images/use_icons/communicate.svg",
       "unknown": false
     },
     { "id": "use_detect_malicious",
-      "label": "Detect and prevent malicious activity",
+      "description": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.svg",
       "unknown": false
     },
     { "id": "use_detect_violations",
-      "label": "Detect and prevent violations of the terms of service",
+      "description": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.svg",
       "unknown": false
     },
     { "id": "use_legal",
-      "label": "Conduct audits and respond to legal requirements",
+      "description": "Conduct audits and respond to legal requirements",
       "image":"images/use_icons/legal.svg",
       "unknown": false
     },
     { "id": "use_personalize_marketing",
-      "label": "Personalize marketing and ads",
+      "description": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.svg",
       "unknown": false
     },
     { "id": "use_personalize_services",
-      "label": "Personalize services and content",
+      "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.svg",
       "unknown": false
     },
     { "id": "use_promotions",
-      "label": "Allow you to participate in sweepstakes, contests, and other promotions",
+      "description": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.svg",
       "unknown": false
     },
     { "id": "use_provide_services",
-      "label": "Provide services to you",
+      "description": "Provide services to you",
       "image": "images/use_icons/provide_services.svg",
       "unknown": false
     },
     { "id": "use_research_services",
-      "label": "Conduct research and development on services",
+      "description": "Conduct research and development on services",
       "image":"images/use_icons/research_services.svg",
       "unknown": false
     },
     { "id": "use_research_other",
-      "label": "Conduct research not related to services",
+      "description": "Conduct research not related to services",
       "image":"images/use_icons/research_other.svg",
       "unknown": false
     },
     { "id": "use_other",
-      "label": "Fulfill some other purpose",
+      "description": "Fulfill some other purpose",
       "image":"images/generic_icon.svg",
       "unknown": false
     },
     { "id": "use_unknown",
-      "label": "Use unknown!",
+      "description": "Use unknown!",
       "image":"images/use_icons/unknown.svg",
       "unknown": true
     }
