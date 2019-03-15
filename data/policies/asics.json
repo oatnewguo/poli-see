@@ -3,6 +3,7 @@
   "intro_text": "We value the trust that you place in us by sharing your personal data with us. ASICS takes your privacy seriously and is committed to handling your personal data in a way that is fair and worthy of that trust. ASICS will take all reasonable steps to protect your information from misuse and keep it secure. We believe it is important to inform you about how we will use your personal data. Therefore, we encourage you to read this privacy policy carefully. To view the full privacy policy, click <a href=\"https://www.asics.com/privacy/privacy/en-us/privacy-english.html\" target=\"_blank\">here</a>.",
   "primary_entity_name": "ASICS",
   "base_all_data_node_id": "all_1",
+  "options_icon_image": "images/options_icon.png",
   "nodes":
   [
     { "id": "you",
@@ -422,65 +423,65 @@
   "node_types":
   [
     { "id": "node_account",
-      "image": "images/node_icons/account.svg",
+      "image": "images/node_icons/account.png",
       "all_data": false
     },
     { "id": "node_activity",
-      "image": "images/node_icons/activity.svg",
+      "image": "images/node_icons/activity.png",
       "all_data": false
     },
     { "id": "node_all",
-      "image": "images/node_icons/all_identifiable.svg",
-      "image_identifiable": "images/node_icons/all_identifiable.svg",
-      "image_unidentifiable": "images/node_icons/all_unidentifiable.svg",
+      "image": "images/node_icons/all_identifiable.png",
+      "image_identifiable": "images/node_icons/all_identifiable.png",
+      "image_unidentifiable": "images/node_icons/all_unidentifiable.png",
       "all_data": true
     },
     { "id": "node_basic",
-      "image": "images/node_icons/basic.svg",
+      "image": "images/node_icons/basic.png",
       "all_data": false
     },
     { "id": "node_connections",
-      "image":"images/node_icons/connections.svg",
+      "image":"images/node_icons/connections.png",
       "all_data": false
     },
     { "id": "node_contact",
-      "image":"images/node_icons/contact.svg",
+      "image":"images/node_icons/contact.png",
       "all_data": false
     },
     { "id": "node_cookie",
-      "image":"images/node_icons/cookie.svg",
+      "image":"images/node_icons/cookie.png",
       "all_data": false
     },
     { "id": "node_device",
-      "image":"images/node_icons/device.svg",
+      "image":"images/node_icons/device.png",
       "all_data": false
     },
     { "id": "node_financial",
-      "image":"images/node_icons/financial.svg",
+      "image":"images/node_icons/financial.png",
       "all_data": false
     },
     { "id": "node_health",
-      "image":"images/node_icons/health.svg",
+      "image":"images/node_icons/health.png",
       "all_data": false
     },
     { "id": "node_location",
-      "image":"images/node_icons/location.svg",
+      "image":"images/node_icons/location.png",
       "all_data": false
     },
     { "id": "node_photos",
-      "image":"images/node_icons/photos.svg",
+      "image":"images/node_icons/photos.png",
       "all_data": false
     },
     { "id": "node_user",
-      "image":"images/node_icons/user.svg",
+      "image":"images/node_icons/user.png",
       "all_data": false
     },
     { "id": "node_user-generated_content",
-      "image":"images/node_icons/user-generated_content.svg",
+      "image":"images/node_icons/user-generated_content.png",
       "all_data": false
     },
     { "id": "node_other",
-      "image":"images/generic_icon.svg",
+      "image":"images/generic_icon.png",
       "all_data": false
     }
   ],
@@ -494,56 +495,56 @@
       "description": "Aggregated by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
-      "image":"images/link_icons/aggregate.svg"
+      "image":"images/link_icons/aggregate.png"
     },
     { "id": "link_anonymize",
       "label": "Anonymize",
       "description": "Anonymized by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
-      "image":"images/link_icons/anonymize.svg"
+      "image":"images/link_icons/anonymize.png"
     },
     { "id": "link_collect",
       "label": "Collect",
       "description": "Collected by ",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
-      "image":"images/link_icons/collect.svg"
+      "image":"images/link_icons/collect.png"
     },
     { "id": "link_identify",
       "label": "Identify",
       "description": "Identified by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
-      "image":"images/link_icons/identify.svg"
+      "image":"images/link_icons/identify.png"
     },
     { "id": "link_infer",
       "label": "Infer",
       "description": "Used to infer other data by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
-      "image":"images/link_icons/infer.svg"
+      "image":"images/link_icons/infer.png"
     },
     { "id": "link_sell",
       "label": "Sell",
       "description": "Sold to ",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
-      "image":"images/link_icons/sell.svg"
+      "image":"images/link_icons/sell.png"
     },
     { "id": "link_share",
       "label": "Share",
       "description": "Shared with ",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
-      "image":"images/link_icons/share.svg"
+      "image":"images/link_icons/share.png"
     },
     { "id": "link_other",
       "label": "Other",
       "description": "Transformed or transferred in some other way",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": false,
-      "image":"images/generic_icon.svg"
+      "image":"images/generic_icon.png"
     }
   ],
 
@@ -553,72 +554,72 @@
   [
     { "id": "use_ads",
       "description": "Advertise or market to you",
-      "image":"images/use_icons/ads.svg",
+      "image":"images/use_icons/ads.png",
       "unknown": false
     },
     { "id": "use_business",
       "description": "Conduct business operations",
-      "image":"images/use_icons/business.svg",
+      "image":"images/use_icons/business.png",
       "unknown": false
     },
     { "id": "use_communicate",
       "description": "Communicate with you",
-      "image":"images/use_icons/communicate.svg",
+      "image":"images/use_icons/communicate.png",
       "unknown": false
     },
     { "id": "use_detect_malicious",
       "description": "Detect and prevent malicious activity",
-      "image":"images/use_icons/detect_malicious.svg",
+      "image":"images/use_icons/detect_malicious.png",
       "unknown": false
     },
     { "id": "use_detect_violations",
       "description": "Detect and prevent violations of the terms of service",
-      "image":"images/use_icons/detect_violations.svg",
+      "image":"images/use_icons/detect_violations.png",
       "unknown": false
     },
     { "id": "use_legal",
       "description": "Conduct audits and respond to legal requirements",
-      "image":"images/use_icons/legal.svg",
+      "image":"images/use_icons/legal.png",
       "unknown": false
     },
     { "id": "use_personalize_marketing",
       "description": "Personalize marketing and ads",
-      "image":"images/use_icons/personalize_marketing.svg",
+      "image":"images/use_icons/personalize_marketing.png",
       "unknown": false
     },
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
-      "image":"images/use_icons/personalize_services.svg",
+      "image":"images/use_icons/personalize_services.png",
       "unknown": false
     },
     { "id": "use_promotions",
       "description": "Allow you to participate in sweepstakes, contests, and other promotions",
-      "image":"images/use_icons/promotions.svg",
+      "image":"images/use_icons/promotions.png",
       "unknown": false
     },
     { "id": "use_provide_services",
       "description": "Provide services to you",
-      "image": "images/use_icons/provide_services.svg",
+      "image": "images/use_icons/provide_services.png",
       "unknown": false
     },
     { "id": "use_research_services",
       "description": "Conduct research and development on services",
-      "image":"images/use_icons/research_services.svg",
+      "image":"images/use_icons/research_services.png",
       "unknown": false
     },
     { "id": "use_research_other",
       "description": "Conduct research not related to services",
-      "image":"images/use_icons/research_other.svg",
+      "image":"images/use_icons/research_other.png",
       "unknown": false
     },
     { "id": "use_other",
       "description": "Fulfill some other purpose",
-      "image":"images/generic_icon.svg",
+      "image":"images/generic_icon.png",
       "unknown": false
     },
     { "id": "use_unknown",
       "description": "Use unknown!",
-      "image":"images/use_icons/unknown.svg",
+      "image":"images/use_icons/unknown.png",
       "unknown": true
     }
   ]

@@ -74,10 +74,11 @@ const element_types =
 
 const NUM_LAYERS = 3;
 
-// variables for title, intro text, and name of the primary data-collecting entity
+// variables for title, intro text, name of the primary data-collecting entity, and options icon image
 var title;
 var intro_text;
 var primary_entity_name;
+var options_icon_image;
 
 // arrays for nodes and links
 var nodes;
@@ -390,7 +391,7 @@ function setUpPatterns()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", "images/options_icon.svg");
+    .attr("href", options_icon_image);
 }
 
 // create a stick with the child at the bottom and a specified number of parents preceding
@@ -1100,6 +1101,7 @@ d3.json("data/policies/strava.json").then(function(policy_json)
     intro_text = policy_json.intro_text;
     primary_entity_name = policy_json.primary_entity_name;
     base_all_data_node_id = policy_json.base_all_data_node_id;
+    options_icon_image = policy_json.options_icon_image;
     nodes = policy_json.nodes;
     node_types = policy_json.node_types;
     link_types = policy_json.link_types;
