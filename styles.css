@@ -5,7 +5,7 @@ html
 
 .tool_container
 {
-  overflow-x: scroll;
+  overflow-x: auto;
   white-space: nowrap;
 }
 
@@ -28,7 +28,7 @@ html
 
 .sidebar
 {
-  overflow: scroll;
+  overflow: auto;
   word-wrap: break-word;
 }
 
