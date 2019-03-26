@@ -71,30 +71,28 @@
       "identifiable": false,
       "options": false,
       "options_text": "",
-      "label": "Aggregated Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_research_other", "use_legal"],
+      "label": "All Information buildUp Collects, Aggregated",
+      "uses": ["use_research_other", "use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
     },
     { "id": "all_aggregated_2",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
       "identifiable": false,
       "options": true,
       "options_text": "Please visit your <a href=\"https://www.strava.com/settings/privacy\" target=\"_blank\">privacy controls</a> if you object to buildUp sharing this information.",
-      "label": "Aggregated Information",
+      "label": "All Information buildUp Collects, Aggregated",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
       "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
     },
     { "id": "all_2.1",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -108,8 +106,7 @@
       "text": "Information necessary to provide services to buildUp such as supporting and improving the Services, promoting the Services, processing payments, or fulfilling orders. Service providers will only have access to the information necessary to perform these limited functions on our behalf and are required to protect and secure your information."
     },
     { "id": "all_2.2",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -123,8 +120,7 @@
       "text": "Information and content, including your photos and your activity data (including private activities)."
     },
     { "id": "all_2.3",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -138,8 +134,7 @@
       "text": "Your information and content."
     },
     { "id": "all_2.4",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -147,14 +142,13 @@
       "options": false,
       "options_text": "",
       "label": "All Information buildUp Collects",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "Affiliates under common control with buildUp",
       "data_handler_category": "affiliates",
       "text": ""
     },
     { "id": "all_2.5",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -168,8 +162,7 @@
       "text": "Your information, if we determine disclosure is allowed by the law or reasonably necessary to comply with the law, or if disclosure is reasonably necessary or appropriate to prevent any person from death or serious bodily injury, to address issues of national security or other issues of public importance, to prevent or detect violations of our Terms of Service or fraud or abuse of buildUp or its members, or to protect our operations or our property or other legal rights."
     },
     { "id": "all_2.6",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -194,14 +187,13 @@
       "options": false,
       "options_text": "",
       "label": "Basic Account Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Name, email address, date of birth, gender, username and password."
     },
     { "id": "account_2",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_account",
       "all_data": false,
@@ -227,14 +219,13 @@
       "options": false,
       "options_text": "",
       "label": "Profile, Activity and Use Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Pictures, activities (including date, time and geo-location information as well as your speed and pace) and posts, and other information about your use of the Services."
     },
     { "id": "profile_2.1",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_basic",
       "all_data": false,
@@ -248,8 +239,7 @@
       "text": ""
     },
     { "id": "profile_2.2",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_basic",
       "all_data": false,
@@ -263,10 +253,7 @@
       "text": "Name and some profile information."
     },
     { "id": "contacts_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_connections",
       "all_data": false,
@@ -274,7 +261,7 @@
       "options": true,
       "options_text": "<a href=\"https://support.strava.com/hc/en-us/articles/360016371512\" target=\"_blank\">Learn more</a> about how we collect information about your contacts, how we use that information, and the controls available to you.",
       "label": "Your Contacts’ Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Information about your contacts on your mobile device or social networking accounts."
@@ -291,14 +278,13 @@
       "options": false,
       "options_text": "",
       "label": "Connected Devices and Apps",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Information from devices and apps you connect to buildUp. For example, you may connect your Garmin watch or Flywheel account to buildUp and information from these devices and apps will be passed along to buildUp."
     },
     { "id": "connected_devices_2",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_device",
       "all_data": false,
@@ -323,16 +309,13 @@
       "options": true,
       "options_text": "Before you can upload health information to buildUp, you must give your explicit consent to the processing of that health information by buildUp. You can withdraw your consent to buildUp processing your health information at any time.",
       "label": "Health Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Health information from sources such as heart rate, power, cadence, height and weight and other indicators."
     },
     { "id": "health_inferred_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_health",
       "all_data": false,
@@ -340,7 +323,7 @@
       "options": true,
       "options_text": "You can withdraw your consent to buildUp processing your health information at any time.",
       "label": "Inferred Health Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Health information inferred from other data."
@@ -357,14 +340,13 @@
       "options": false,
       "options_text": "",
       "label": "Content You Share",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Photos, posts, comments, kudos and other content you share on the Services."
     },
     { "id": "content_2",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_user-generated_content",
       "all_data": false,
@@ -378,10 +360,7 @@
       "text": "Kudos and comments you give and receive."
     },
     { "id": "financial_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_financial",
       "all_data": false,
@@ -389,16 +368,13 @@
       "options": false,
       "options_text": "",
       "label": "Payment Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Payment card and other payment details. We do not store your credit card information."
     },
     { "id": "financial_2",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_financial",
       "all_data": false,
@@ -406,7 +382,7 @@
       "options": false,
       "options_text": "",
       "label": "Payment Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "Payment Card Industry compliant third-party payment services",
       "data_handler_category": "third parties",
       "text": "Payment card and other payment details."
@@ -423,14 +399,13 @@
       "options": true,
       "options_text": "You can tell us about important locations, such as your home or work address, by enabling a <a href=\"https://strava.com/settings/privacy\" target=\"_blank\">Privacy Zone</a> in your settings. We will make private any portion of your activity that starts or ends in your Privacy Zone.",
       "label": "Location Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Physical location of your device including, data such as speed and direction. Processing of your location data is essential to the Services which we provide and a necessary part of our performance of the agreement we have with you."
     },
     { "id": "location_2",
-      "successor_links":
-      [],
+      "successor_links": [],
       "layer": 2,
       "type": "node_location",
       "all_data": false,
@@ -444,10 +419,7 @@
       "text": "Precise location information, such as a route or segment."
     },
     { "id": "third-party_accounts_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_basic",
       "all_data": false,
@@ -455,16 +427,13 @@
       "options": false,
       "options_text": "",
       "label": "Third-Party Account Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Information that you have agreed to make available such as your name, email address, profile information and preferences with the applicable Third-Party Account."
     },
     { "id": "contact_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_contact",
       "all_data": false,
@@ -472,16 +441,13 @@
       "options": false,
       "options_text": "",
       "label": "Contact Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": ""
     },
     { "id": "info_from_others_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_other",
       "all_data": false,
@@ -489,16 +455,13 @@
       "options": false,
       "options_text": "",
       "label": "Information from Others",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Information about you from third parties and other members."
     },
     { "id": "device_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_device",
       "all_data": false,
@@ -506,16 +469,13 @@
       "options": false,
       "options_text": "",
       "label": "Device Information",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
     },
     { "id": "logs_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_activity",
       "all_data": false,
@@ -523,7 +483,7 @@
       "options": false,
       "options_text": "",
       "label": "Data from Log Files",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
+      "uses": ["use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
@@ -667,72 +627,92 @@
     { "id": "use_ads",
       "description": "Advertise or market to you",
       "image":"images/use_icons/ads.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
+    },
+    { "id": "use_all_data",
+      "description": "Do anything that buildUp can do with all of your data",
+      "image":"images/node_icons/all_identifiable.png",
+      "unknown": false,
+      "all_data": true
     },
     { "id": "use_business",
       "description": "Conduct business operations",
       "image":"images/use_icons/business.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_communicate",
       "description": "Communicate with you",
       "image":"images/use_icons/communicate.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_detect_malicious",
       "description": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_detect_violations",
       "description": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_legal",
-      "description": "Conduct audits and respond to legal requirements",
+      "description": "Respond to legal requirements",
       "image":"images/use_icons/legal.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_personalize_marketing",
       "description": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_promotions",
       "description": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_provide_services",
       "description": "Provide services to you",
       "image": "images/use_icons/provide_services.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_research_services",
       "description": "Conduct research and development on services",
       "image":"images/use_icons/research_services.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_research_other",
       "description": "Conduct research not related to services",
       "image":"images/use_icons/research_other.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_other",
       "description": "Fulfill some other purpose",
       "image":"images/generic_icon.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_unknown",
-      "description": "Use unknown!",
+      "description": "Not limited by this privacy policy",
       "image":"images/use_icons/unknown.png",
-      "unknown": true
+      "unknown": true,
+      "all_data": false
     }
   ]
 }

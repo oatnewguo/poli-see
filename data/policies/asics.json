@@ -54,7 +54,7 @@
       "options": false,
       "options_text": "",
       "label": "All Information A+ Fit Collects",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": ""
@@ -71,16 +71,13 @@
       "options": false,
       "options_text": "",
       "label": "All Information A+ Fit Collects, Aggregated",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": ""
     },
     { "id": "all_aggregated_2",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -94,10 +91,7 @@
       "text": ""
     },
     { "id": "all_2.1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -105,16 +99,13 @@
       "options": false,
       "options_text": "",
       "label": "All Information A+ Fit Collects",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_all_data"],
       "data_handler": "Data controllers within the A+ Fit Group",
       "data_handler_category": "affiliates",
       "text": ""
     },
     { "id": "all_2.2",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -128,10 +119,7 @@
       "text": "Information A+ Fit may share with third-party service providers. Our contracts with these service providers do not permit use of your information for their own (marketing) purposes. Consistent with applicable legal requirements, we take commercially reasonable steps to require third parties to adequately safeguard your personal data and only process it in accordance with our instructions."
     },
     { "id": "all_2.3",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -145,10 +133,7 @@
       "text": ""
     },
     { "id": "all_2.4",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -162,10 +147,7 @@
       "text": "Personal data we are required by law to disclose."
     },
     { "id": "all_2.5",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -179,10 +161,7 @@
       "text": "Personal data we disclose as part of any merger, sale, transfer of A+ Fit’s assets, acquisition, bankruptcy, or similar event."
     },
     { "id": "all_2.6",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 2,
       "type": "node_all",
       "all_data": true,
@@ -196,10 +175,7 @@
       "text": ""
     },
     { "id": "contact_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_contact",
       "all_data": false,
@@ -207,16 +183,13 @@
       "options": false,
       "options_text": "",
       "label": "Contact Details",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "Your name, postal address and other contact details, such as your telephone number and e-mail address."
     },
     { "id": "account_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_account",
       "all_data": false,
@@ -224,16 +197,13 @@
       "options": false,
       "options_text": "",
       "label": "Account Data and Electronic Identification Data",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "Your A+ Fit ID account or other A+ Fit account (if you have made such an account with us) and other electronic identification data (such as IDFA, GAID, IP address, MAC address) and the data you add to your A+ Fit ID account or other A+ Fit account, such as your password, your date of birth, your gender, your language of preference, the time zone you live in, your picture and other information you may share with us."
     },
     { "id": "use_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_activity",
       "all_data": false,
@@ -241,16 +211,13 @@
       "options": false,
       "options_text": "",
       "label": "Information Regarding Your Use of Our Online Services",
-      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "This may include data regarding the pages you visit, the products and services you like and the content of your abandoned shopping cart."
     },
     { "id": "purchases_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_financial",
       "all_data": false,
@@ -258,16 +225,13 @@
       "options": false,
       "options_text": "",
       "label": "Your Purchases in Our Stores and Online",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "The data we collect if you purchase a product or use a Service in one of our stores or online, such as the amount and date of your purchase, the product you purchase or Service you use, location of the store, the website or app through which you make your purchase, payment method, payment status, discount, delivery method and delivery address."
     },
     { "id": "events_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_activity",
       "all_data": false,
@@ -275,16 +239,13 @@
       "options": false,
       "options_text": "",
       "label": "Your Leisure Activities, Interest and Events",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "This includes information regarding events we organize or sponsor, including your interest in and registration to those events (including the date and place of the event and your personal targets), as well as your reason for running and other fitness activities, whether you prefer to run alone or with friends and what other sports you enjoy."
     },
     { "id": "training_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_activity",
       "all_data": false,
@@ -292,16 +253,13 @@
       "options": false,
       "options_text": "",
       "label": "Your Training and Running Data",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "The training and running data that you fill out on or generate through the use of our Services or that you import from other apps or services from our partners or third parties, including your running experience and current running abilities (the distance you can run and the time that you can run it in), your training goal (aimed distance and race time), performance (distance and race time, records), training schedule (date, duration and type), your type of running (trail running, natural running or speed running) and your fitness activities."
     },
     { "id": "contest_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_activity",
       "all_data": false,
@@ -309,16 +267,13 @@
       "options": false,
       "options_text": "",
       "label": "Your Details Regarding Contests",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "The data we collect if you participate in a contest."
     },
     { "id": "reviews_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_user-generated_content",
       "all_data": false,
@@ -326,16 +281,13 @@
       "options": false,
       "options_text": "",
       "label": "Your Reviews",
-      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "The opinions, experiences, preferences and interests, and product or event reviews that you publish on our websites or share with us online or through social media, such as your experiences and tips regarding gear, your race day and your training schedule."
     },
     { "id": "communication_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_contact",
       "all_data": false,
@@ -343,16 +295,13 @@
       "options": false,
       "options_text": "",
       "label": "Your Communication Data",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "Your requests, any complaints you may have and any other data that we receive if we communicate with you via e-mail, online or via social media."
     },
     { "id": "activity_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_health",
       "all_data": false,
@@ -360,16 +309,13 @@
       "options": true,
       "options_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Activity Data and Other Information You Provide When Using the Services",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "Your foot and clothes size and other personal measurement information and activity data that you voluntarily share with us through the use of the Services, such as weight, height, heartrate, calories burned, steps taken, nutritional information, sleep activities, other activity data (type, duration and frequency of fitness activities, distance, speed, pace, step count) and injuries."
     },
     { "id": "running_specifics_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_health",
       "all_data": false,
@@ -377,16 +323,13 @@
       "options": true,
       "options_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Running Specifics",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "Your current running shoe, which running type you are and the level of your running."
     },
     { "id": "tests_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_health",
       "all_data": false,
@@ -394,16 +337,13 @@
       "options": true,
       "options_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Test and Measurement Results",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "Measurement data we collect if you participate in one of our tests or measurement programs, such as Foot ID, Motion ID, Running Lab, 3D foot shape measurement, leg alignment measurement, body composition measurement, leg strength test, running form test, aerobic test and similar measurement programs and tests. Measurement data that we collect during our tests may also include heartrate, blood pressure, oxygen level in blood, fat and muscle mass weight and percentage, BMI, BMR, strength and endurance."
     },
     { "id": "location_1",
-      "successor_links":
-      [
-
-      ],
+      "successor_links": [],
       "layer": 1,
       "type": "node_location",
       "all_data": false,
@@ -411,7 +351,7 @@
       "options": true,
       "options_text": "We will only use location data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Location",
-      "uses": ["use_provide_services", "use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": "Exact information regarding your location, such as GPS, accelerometer, your running route (including precise location data that shows your geographical position)."
@@ -555,72 +495,92 @@
     { "id": "use_ads",
       "description": "Advertise or market to you",
       "image":"images/use_icons/ads.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
+    },
+    { "id": "use_all_data",
+      "description": "Do anything that A+ Fit can do with all of your data",
+      "image":"images/node_icons/all_identifiable.png",
+      "unknown": false,
+      "all_data": true
     },
     { "id": "use_business",
       "description": "Conduct business operations",
       "image":"images/use_icons/business.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_communicate",
       "description": "Communicate with you",
       "image":"images/use_icons/communicate.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_detect_malicious",
       "description": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_detect_violations",
       "description": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_legal",
-      "description": "Conduct audits and respond to legal requirements",
+      "description": "Respond to legal requirements",
       "image":"images/use_icons/legal.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_personalize_marketing",
       "description": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_promotions",
       "description": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_provide_services",
       "description": "Provide services to you",
       "image": "images/use_icons/provide_services.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_research_services",
       "description": "Conduct research and development on services",
       "image":"images/use_icons/research_services.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_research_other",
       "description": "Conduct research not related to services",
       "image":"images/use_icons/research_other.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_other",
       "description": "Fulfill some other purpose",
       "image":"images/generic_icon.png",
-      "unknown": false
+      "unknown": false,
+      "all_data": false
     },
     { "id": "use_unknown",
-      "description": "Use unknown!",
+      "description": "Not limited by this privacy policy",
       "image":"images/use_icons/unknown.png",
-      "unknown": true
+      "unknown": true,
+      "all_data": false
     }
   ]
 }
