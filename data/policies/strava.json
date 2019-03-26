@@ -1,7 +1,7 @@
 {
-  "title": "Strava Privacy Policy",
-  "intro_text": "Your privacy is very important to us. This visualization of our privacy policy explains the information we collect, how we use and share it, how to manage your privacy controls and your rights in connection with Strava’s websites and the related mobile applications and services (collectively, the “Services”). To view the full privacy policy, click <a href=\"https://www.strava.com/legal/privacy\" target=\"_blank\">here</a>. To learn about how we protect information, click <a href=\"https://www.strava.com/legal/privacy#how-we-protect-information\" target=\"_blank\">here</a>. To learn about managing your settings, click <a href=\"https://www.strava.com/legal/privacy#managing-your-settings\" target=\"_blank\">here</a>.",
-  "primary_entity_name": "Strava",
+  "title": "buildUp Privacy Policy",
+  "intro_text": "Your privacy is very important to us. This visualization of our privacy policy explains the information we collect, how we use and share it, how to manage your privacy controls and your rights in connection with buildUp’s websites and the related mobile applications and services (collectively, the “Services”). To view the full privacy policy, click <a href=\"https://www.buildUp.com/legal/privacy\" target=\"_blank\">here</a>. To learn about how we protect information, click <a href=\"https://www.buildUp.com/legal/privacy#how-we-protect-information\" target=\"_blank\">here</a>. To learn about managing your settings, click <a href=\"https://www.buildUp.com/legal/privacy#managing-your-settings\" target=\"_blank\">here</a>.",
+  "primary_entity_name": "buildUp",
   "base_all_data_node_id": "all_1",
   "options_icon_image": "images/options_icon.png",
   "nodes":
@@ -10,20 +10,20 @@
       "successor_links":
       [
         {"successor_id": "all_1", "type": "link_collect", "text": ""},
-        {"successor_id": "account_1", "type": "link_collect", "text": "Strava collects basic account information to help secure and provide you with access to our Services."},
-        {"successor_id": "profile_1", "type": "link_collect", "text": "Strava collects activity information when you choose to upload content, join a challenge, add your equipment usage, view others’ activities, or otherwise use the Services."},
-        {"successor_id": "contacts_1", "type": "link_share", "text": "You can choose to add your contacts’ information by connecting your contacts from your mobile device or social networking accounts to Strava. In accordance with your instructions, Strava may then access and store your contacts’ information in order to identify connections and help you connect with them."},
-        {"successor_id": "connected_devices_1", "type": "link_collect", "text": "Strava collects information from devices and apps you connect to Strava."},
-        {"successor_id": "health_1", "type": "link_collect", "text": "Strava may collect health information. Before you can upload health information to Strava, you must give your explicit consent to the processing of that health information by Strava."},
-        {"successor_id": "content_1", "type": "link_share", "text": "Strava gathers information from content you share on the Services, including when you participate in partner events or create segments or routes."},
-        {"successor_id": "financial_1", "type": "link_share", "text": "When you make a payment on Strava, you may provide payment information to Strava."},
-        {"successor_id": "financial_2", "type": "link_share", "text": "When you make a payment on Strava, you may provide payment information to third parties."},
-        {"successor_id": "location_1", "type": "link_collect", "text": "Strava collects and processes location information when you sign up for and use the Services."},
-        {"successor_id": "third-party_accounts_1", "type": "link_collect", "text": "When you sign up and log in to the Services using accounts you create with third-party products and services, such as Facebook or Google (collectively, “Third-Party Accounts”), Strava may collect information provided to Strava under the Third-Party Account provider's privacy policies. You can generally control the information that we receive from these sources using the privacy controls in your Third-Party Account."},
+        {"successor_id": "account_1", "type": "link_collect", "text": "buildUp collects basic account information to help secure and provide you with access to our Services."},
+        {"successor_id": "profile_1", "type": "link_collect", "text": "buildUp collects activity information when you choose to upload content, join a challenge, add your equipment usage, view others’ activities, or otherwise use the Services."},
+        {"successor_id": "contacts_1", "type": "link_share", "text": "You can choose to add your contacts’ information by connecting your contacts from your mobile device or social networking accounts to buildUp. In accordance with your instructions, buildUp may then access and store your contacts’ information in order to identify connections and help you connect with them."},
+        {"successor_id": "connected_devices_1", "type": "link_collect", "text": "buildUp collects information from devices and apps you connect to buildUp."},
+        {"successor_id": "health_1", "type": "link_collect", "text": "buildUp may collect health information. Before you can upload health information to buildUp, you must give your explicit consent to the processing of that health information by buildUp."},
+        {"successor_id": "content_1", "type": "link_share", "text": "buildUp gathers information from content you share on the Services, including when you participate in partner events or create segments or routes."},
+        {"successor_id": "financial_1", "type": "link_share", "text": "When you make a payment on buildUp, you may provide payment information to buildUp."},
+        {"successor_id": "financial_2", "type": "link_share", "text": "When you make a payment on buildUp, you may provide payment information to third parties."},
+        {"successor_id": "location_1", "type": "link_collect", "text": "buildUp collects and processes location information when you sign up for and use the Services."},
+        {"successor_id": "third-party_accounts_1", "type": "link_collect", "text": "When you sign up and log in to the Services using accounts you create with third-party products and services, such as Facebook or Google (collectively, “Third-Party Accounts”), buildUp may collect information provided to buildUp under the Third-Party Account provider's privacy policies. You can generally control the information that we receive from these sources using the privacy controls in your Third-Party Account."},
         {"successor_id": "contact_1", "type": "link_share", "text": "You can choose to provide us with your contact information so we can better respond to your support requests and comments."},
-        {"successor_id": "info_from_others_1", "type": "link_collect", "text": "Strava obtains additional third party information about our members from marketers, partners, researchers, and others. We may combine information that we collect from you with information obtained from other members, third parties and information derived from any other subscription, product, or service we provide. We may also collect information about you from other members such as when they give you kudos or comment on your activities."},
-        {"successor_id": "device_1", "type": "link_collect", "text": "Strava collects device information that provides us with technical information when you access or use the Services."},
-        {"successor_id": "logs_1", "type": "link_collect", "text": "Strava uses log files to collect additional information."}
+        {"successor_id": "info_from_others_1", "type": "link_collect", "text": "buildUp obtains additional third party information about our members from marketers, partners, researchers, and others. We may combine information that we collect from you with information obtained from other members, third parties and information derived from any other subscription, product, or service we provide. We may also collect information about you from other members such as when they give you kudos or comment on your activities."},
+        {"successor_id": "device_1", "type": "link_collect", "text": "buildUp collects device information that provides us with technical information when you access or use the Services."},
+        {"successor_id": "logs_1", "type": "link_collect", "text": "buildUp uses log files to collect additional information."}
       ],
       "layer": 0,
       "type": "node_user",
@@ -40,11 +40,11 @@
     { "id": "all_1",
       "successor_links":
       [
-        {"successor_id": "all_aggregated_1", "type": "link_aggregate", "text": "Strava may aggregate the information you and others make available in connection with the Services and post it publicly or share it with third parties. To do this, we remove certain account information, such as your name, and combine the resulting information with similar information from other Strava athletes."},
-        {"successor_id": "all_2.1", "type": "link_share", "text": "Strava may share your information with third parties who provide services to Strava."},
-        {"successor_id": "all_2.2", "type": "link_share", "text": "When you choose to use third party apps, plugins, or websites that integrate with the Services, or when you use Strava features that are offered in conjunction with third parties such as a sponsored challenge, they may receive your information and content."},
-        {"successor_id": "all_2.3", "type": "link_share", "text": "As a social network, Strava shares your information with other Strava members and the public in accordance with your privacy controls."},
-        {"successor_id": "all_2.4", "type": "link_share", "text": "We may share your information with affiliates under common control with us, who are required to comply with the terms of this Privacy Policy with regard to your information. If Strava becomes involved in a business combination, securities offering, bankruptcy, reorganization, dissolution or other similar transaction, we may share or transfer your information in connection with such transaction."},
+        {"successor_id": "all_aggregated_1", "type": "link_aggregate", "text": "buildUp may aggregate the information you and others make available in connection with the Services and post it publicly or share it with third parties. To do this, we remove certain account information, such as your name, and combine the resulting information with similar information from other buildUp athletes."},
+        {"successor_id": "all_2.1", "type": "link_share", "text": "buildUp may share your information with third parties who provide services to buildUp."},
+        {"successor_id": "all_2.2", "type": "link_share", "text": "When you choose to use third party apps, plugins, or websites that integrate with the Services, or when you use buildUp features that are offered in conjunction with third parties such as a sponsored challenge, they may receive your information and content."},
+        {"successor_id": "all_2.3", "type": "link_share", "text": "As a social network, buildUp shares your information with other buildUp members and the public in accordance with your privacy controls."},
+        {"successor_id": "all_2.4", "type": "link_share", "text": "We may share your information with affiliates under common control with us, who are required to comply with the terms of this Privacy Policy with regard to your information. If buildUp becomes involved in a business combination, securities offering, bankruptcy, reorganization, dissolution or other similar transaction, we may share or transfer your information in connection with such transaction."},
         {"successor_id": "all_2.5", "type": "link_share", "text": "We may preserve and share your information with third parties for legal requirements."},
         {"successor_id": "all_2.6", "type": "link_share", "text": "We may share your information with third parties when we forward Digital Millennium Copyright Act (DMCA) notifications, which will be forwarded as submitted to us without any deletions."}
       ],
@@ -54,16 +54,16 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "Any Information Strava Collects",
+      "label": "Any Information buildUp Collects",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": ""
     },
     { "id": "all_aggregated_1",
       "successor_links":
       [
-        {"successor_id": "all_aggregated_2", "type": "link_sell", "text": "Strava may use, sell, license, and share aggregated information with third parties for research, business or other purposes such as to improve walking, running or riding in cities via Strava Metro or to help our partners understand more about athletes, including the people who use their products and services."}
+        {"successor_id": "all_aggregated_2", "type": "link_sell", "text": "buildUp may use, sell, license, and share aggregated information with third parties for research, business or other purposes such as to improve walking, running or riding in cities via buildUp Metro or to help our partners understand more about athletes, including the people who use their products and services."}
       ],
       "layer": 1,
       "type": "node_all",
@@ -73,8 +73,8 @@
       "options_text": "",
       "label": "Aggregated Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_research_other", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
     },
     { "id": "all_aggregated_2",
@@ -85,7 +85,7 @@
       "all_data": true,
       "identifiable": false,
       "options": true,
-      "options_text": "Please visit your <a href=\"https://www.strava.com/settings/privacy\" target=\"_blank\">privacy controls</a> if you object to Strava sharing this information.",
+      "options_text": "Please visit your <a href=\"https://www.buildUp.com/settings/privacy\" target=\"_blank\">privacy controls</a> if you object to buildUp sharing this information.",
       "label": "Aggregated Information",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
@@ -101,11 +101,11 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "Any Information Strava Collects",
+      "label": "Any Information buildUp Collects",
       "uses": ["use_provide_services"],
       "data_handler": "Third-party service providers",
       "data_handler_category": "third parties",
-      "text": "Information necessary to provide services to Strava such as supporting and improving the Services, promoting the Services, processing payments, or fulfilling orders. Service providers will only have access to the information necessary to perform these limited functions on our behalf and are required to protect and secure your information."
+      "text": "Information necessary to provide services to buildUp such as supporting and improving the Services, promoting the Services, processing payments, or fulfilling orders. Service providers will only have access to the information necessary to perform these limited functions on our behalf and are required to protect and secure your information."
     },
     { "id": "all_2.2",
       "successor_links":
@@ -116,7 +116,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "Any Information Strava Collects",
+      "label": "Any Information buildUp Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third party apps, plugins, or websites",
       "data_handler_category": "third parties",
@@ -131,10 +131,10 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "Any Information Strava Collects",
+      "label": "Any Information buildUp Collects",
       "uses": ["use_unknown"],
-      "data_handler": "Other Strava members and non-members",
-      "data_handler_category": "Strava members and non-members",
+      "data_handler": "Other buildUp members and non-members",
+      "data_handler_category": "buildUp members and non-members",
       "text": "Your information and content."
     },
     { "id": "all_2.4",
@@ -146,9 +146,9 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "Any Information Strava Collects",
+      "label": "Any Information buildUp Collects",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Affiliates under common control with Strava",
+      "data_handler": "Affiliates under common control with buildUp",
       "data_handler_category": "affiliates",
       "text": ""
     },
@@ -161,11 +161,11 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "Any Information Strava Collects",
+      "label": "Any Information buildUp Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties, including law enforcement, public or governmental agencies, or private litigants, within or outside your country of residence,",
       "data_handler_category": "third parties",
-      "text": "Your information, if we determine disclosure is allowed by the law or reasonably necessary to comply with the law, or if disclosure is reasonably necessary or appropriate to prevent any person from death or serious bodily injury, to address issues of national security or other issues of public importance, to prevent or detect violations of our Terms of Service or fraud or abuse of Strava or its members, or to protect our operations or our property or other legal rights."
+      "text": "Your information, if we determine disclosure is allowed by the law or reasonably necessary to comply with the law, or if disclosure is reasonably necessary or appropriate to prevent any person from death or serious bodily injury, to address issues of national security or other issues of public importance, to prevent or detect violations of our Terms of Service or fraud or abuse of buildUp or its members, or to protect our operations or our property or other legal rights."
     },
     { "id": "all_2.6",
       "successor_links":
@@ -176,7 +176,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "Any Information Strava Collects",
+      "label": "Any Information buildUp Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
@@ -185,7 +185,7 @@
     { "id": "account_1",
       "successor_links":
       [
-        {"successor_id": "account_2", "type": "link_share", "text": "Subject to your privacy controls, your username will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
+        {"successor_id": "account_2", "type": "link_share", "text": "Subject to your privacy controls, your username will be shared on buildUp so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
       ],
       "layer": 1,
       "type": "node_account",
@@ -195,8 +195,8 @@
       "options_text": "",
       "label": "Basic Account Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Name, email address, date of birth, gender, username and password."
     },
     { "id": "account_2",
@@ -210,15 +210,15 @@
       "options_text": "",
       "label": "Username",
       "uses": ["use_unknown"],
-      "data_handler": "Strava members",
-      "data_handler_category": "Strava members",
+      "data_handler": "buildUp members",
+      "data_handler_category": "buildUp members",
       "text": ""
     },
     { "id": "profile_1",
       "successor_links":
       [
-        {"successor_id": "profile_2.1", "type": "link_share", "text": "Subject to your privacy controls, your profile and activities will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."},
-        {"successor_id": "profile_2.2", "type": "link_share", "text": "Strava may make certain profile information available to non-members on the web."}
+        {"successor_id": "profile_2.1", "type": "link_share", "text": "Subject to your privacy controls, your profile and activities will be shared on buildUp so that you may be able to participate in the Services, for example to show your place on a leaderboard."},
+        {"successor_id": "profile_2.2", "type": "link_share", "text": "buildUp may make certain profile information available to non-members on the web."}
       ],
       "layer": 1,
       "type": "node_basic",
@@ -228,8 +228,8 @@
       "options_text": "",
       "label": "Profile, Activity and Use Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Pictures, activities (including date, time and geo-location information as well as your speed and pace) and posts, and other information about your use of the Services."
     },
     { "id": "profile_2.1",
@@ -243,8 +243,8 @@
       "options_text": "",
       "label": "Profile and Activity Information",
       "uses": ["use_unknown"],
-      "data_handler": "Strava members",
-      "data_handler_category": "Strava members",
+      "data_handler": "buildUp members",
+      "data_handler_category": "buildUp members",
       "text": ""
     },
     { "id": "profile_2.2",
@@ -259,7 +259,7 @@
       "label": "Public Profile",
       "uses": ["use_unknown"],
       "data_handler": "Non-members",
-      "data_handler_category": "Strava non-members",
+      "data_handler_category": "buildUp non-members",
       "text": "Name and some profile information."
     },
     { "id": "contacts_1",
@@ -272,17 +272,17 @@
       "all_data": false,
       "identifiable": true,
       "options": true,
-      "options_text": "<a href=\"https://support.strava.com/hc/en-us/articles/360016371512\" target=\"_blank\">Learn more</a> about how we collect information about your contacts, how we use that information, and the controls available to you.",
+      "options_text": "<a href=\"https://support.buildUp.com/hc/en-us/articles/360016371512\" target=\"_blank\">Learn more</a> about how we collect information about your contacts, how we use that information, and the controls available to you.",
       "label": "Your Contacts’ Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Information about your contacts on your mobile device or social networking accounts."
     },
     { "id": "connected_devices_1",
       "successor_links":
       [
-        {"successor_id": "connected_devices_2", "type": "link_share", "text": "Subject to your privacy controls, the devices you use will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
+        {"successor_id": "connected_devices_2", "type": "link_share", "text": "Subject to your privacy controls, the devices you use will be shared on buildUp so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
       ],
       "layer": 1,
       "type": "node_device",
@@ -292,9 +292,9 @@
       "options_text": "",
       "label": "Connected Devices and Apps",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
-      "text": "Information from devices and apps you connect to Strava. For example, you may connect your Garmin watch or Flywheel account to Strava and information from these devices and apps will be passed along to Strava."
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
+      "text": "Information from devices and apps you connect to buildUp. For example, you may connect your Garmin watch or Flywheel account to buildUp and information from these devices and apps will be passed along to buildUp."
     },
     { "id": "connected_devices_2",
       "successor_links":
@@ -307,8 +307,8 @@
       "options_text": "",
       "label": "Connected Devices",
       "uses": ["use_unknown"],
-      "data_handler": "Strava members",
-      "data_handler_category": "Strava members",
+      "data_handler": "buildUp members",
+      "data_handler_category": "buildUp members",
       "text": ""
     },
     { "id": "health_1",
@@ -321,11 +321,11 @@
       "all_data": false,
       "identifiable": true,
       "options": true,
-      "options_text": "Before you can upload health information to Strava, you must give your explicit consent to the processing of that health information by Strava. You can withdraw your consent to Strava processing your health information at any time.",
+      "options_text": "Before you can upload health information to buildUp, you must give your explicit consent to the processing of that health information by buildUp. You can withdraw your consent to buildUp processing your health information at any time.",
       "label": "Health Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Health information from sources such as heart rate, power, cadence, height and weight and other indicators."
     },
     { "id": "health_inferred_1",
@@ -338,17 +338,17 @@
       "all_data": false,
       "identifiable": true,
       "options": true,
-      "options_text": "You can withdraw your consent to Strava processing your health information at any time.",
+      "options_text": "You can withdraw your consent to buildUp processing your health information at any time.",
       "label": "Inferred Health Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Health information inferred from other data."
     },
     { "id": "content_1",
       "successor_links":
       [
-        {"successor_id": "content_2", "type": "link_share", "text": "Subject to your privacy controls, the kudos and comments you give and receive will be shared on Strava so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
+        {"successor_id": "content_2", "type": "link_share", "text": "Subject to your privacy controls, the kudos and comments you give and receive will be shared on buildUp so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
       ],
       "layer": 1,
       "type": "node_user-generated_content",
@@ -358,8 +358,8 @@
       "options_text": "",
       "label": "Content You Share",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Photos, posts, comments, kudos and other content you share on the Services."
     },
     { "id": "content_2",
@@ -373,8 +373,8 @@
       "options_text": "",
       "label": "Kudos and Comments",
       "uses": ["use_unknown"],
-      "data_handler": "Strava members",
-      "data_handler_category": "Strava members",
+      "data_handler": "buildUp members",
+      "data_handler_category": "buildUp members",
       "text": "Kudos and comments you give and receive."
     },
     { "id": "financial_1",
@@ -390,8 +390,8 @@
       "options_text": "",
       "label": "Payment Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Payment card and other payment details. We do not store your credit card information."
     },
     { "id": "financial_2",
@@ -414,18 +414,18 @@
     { "id": "location_1",
       "successor_links":
       [
-        {"successor_id": "location_2", "type": "link_share", "text": "Strava may share your precise location information on Strava with non-members, in accordance with your privacy controls."}
+        {"successor_id": "location_2", "type": "link_share", "text": "buildUp may share your precise location information on buildUp with non-members, in accordance with your privacy controls."}
       ],
       "layer": 1,
       "type": "node_location",
       "all_data": false,
       "identifiable": true,
       "options": true,
-      "options_text": "You can tell us about important locations, such as your home or work address, by enabling a <a href=\"https://strava.com/settings/privacy\" target=\"_blank\">Privacy Zone</a> in your settings. We will make private any portion of your activity that starts or ends in your Privacy Zone.",
+      "options_text": "You can tell us about important locations, such as your home or work address, by enabling a <a href=\"https://buildUp.com/settings/privacy\" target=\"_blank\">Privacy Zone</a> in your settings. We will make private any portion of your activity that starts or ends in your Privacy Zone.",
       "label": "Location Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Physical location of your device including, data such as speed and direction. Processing of your location data is essential to the Services which we provide and a necessary part of our performance of the agreement we have with you."
     },
     { "id": "location_2",
@@ -436,11 +436,11 @@
       "all_data": false,
       "identifiable": true,
       "options": true,
-      "options_text": "You can control this sharing in your <a href=\"https://www.strava.com/settings/privacy\" target=\"_blank\">privacy controls</a>.",
+      "options_text": "You can control this sharing in your <a href=\"https://www.buildUp.com/settings/privacy\" target=\"_blank\">privacy controls</a>.",
       "label": "Location Information",
       "uses": ["use_unknown"],
-      "data_handler": "Strava members and non-members",
-      "data_handler_category": "Strava members and non-members",
+      "data_handler": "buildUp members and non-members",
+      "data_handler_category": "buildUp members and non-members",
       "text": "Precise location information, such as a route or segment."
     },
     { "id": "third-party_accounts_1",
@@ -456,8 +456,8 @@
       "options_text": "",
       "label": "Third-Party Account Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Information that you have agreed to make available such as your name, email address, profile information and preferences with the applicable Third-Party Account."
     },
     { "id": "contact_1",
@@ -473,8 +473,8 @@
       "options_text": "",
       "label": "Contact Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": ""
     },
     { "id": "info_from_others_1",
@@ -490,8 +490,8 @@
       "options_text": "",
       "label": "Information from Others",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Information about you from third parties and other members."
     },
     { "id": "device_1",
@@ -507,8 +507,8 @@
       "options_text": "",
       "label": "Device Information",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
     },
     { "id": "logs_1",
@@ -524,8 +524,8 @@
       "options_text": "",
       "label": "Data from Log Files",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
-      "data_handler": "Strava",
-      "data_handler_category": "Strava",
+      "data_handler": "buildUp",
+      "data_handler_category": "buildUp",
       "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
     }
   ],
