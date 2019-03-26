@@ -181,7 +181,7 @@
         {"successor_id": "account_2", "type": "link_share", "text": "Subject to your privacy controls, your username will be shared on buildUp so that you may be able to participate in the Services, for example to show your place on a leaderboard."}
       ],
       "layer": 1,
-      "type": "node_account",
+      "type": "node_basic",
       "all_data": false,
       "identifiable": true,
       "options": false,
@@ -195,7 +195,7 @@
     { "id": "account_2",
       "successor_links": [],
       "layer": 2,
-      "type": "node_account",
+      "type": "node_basic",
       "all_data": false,
       "identifiable": true,
       "options": false,
@@ -494,10 +494,6 @@
 
   "node_types":
   [
-    { "id": "node_account",
-      "image": "images/node_icons/account.png",
-      "all_data": false
-    },
     { "id": "node_activity",
       "image": "images/node_icons/activity.png",
       "all_data": false

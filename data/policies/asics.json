@@ -191,7 +191,7 @@
     { "id": "account_1",
       "successor_links": [],
       "layer": 1,
-      "type": "node_account",
+      "type": "node_basic",
       "all_data": false,
       "identifiable": true,
       "options": false,
@@ -362,10 +362,6 @@
 
   "node_types":
   [
-    { "id": "node_account",
-      "image": "images/node_icons/account.png",
-      "all_data": false
-    },
     { "id": "node_activity",
       "image": "images/node_icons/activity.png",
       "all_data": false
