@@ -125,12 +125,12 @@ html
   align-self: center;
 }
 
-.node circle
+.node
 {
   cursor: pointer;
 }
 
-.link polyline
+.link
 {
   cursor: pointer;
 }

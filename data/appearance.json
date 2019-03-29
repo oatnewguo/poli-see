@@ -36,6 +36,7 @@
     "width": 6,
     "arrowhead_length": 10,
     "arrowhead_width": 10,
+    "arrowhead_to_node_distance": 3,
     "outline_width": 2,
     "outline_width_focus": 3,
     "fill_color_identifiable": "#404060",
@@ -50,8 +51,14 @@
   {
     "radius": 15,
     "outline_width": 2,
-    "fill_color": "#000000",
-    "outline_color": "#000000"
+    "fill_color_identifiable": "#404060",
+    "fill_color_unidentifiable": "#707070",
+    "outline_color_identifiable": "#404060",
+    "outline_color_unidentifiable": "#707070"
+  },
+  "link_icon_on_link":
+  {
+    "radius": 10
   },
   "use_icon":
   {

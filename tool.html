@@ -35,9 +35,6 @@
           <p></p>
         </div>
       </div>
-      <div id="node_sidebar_links_container" class="sidebar_list_container">
-        <h2></h2>
-      </div>
       <div id="node_sidebar_uses_container" class="sidebar_list_container">
         <h2></h2>
       </div>
@@ -111,8 +108,7 @@ var link_sidebar_selection = link_sidebar_container_selection.select("#link_side
 // selection of div for node options information
 var node_sidebar_options_container_selection = node_sidebar_selection.select("#node_sidebar_options_container");
 
-// selections of divs for node links and uses
-var node_sidebar_links_container_selection = node_sidebar_selection.select("#node_sidebar_links_container");
+// selections of divs for uses
 var node_sidebar_uses_container_selection = node_sidebar_selection.select("#node_sidebar_uses_container");
 
 // selection of svg for link sidebar graphic
@@ -216,7 +212,14 @@ function getNodePattern(n)
 // return the proper icon fill pattern of a link
 function getLinkPattern(l)
 {
-  return getLinkPatternById(l.type);
+  var id = l.type;
+
+  if(getNodeById(l.destination).identifiable)
+    id += "_identifiable";
+  else
+    id += "_unidentifiable";
+
+  return getLinkPatternById(id);
 }
 
 // return the proper icon fill pattern of a link, given its id
@@ -276,18 +279,24 @@ function getLinkOutlineColor(l)
 }
 
 // return a string containing the points for a link polyline arrow pointing down, given a link
-function createLinkPolylineFromLink(l)
+function getLinkPolylinePoints(l)
 {
   var source = getNodeById(l.source);
   var dest = getNodeById(l.destination);
-  return createLinkPolylineFromValues(source.x, source.y, dest.x, dest.y,
-    dest.radius + appearance.node.outline_width + 3);
+  var length = getLinkPolylineLength(source.x, source.y, dest.x, dest.y,
+    dest.radius + appearance.node.outline_width + appearance.link.arrowhead_to_node_distance);
+  return getLinkPolylinePointsFromLength(length);
 }
 
-// return a string containing the points for a link polyline arrow pointing down, given necessary values
-function createLinkPolylineFromValues(source_x, source_y, dest_x, dest_y, subtract_len)
+// return the length of a link polyline arrow, given relevant values
+function getLinkPolylineLength(source_x, source_y, dest_x, dest_y, subtract_len)
 {
-  var length = Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
+  return Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
+}
+
+// return a string containing the points for a link polyline arrow pointing down, given its length
+function getLinkPolylinePointsFromLength(length)
+{
   var length_to_head = length - appearance.link.arrowhead_length;
   var w1 = appearance.link.width / 2;
   var w2 = appearance.link.arrowhead_width / 2;
@@ -311,10 +320,20 @@ function getLinkRotationDegrees(l)
   return theta * 180 / Math.PI + 90;
 }
 
+// return a link icon's outline color
+function getLinkIconOutlineColor(l)
+{
+  if(getNodeById(l.destination).identifiable)
+  {
+    return appearance.link_icon.outline_color_identifiable;
+  }
+  return appearance.link_icon.outline_color_unidentifiable;
+}
+
 // set up patterns to fill nodes, link icons, use icons, and other svg elements
 function setUpPatterns()
 {
-  // create one identifiable and one unidentifiable version of each node icon
+  // create one identifiable and one unidentifiable version of each node and link icon
   {
     let num_node_types = node_types.length;
     for(let i = 0; i < num_node_types; i++)
@@ -333,6 +352,14 @@ function setUpPatterns()
         node_types[i].fill_color = appearance.node.fill_color_identifiable;
       }
     }
+
+    let num_link_types = link_types.length;
+    for(let i = 0; i < num_link_types; i++)
+    {
+      link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image, fill_color: appearance.link_icon.fill_color_unidentifiable});
+      link_types[i].id = link_types[i].id + "_identifiable";
+      link_types[i].fill_color = appearance.link.fill_color_identifiable;
+    }
   }
 
   // node patterns
@@ -340,7 +367,7 @@ function setUpPatterns()
     .data(node_types)
     .enter()
     .append("pattern")
-      .attr("id", function(d) { return d.id; })
+      .attr("id", d => d.id)
       .attr("width", "1")
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
@@ -348,20 +375,20 @@ function setUpPatterns()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", function(d) { return d.fill_color; });
+    .attr("fill", d => d.fill_color);
   node_patterns.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", function(d) { return d.image; });
+    .attr("href", d => d.image);
 
   // link icon patterns
   link_icon_patterns = svg_selection.select("#link_pattern_defs").selectAll("pattern")
     .data(link_types)
     .enter()
     .append("pattern")
-      .attr("id", function(d) { return d.id; })
+      .attr("id", d => d.id)
       .attr("width", "1")
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
@@ -369,20 +396,20 @@ function setUpPatterns()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", appearance.link_icon.fill_color);
+    .attr("fill", d => d.fill_color);
   link_icon_patterns.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", function(d) { return d.image; });
+    .attr("href", d => d.image);
 
   // use icon patterns
   use_icon_patterns = svg_selection.select("#use_pattern_defs").selectAll("pattern")
     .data(use_types)
     .enter()
     .append("pattern")
-      .attr("id", function(d) { return d.id; })
+      .attr("id", d => d.id)
       .attr("width", "1")
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
@@ -396,7 +423,7 @@ function setUpPatterns()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", function(d) { return d.image; });
+    .attr("href", d => d.image);
 
   // other patterns
   other_patterns = svg_selection.select("#other_pattern_defs").append("pattern")
@@ -508,75 +535,6 @@ function updateNodeSidebar(n)
     node_sidebar_options_container_selection.style("display", "none");
   }
 
-  // list of successor nodes, excluding the base all_data node
-  var real_successor_links = n.successor_links.filter(d => d.successor_id != base_all_data_node_id);
-
-  // if there are no links to display, then hide the section
-  if(real_successor_links.length == 0)
-  {
-    node_sidebar_links_container_selection
-      .style("display", "none");
-  }
-  // if there are links to display, then display them
-  else
-  {
-    node_sidebar_links_container_selection
-      .style("display", "block");
-
-    // adjust the heading based on whether the node is the central node or not
-    let heading_text = (n.layer == 0) ? "Your data can directly be..." : "This data can directly be...";
-    node_sidebar_links_container_selection.select("h2")
-      .html(heading_text);
-
-    // remove existing link divs
-    node_sidebar_links_container_selection.selectAll("div").remove();
-
-      // create a potentially shorter list of more general links by using the data_handler_category property
-    let general_links = [];
-    for(let i = 0; i < real_successor_links.length; i++)
-    {
-      // get important information from the link and put it in a general link
-      let l = real_successor_links[i];
-      let type = getLinkTypeById(l.type);
-      let handler = type.add_name_of_current_handler ? n.data_handler_category :
-                                                       getNodeById(l.successor_id).data_handler_category
-      let general_descript = type.description + handler;
-      let general_link = {type: l.type, description: general_descript};
-
-      // if the general link is not already in the list of general links, add it
-      if(general_links.filter(d => d.type == general_link.type && d.description == general_descript).length == 0)
-      {
-        general_links.push(general_link);
-      }
-    }
-
-    // add link divs to the sidebar
-    var link_divs_selection = node_sidebar_links_container_selection.selectAll("div")
-      .data(general_links)
-      .enter().append("div")
-        .classed("sidebar_list_item_container", true)
-        .style("border-bottom", appearance.node_sidebar.outline_width + "px solid " + outline_color);
-
-    // remove bottom border from last link div
-    node_sidebar_links_container_selection.select("div:last-child")
-      .style("border-bottom", "none");
-
-    // add icons and text to the link divs
-    var icon_radius_with_outline = appearance.link_icon.radius + appearance.link_icon.outline_width;
-    link_divs_selection.append("svg")
-      .attr("height", icon_radius_with_outline * 2 + "px")
-      .style("flex-basis", icon_radius_with_outline * 2 + "px")
-      .append("circle")
-        .attr("r", appearance.link_icon.radius)
-        .attr("cx", icon_radius_with_outline)
-        .attr("cy", icon_radius_with_outline)
-        .attr("fill", d => getLinkPatternById(d.type))
-        .attr("stroke", appearance.link_icon.outline_color)
-        .attr("stroke-width", appearance.link_icon.outline_width);
-    link_divs_selection.append("p")
-      .html( d => d.description );
-  }
-
   // if there are no uses to display, then hide the section
   if(n.layer == 0)
   {
@@ -655,9 +613,9 @@ function updateLinkSidebar(l)
 
   // update the link graphic
   link_sidebar_graphic_selection.select("polyline")
-      .attr("points", createLinkPolylineFromValues(node_radius_with_outline, node_radius_with_outline,
-        appearance.link_sidebar_graphic.distance_between_nodes + node_radius_with_outline, node_radius_with_outline,
-        node_radius_with_outline + 3))
+      .attr("points", getLinkPolylinePointsFromLength(getLinkPolylineLength(node_radius_with_outline,
+        node_radius_with_outline, appearance.link_sidebar_graphic.distance_between_nodes + node_radius_with_outline,
+        node_radius_with_outline, node_radius_with_outline + appearance.link.arrowhead_to_node_distance)))
       .attr("fill", getLinkFillColor(l))
       .attr("stroke", getLinkOutlineColor(l));
   link_sidebar_graphic_selection.select("circle")
@@ -669,9 +627,10 @@ function updateLinkSidebar(l)
 
   // set the icon and title for the link sidebar
   link_sidebar_selection.select("circle")
-    .attr("fill", getLinkPattern(l));
+    .attr("fill", getLinkPattern(l))
+    .attr("stroke", getLinkOutlineColor(l));
   link_sidebar_selection.select("h1")
-    .html(getLinkTypeById(l.type).label);
+    .html(getLinkTypeById(l.type + "_identifiable").label);
   link_sidebar_selection.select("p")
     .html(l.text);
 
@@ -916,7 +875,6 @@ function main()
         .attr("r", appearance.link_icon.radius)
         .attr("cx", link_icon_radius_with_outline)
         .attr("cy", link_icon_radius_with_outline)
-        .attr("stroke", appearance.link_icon.outline_color)
         .attr("stroke-width", appearance.link_icon.outline_width);
 
     tree
@@ -1057,7 +1015,7 @@ function main()
 
   // add lines to background links
   background_links_selection.append("polyline")
-    .attr("points", createLinkPolylineFromLink)
+    .attr("points", getLinkPolylinePoints)
     .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
     .attr("fill", appearance.link.fill_color_background)
     .attr("stroke", appearance.link.outline_color_background)
@@ -1073,16 +1031,34 @@ function main()
       .attr("transform", function(d)
       {
         let source = getNodeById(d.source);
-        return "translate(" + source.x + "," + source.y + ")";
+        return "translate(" + source.x + "," + source.y + ") rotate(" + getLinkRotationDegrees(d) + ")";
       });
 
   // add lines to links
   links_selection.append("polyline")
-    .attr("points", createLinkPolylineFromLink)
-    .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
+    .attr("points", getLinkPolylinePoints)
     .attr("fill", getLinkFillColor)
     .attr("stroke", getLinkOutlineColor)
     .attr("stroke-width", appearance.link.outline_width);
+
+  link_types_to_display = ["link_aggregate", "link_anonymize", "link_identify", "link_infer", "link_sell", "link_other"]
+
+  // add icons for special types of links
+  links_selection.filter(d => link_types_to_display.includes(d.type)).append("circle")
+    .attr("transform", function(d)
+    {
+      let source = getNodeById(d.source);
+      let dest = getNodeById(d.destination);
+      let length_to_head = getLinkPolylineLength(source.x, source.y, dest.x, dest.y,
+        dest.radius + appearance.node.outline_width + appearance.link.arrowhead_to_node_distance)
+        - appearance.link.arrowhead_length;
+      let displacement = (length_to_head + source.radius) / 2;
+      return "translate(0," + displacement + ") rotate(-" + getLinkRotationDegrees(d) + ")";
+    })
+    .attr("r", appearance.link_icon_on_link.radius)
+    .attr("fill", getLinkPattern)
+    .attr("stroke", getLinkOutlineColor)
+    .attr("stroke-width", appearance.link_icon.outline_width);
 
   // mouse interactions for links
   links_selection
