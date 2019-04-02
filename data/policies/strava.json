@@ -635,7 +635,7 @@
       "all_data": false
     },
     { "id": "use_all_data",
-      "description": "Do anything that buildUp can do with all of your data",
+      "description": "Follow the arrow to see more",
       "image":"images/node_icons/all_identifiable.png",
       "unknown": false,
       "all_data": true
