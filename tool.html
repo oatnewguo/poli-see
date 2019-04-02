@@ -725,6 +725,22 @@ function unfocusElementOutline(elt)
   }
 }
 
+// highlight a node's background arrow, if it has one
+function highlightBackgroundArrow(elt)
+{
+  background_links_selection.filter(d => d.source == elt.data.id).select("polyline")
+    .attr("fill", appearance.link.fill_color_background_highlight)
+    .attr("stroke", appearance.link.outline_color_background_highlight)
+}
+
+// unhighlight a node's background arrow, if it has one
+function unhighlightBackgroundArrow(elt)
+{
+  background_links_selection.filter(d => d.source == elt.data.id).select("polyline")
+    .attr("fill", appearance.link.fill_color_background)
+    .attr("stroke", appearance.link.outline_color_background)
+}
+
 // handle interactions when the cursor enters an interactive element
 function onMouseEnter(elt)
 {
@@ -732,8 +748,12 @@ function onMouseEnter(elt)
   hideSidebars();
   updateSidebar(elt);
 
-  // if the cursor is over a node, then increase the node's size
-  increaseNodeRadius(elt);
+  // if the cursor is over a node, then change its appearance
+  if(elt.type == element_types.NODE)
+  {
+    increaseNodeRadius(elt);
+    highlightBackgroundArrow(elt);
+  }
 }
 
 // handle interactions when the cursor leaves an interactive element
@@ -742,20 +762,28 @@ function onMouseLeave(elt)
   // hide the sidebar
   hideSidebars();
 
-  // if there is no clicked element, then if the cursor was over a node, just decrease the node's size back to normal
+  // if there is no clicked element, then if the cursor was over a node, then change its appearance back
   if(clicked_elt == null)
   {
-    decreaseNodeRadius(elt);
+    if(elt.type == element_types.NODE)
+    {
+      decreaseNodeRadius(elt);
+      unhighlightBackgroundArrow(elt);
+    }
   }
   // if there is a clicked element, then update the sidebar to display information about the clicked element
   else
   {
     updateSidebar(clicked_elt);
 
-    // if the cursor was over a node, then unless the node is the clicked element, decrease its size back to normal
+    // if the cursor was over a node, then unless the node is the clicked element, change its appearance back
     if(elt.data.id != clicked_elt.data.id)
     {
-      decreaseNodeRadius(elt);
+      if(elt.type == element_types.NODE)
+      {
+        decreaseNodeRadius(elt);
+        unhighlightBackgroundArrow(elt);
+      }
     }
   }
 }
@@ -778,9 +806,13 @@ function onClick(elt)
     hideSidebars();
     updateSidebar(elt);
 
-    // change the outline of the old clicked element back to normal, and decrease its size back to normal if it was a node
+    // change the outline of the old clicked element back to normal, and change its appearance otherwise back
     unfocusElementOutline(clicked_elt);
-    decreaseNodeRadius(clicked_elt);
+    if(elt.type == element_types.NODE)
+    {
+      decreaseNodeRadius(clicked_elt);
+      unhighlightBackgroundArrow(clicked_elt);
+    }
 
     // change outline of new clicked element to indicate focus
     focusElementOutline(elt);

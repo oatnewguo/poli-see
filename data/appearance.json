@@ -42,9 +42,11 @@
     "fill_color_identifiable": "#404060",
     "fill_color_unidentifiable": "#707070",
     "fill_color_background": "#CBCBE0",
+    "fill_color_background_highlight": "#66668A",
     "outline_color_identifiable": "#404060",
     "outline_color_unidentifiable": "#707070",
     "outline_color_background": "#CBCBE0",
+    "outline_color_background_highlight": "#66668A",
     "outline_color_focus": "#00C8FF"
   },
   "link_icon":
