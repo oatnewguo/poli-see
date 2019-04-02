@@ -563,6 +563,7 @@
       "description": "Aggregated by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
+      "display_on_link": true,
       "image":"images/link_icons/aggregate.png"
     },
     { "id": "link_anonymize",
@@ -570,6 +571,7 @@
       "description": "Anonymized by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
+      "display_on_link": true,
       "image":"images/link_icons/anonymize.png"
     },
     { "id": "link_collect",
@@ -577,6 +579,7 @@
       "description": "Collected by ",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
+      "display_on_link": false,
       "image":"images/link_icons/collect.png"
     },
     { "id": "link_identify",
@@ -584,6 +587,7 @@
       "description": "Identified by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
+      "display_on_link": true,
       "image":"images/link_icons/identify.png"
     },
     { "id": "link_infer",
@@ -591,6 +595,7 @@
       "description": "Used to infer other data by ",
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
+      "display_on_link": true,
       "image":"images/link_icons/infer.png"
     },
     { "id": "link_sell",
@@ -598,6 +603,7 @@
       "description": "Sold to ",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
+      "display_on_link": true,
       "image":"images/link_icons/sell.png"
     },
     { "id": "link_share",
@@ -605,6 +611,7 @@
       "description": "Shared with ",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
+      "display_on_link": false,
       "image":"images/link_icons/share.png"
     },
     { "id": "link_other",
@@ -612,6 +619,7 @@
       "description": "Transformed or transferred in some other way",
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": false,
+      "display_on_link": true,
       "image":"images/generic_icon.png"
     }
   ],

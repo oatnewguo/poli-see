@@ -1041,10 +1041,8 @@ function main()
     .attr("stroke", getLinkOutlineColor)
     .attr("stroke-width", appearance.link.outline_width);
 
-  link_types_to_display = ["link_aggregate", "link_anonymize", "link_identify", "link_infer", "link_sell", "link_other"]
-
   // add icons for special types of links
-  links_selection.filter(d => link_types_to_display.includes(d.type)).append("circle")
+  links_selection.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
     .attr("transform", function(d)
     {
       let source = getNodeById(d.source);
