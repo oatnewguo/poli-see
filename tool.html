@@ -1156,17 +1156,6 @@ function main()
     .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, selection:d3.select(this)}); })
     // retain focus on an element when it is clicked
     .on("click", function(d) { onClick({type:element_types.NODE, data:d, selection:d3.select(this)}); });
-
-
-
-  // automatically select the base all_data node at the beginning
-  {
-    let base_all_data_node_elt = {type:element_types.NODE, data:nodes.filter(d => d.id == base_all_data_node_id)[0],
-      selection:d3.select("#" + base_all_data_node_id)};
-    onMouseEnter(base_all_data_node_elt);
-    onClick(base_all_data_node_elt);
-    onMouseLeave(base_all_data_node_elt);
-  }
 }
 
 
