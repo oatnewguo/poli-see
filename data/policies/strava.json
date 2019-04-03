@@ -54,7 +54,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects",
+      "label": "All Data buildUp Collects",
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
@@ -71,7 +71,7 @@
       "identifiable": false,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects, Aggregated",
+      "label": "All Data buildUp Collects, Aggregated",
       "uses": ["use_research_other", "use_all_data"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
@@ -85,7 +85,7 @@
       "identifiable": false,
       "options": true,
       "options_text": "Please visit your <a href=\"https://www.strava.com/settings/privacy\" target=\"_blank\">privacy controls</a> if you object to buildUp sharing this information.",
-      "label": "All Information buildUp Collects, Aggregated",
+      "label": "All Data buildUp Collects, Aggregated",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
@@ -99,7 +99,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects",
+      "label": "All Data buildUp Collects",
       "uses": ["use_provide_services"],
       "data_handler": "Third-party service providers",
       "data_handler_category": "third parties",
@@ -113,7 +113,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects",
+      "label": "All Data buildUp Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third party apps, plugins, or websites",
       "data_handler_category": "third parties",
@@ -127,7 +127,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects",
+      "label": "All Data buildUp Collects",
       "uses": ["use_unknown"],
       "data_handler": "Other buildUp members and non-members",
       "data_handler_category": "buildUp members and non-members",
@@ -141,7 +141,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects",
+      "label": "All Data buildUp Collects",
       "uses": ["use_all_data"],
       "data_handler": "Affiliates under common control with buildUp",
       "data_handler_category": "affiliates",
@@ -155,7 +155,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects",
+      "label": "All Data buildUp Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties, including law enforcement, public or governmental agencies, or private litigants, within or outside your country of residence,",
       "data_handler_category": "third parties",
@@ -169,7 +169,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information buildUp Collects",
+      "label": "All Data buildUp Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
@@ -564,7 +564,17 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/aggregate.png"
+      "image":"images/link_icons/aggregate.png",
+      "all_data": false
+    },
+    { "id": "link_all_data",
+      "label": "All Data",
+      "description": "Considered part of all data collected",
+      "add_name_of_current_handler": false,
+      "add_name_of_future_handler": false,
+      "display_on_link": false,
+      "image":"images/node_icons/all_identifiable.png",
+      "all_data": true
     },
     { "id": "link_anonymize",
       "label": "Anonymize",
@@ -572,7 +582,8 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/anonymize.png"
+      "image":"images/link_icons/anonymize.png",
+      "all_data": false
     },
     { "id": "link_collect",
       "label": "Collect",
@@ -580,7 +591,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
       "display_on_link": false,
-      "image":"images/link_icons/collect.png"
+      "image":"images/link_icons/collect.png",
+      "all_data": false
     },
     { "id": "link_identify",
       "label": "Identify",
@@ -588,7 +600,8 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/identify.png"
+      "image":"images/link_icons/identify.png",
+      "all_data": false
     },
     { "id": "link_infer",
       "label": "Infer",
@@ -596,7 +609,8 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/infer.png"
+      "image":"images/link_icons/infer.png",
+      "all_data": false
     },
     { "id": "link_sell",
       "label": "Sell",
@@ -604,7 +618,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
       "display_on_link": true,
-      "image":"images/link_icons/sell.png"
+      "image":"images/link_icons/sell.png",
+      "all_data": false
     },
     { "id": "link_share",
       "label": "Share",
@@ -612,7 +627,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
       "display_on_link": false,
-      "image":"images/link_icons/share.png"
+      "image":"images/link_icons/share.png",
+      "all_data": false
     },
     { "id": "link_other",
       "label": "Other",
@@ -620,7 +636,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/generic_icon.png"
+      "image":"images/generic_icon.png",
+      "all_data": false
     }
   ],
 

@@ -53,7 +53,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information A+ Fit Collects",
+      "label": "All Data A+ Fit Collects",
       "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
@@ -70,7 +70,7 @@
       "identifiable": false,
       "options": false,
       "options_text": "",
-      "label": "All Information A+ Fit Collects, Aggregated",
+      "label": "All Data A+ Fit Collects, Aggregated",
       "uses": ["use_all_data"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
@@ -84,7 +84,7 @@
       "identifiable": false,
       "options": false,
       "options_text": "",
-      "label": "All Information A+ Fit Collects, Aggregated",
+      "label": "All Data A+ Fit Collects, Aggregated",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
@@ -98,7 +98,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information A+ Fit Collects",
+      "label": "All Data A+ Fit Collects",
       "uses": ["use_all_data"],
       "data_handler": "Data controllers within the A+ Fit Group",
       "data_handler_category": "affiliates",
@@ -112,7 +112,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information A+ Fit Collects",
+      "label": "All Data A+ Fit Collects",
       "uses": ["use_unknown"],
       "data_handler": "Service Providers and Processor",
       "data_handler_category": "third parties",
@@ -126,7 +126,7 @@
       "identifiable": true,
       "options": true,
       "options_text": "We will only disclose your personal data to partners where you have consented or requested that we do so.",
-      "label": "All Information A+ Fit Collects",
+      "label": "All Data A+ Fit Collects",
       "uses": ["use_unknown"],
       "data_handler": "Partners",
       "data_handler_category": "third parties",
@@ -140,7 +140,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information A+ Fit Collects",
+      "label": "All Data A+ Fit Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties in case of legal requirement",
       "data_handler_category": "third parties",
@@ -154,7 +154,7 @@
       "identifiable": true,
       "options": false,
       "options_text": "",
-      "label": "All Information A+ Fit Collects",
+      "label": "All Data A+ Fit Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
@@ -168,7 +168,7 @@
       "identifiable": true,
       "options": true,
       "options_text": "We will only disclose this data where you have consented or requested that we do so.",
-      "label": "All Information A+ Fit Collects",
+      "label": "All Data A+ Fit Collects",
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
@@ -432,7 +432,17 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/aggregate.png"
+      "image":"images/link_icons/aggregate.png",
+      "all_data": false
+    },
+    { "id": "link_all_data",
+      "label": "All Data",
+      "description": "Considered part of all data collected",
+      "add_name_of_current_handler": false,
+      "add_name_of_future_handler": false,
+      "display_on_link": false,
+      "image":"images/node_icons/all_identifiable.png",
+      "all_data": true
     },
     { "id": "link_anonymize",
       "label": "Anonymize",
@@ -440,7 +450,8 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/anonymize.png"
+      "image":"images/link_icons/anonymize.png",
+      "all_data": false
     },
     { "id": "link_collect",
       "label": "Collect",
@@ -448,7 +459,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
       "display_on_link": false,
-      "image":"images/link_icons/collect.png"
+      "image":"images/link_icons/collect.png",
+      "all_data": false
     },
     { "id": "link_identify",
       "label": "Identify",
@@ -456,7 +468,8 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/identify.png"
+      "image":"images/link_icons/identify.png",
+      "all_data": false
     },
     { "id": "link_infer",
       "label": "Infer",
@@ -464,7 +477,8 @@
       "add_name_of_current_handler": true,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/link_icons/infer.png"
+      "image":"images/link_icons/infer.png",
+      "all_data": false
     },
     { "id": "link_sell",
       "label": "Sell",
@@ -472,7 +486,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
       "display_on_link": true,
-      "image":"images/link_icons/sell.png"
+      "image":"images/link_icons/sell.png",
+      "all_data": false
     },
     { "id": "link_share",
       "label": "Share",
@@ -480,7 +495,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": true,
       "display_on_link": false,
-      "image":"images/link_icons/share.png"
+      "image":"images/link_icons/share.png",
+      "all_data": false
     },
     { "id": "link_other",
       "label": "Other",
@@ -488,7 +504,8 @@
       "add_name_of_current_handler": false,
       "add_name_of_future_handler": false,
       "display_on_link": true,
-      "image":"images/generic_icon.png"
+      "image":"images/generic_icon.png",
+      "all_data": false
     }
   ],
 

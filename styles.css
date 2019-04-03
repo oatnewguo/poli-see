@@ -125,12 +125,7 @@ html
   align-self: center;
 }
 
-.node
-{
-  cursor: pointer;
-}
-
-.link
+.node, .link, .background_link
 {
   cursor: pointer;
 }

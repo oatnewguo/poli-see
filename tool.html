@@ -356,9 +356,18 @@ function setUpPatterns()
     let num_link_types = link_types.length;
     for(let i = 0; i < num_link_types; i++)
     {
-      link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image, fill_color: appearance.link_icon.fill_color_unidentifiable});
-      link_types[i].id = link_types[i].id + "_identifiable";
-      link_types[i].fill_color = appearance.link.fill_color_identifiable;
+      if(link_types[i].all_data)
+      {
+        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image, fill_color: appearance.node.fill_color_all_data});
+        link_types[i].id = link_types[i].id + "_identifiable";
+        link_types[i].fill_color = appearance.node.fill_color_all_data;
+      }
+      else
+      {
+        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image, fill_color: appearance.link_icon.fill_color_unidentifiable});
+        link_types[i].id = link_types[i].id + "_identifiable";
+        link_types[i].fill_color = appearance.link.fill_color_identifiable;
+      }
     }
   }
 
@@ -925,7 +934,7 @@ function main()
 
 
   // iterate through nodes to record special nodes, change node layers to essentially create a second sub-layer in
-  // layer 1, and create links
+  // layer 1, and create links and background links
   for(let i = 0; i < nodes.length; i++)
   {
     let n = nodes[i];
@@ -960,7 +969,7 @@ function main()
     // if the node is in layer one and not an all_data node, add a background link to the base all_data node
     if(n.layer == 1 && ! n.all_data)
     {
-      background_links.push({ source: n.id, destination: base_all_data_node_id, type: null, text: null });
+      background_links.push({ source: n.id, destination: base_all_data_node_id, type: "link_all_data", text: "These lighter arrows point to a circle that tells you what " + primary_entity_name + " can do with all of your data." });
     }
 
     // move the node one node outward to accommodate for second sub-layer within layer 1 (center node and primary
@@ -1054,6 +1063,15 @@ function main()
     .attr("fill", appearance.link.fill_color_background)
     .attr("stroke", appearance.link.outline_color_background)
     .attr("stroke-width", appearance.link.outline_width);
+
+  // mouse interactions for background links
+  background_links_selection
+    // display more information when the cursor hovers over links
+    .on("mouseenter", function(d) { onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)}); })
+    // hide information when the cursor leaves a link
+    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, selection:d3.select(this)}); })
+    // retain focus on an element when it is clicked
+    .on("click", function(d) { onClick({type:element_types.LINK, data:d, selection:d3.select(this)}); });
 
 
 
