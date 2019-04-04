@@ -69,6 +69,13 @@ const element_types =
   LINK: "link"
 }
 
+// enumerated constants for types of uses displayed in node sidebar
+const display_use_types =
+{
+  USE: "use",
+  LINK: "link"
+}
+
 const NUM_LAYERS = 3;
 
 // variables for title, intro text, name of the primary data-collecting entity, and options icon image
@@ -545,7 +552,7 @@ function updateNodeSidebar(n)
   }
 
   // if there are no uses to display, then hide the section
-  if(n.layer == 0)
+  if(n.layer == 0 || n.uses.length == 0)
   {
     node_sidebar_uses_container_selection
       .style("display", "none");
