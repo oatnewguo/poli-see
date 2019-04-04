@@ -3,20 +3,8 @@ html
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.tool_container
+#canvas
 {
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-.tool_container *
-{
-  white-space: normal;
-}
-
-.layer_title
-{
-  font-weight: bold;
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -24,6 +12,16 @@ html
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.tool_container
+{
+  overflow-x: auto;
+}
+
+.layer_title
+{
+  font-weight: bold;
 }
 
 .sidebar
