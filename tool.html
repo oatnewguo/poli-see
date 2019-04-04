@@ -965,7 +965,7 @@ function main()
     // if the node is in layer one and not an all_data node, add a background link to the base all_data node
     if(n.layer == 1 && ! n.all_data)
     {
-      background_links.push({ source: n.id, destination: base_all_data_node_id, type: "link_all_data", text: "These lighter arrows point to a circle that tells you what " + primary_entity_name + " can do with all of your data." });
+      background_links.push({ id: n.id + "->" + base_all_data_node_id, source: n.id, destination: base_all_data_node_id, type: "link_all_data", text: "These lighter arrows point to a circle that tells you what " + primary_entity_name + " can do with all of your data." });
     }
 
     // move the node one node outward to accommodate for second sub-layer within layer 1 (center node and primary
