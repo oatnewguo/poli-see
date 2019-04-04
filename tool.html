@@ -268,21 +268,15 @@ function getNodeRadius(n)
 // return the fill color of a link
 function getLinkFillColor(l)
 {
-  if(getNodeById(l.destination).identifiable)
+  if(l.destination == base_all_data_node_id)
+  {
+    return appearance.link.fill_color_background;
+  }
+  else if(getNodeById(l.destination).identifiable)
   {
     return appearance.link.fill_color_identifiable;
   }
   return appearance.link.fill_color_unidentifiable;
-}
-
-// return the outline color of a link
-function getLinkOutlineColor(l)
-{
-  if(getNodeById(l.destination).identifiable)
-  {
-    return appearance.link.outline_color_identifiable;
-  }
-  return appearance.link.outline_color_unidentifiable;
 }
 
 // return a string containing the points for a link polyline arrow pointing down, given a link
@@ -599,8 +593,8 @@ function updateNodeSidebar(n)
       .attr("points", getLinkPolylinePointsFromLength(getLinkPolylineLength(0, icon_radius_with_outline,
         4 * icon_radius_with_outline, icon_radius_with_outline,
         icon_radius_with_outline + appearance.link.arrowhead_to_node_distance)))
-      .attr("fill", appearance.link.fill_color_background)
-      .attr("stroke", appearance.link.outline_color_background);
+      .attr("fill", appearance.link.fill_color_background_highlight)
+      .attr("stroke-width", 0);
     use_divs_selection.append("p")
       .html(function(d) { return getUseTypeById(d).description; });
   }
@@ -640,8 +634,7 @@ function updateLinkSidebar(l)
       .attr("points", getLinkPolylinePointsFromLength(getLinkPolylineLength(node_radius_with_outline,
         node_radius_with_outline, appearance.link_sidebar_graphic.distance_between_nodes + node_radius_with_outline,
         node_radius_with_outline, node_radius_with_outline + appearance.link.arrowhead_to_node_distance)))
-      .attr("fill", getLinkFillColor(l))
-      .attr("stroke", getLinkOutlineColor(l));
+      .attr("fill", getLinkFillColor(l));
   link_sidebar_graphic_selection.select("circle")
       .attr("fill", getNodePattern(source))
       .attr("stroke", getNodeOutlineColor(source));
@@ -652,7 +645,7 @@ function updateLinkSidebar(l)
   // set the icon and title for the link sidebar
   link_sidebar_selection.select("circle")
     .attr("fill", getLinkPattern(l))
-    .attr("stroke", getLinkOutlineColor(l));
+    .attr("stroke", getLinkFillColor(l));
   link_sidebar_selection.select("h1")
     .html(getLinkTypeById(l.type + "_identifiable").label);
   link_sidebar_selection.select("p")
@@ -719,7 +712,6 @@ function focusElementOutline(elt)
   else
   {
     elt.selection.select("polyline")
-      .attr("stroke", appearance.link.outline_color_focus)
       .attr("stroke-width", appearance.link.outline_width_focus);
   }
 }
@@ -736,8 +728,7 @@ function unfocusElementOutline(elt)
   else if(clicked_elt.type == element_types.LINK)
   {
     clicked_elt.selection.select("polyline")
-      .attr("stroke", getLinkOutlineColor)
-      .attr("stroke-width", appearance.link.outline_width);
+      .attr("stroke-width", 0);
   }
 }
 
@@ -745,16 +736,14 @@ function unfocusElementOutline(elt)
 function highlightBackgroundArrow(elt)
 {
   background_links_selection.filter(d => d.source == elt.data.id).select("polyline")
-    .attr("fill", appearance.link.fill_color_background_highlight)
-    .attr("stroke", appearance.link.outline_color_background_highlight)
+    .attr("fill", appearance.link.fill_color_background_highlight);
 }
 
 // unhighlight a node's background arrow, if it has one
 function unhighlightBackgroundArrow(elt)
 {
   background_links_selection.filter(d => d.source == elt.data.id).select("polyline")
-    .attr("fill", appearance.link.fill_color_background)
-    .attr("stroke", appearance.link.outline_color_background)
+    .attr("fill", appearance.link.fill_color_background);
 }
 
 // handle interactions when the cursor enters an interactive element
@@ -824,7 +813,7 @@ function onClick(elt)
 
     // change the outline of the old clicked element back to normal, and change its appearance otherwise back
     unfocusElementOutline(clicked_elt);
-    if(elt.type == element_types.NODE)
+    if(clicked_elt.type == element_types.NODE)
     {
       decreaseNodeRadius(clicked_elt);
       unhighlightBackgroundArrow(clicked_elt);
@@ -912,7 +901,7 @@ function main()
       .style("margin-bottom", appearance.link_sidebar_graphic.margin_bottom);
     link_sidebar_graphic_selection.select("polyline")
         .attr("transform", "translate(" + node_radius_with_outline + "," + node_radius_with_outline + ") rotate(270)")
-        .attr("stroke-width", appearance.link.outline_width);
+        .attr("stroke-width", 0);
     link_sidebar_graphic_selection.select("circle")
         .attr("r", appearance.node.radius)
         .attr("cx", node_radius_with_outline)
@@ -1068,8 +1057,8 @@ function main()
     .attr("points", getLinkPolylinePoints)
     .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
     .attr("fill", appearance.link.fill_color_background)
-    .attr("stroke", appearance.link.outline_color_background)
-    .attr("stroke-width", appearance.link.outline_width);
+    .attr("stroke", appearance.link.outline_color_focus)
+    .attr("stroke-width", 0);
 
   // mouse interactions for background links
   background_links_selection
@@ -1097,8 +1086,8 @@ function main()
   links_selection.append("polyline")
     .attr("points", getLinkPolylinePoints)
     .attr("fill", getLinkFillColor)
-    .attr("stroke", getLinkOutlineColor)
-    .attr("stroke-width", appearance.link.outline_width);
+    .attr("stroke", appearance.link.outline_color_focus)
+    .attr("stroke-width", 0);
 
   // add icons for special types of links
   links_selection.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
@@ -1114,7 +1103,7 @@ function main()
     })
     .attr("r", appearance.link_icon_on_link.radius)
     .attr("fill", getLinkPattern)
-    .attr("stroke", getLinkOutlineColor)
+    .attr("stroke", getLinkFillColor)
     .attr("stroke-width", appearance.link_icon.outline_width);
 
   // mouse interactions for links

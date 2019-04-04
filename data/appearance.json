@@ -33,20 +33,15 @@
   },
   "link":
   {
-    "width": 6,
-    "arrowhead_length": 10,
-    "arrowhead_width": 10,
+    "width": 8,
+    "arrowhead_length": 14,
+    "arrowhead_width": 14,
     "arrowhead_to_node_distance": 3,
-    "outline_width": 2,
     "outline_width_focus": 3,
     "fill_color_identifiable": "#404060",
     "fill_color_unidentifiable": "#707070",
     "fill_color_background": "#CBCBE0",
-    "fill_color_background_highlight": "#66668A",
-    "outline_color_identifiable": "#404060",
-    "outline_color_unidentifiable": "#707070",
-    "outline_color_background": "#CBCBE0",
-    "outline_color_background_highlight": "#66668A",
+    "fill_color_background_highlight": "#A0A0C0",
     "outline_color_focus": "#00C8FF"
   },
   "link_icon":
