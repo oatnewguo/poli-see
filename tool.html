@@ -735,8 +735,11 @@ function unfocusElementOutline(elt)
 // highlight a node's background arrow, if it has one
 function highlightBackgroundArrow(elt)
 {
-  background_links_selection.filter(d => d.source == elt.data.id).select("polyline")
+  var a = background_links_selection.filter(d => d.source == elt.data.id);
+  a.select("polyline")
     .attr("fill", appearance.link.fill_color_background_highlight);
+
+  a.raise();
 }
 
 // unhighlight a node's background arrow, if it has one
@@ -1042,7 +1045,7 @@ function main()
 
 
   // append background links
-  background_links_selection = g_selection.selectAll(".background_link")
+  background_links_selection = g_selection.append("g").selectAll(".background_link")
     .data(background_links)
     .enter().append("g")
       .classed("background_link", true)
@@ -1063,7 +1066,11 @@ function main()
   // mouse interactions for background links
   background_links_selection
     // display more information when the cursor hovers over links
-    .on("mouseenter", function(d) { onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)}); })
+    .on("mouseenter", function(d)
+    {
+      onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)});
+      d3.select(this).raise();
+    })
     // hide information when the cursor leaves a link
     .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, selection:d3.select(this)}); })
     // retain focus on an element when it is clicked
@@ -1072,7 +1079,7 @@ function main()
 
 
   // append links
-  links_selection = g_selection.selectAll(".link")
+  links_selection = g_selection.append("g").selectAll(".link")
     .data(links)
     .enter().append("g")
       .classed("link", true)
@@ -1109,7 +1116,11 @@ function main()
   // mouse interactions for links
   links_selection
     // display more information when the cursor hovers over links
-    .on("mouseenter", function(d) { onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)}); })
+    .on("mouseenter", function(d)
+    {
+      onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)});
+      d3.select(this).raise();
+    })
     // hide information when the cursor leaves a link
     .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, selection:d3.select(this)}); })
     // retain focus on an element when it is clicked
@@ -1118,7 +1129,7 @@ function main()
 
 
   // append nodes
-  nodes_selection = g_selection.selectAll(".node")
+  nodes_selection = g_selection.append("g").selectAll(".node")
     .data(nodes)
     .enter().append("g")
       .classed("node", true)
@@ -1147,7 +1158,11 @@ function main()
   // mouse interactions for nodes
   nodes_selection
     // display more information in the node sidebar when the cursor hovers over nodes
-    .on("mouseenter", function(d) { onMouseEnter({type:element_types.NODE, data:d, selection:d3.select(this)}); })
+    .on("mouseenter", function(d)
+    {
+      onMouseEnter({type:element_types.NODE, data:d, selection:d3.select(this)});
+      d3.select(this).raise();
+    })
     // update the node sidebar when the cursor leaves a node
     .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, selection:d3.select(this)}); })
     // retain focus on an element when it is clicked
