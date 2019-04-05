@@ -16,7 +16,13 @@ html
 
 .tool_container
 {
-  overflow-x: auto;
+  overflow-x: auto;       /* force tool to scroll horizontally */
+  white-space: nowrap;
+}
+
+.tool_container *
+{
+  white-space: normal;
 }
 
 .layer_title
