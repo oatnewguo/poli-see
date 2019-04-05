@@ -38,6 +38,7 @@
       <div id="node_sidebar_uses_container" class="sidebar_list_container">
         <h2></h2>
       </div>
+      <span class="close_button"></span>
     </div>
   </div>
 
@@ -55,6 +56,7 @@
         <h1 style="display: inline-block"></h1>
       </div>
       <p></p>
+      <span class="close_button"></span>
     </div>
   </div>
 </div>
@@ -120,6 +122,9 @@ var node_sidebar_uses_container_selection = node_sidebar_selection.select("#node
 
 // selection of svg for link sidebar graphic
 var link_sidebar_graphic_selection = link_sidebar_container_selection.select("#link_sidebar_graphic");
+
+// selection of sidebar close buttons
+var sidebar_close_buttons_selection = d3.select(".close_button");
 
 // radii of background circles
 var background_circles_radii;
@@ -1167,6 +1172,17 @@ function main()
     .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, selection:d3.select(this)}); })
     // retain focus on an element when it is clicked
     .on("click", function(d) { onClick({type:element_types.NODE, data:d, selection:d3.select(this)}); });
+
+
+
+  // mouse interactions for sidebar close buttons
+  sidebar_close_buttons_selection
+    .on("click", function(d)
+    {
+      let c = clicked_elt;
+      onClick(c);
+      onMouseLeave(c);
+    })
 }
 
 

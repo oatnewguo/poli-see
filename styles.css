@@ -28,6 +28,7 @@ html
 {
   overflow: auto;
   word-wrap: break-word;
+  position: relative;
 }
 
 .sidebar > *
@@ -121,6 +122,29 @@ html
 {
   margin: 0 0 0 10px;
   align-self: center;
+}
+
+.close_button
+{
+  color: #777;
+  font: 48px Helvetica, Arial, sans-serif;
+  position: absolute;
+  top: 0;
+  right: 16px;
+  cursor: pointer;
+  margin: 0;
+  -webkit-transition: color .5s; /* Safari */
+          transition: color .5s;
+}
+
+.close_button:hover
+{
+  color: #333;
+}
+
+.close_button:after
+{
+  content: "\00D7";
 }
 
 .node, .link, .background_link
