@@ -72,7 +72,7 @@
       "options": false,
       "options_text": "",
       "label": "All Data buildUp Collects, Aggregated",
-      "uses": ["use_research_other", "use_all_data"],
+      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal", "use_research_other"],
       "data_handler": "buildUp",
       "data_handler_category": "buildUp",
       "text": "Your information, name removed and aggregated with others' information. Examples include information about equipment, usage, demographics, routes and performance."
@@ -142,7 +142,7 @@
       "options": false,
       "options_text": "",
       "label": "All Data buildUp Collects",
-      "uses": ["use_all_data"],
+      "uses": ["use_policy"],
       "data_handler": "Affiliates under common control with buildUp",
       "data_handler_category": "affiliates",
       "text": ""
@@ -382,7 +382,7 @@
       "options": false,
       "options_text": "",
       "label": "Payment Information",
-      "uses": ["use_all_data"],
+      "uses": ["use_policy"],
       "data_handler": "Payment Card Industry compliant third-party payment services",
       "data_handler_category": "third parties",
       "text": "Payment card and other payment details."
@@ -680,6 +680,12 @@
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
+      "unknown": false,
+      "all_data": false
+    },
+    { "id": "use_policy",
+      "description": "Do anything that this privacy policy allows buildUp to do",
+      "image":"images/use_icons/policy.png",
       "unknown": false,
       "all_data": false
     },

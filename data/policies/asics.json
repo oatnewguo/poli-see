@@ -71,7 +71,7 @@
       "options": false,
       "options_text": "",
       "label": "All Data A+ Fit Collects, Aggregated",
-      "uses": ["use_all_data"],
+      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
       "text": ""
@@ -99,7 +99,7 @@
       "options": false,
       "options_text": "",
       "label": "All Data A+ Fit Collects",
-      "uses": ["use_all_data"],
+      "uses": ["use_policy"],
       "data_handler": "Data controllers within the A+ Fit Group",
       "data_handler_category": "affiliates",
       "text": ""
@@ -548,6 +548,12 @@
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
+      "unknown": false,
+      "all_data": false
+    },
+    { "id": "use_policy",
+      "description": "Do anything that this privacy policy allows A+ Fit to do",
+      "image":"images/use_icons/policy.png",
       "unknown": false,
       "all_data": false
     },
