@@ -663,6 +663,22 @@ function updateNodeSidebar(n)
       .attr("fill", d => getLinkFillColorByDestinationId(d.successor_id))
       .attr("stroke-width", 0);
 
+    // add icons for special types of links
+    use_divs_link_svgs_selection.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
+      .attr("transform", function(d)
+      {
+        let length_to_head = getLinkPolylineLength(0, icon_radius_with_outline,
+          4 * icon_radius_with_outline, icon_radius_with_outline,
+          icon_radius_with_outline + appearance.link.arrowhead_to_node_distance)
+          - appearance.link.arrowhead_length;
+        return "translate(" + length_to_head/2 + "," + icon_radius_with_outline + ")";
+      })
+      .attr("r", appearance.link_icon_on_link.radius)
+      .attr("fill", d => getNodeById(d.successor_id).identifiable ? getLinkPatternById(d.type + "_identifiable")
+                                                                  : getLinkPatternById(d.type + "_unidentifiable"))
+      .attr("stroke", d => getLinkFillColorByDestinationId(d.successor_id))
+      .attr("stroke-width", appearance.link_icon.outline_width);
+
     use_divs_selection.filter(d => d.elt_type == display_use_types.USE).append("p")
       .html(d => getUseTypeById(d.type).description);
     use_divs_selection.filter(d => d.elt_type == display_use_types.LINK).append("p")
