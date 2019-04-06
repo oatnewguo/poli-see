@@ -124,6 +124,11 @@ html
   display: flex;
 }
 
+#link_sidebar_header_container svg
+{
+  flex-shrink: 0;
+}
+
 #link_sidebar_header_container h1
 {
   margin: 0 0 0 10px;

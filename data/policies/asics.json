@@ -57,7 +57,7 @@
       "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "A+ Fit",
       "data_handler_category": "A+ Fit",
-      "text": ""
+      "text": "All of your data that A+ Fit collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that have arrows pointing to this circle."
     },
     { "id": "all_aggregated_1",
       "successor_links":
@@ -438,6 +438,8 @@
       "description": "",
       "display_on_link": false,
       "image":"images/node_icons/all_identifiable.png",
+      "image_identifiable": "images/node_icons/all_identifiable.png",
+      "image_unidentifiable": "images/node_icons/all_unidentifiable.png",
       "all_data": true
     },
     { "id": "link_anonymize",
@@ -502,7 +504,7 @@
       "all_data": false
     },
     { "id": "use_all_data",
-      "description": "Follow the arrow to see more",
+      "description": "Do anything that this privacy policy allows A+ Fit to do with all data it collects. Follow the arrow depicted for more.",
       "image":"images/node_icons/all_identifiable.png",
       "unknown": false,
       "all_data": true
