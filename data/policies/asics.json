@@ -383,7 +383,7 @@
       "label": "Your Browsing Activities and Use of the Services",
       "uses": ["use_unknown"],
       "data_handler": "Third party providers",
-      "data_handler_category": "Third parties",
+      "data_handler_category": "third parties",
       "text": ""
     }
   ],

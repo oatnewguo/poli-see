@@ -25,6 +25,11 @@ html
   white-space: normal;
 }
 
+.node, .link, .background_link
+{
+  cursor: pointer;
+}
+
 .layer_title
 {
   font-weight: bold;
@@ -158,7 +163,20 @@ html
   content: "\00D7";
 }
 
-.node, .link, .background_link
+.tutorial_box
 {
-  cursor: pointer;
+  display: flex;
+}
+
+.tutorial_box img
+{
+  flex-shrink: 0;
+}
+
+.tutorial_box h2
+{
+  flex-basis: 100%;
+  margin: 0 0 0 5px;
+  align-self: center;
+  color: #66668A;
 }
