@@ -42,6 +42,7 @@
       "successor_links":
       [
         {"successor_id": "all_aggregated_1", "type": "link_aggregate", "text": "We may use your personal data to generate aggregated statistics about the users of our products and Services."},
+        {"successor_id": "all_anonymized_1", "type": "link_anonymize", "text": "We may de-identify your personal data."},
         {"successor_id": "all_2.1", "type": "link_share", "text": "Your personal data will be shared between the responsible ASICS companies that may use your personal data as described in this Privacy Policy."},
         {"successor_id": "all_2.2", "type": "link_share", "text": ""},
         {"successor_id": "all_2.3", "type": "link_share", "text": "Sometimes ASICS offers you a service or application in co-operation with partners. We may also disclose your personal data to those partners, but only where you have consented or requested that we do so."},
@@ -76,7 +77,7 @@
       "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
-      "text": ""
+      "text": "Aggregated statistics about the users of our products and Services."
     },
     { "id": "all_aggregated_2",
       "successor_links": [],
@@ -90,7 +91,38 @@
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
-      "text": ""
+      "text": "Aggregated statistics about the users of our products and Services."
+    },
+    { "id": "all_anonymized_1",
+      "successor_links":
+      [
+        {"successor_id": "all_anonymized_2", "type": "link_share", "text": "We may share aggregate or de-identified information with third parties for research, marketing, analytics and other purposes, provided such information does not identify a particular individual."}
+      ],
+      "layer": 1,
+      "type": "node_all",
+      "all_data": true,
+      "identifiable": false,
+      "options": false,
+      "options_text": "",
+      "label": "All Data ASICS Collects, Anonymized",
+      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
+      "data_handler": "ASICS",
+      "data_handler_category": "ASICS",
+      "text": "De-identified information about you."
+    },
+    { "id": "all_anonymized_2",
+      "successor_links": [],
+      "layer": 2,
+      "type": "node_all",
+      "all_data": true,
+      "identifiable": false,
+      "options": false,
+      "options_text": "",
+      "label": "All Data ASICS Collects, Anonymized",
+      "uses": ["use_unknown"],
+      "data_handler": "Third parties",
+      "data_handler_category": "third parties",
+      "text": "De-identified information about you."
     },
     { "id": "all_2.1",
       "successor_links": [],
@@ -132,7 +164,7 @@
       "uses": ["use_unknown"],
       "data_handler": "Partners",
       "data_handler_category": "third parties",
-      "text": ""
+      "text": "Information where you have consented or requested that we share with partners."
     },
     { "id": "all_2.4",
       "successor_links": [],
@@ -174,7 +206,7 @@
       "uses": ["use_unknown"],
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
-      "text": ""
+      "text": "Information where you have consented or requested that we share."
     },
     { "id": "contact_1",
       "successor_links": [],
@@ -370,7 +402,7 @@
       "uses": ["use_all_data"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
-      "text": ""
+      "text": "Data collected using cookies, log files, and more."
     },
     { "id": "browsing_2",
       "successor_links": [],
@@ -384,7 +416,7 @@
       "uses": ["use_unknown"],
       "data_handler": "Third party providers",
       "data_handler_category": "third parties",
-      "text": ""
+      "text": "Data collected using cookies, log files, and more."
     }
   ],
 
