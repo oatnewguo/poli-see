@@ -44,7 +44,7 @@ html
 
 .sidebar > *:first-child
 {
-  margin: 0;
+  margin: 0 36px 0 0;
 }
 
 .sidebar h1
