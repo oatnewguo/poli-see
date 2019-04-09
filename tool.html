@@ -1270,7 +1270,9 @@ function main()
 
 
 // load data from .json files
-d3.json("data/policies/strava.json").then(function(policy_json)
+var url = new URL(document.URL);
+var p = url.searchParams.get("policy");
+d3.json("data/policies/" + p).then(function(policy_json)
 {
   d3.json("data/appearance.json").then(function(appearance_json)
   {
