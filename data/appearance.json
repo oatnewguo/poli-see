@@ -40,8 +40,8 @@
     "outline_width_focus": 3,
     "fill_color_identifiable": "#404060",
     "fill_color_unidentifiable": "#707070",
-    "fill_color_background": "#D8D8E8",
-    "fill_color_background_highlight": "#B0B0C8",
+    "fill_color_background": "#D0D0E0",
+    "fill_color_background_highlight": "#9090D0",
     "outline_color_focus": "#00C8FF"
   },
   "link_icon":
