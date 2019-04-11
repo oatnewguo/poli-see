@@ -1198,7 +1198,7 @@ function main()
         dest.radius + appearance.node.outline_width + appearance.link.arrowhead_to_node_distance)
         - appearance.link.arrowhead_length;
       let displacement = (length_to_head + source.radius) / 2;
-      return "translate(0," + displacement + ") rotate(-" + getLinkRotationDegrees(d) + ")";
+      return "translate(0," + displacement + ") rotate(" + (-getLinkRotationDegrees(d)) + ")";
     })
     .attr("r", appearance.link_icon_on_link.radius)
     .attr("fill", getLinkPattern)
