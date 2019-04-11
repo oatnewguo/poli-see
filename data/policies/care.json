@@ -164,8 +164,8 @@
       "options_text": "",
       "label": "Location Information, Aggregated",
       "uses": ["use_unknown"],
-      "data_handler": "Academic researcher",
-      "data_handler_category": "Academic researcher",
+      "data_handler": "Academic researchers",
+      "data_handler_category": "Academic researchers",
       "text": ""
     },
     { "id": "financial_1",
