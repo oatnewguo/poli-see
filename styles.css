@@ -14,18 +14,18 @@ html
                                   supported by Chrome and Opera */
 }
 
-.tool_container
+.visualization_box
 {
   overflow-x: auto;       /* force tool to scroll horizontally */
   display: flex;
 }
 
-.tool_container > *
+.visualization_box > *
 {
   flex-shrink: 0;
 }
 
-.node, .link, .background_link
+.node, .link, .bg_link
 {
   cursor: pointer;
 }
@@ -35,112 +35,112 @@ html
   font-weight: bold;
 }
 
-.sidebar
+.panel
 {
   overflow: auto;
   word-wrap: break-word;
   position: relative;
 }
 
-.sidebar > *
+.panel > *
 {
   margin: 15px 0 0 0;
 }
 
-.sidebar > *:first-child
+.panel > *:first-child
 {
   margin: 0 36px 0 0;
 }
 
-.sidebar h1
+.panel h1
 {
   font-size: 1.8em;
 }
 
-.sidebar_container
+.panel_box
 {
   line-height: 0;
   vertical-align: top;
 }
 
-.sidebar_container *
+.panel_box *
 {
   line-height: initial;
 }
 
-#node_sidebar_options_container
+#node_panel_opts_box
 {
   display: flex;
   margin-bottom: 10px;
 }
 
-#node_sidebar_options_container svg
+#node_panel_opts_box svg
 {
   flex-shrink: 0;
 }
 
-#node_sidebar_options_container div
+#node_panel_opts_box div
 {
   margin: 0 0 0 10px;
 }
 
-#node_sidebar_options_container h2
+#node_panel_opts_box h2
 {
   margin: 0 0 5px 0;
   font-size: 1.3em;
 }
 
-#node_sidebar_options_container p
+#node_panel_opts_box p
 {
   margin: 0;
 }
 
-.sidebar_list_container h2
+.panel_list_box h2
 {
   margin: 0 0 5px 0;
   font-size: 1.3em;
 }
 
-.sidebar_list_item_container
+.panel_list_item_box
 {
   display: flex;
   padding: 5px 0 5px 0;
 }
 
-.sidebar_list_item_container:last-child
+.panel_list_item_box:last-child
 {
   padding-bottom: 0;
 }
 
-.sidebar_list_item_container svg
+.panel_list_item_box svg
 {
   flex-shrink: 0;
 }
 
-.sidebar_list_item_container p
+.panel_list_item_box p
 {
   flex-basis: 100%;
   margin: 0 0 0 5px;
   align-self: center;
 }
 
-#link_sidebar_header_container
+#link_panel_header_box
 {
   display: flex;
 }
 
-#link_sidebar_header_container svg
+#link_panel_header_box svg
 {
   flex-shrink: 0;
 }
 
-#link_sidebar_header_container h1
+#link_panel_header_box h1
 {
   margin: 0 0 0 10px;
   align-self: center;
 }
 
-.close_button
+.close_btn
 {
   color: #777;
   font: 48px Helvetica, Arial, sans-serif;
@@ -153,14 +153,14 @@ html
           transition: color .5s;
 }
 
-.close_button:hover
+.close_btn:hover
 {
   color: #333;
 }
 
-.close_button:after
+.close_btn:after
 {
-  content: "\00D7";
+  content: "\00D7"; /* X symbol */
 }
 
 .tutorial_box

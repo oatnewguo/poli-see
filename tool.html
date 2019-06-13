@@ -19,7 +19,7 @@
   <h2 style="display:inline-block">Tutorial</h2>
 </a>
 
-<div class="tool_container">
+<div class="visualization_box">
   <svg id="canvas">
     <defs id="node_pattern_defs"></defs>
     <defs id="link_pattern_defs"></defs>
@@ -27,11 +27,11 @@
     <defs id="other_pattern_defs"></defs>
   </svg>
 
-  <div id="node_sidebar_container" class="sidebar_container" style="display: none">
-    <div id="node_sidebar" class="sidebar">
+  <div id="node_panel_box" class="panel_box" style="display: none">
+    <div id="node_panel" class="panel">
       <h1></h1>
       <p></p>
-      <div id="node_sidebar_options_container">
+      <div id="node_panel_opts_box">
         <svg>
           <circle></circle>
         </svg>
@@ -40,28 +40,28 @@
           <p></p>
         </div>
       </div>
-      <div id="node_sidebar_uses_container" class="sidebar_list_container">
+      <div id="node_panel_uses_box" class="panel_list_box">
         <h2></h2>
       </div>
-      <span class="close_button"></span>
+      <span class="close_btn"></span>
     </div>
   </div>
 
-  <div id="link_sidebar_container" class="sidebar_container" style="display: none">
-    <svg id="link_sidebar_graphic">
+  <div id="link_panel_box" class="panel_box" style="display: none">
+    <svg id="link_panel_graphic">
       <polyline></polyline>
       <circle></circle>
       <circle></circle>
     </svg>
-    <div id="link_sidebar" class="sidebar">
-      <div id="link_sidebar_header_container">
+    <div id="link_panel" class="panel">
+      <div id="link_panel_header_box">
         <svg>
           <circle></circle>
         </svg>
         <h1 style="display: inline-block"></h1>
       </div>
       <p></p>
-      <span class="close_button"></span>
+      <span class="close_btn"></span>
     </div>
   </div>
 </div>
@@ -69,27 +69,19 @@
 <script src="d3/d3.min.js"></script>
 <script>
 
-// enumerated constants for types of elements
+// enumerated constants for some types of elements
 const element_types =
 {
   NODE: "node",
-  LINK: "link"
-}
-
-// enumerated constants for types of uses displayed in node sidebar
-const display_use_types =
-{
-  USE: "use",
-  LINK: "link"
+  LINK: "link",
+  USE: "use"
 }
 
 const NUM_LAYERS = 3;
 
-// variables for title, intro text, name of the primary data-collecting entity, and options icon image
-var title;
-var intro_text;
-var primary_entity_name;
-var options_icon_image;
+// objects for policy- and visual-related data
+var pol;
+var vis;
 
 // arrays for nodes and links
 var nodes;
@@ -100,39 +92,36 @@ var node_types;
 var link_types;
 var use_types;
 
-// object for appearance-related data
-var appearance;
-
 // object for currently selected element
 var clicked_elt = null;
 
 // selection of svg to contain the main body of the graph
-var svg_selection = d3.select("#canvas");
+var svg_s = d3.select("#canvas");
 // selection of g to be placed at center of the graph
-var g_selection = svg_selection.append("g");
+var g_s = svg_s.append("g");
 
-// selections of div containers to contain sidebars and potentially other display elements accompanying sidebars
-var node_sidebar_container_selection = d3.select("#node_sidebar_container");
-var link_sidebar_container_selection = d3.select("#link_sidebar_container");
+// selections of div containers to contain panels and potentially other display elements accompanying panels
+var node_panel_box_s = d3.select("#node_panel_box");
+var link_panel_box_s = d3.select("#link_panel_box");
 
-// selections of div sidebars to display additional information about nodes and links
-var node_sidebar_selection = node_sidebar_container_selection.select("#node_sidebar");
-var link_sidebar_selection = link_sidebar_container_selection.select("#link_sidebar");
+// selections of div panels to display additional information about nodes and links
+var node_panel_s = node_panel_box_s.select("#node_panel");
+var link_panel_s = link_panel_box_s.select("#link_panel");
 
 // selection of div for node options information
-var node_sidebar_options_container_selection = node_sidebar_selection.select("#node_sidebar_options_container");
+var node_panel_opts_box_s = node_panel_s.select("#node_panel_opts_box");
 
 // selections of divs for uses
-var node_sidebar_uses_container_selection = node_sidebar_selection.select("#node_sidebar_uses_container");
+var node_panel_uses_box_s = node_panel_s.select("#node_panel_uses_box");
 
-// selection of svg for link sidebar graphic
-var link_sidebar_graphic_selection = link_sidebar_container_selection.select("#link_sidebar_graphic");
+// selection of svg for link panel graphic
+var link_panel_graphic_s = link_panel_box_s.select("#link_panel_graphic");
 
-// selection of sidebar close buttons
-var sidebar_close_buttons_selection = d3.selectAll(".close_button");
+// selection of panel close buttons
+var panel_close_btns_s = d3.selectAll(".close_btn");
 
-// radii of background circles
-var background_circles_radii;
+// array containing radii of background circles
+var bg_circles_rs;
 
 // node-mapping object to generate tree
 var root;
@@ -147,70 +136,168 @@ var use_patterns;
 var other_patterns;
 
 // selection of nodes to represent personal data
-var nodes_selection;
+var nodes_s;
 
 // selection of links to connect nodes
-var links_selection;
+var links_s;
 
 // central node
 var central_node;
 // array of primary nodes, direct successors of the central node in layer 1
 var primary_nodes = [];
-// id of the base node containing all data collected
-var base_all_data_node_id;
 // array of links that should be drawn in the background
-var background_links = [];
+var bg_links = [];
 // selection of links background links
-var background_links_selection;
+var bg_links_s;
 
 
 
 // return the node with a given id
 function getNodeById(id)
 {
-  return nodes.find(function(n) { return n.id == id; });
+  return nodes.find(n => n.id == id);
 }
 
 // return the node type with a given id
 function getNodeTypeById(id)
 {
-  return node_types.find(function(t) { return t.id == id; });
+  return node_types.find(t => t.id == id);
 }
 
 // return the link type with a given id
 function getLinkTypeById(id)
 {
-  return link_types.find(function(t) { return t.id == id; });
+  return link_types.find(t => t.id == id);
 }
 
 // return the use type with a given id
 function getUseTypeById(id)
 {
-  return use_types.find(function(t) { return t.id == id; });
+  return use_types.find(t => t.id == id);
+}
+
+// return the radius of a node
+function getNodeRadius(n)
+{
+  if(n.layer == 0)
+  {
+    return vis.node.central_node_r;
+  }
+  return vis.node.r;
+}
+
+// return a string containing the points for a link polyline arrow pointing down, given a link
+function getLinkPoints(l)
+{
+  var source = getNodeById(l.source);
+  var dest = getNodeById(l.dest);
+  var len = getLinkLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
+    vis.link.head_to_node_dist);
+  return getLinkPointsFromLen(len);
+}
+
+// return the length of a link polyline arrow, given relevant values
+function getLinkLen(source_x, source_y, dest_x, dest_y, subtract_len)
+{
+  return Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
+}
+
+// return a string containing the points for a link polyline arrow pointing down, given its length
+function getLinkPointsFromLen(len)
+{
+  var len_to_head = len - vis.link.head_len;
+  var w1 = vis.link.width / 2;
+  var w2 = vis.link.head_width / 2;
+  return "0 0, " +
+    w1 + " 0, " +
+    w1 + " " + len_to_head + ", " +
+    w2 + " " + len_to_head + ", " +
+    "0 " + len + ", " +
+    -w2 + " " + len_to_head + ", " +
+    -w1 + " " + len_to_head + ", " +
+    -w1 + " 0, 0 0";
+}
+
+// return the degrees by which a link needs to be rotated counterclockwise from pointing straight down in order to
+// point in the right direction
+function getLinkRotation(l)
+{
+  var source = getNodeById(l.source);
+  var dest = getNodeById(l.dest);
+  var theta = Math.atan2((source.y - dest.y), (source.x - dest.x));
+  return theta * 180 / Math.PI + 90;
+}
+
+// return the fill color of a link
+function getLinkFillColor(l)
+{
+  if(l.dest == pol.base_all_data_node_id)
+  {
+    return vis.link.fill_color_bg;
+  }
+  else if(getNodeById(l.dest).identifiable)
+  {
+    return vis.link.fill_color_identifiable;
+  }
+  return vis.link.fill_color_unidentifiable;
+}
+
+// return the fill color of a link, given its destination id
+function getLinkFillColorByDestId(id)
+{
+  if(id == pol.base_all_data_node_id)
+  {
+    return vis.link.fill_color_bg;
+  }
+  else if(getNodeById(id).identifiable)
+  {
+    return vis.link.fill_color_identifiable;
+  }
+  return vis.link.fill_color_unidentifiable;
 }
 
 // given a use type, return the fill color
-function getUseTypeFillColor(u)
+function getUseTypeFillColor(t)
 {
-  if(u.unknown)
+  if(t.unknown)
   {
-    return appearance.use_icon.fill_color_unknown;
+    return vis.use_icon.fill_color_unknown;
   }
-  else if(u.all_data)
+  else if(t.all_data)
   {
-    return appearance.node.fill_color_all_data;
+    return vis.node.fill_color_all_data;
   }
-  return appearance.use_icon.fill_color_normal;
+  return vis.use_icon.fill_color_normal;
+}
+
+// return the outline color of a node
+function getNodeOutlineColor(n)
+{
+  if(n.identifiable)
+  {
+    return vis.node.outline_color_identifiable;
+  }
+  return vis.node.outline_color_unidentifiable;
+}
+
+// return a link icon's outline color
+function getLinkIconOutlineColor(l)
+{
+  if(getNodeById(l.dest).identifiable)
+  {
+    return vis.link_icon.outline_color_identifiable;
+  }
+  return vis.link_icon.outline_color_unidentifiable;
 }
 
 // given a use type, return the outline color
-function getUseTypeOutlineColor(u)
+function getUseTypeOutlineColor(t)
 {
-  if(u.all_data)
+  if(t.all_data)
   {
-    return getNodeOutlineColor(getNodeById(base_all_data_node_id));
+    return getNodeOutlineColor(getNodeById(pol.base_all_data_node_id));
   }
-  return appearance.use_icon.outline_color;
+  return vis.use_icon.outline_color;
 }
 
 // return the proper fill pattern of a node
@@ -234,7 +321,7 @@ function getLinkPattern(l)
 {
   var id = l.type;
 
-  if(getNodeById(l.destination).identifiable)
+  if(getNodeById(l.dest).identifiable)
   {
     id += "_identifiable";
   }
@@ -262,106 +349,6 @@ function getUsePatternById(id)
   return "url(" + url + ")";
 }
 
-// return the outline color of a node
-function getNodeOutlineColor(n)
-{
-  if(n.identifiable)
-  {
-    return appearance.node.outline_color_identifiable;
-  }
-  return appearance.node.outline_color_unidentifiable;
-}
-
-// return the radius of a node
-function getNodeRadius(n)
-{
-  if(n.layer == 0)
-  {
-    return appearance.node.central_node_radius;
-  }
-  return appearance.node.radius;
-}
-
-// return the fill color of a link
-function getLinkFillColor(l)
-{
-  if(l.destination == base_all_data_node_id)
-  {
-    return appearance.link.fill_color_background;
-  }
-  else if(getNodeById(l.destination).identifiable)
-  {
-    return appearance.link.fill_color_identifiable;
-  }
-  return appearance.link.fill_color_unidentifiable;
-}
-
-// return the fill color of a link, given its destination id
-function getLinkFillColorByDestinationId(id)
-{
-  if(id == base_all_data_node_id)
-  {
-    return appearance.link.fill_color_background;
-  }
-  else if(getNodeById(id).identifiable)
-  {
-    return appearance.link.fill_color_identifiable;
-  }
-  return appearance.link.fill_color_unidentifiable;
-}
-
-// return a string containing the points for a link polyline arrow pointing down, given a link
-function getLinkPolylinePoints(l)
-{
-  var source = getNodeById(l.source);
-  var dest = getNodeById(l.destination);
-  var length = getLinkPolylineLength(source.x, source.y, dest.x, dest.y,
-    dest.radius + appearance.node.outline_width + appearance.link.arrowhead_to_node_distance);
-  return getLinkPolylinePointsFromLength(length);
-}
-
-// return the length of a link polyline arrow, given relevant values
-function getLinkPolylineLength(source_x, source_y, dest_x, dest_y, subtract_len)
-{
-  return Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
-}
-
-// return a string containing the points for a link polyline arrow pointing down, given its length
-function getLinkPolylinePointsFromLength(length)
-{
-  var length_to_head = length - appearance.link.arrowhead_length;
-  var w1 = appearance.link.width / 2;
-  var w2 = appearance.link.arrowhead_width / 2;
-  return "0 0, " +
-    w1 + " 0, " +
-    w1 + " " + length_to_head + ", " +
-    w2 + " " + length_to_head + ", " +
-    "0 " + length + ", " +
-    -w2 + " " + length_to_head + ", " +
-    -w1 + " " + length_to_head + ", " +
-    -w1 + " 0, 0 0";
-}
-
-// return the degrees by which a link needs to be rotated counterclockwise from pointing straight down in order to
-// point in the right direction
-function getLinkRotationDegrees(l)
-{
-  var source = getNodeById(l.source);
-  var dest = getNodeById(l.destination);
-  var theta = Math.atan2((source.y - dest.y), (source.x - dest.x));
-  return theta * 180 / Math.PI + 90;
-}
-
-// return a link icon's outline color
-function getLinkIconOutlineColor(l)
-{
-  if(getNodeById(l.destination).identifiable)
-  {
-    return appearance.link_icon.outline_color_identifiable;
-  }
-  return appearance.link_icon.outline_color_unidentifiable;
-}
-
 // set up patterns to fill nodes, link icons, use icons, and other svg elements
 function setUpPatterns()
 {
@@ -372,16 +359,16 @@ function setUpPatterns()
     {
       if(node_types[i].all_data)
       {
-        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image_unidentifiable, fill_color: appearance.node.fill_color_all_data});
+        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image_unidentifiable, fill_color: vis.node.fill_color_all_data});
         node_types[i].id = node_types[i].id + "_identifiable";
         node_types[i].image = node_types[i].image_identifiable;
-        node_types[i].fill_color = appearance.node.fill_color_all_data;
+        node_types[i].fill_color = vis.node.fill_color_all_data;
       }
       else
       {
-        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image, fill_color: appearance.node.fill_color_unidentifiable});
+        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image, fill_color: vis.node.fill_color_unidentifiable});
         node_types[i].id = node_types[i].id + "_identifiable";
-        node_types[i].fill_color = appearance.node.fill_color_identifiable;
+        node_types[i].fill_color = vis.node.fill_color_identifiable;
       }
     }
 
@@ -390,22 +377,22 @@ function setUpPatterns()
     {
       if(link_types[i].all_data)
       {
-        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image_unidentifiable, fill_color: appearance.node.fill_color_all_data});
+        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image_unidentifiable, fill_color: vis.node.fill_color_all_data});
         link_types[i].id = link_types[i].id + "_identifiable";
         link_types[i].image = link_types[i].image_identifiable;
-        link_types[i].fill_color = appearance.node.fill_color_all_data;
+        link_types[i].fill_color = vis.node.fill_color_all_data;
       }
       else
       {
-        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image, fill_color: appearance.link_icon.fill_color_unidentifiable});
+        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image, fill_color: vis.link_icon.fill_color_unidentifiable});
         link_types[i].id = link_types[i].id + "_identifiable";
-        link_types[i].fill_color = appearance.link.fill_color_identifiable;
+        link_types[i].fill_color = vis.link.fill_color_identifiable;
       }
     }
   }
 
   // node patterns
-  node_patterns = svg_selection.select("#node_pattern_defs").selectAll("pattern")
+  node_patterns = svg_s.select("#node_pattern_defs").selectAll("pattern")
     .data(node_types)
     .enter()
     .append("pattern")
@@ -426,7 +413,7 @@ function setUpPatterns()
     .attr("href", d => d.image);
 
   // link icon patterns
-  link_icon_patterns = svg_selection.select("#link_pattern_defs").selectAll("pattern")
+  link_icon_patterns = svg_s.select("#link_pattern_defs").selectAll("pattern")
     .data(link_types)
     .enter()
     .append("pattern")
@@ -447,7 +434,7 @@ function setUpPatterns()
     .attr("href", d => d.image);
 
   // use icon patterns
-  use_icon_patterns = svg_selection.select("#use_pattern_defs").selectAll("pattern")
+  use_icon_patterns = svg_s.select("#use_pattern_defs").selectAll("pattern")
     .data(use_types)
     .enter()
     .append("pattern")
@@ -468,8 +455,8 @@ function setUpPatterns()
     .attr("href", d => d.image);
 
   // other patterns
-  other_patterns = svg_selection.select("#other_pattern_defs").append("pattern")
-    .attr("id", "other_options")
+  other_patterns = svg_s.select("#other_pattern_defs").append("pattern")
+    .attr("id", "other_opts")
     .attr("width", "1")
     .attr("height", "1")
     .attr("patternContentUnits", "objectBoundingBox");
@@ -477,13 +464,13 @@ function setUpPatterns()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", appearance.options_icon_on_node.fill_color);
+    .attr("fill", vis.opts_icon_on_node.fill_color);
   other_patterns.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", options_icon_image);
+    .attr("href", vis.opts_icon.image);
 }
 
 // create a stick with the child at the bottom and a specified number of parents preceding
@@ -537,44 +524,44 @@ function createTree(root)
   }
 }
 
-// update the node sidebar based on a node
-function updateNodeSidebar(n)
+// update the node panel based on a node
+function updateNodePanel(n)
 {
-  // set color of sidebar based on whether data is identifiable or not
+  // set color of panel based on whether data is identifiable or not
   var fill_color;
   var outline_color;
   if(n.identifiable)
   {
-    fill_color = appearance.node_sidebar.fill_color_identifiable;
-    outline_color = appearance.node_sidebar.outline_color_identifiable;
+    fill_color = vis.node_panel.fill_color_identifiable;
+    outline_color = vis.node_panel.outline_color_identifiable;
   }
   else
   {
-    fill_color = appearance.node_sidebar.fill_color_unidentifiable;
-    outline_color = appearance.node_sidebar.outline_color_unidentifiable;
+    fill_color = vis.node_panel.fill_color_unidentifiable;
+    outline_color = vis.node_panel.outline_color_unidentifiable;
   }
-  node_sidebar_selection
+  node_panel_s
     .style("background-color", fill_color)
     .style("border-color", outline_color);
 
 
-  // set basic sidebar text
-  node_sidebar_selection.select("h1")
+  // set basic panel text
+  node_panel_s.select("h1")
     .html(n.label);
-  node_sidebar_selection.select("p")
+  node_panel_s.select("p")
     .html(n.text);
 
   // set information about options regarding the node
-  if(n.options)
+  if(n.opts)
   {
-    node_sidebar_options_container_selection.select("p")
-      .html(n.options_text);
+    node_panel_opts_box_s.select("p")
+      .html(n.opts_text);
 
-    node_sidebar_options_container_selection.style("display", "flex");
+    node_panel_opts_box_s.style("display", "flex");
   }
   else
   {
-    node_sidebar_options_container_selection.style("display", "none");
+    node_panel_opts_box_s.style("display", "none");
   }
 
   // combine uses and links into one array, used to display how data can be used
@@ -582,14 +569,14 @@ function updateNodeSidebar(n)
   var track_links = [];
   for(let i = 0; i < n.uses.length; i++)
   {
-    display_uses.push({type:n.uses[i], elt_type:display_use_types.USE});
+    display_uses.push({type:n.uses[i], elt_type:element_types.USE});
   }
   for(let i = 0; i < n.successor_links.length; i++)
   {
     if(! track_links.includes(n.successor_links[i].type))
     {
       display_uses.push(n.successor_links[i]);
-      display_uses[display_uses.length - 1].elt_type = display_use_types.LINK;
+      display_uses[display_uses.length - 1].elt_type = element_types.LINK;
       track_links.push(n.successor_links[i].type);
     }
   }
@@ -597,176 +584,176 @@ function updateNodeSidebar(n)
   // if there are no uses to display, then hide the section
   if(n.layer == 0 || display_uses.length == 0)
   {
-    node_sidebar_uses_container_selection
+    node_panel_uses_box_s
       .style("display", "none");
   }
   // if there are uses to display, then display them
   else
   {
-    node_sidebar_uses_container_selection
+    node_panel_uses_box_s
       .style("display", "block");
 
     // update the heading
-    node_sidebar_uses_container_selection.select("h2")
+    node_panel_uses_box_s.select("h2")
       .html(n.data_handler + " can use this data to...");
 
     // remove existing use divs
-    node_sidebar_uses_container_selection.selectAll("div").remove();
+    node_panel_uses_box_s.selectAll("div").remove();
 
-    // add use divs to the sidebar
-    var use_divs_selection = node_sidebar_uses_container_selection.selectAll("div")
+    // add use divs to the panel
+    var use_divs_s = node_panel_uses_box_s.selectAll("div")
       .data(display_uses)
       .enter().append("div")
-        .classed("sidebar_list_item_container", true)
-        .style("border-bottom", appearance.node_sidebar.outline_width + "px solid " + outline_color);
+        .classed("panel_list_item_box", true)
+        .style("border-bottom", vis.node_panel.outline_width + "px solid " + outline_color);
 
     // remove bottom border from last use div
-    node_sidebar_uses_container_selection.select("div:last-child")
+    node_panel_uses_box_s.select("div:last-child")
       .style("border-bottom", "none");
 
     // add icons and text to the use divs
-    var icon_radius_with_outline = appearance.use_icon.radius + appearance.use_icon.outline_width;
-    var use_divs_svgs_selection = use_divs_selection.append("svg")
-      .attr("height", icon_radius_with_outline * 2 + "px");
-    var use_divs_use_svgs_selection = use_divs_svgs_selection.filter(d => d.elt_type == display_use_types.USE);
-    var use_divs_link_svgs_selection = use_divs_svgs_selection.filter(d => d.elt_type == display_use_types.LINK);
+    var icon_r_with_outline = vis.use_icon.r + vis.use_icon.outline_width;
+    var use_divs_svgs_s = use_divs_s.append("svg")
+      .attr("height", icon_r_with_outline * 2 + "px");
+    var use_divs_use_svgs_s = use_divs_svgs_s.filter(d => d.elt_type == element_types.USE);
+    var use_divs_link_svgs_s = use_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
 
-    use_divs_use_svgs_selection
-      .style("flex-basis", d => getUseTypeById(d.type).all_data ? icon_radius_with_outline * 5 + "px"
-                                                                : icon_radius_with_outline * 2 + "px");
-    use_divs_link_svgs_selection
-      .style("flex-basis", icon_radius_with_outline * 5 + "px");
+    use_divs_use_svgs_s
+      .style("flex-basis", d => getUseTypeById(d.type).all_data ? icon_r_with_outline * 5 + "px"
+                                                                : icon_r_with_outline * 2 + "px");
+    use_divs_link_svgs_s
+      .style("flex-basis", icon_r_with_outline * 5 + "px");
 
-    use_divs_use_svgs_selection.append("circle")
-      .attr("r", appearance.use_icon.radius)
-      .attr("cx", d => getUseTypeById(d.type).all_data ? 4 * icon_radius_with_outline : icon_radius_with_outline)
-      .attr("cy", icon_radius_with_outline)
-      .attr("fill", d => getUseTypeById(d.type).all_data ? getNodePattern(getNodeById(base_all_data_node_id))
+    use_divs_use_svgs_s.append("circle")
+      .attr("r", vis.use_icon.r)
+      .attr("cx", d => getUseTypeById(d.type).all_data ? 4 * icon_r_with_outline : icon_r_with_outline)
+      .attr("cy", icon_r_with_outline)
+      .attr("fill", d => getUseTypeById(d.type).all_data ? getNodePattern(getNodeById(pol.base_all_data_node_id))
                                                          : getUsePatternById(d.type))
       .attr("stroke", d => getUseTypeOutlineColor(getUseTypeById(d.type)))
-      .attr("stroke-width", appearance.use_icon.outline_width);
-    use_divs_link_svgs_selection.append("circle")
-      .attr("r", appearance.use_icon.radius)
-      .attr("cx", 4 * icon_radius_with_outline)
-      .attr("cy", icon_radius_with_outline)
+      .attr("stroke-width", vis.use_icon.outline_width);
+    use_divs_link_svgs_s.append("circle")
+      .attr("r", vis.use_icon.r)
+      .attr("cx", 4 * icon_r_with_outline)
+      .attr("cy", icon_r_with_outline)
       .attr("fill", d => getNodePattern(getNodeById(d.successor_id)))
       .attr("stroke", d => getNodeOutlineColor(getNodeById(d.successor_id)))
-      .attr("stroke-width", appearance.use_icon.outline_width);
+      .attr("stroke-width", vis.use_icon.outline_width);
 
-    use_divs_use_svgs_selection.filter(d => getUseTypeById(d.type).all_data).append("polyline")
-      .attr("transform", "translate(" + 0 + "," + icon_radius_with_outline + ") rotate(270)")
-      .attr("points", getLinkPolylinePointsFromLength(getLinkPolylineLength(0, icon_radius_with_outline,
-        4 * icon_radius_with_outline, icon_radius_with_outline,
-        icon_radius_with_outline + appearance.link.arrowhead_to_node_distance)))
-      .attr("fill", appearance.link.fill_color_background_highlight)
+    use_divs_use_svgs_s.filter(d => getUseTypeById(d.type).all_data).append("polyline")
+      .attr("transform", "translate(" + 0 + "," + icon_r_with_outline + ") rotate(270)")
+      .attr("points", getLinkPointsFromLen(getLinkLen(0, icon_r_with_outline,
+        4 * icon_r_with_outline, icon_r_with_outline,
+        icon_r_with_outline + vis.link.head_to_node_dist)))
+      .attr("fill", vis.link.fill_color_bg_highlight)
       .attr("stroke-width", 0);
-    use_divs_link_svgs_selection.append("polyline")
-      .attr("transform", "translate(" + 0 + "," + icon_radius_with_outline + ") rotate(270)")
-      .attr("points", getLinkPolylinePointsFromLength(getLinkPolylineLength(0, icon_radius_with_outline,
-        4 * icon_radius_with_outline, icon_radius_with_outline,
-        icon_radius_with_outline + appearance.link.arrowhead_to_node_distance)))
-      .attr("fill", d => getLinkFillColorByDestinationId(d.successor_id))
+    use_divs_link_svgs_s.append("polyline")
+      .attr("transform", "translate(" + 0 + "," + icon_r_with_outline + ") rotate(270)")
+      .attr("points", getLinkPointsFromLen(getLinkLen(0, icon_r_with_outline,
+        4 * icon_r_with_outline, icon_r_with_outline,
+        icon_r_with_outline + vis.link.head_to_node_dist)))
+      .attr("fill", d => getLinkFillColorByDestId(d.successor_id))
       .attr("stroke-width", 0);
 
     // add icons for special types of links
-    use_divs_link_svgs_selection.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
+    use_divs_link_svgs_s.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
       .attr("transform", function(d)
       {
-        let length_to_head = getLinkPolylineLength(0, icon_radius_with_outline,
-          4 * icon_radius_with_outline, icon_radius_with_outline,
-          icon_radius_with_outline + appearance.link.arrowhead_to_node_distance)
-          - appearance.link.arrowhead_length;
-        return "translate(" + length_to_head/2 + "," + icon_radius_with_outline + ")";
+        let len_to_head = getLinkLen(0, icon_r_with_outline,
+          4 * icon_r_with_outline, icon_r_with_outline,
+          icon_r_with_outline + vis.link.head_to_node_dist)
+          - vis.link.head_len;
+        return "translate(" + len_to_head/2 + "," + icon_r_with_outline + ")";
       })
-      .attr("r", appearance.link_icon_on_link.radius)
+      .attr("r", vis.link_icon_on_link.r)
       .attr("fill", d => getNodeById(d.successor_id).identifiable ? getLinkPatternById(d.type + "_identifiable")
                                                                   : getLinkPatternById(d.type + "_unidentifiable"))
-      .attr("stroke", d => getLinkFillColorByDestinationId(d.successor_id))
-      .attr("stroke-width", appearance.link_icon.outline_width);
+      .attr("stroke", d => getLinkFillColorByDestId(d.successor_id))
+      .attr("stroke-width", vis.link_icon.outline_width);
 
-    use_divs_selection.filter(d => d.elt_type == display_use_types.USE).append("p")
+    use_divs_s.filter(d => d.elt_type == element_types.USE).append("p")
       .html(d => getUseTypeById(d.type).description);
-    use_divs_selection.filter(d => d.elt_type == display_use_types.LINK).append("p")
+    use_divs_s.filter(d => d.elt_type == element_types.LINK).append("p")
       .html(d => getLinkTypeById(d.type + "_identifiable").description);
   }
 
-  // show the sidebar
-  node_sidebar_container_selection
+  // show the panel
+  node_panel_box_s
     .style("display", "inline-block");
 }
 
-// update the link sidebar based on a link
-function updateLinkSidebar(l)
+// update the link panel based on a link
+function updateLinkPanel(l)
 {
   var source = getNodeById(l.source);
-  var dest = getNodeById(l.destination);
+  var dest = getNodeById(l.dest);
 
-  // set color of sidebar based on whether data of destination node is identifiable or not
+  // set color of panel based on whether data of destination node is identifiable or not
   var fill_color;
   var outline_color;
   if(dest.identifiable)
   {
-    fill_color = appearance.link_sidebar.fill_color_identifiable;
-    outline_color = appearance.link_sidebar.outline_color_identifiable;
+    fill_color = vis.link_panel.fill_color_identifiable;
+    outline_color = vis.link_panel.outline_color_identifiable;
   }
   else
   {
-    fill_color = appearance.link_sidebar.fill_color_unidentifiable;
-    outline_color = appearance.link_sidebar.outline_color_unidentifiable;
+    fill_color = vis.link_panel.fill_color_unidentifiable;
+    outline_color = vis.link_panel.outline_color_unidentifiable;
   }
-  link_sidebar_selection
+  link_panel_s
     .style("background-color", fill_color)
     .style("border-color", outline_color);
 
-  var node_radius_with_outline = appearance.node.radius + appearance.node.outline_width;
+  var node_r_with_outline = vis.node.r + vis.node.outline_width;
 
   // update the link graphic
-  link_sidebar_graphic_selection.select("polyline")
-      .attr("points", getLinkPolylinePointsFromLength(getLinkPolylineLength(node_radius_with_outline,
-        node_radius_with_outline, appearance.link_sidebar_graphic.distance_between_nodes + node_radius_with_outline,
-        node_radius_with_outline, node_radius_with_outline + appearance.link.arrowhead_to_node_distance)))
+  link_panel_graphic_s.select("polyline")
+      .attr("points", getLinkPointsFromLen(getLinkLen(node_r_with_outline,
+        node_r_with_outline, vis.link_panel_graphic.dist_between_nodes + node_r_with_outline,
+        node_r_with_outline, node_r_with_outline + vis.link.head_to_node_dist)))
       .attr("fill", getLinkFillColor(l));
-  link_sidebar_graphic_selection.select("circle")
+  link_panel_graphic_s.select("circle")
       .attr("fill", getNodePattern(source))
       .attr("stroke", getNodeOutlineColor(source));
-  link_sidebar_graphic_selection.select("circle:nth-child(3)")
+  link_panel_graphic_s.select("circle:nth-child(3)")
       .attr("fill", getNodePattern(dest))
       .attr("stroke", getNodeOutlineColor(dest));
 
-  // set the icon and title for the link sidebar
-  link_sidebar_selection.select("circle")
+  // set the icon and title for the link panel
+  link_panel_s.select("circle")
     .attr("fill", getLinkPattern(l))
-    .attr("stroke", dest.id == base_all_data_node_id ? getNodeOutlineColor(getNodeById(base_all_data_node_id))
-                                                     : getLinkFillColor(l));
-  link_sidebar_selection.select("h1")
+    .attr("stroke", dest.id == pol.base_all_data_node_id ? getNodeOutlineColor(getNodeById(pol.base_all_data_node_id))
+                                                            : getLinkFillColor(l));
+  link_panel_s.select("h1")
     .html(getLinkTypeById(l.type + "_identifiable").label);
-  link_sidebar_selection.select("p")
+  link_panel_s.select("p")
     .html(l.text);
 
-  // show the sidebar
-  link_sidebar_container_selection
+  // show the panel
+  link_panel_box_s
     .style("display", "inline-block");
 }
 
-// update either the node or the link sidebar based on an input element
-function updateSidebar(elt)
+// update either the node or the link panel based on an input element
+function updatePanel(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    updateNodeSidebar(elt.data);
+    updateNodePanel(elt.data);
   }
   else if(elt.type == element_types.LINK)
   {
-    updateLinkSidebar(elt.data);
+    updateLinkPanel(elt.data);
   }
 }
 
-// hide the sidebars
-function hideSidebars()
+// hide the panels
+function hidePanels()
 {
-  node_sidebar_container_selection
+  node_panel_box_s
     .style("display", "none");
-  link_sidebar_container_selection
+  link_panel_box_s
     .style("display", "none");
 }
 
@@ -775,9 +762,9 @@ function increaseNodeRadius(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection.select("circle")
+    elt.s.select("circle")
       .transition()
-      .attr("r", elt.data.radius * 1.3);
+      .attr("r", elt.data.r * 1.3);
   }
 }
 
@@ -786,9 +773,9 @@ function decreaseNodeRadius(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection.select("circle")
+    elt.s.select("circle")
       .transition()
-      .attr("r", elt.data.radius);
+      .attr("r", elt.data.r);
   }
 }
 
@@ -797,14 +784,14 @@ function focusElementOutline(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection.select("circle")
-      .attr("stroke", appearance.node.outline_color_focus)
-      .attr("stroke-width", appearance.node.outline_width_focus);
+    elt.s.select("circle")
+      .attr("stroke", vis.node.outline_color_focus)
+      .attr("stroke-width", vis.node.outline_width_focus);
   }
   else
   {
-    elt.selection.select("polyline")
-      .attr("stroke-width", appearance.link.outline_width_focus);
+    elt.s.select("polyline")
+      .attr("stroke-width", vis.link.outline_width_focus);
   }
 }
 
@@ -813,54 +800,54 @@ function unfocusElementOutline(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.selection.select("circle")
+    elt.s.select("circle")
       .attr("stroke", getNodeOutlineColor)
-      .attr("stroke-width", appearance.node.outline_width);
+      .attr("stroke-width", vis.node.outline_width);
   }
   else if(clicked_elt.type == element_types.LINK)
   {
-    clicked_elt.selection.select("polyline")
+    clicked_elt.s.select("polyline")
       .attr("stroke-width", 0);
   }
 }
 
 // highlight a node's background arrow, if it has one
-function highlightBackgroundArrow(elt)
+function highlightBgArrow(elt)
 {
-  var a = background_links_selection.filter(d => d.source == elt.data.id);
+  var a = bg_links_s.filter(d => d.source == elt.data.id);
   a.select("polyline")
-    .attr("fill", appearance.link.fill_color_background_highlight);
+    .attr("fill", vis.link.fill_color_bg_highlight);
 
   a.raise();
 }
 
 // unhighlight a node's background arrow, if it has one
-function unhighlightBackgroundArrow(elt)
+function unhighlightBgArrow(elt)
 {
-  background_links_selection.filter(d => d.source == elt.data.id).select("polyline")
-    .attr("fill", appearance.link.fill_color_background);
+  bg_links_s.filter(d => d.source == elt.data.id).select("polyline")
+    .attr("fill", vis.link.fill_color_bg);
 }
 
 // handle interactions when the cursor enters an interactive element
 function onMouseEnter(elt)
 {
-  // display the correct sidebar
-  hideSidebars();
-  updateSidebar(elt);
+  // display the correct panel
+  hidePanels();
+  updatePanel(elt);
 
   // if the cursor is over a node, then change its appearance
   if(elt.type == element_types.NODE)
   {
     increaseNodeRadius(elt);
-    highlightBackgroundArrow(elt);
+    highlightBgArrow(elt);
   }
 }
 
 // handle interactions when the cursor leaves an interactive element
 function onMouseLeave(elt)
 {
-  // hide the sidebar
-  hideSidebars();
+  // hide the panel
+  hidePanels();
 
   // if there is no clicked element, then if the cursor was over a node, then change its appearance back
   if(clicked_elt == null)
@@ -868,13 +855,13 @@ function onMouseLeave(elt)
     if(elt.type == element_types.NODE)
     {
       decreaseNodeRadius(elt);
-      unhighlightBackgroundArrow(elt);
+      unhighlightBgArrow(elt);
     }
   }
-  // if there is a clicked element, then update the sidebar to display information about the clicked element
+  // if there is a clicked element, then update the panel to display information about the clicked element
   else
   {
-    updateSidebar(clicked_elt);
+    updatePanel(clicked_elt);
 
     // if the cursor was over a node, then unless the node is the clicked element, change its appearance back
     if(elt.data.id != clicked_elt.data.id)
@@ -882,7 +869,7 @@ function onMouseLeave(elt)
       if(elt.type == element_types.NODE)
       {
         decreaseNodeRadius(elt);
-        unhighlightBackgroundArrow(elt);
+        unhighlightBgArrow(elt);
       }
     }
   }
@@ -902,16 +889,16 @@ function onClick(elt)
   // if there is an old clicked element that is not the new clicked element, then focus away from the old and on the new
   else if(elt.data.id != clicked_elt.data.id)
   {
-    // display the correct sidebar
-    hideSidebars();
-    updateSidebar(elt);
+    // display the correct panel
+    hidePanels();
+    updatePanel(elt);
 
     // change the outline of the old clicked element back to normal, and change its appearance otherwise back
     unfocusElementOutline(clicked_elt);
     if(clicked_elt.type == element_types.NODE)
     {
       decreaseNodeRadius(clicked_elt);
-      unhighlightBackgroundArrow(clicked_elt);
+      unhighlightBgArrow(clicked_elt);
     }
 
     // change outline of new clicked element to indicate focus
@@ -934,91 +921,91 @@ function onClick(elt)
 function main()
 {
   // set title and intro text
-  d3.select("h1").html(title);
-  d3.select("p").html(intro_text);
+  d3.select("h1").html(pol.title);
+  d3.select("p").html(pol.intro_text);
 
   // set up patterns for background fills
   setUpPatterns();
 
   // set display variables and elements
   {
-    let display_radius = appearance.display.radius;
+    let display_r = vis.display.r;
 
-    let node_radius_with_outline = appearance.node.radius + appearance.node.outline_width;
-    let link_icon_radius_with_outline = appearance.link_icon.radius + appearance.link_icon.outline_width;
-    let options_icon_in_sidebar_radius_with_outline = appearance.options_icon_in_sidebar.radius +
-      appearance.options_icon_in_sidebar.outline_width;
+    let node_r_with_outline = vis.node.r + vis.node.outline_width;
+    let link_icon_r_with_outline = vis.link_icon.r + vis.link_icon.outline_width;
+    let opts_icon_in_panel_r_with_outline = vis.opts_icon_in_panel.r +
+      vis.opts_icon_in_panel.outline_width;
 
-    let node_sidebar_extra_space = 2 * (appearance.node_sidebar.padding +
-      appearance.node_sidebar.outline_width);
-    let node_sidebar_max_height = 2 * display_radius - node_sidebar_extra_space;
+    let node_panel_extra_space = 2 * (vis.node_panel.padding +
+      vis.node_panel.outline_width);
+    let node_panel_max_height = 2 * display_r - node_panel_extra_space;
 
-    let link_sidebar_graphic_height = 2 * node_radius_with_outline;
-    let link_sidebar_extra_space = 2 * (appearance.link_sidebar.padding +
-      appearance.link_sidebar.outline_width);
-    let link_sidebar_max_height = 2 * display_radius - link_sidebar_extra_space - link_sidebar_graphic_height -
-      appearance.link_sidebar_graphic.margin_bottom;
+    let link_panel_graphic_height = 2 * node_r_with_outline;
+    let link_panel_extra_space = 2 * (vis.link_panel.padding +
+      vis.link_panel.outline_width);
+    let link_panel_max_height = 2 * display_r - link_panel_extra_space - link_panel_graphic_height -
+      vis.link_panel_graphic.margin_bottom;
 
-    background_circles_radii = appearance.background_circle.radius_proportions.map(function(x) { return x * display_radius; });
-    svg_selection
-      .attr("width", 2 * display_radius)
-      .attr("height", 2 * display_radius);
-    g_selection.attr("transform", "translate(" + display_radius + "," + display_radius + ")");
+    bg_circles_rs = vis.bg_circle.r_proportions.map(function(x) { return x * display_r; });
+    svg_s
+      .attr("width", 2 * display_r)
+      .attr("height", 2 * display_r);
+    g_s.attr("transform", "translate(" + display_r + "," + display_r + ")");
 
-    node_sidebar_selection
-      .style("border", appearance.node_sidebar.outline_width + "px solid")
-      .style("width", appearance.node_sidebar.width + "px")
-      .style("max-height", node_sidebar_max_height + "px")
-      .style("padding", appearance.node_sidebar.padding + "px");
+    node_panel_s
+      .style("border", vis.node_panel.outline_width + "px solid")
+      .style("width", vis.node_panel.width + "px")
+      .style("max-height", node_panel_max_height + "px")
+      .style("padding", vis.node_panel.padding + "px");
 
-    node_sidebar_options_container_selection.select("svg")
-      .attr("width", 2 * options_icon_in_sidebar_radius_with_outline)
-      .attr("height", 2 * options_icon_in_sidebar_radius_with_outline);
-    node_sidebar_options_container_selection.select("h2")
+    node_panel_opts_box_s.select("svg")
+      .attr("width", 2 * opts_icon_in_panel_r_with_outline)
+      .attr("height", 2 * opts_icon_in_panel_r_with_outline);
+    node_panel_opts_box_s.select("h2")
       .html("You have some control over this data.");
-    node_sidebar_options_container_selection.select("circle")
-      .attr("cx", options_icon_in_sidebar_radius_with_outline)
-      .attr("cy", options_icon_in_sidebar_radius_with_outline)
-      .attr("r", appearance.options_icon_in_sidebar.radius)
-      .attr("fill", "url(#other_options)")
-      .attr("stroke", appearance.options_icon_in_sidebar.outline_color)
-      .attr("stroke-width", appearance.options_icon_in_sidebar.outline_width);
+    node_panel_opts_box_s.select("circle")
+      .attr("cx", opts_icon_in_panel_r_with_outline)
+      .attr("cy", opts_icon_in_panel_r_with_outline)
+      .attr("r", vis.opts_icon_in_panel.r)
+      .attr("fill", "url(#other_opts)")
+      .attr("stroke", vis.opts_icon_in_panel.outline_color)
+      .attr("stroke-width", vis.opts_icon_in_panel.outline_width);
 
-    link_sidebar_selection
-      .style("border", appearance.link_sidebar.outline_width + "px solid")
-      .style("width", appearance.link_sidebar.width + "px")
-      .style("max-height", link_sidebar_max_height + "px")
-      .style("padding", appearance.link_sidebar.padding + "px");
+    link_panel_s
+      .style("border", vis.link_panel.outline_width + "px solid")
+      .style("width", vis.link_panel.width + "px")
+      .style("max-height", link_panel_max_height + "px")
+      .style("padding", vis.link_panel.padding + "px");
 
-    link_sidebar_graphic_selection
-      .attr("width", (appearance.link_sidebar_graphic.distance_between_nodes + 2 * node_radius_with_outline) + "px")
-      .attr("height", link_sidebar_graphic_height)
-      .style("margin-bottom", appearance.link_sidebar_graphic.margin_bottom);
-    link_sidebar_graphic_selection.select("polyline")
-        .attr("transform", "translate(" + node_radius_with_outline + "," + node_radius_with_outline + ") rotate(270)")
+    link_panel_graphic_s
+      .attr("width", (vis.link_panel_graphic.dist_between_nodes + 2 * node_r_with_outline) + "px")
+      .attr("height", link_panel_graphic_height)
+      .style("margin-bottom", vis.link_panel_graphic.margin_bottom);
+    link_panel_graphic_s.select("polyline")
+        .attr("transform", "translate(" + node_r_with_outline + "," + node_r_with_outline + ") rotate(270)")
         .attr("stroke-width", 0);
-    link_sidebar_graphic_selection.select("circle")
-        .attr("r", appearance.node.radius)
-        .attr("cx", node_radius_with_outline)
-        .attr("cy", node_radius_with_outline)
-        .attr("stroke-width", appearance.node.outline_width);
-    link_sidebar_graphic_selection.select("circle:nth-child(3)")
-        .attr("r", appearance.node.radius)
-        .attr("cx", appearance.link_sidebar_graphic.distance_between_nodes + node_radius_with_outline)
-        .attr("cy", node_radius_with_outline)
-        .attr("stroke-width", appearance.node.outline_width);
+    link_panel_graphic_s.select("circle")
+        .attr("r", vis.node.r)
+        .attr("cx", node_r_with_outline)
+        .attr("cy", node_r_with_outline)
+        .attr("stroke-width", vis.node.outline_width);
+    link_panel_graphic_s.select("circle:nth-child(3)")
+        .attr("r", vis.node.r)
+        .attr("cx", vis.link_panel_graphic.dist_between_nodes + node_r_with_outline)
+        .attr("cy", node_r_with_outline)
+        .attr("stroke-width", vis.node.outline_width);
 
-    link_sidebar_selection.select("svg")
-      .attr("width", 2 * link_icon_radius_with_outline)
-      .attr("height", 2 * link_icon_radius_with_outline)
+    link_panel_s.select("svg")
+      .attr("width", 2 * link_icon_r_with_outline)
+      .attr("height", 2 * link_icon_r_with_outline)
       .select("circle")
-        .attr("r", appearance.link_icon.radius)
-        .attr("cx", link_icon_radius_with_outline)
-        .attr("cy", link_icon_radius_with_outline)
-        .attr("stroke-width", appearance.link_icon.outline_width);
+        .attr("r", vis.link_icon.r)
+        .attr("cx", link_icon_r_with_outline)
+        .attr("cy", link_icon_r_with_outline)
+        .attr("stroke-width", vis.link_icon.outline_width);
 
     tree
-      .size([(2 - appearance.layer_title.space_in_pi_radians) * Math.PI, display_radius])
+      .size([(2 - vis.layer_title.space_in_pi_radians) * Math.PI, display_r])
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
   }
 
@@ -1045,22 +1032,27 @@ function main()
     }
 
     // set the radius of the node
-    n.radius = getNodeRadius(n);
+    n.r = getNodeRadius(n);
 
     // fill links array with link objects based on the .json data
     for(let j = 0; j < n.successor_links.length; j++)
     {
       let l = n.successor_links[j];
-      if(l.successor_id != base_all_data_node_id)
+      if(l.successor_id != pol.base_all_data_node_id)
       {
-        links.push({ id: n.id + "->" + l.successor_id, source: n.id, destination: l.successor_id, type: l.type, text: l.text });
+        links.push({ id: n.id + "->" + l.successor_id, source: n.id, dest: l.successor_id, type: l.type,
+          text: l.text });
       }
     }
 
     // if the node is in layer one and not an all_data node, add a background link to the base all_data node
     if(n.layer == 1 && ! n.all_data)
     {
-      background_links.push({ id: n.id + "->" + base_all_data_node_id, source: n.id, destination: base_all_data_node_id, type: "link_all_data", text: "These lighter-colored arrows point to a circle representing all your data that " + primary_entity_name + " collects. Follow the arrow to that circle to see what " + primary_entity_name + " can do with all data it collects." });
+      bg_links.push({ id: n.id + "->" + pol.base_all_data_node_id, source: n.id,
+        dest: pol.base_all_data_node_id, type: "link_all_data",
+        text: "These lighter-colored arrows point to a circle representing all your data that " +
+        pol.provider_name + " collects. Follow the arrow to that circle to see what " +
+        pol.provider_name + " can do with all data it collects." });
     }
 
     // move the node one node outward to accommodate for second sub-layer within layer 1 (center node and primary
@@ -1082,7 +1074,7 @@ function main()
   for(let i = 0; i < nodes.length; i++)
   {
     let n = nodes[i];
-    let offset = appearance.layer_title.space_in_pi_radians / 2 * Math.PI;
+    let offset = vis.layer_title.space_in_pi_radians / 2 * Math.PI;
     matching_tree_node = tree_nodes.find(function(node) { return node.data.id == n.id; });
     n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos((matching_tree_node.x -= Math.PI / 2) + offset);
     n.y = matching_tree_node.y * Math.sin(matching_tree_node.x + offset);
@@ -1090,8 +1082,8 @@ function main()
     // adjust the distance of nodes from the center, according to specified dimensions
     if(n.layer != 0)
     {
-      n.x = n.x * appearance.node.distance_from_center_proportions[n.layer] / (n.layer / NUM_LAYERS);
-      n.y = n.y * appearance.node.distance_from_center_proportions[n.layer] / (n.layer / NUM_LAYERS);
+      n.x = n.x * vis.node.dist_from_center_proportions[n.layer] / (n.layer / NUM_LAYERS);
+      n.y = n.y * vis.node.dist_from_center_proportions[n.layer] / (n.layer / NUM_LAYERS);
     }
   }
 
@@ -1100,15 +1092,15 @@ function main()
   // append background circles for layers
   for(let i = NUM_LAYERS - 1; i > 0; i--)
   {
-    let r = background_circles_radii[i];
+    let r = bg_circles_rs[i];
 
-    g_selection.append("circle")
+    g_s.append("circle")
       .attr("r", r)
-      .attr("fill", appearance.background_circle.fill_color)
-      .attr("stroke", appearance.background_circle.outline_color)
-      .attr("stroke-width", appearance.background_circle.outline_width);
+      .attr("fill", vis.bg_circle.fill_color)
+      .attr("stroke", vis.bg_circle.outline_color)
+      .attr("stroke-width", vis.bg_circle.outline_width);
 
-    let r_for_text = r - appearance.layer_title.font_size - appearance.layer_title.distance_from_edge;
+    let r_for_text = r - vis.layer_title.font_size - vis.layer_title.dist_from_edge;
     let text;
     if(i == 2)
     {
@@ -1116,18 +1108,18 @@ function main()
     }
     else
     {
-      text = primary_entity_name;
+      text = pol.provider_name;
     }
 
-    g_selection.append("path")
+    g_s.append("path")
       .attr("id", "text_layer_" + i)
       .attr("d", "M-" + r_for_text + ",0 a" + r_for_text + "," + r_for_text + " 0 0 1 " + (2 * r_for_text) + ",0")
       .attr("fill", "none");
-    g_selection.append("text")
+    g_s.append("text")
       .classed("layer_title", true)
       .attr("text-anchor", "middle")
-      .style("font-size", appearance.layer_title.font_size + "px")
-      .style("fill", appearance.layer_title.color)
+      .style("font-size", vis.layer_title.font_size + "px")
+      .style("fill", vis.layer_title.color)
       .append("textPath")
         .html(text)
         .attr("xlink:href", "#text_layer_" + i)
@@ -1137,10 +1129,10 @@ function main()
 
 
   // append background links
-  background_links_selection = g_selection.append("g").selectAll(".background_link")
-    .data(background_links)
+  bg_links_s = g_s.append("g").selectAll(".bg_link")
+    .data(bg_links)
     .enter().append("g")
-      .classed("background_link", true)
+      .classed("bg_link", true)
       .attr("transform", function(d)
       {
         let source = getNodeById(d.source);
@@ -1148,122 +1140,122 @@ function main()
       });
 
   // add lines to background links
-  background_links_selection.append("polyline")
-    .attr("points", getLinkPolylinePoints)
-    .attr("transform", function(d) { return "rotate(" + getLinkRotationDegrees(d) + ")"; })
-    .attr("fill", appearance.link.fill_color_background)
-    .attr("stroke", appearance.link.outline_color_focus)
+  bg_links_s.append("polyline")
+    .attr("points", getLinkPoints)
+    .attr("transform", function(d) { return "rotate(" + getLinkRotation(d) + ")"; })
+    .attr("fill", vis.link.fill_color_bg)
+    .attr("stroke", vis.link.outline_color_focus)
     .attr("stroke-width", 0);
 
   // mouse interactions for background links
-  background_links_selection
+  bg_links_s
     // display more information when the cursor hovers over links
     .on("mouseenter", function(d)
     {
-      onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)});
+      onMouseEnter({type:element_types.LINK, data:d, s:d3.select(this)});
       d3.select(this).raise();
     })
     // hide information when the cursor leaves a link
-    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, selection:d3.select(this)}); })
+    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, s:d3.select(this)}); })
     // retain focus on an element when it is clicked
-    .on("click", function(d) { onClick({type:element_types.LINK, data:d, selection:d3.select(this)}); });
+    .on("click", function(d) { onClick({type:element_types.LINK, data:d, s:d3.select(this)}); });
 
 
 
   // append links
-  links_selection = g_selection.append("g").selectAll(".link")
+  links_s = g_s.append("g").selectAll(".link")
     .data(links)
     .enter().append("g")
       .classed("link", true)
       .attr("transform", function(d)
       {
         let source = getNodeById(d.source);
-        return "translate(" + source.x + "," + source.y + ") rotate(" + getLinkRotationDegrees(d) + ")";
+        return "translate(" + source.x + "," + source.y + ") rotate(" + getLinkRotation(d) + ")";
       });
 
   // add lines to links
-  links_selection.append("polyline")
-    .attr("points", getLinkPolylinePoints)
+  links_s.append("polyline")
+    .attr("points", getLinkPoints)
     .attr("fill", getLinkFillColor)
-    .attr("stroke", appearance.link.outline_color_focus)
+    .attr("stroke", vis.link.outline_color_focus)
     .attr("stroke-width", 0);
 
   // add icons for special types of links
-  links_selection.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
+  links_s.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
     .attr("transform", function(d)
     {
       let source = getNodeById(d.source);
-      let dest = getNodeById(d.destination);
-      let length_to_head = getLinkPolylineLength(source.x, source.y, dest.x, dest.y,
-        dest.radius + appearance.node.outline_width + appearance.link.arrowhead_to_node_distance)
-        - appearance.link.arrowhead_length;
-      let displacement = (length_to_head + source.radius) / 2;
-      return "translate(0," + displacement + ") rotate(" + (-getLinkRotationDegrees(d)) + ")";
+      let dest = getNodeById(d.dest);
+      let len_to_head = getLinkLen(source.x, source.y, dest.x, dest.y,
+        dest.r + vis.node.outline_width + vis.link.head_to_node_dist)
+        - vis.link.head_len;
+      let displacement = (len_to_head + source.r) / 2;
+      return "translate(0," + displacement + ") rotate(" + (-getLinkRotation(d)) + ")";
     })
-    .attr("r", appearance.link_icon_on_link.radius)
+    .attr("r", vis.link_icon_on_link.r)
     .attr("fill", getLinkPattern)
     .attr("stroke", getLinkFillColor)
-    .attr("stroke-width", appearance.link_icon.outline_width);
+    .attr("stroke-width", vis.link_icon.outline_width);
 
   // mouse interactions for links
-  links_selection
+  links_s
     // display more information when the cursor hovers over links
     .on("mouseenter", function(d)
     {
-      onMouseEnter({type:element_types.LINK, data:d, selection:d3.select(this)});
+      onMouseEnter({type:element_types.LINK, data:d, s:d3.select(this)});
       d3.select(this).raise();
     })
     // hide information when the cursor leaves a link
-    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, selection:d3.select(this)}); })
+    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, s:d3.select(this)}); })
     // retain focus on an element when it is clicked
-    .on("click", function(d) { onClick({type:element_types.LINK, data:d, selection:d3.select(this)}); });
+    .on("click", function(d) { onClick({type:element_types.LINK, data:d, s:d3.select(this)}); });
 
 
 
   // append nodes
-  nodes_selection = g_selection.append("g").selectAll(".node")
+  nodes_s = g_s.append("g").selectAll(".node")
     .data(nodes)
     .enter().append("g")
       .classed("node", true)
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
   // give the base all_data node an id
-  nodes_selection.filter(d => d.id == base_all_data_node_id)
-    .attr("id", base_all_data_node_id)
+  nodes_s.filter(d => d.id == pol.base_all_data_node_id)
+    .attr("id", pol.base_all_data_node_id)
 
   // add circles to nodes
-  nodes_selection.append("circle")
+  nodes_s.append("circle")
     .attr("r", getNodeRadius)
     .attr("fill", getNodePattern)
     .attr("stroke", getNodeOutlineColor)
-    .attr("stroke-width", appearance.node.outline_width);
+    .attr("stroke-width", vis.node.outline_width);
 
   // add options icon to nodes that contain options
-  nodes_selection.filter(d => d.options == true).append("circle")
-    .attr("cx", appearance.options_icon_on_node.cx)
-    .attr("cy", appearance.options_icon_on_node.cy)
-    .attr("r", appearance.options_icon_on_node.radius)
-    .attr("fill", "url(#other_options)")
-    .attr("stroke", appearance.options_icon_on_node.outline_color)
-    .attr("stroke-width", appearance.options_icon_on_node.outline_width);
+  nodes_s.filter(d => d.opts == true).append("circle")
+    .attr("cx", vis.opts_icon_on_node.cx)
+    .attr("cy", vis.opts_icon_on_node.cy)
+    .attr("r", vis.opts_icon_on_node.r)
+    .attr("fill", "url(#other_opts)")
+    .attr("stroke", vis.opts_icon_on_node.outline_color)
+    .attr("stroke-width", vis.opts_icon_on_node.outline_width);
 
   // mouse interactions for nodes
-  nodes_selection
-    // display more information in the node sidebar when the cursor hovers over nodes
+  nodes_s
+    // display more information in the node panel when the cursor hovers over nodes
     .on("mouseenter", function(d)
     {
-      onMouseEnter({type:element_types.NODE, data:d, selection:d3.select(this)});
+      onMouseEnter({type:element_types.NODE, data:d, s:d3.select(this)});
       d3.select(this).raise();
     })
-    // update the node sidebar when the cursor leaves a node
-    .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, selection:d3.select(this)}); })
+    // update the node panel when the cursor leaves a node
+    .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, s:d3.select(this)}); })
     // retain focus on an element when it is clicked
-    .on("click", function(d) { onClick({type:element_types.NODE, data:d, selection:d3.select(this)}); });
+    .on("click", function(d) { onClick({type:element_types.NODE, data:d, s:d3.select(this)}); });
 
 
 
-  // mouse interactions for sidebar close buttons
-  sidebar_close_buttons_selection
+  // mouse interactions for panel close buttons
+  panel_close_btns_s
     .on("click", function(d)
     {
       let c = clicked_elt;
@@ -1277,23 +1269,23 @@ function main()
 // load data from .json files
 var url = new URL(document.URL);
 var p = url.searchParams.get("policy");
+var v = url.searchParams.get("visual");
+if(v == null)
+{
+  v = "default.json";
+}
 d3.json("data/policies/" + p).then(function(policy_json)
 {
-  d3.json("data/appearance.json").then(function(appearance_json)
+  d3.json("data/visual_customizations/" + v).then(function(visual_json)
   {
-    // copy data from policy encoding .json file
-    title = policy_json.title;
-    intro_text = policy_json.intro_text;
-    primary_entity_name = policy_json.primary_entity_name;
-    base_all_data_node_id = policy_json.base_all_data_node_id;
-    options_icon_image = policy_json.options_icon_image;
-    nodes = policy_json.nodes;
-    node_types = policy_json.node_types;
-    link_types = policy_json.link_types;
-    use_types = policy_json.use_types;
+    // copy data from .json files
+    pol = policy_json;
+    vis = visual_json;
 
-    // copy data from appearance .json file
-    appearance = appearance_json;
+    nodes = pol.nodes;
+    node_types = pol.node_types;
+    link_types = pol.link_types;
+    use_types = pol.use_types;
 
     main();
   });

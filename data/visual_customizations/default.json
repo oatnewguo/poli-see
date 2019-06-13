@@ -1,11 +1,11 @@
 {
   "display":
   {
-    "radius": 360
+    "r": 360
   },
-  "background_circle":
+  "bg_circle":
   {
-    "radius_proportions": [0.0, 0.76, 0.98],
+    "r_proportions": [0.0, 0.76, 0.98],
     "outline_width": 2,
     "fill_color": "#F4F4FF",
     "outline_color": "#9090B0"
@@ -15,13 +15,13 @@
     "space_in_pi_radians": 0.15,
     "font_size": 22,
     "color": "#404060",
-    "distance_from_edge": 5
+    "dist_from_edge": 5
   },
   "node":
   {
-    "radius": 18,
-    "central_node_radius": 40,
-    "distance_from_center_proportions": [0.0, 0.43, 0.65, 0.87],
+    "r": 18,
+    "central_node_r": 40,
+    "dist_from_center_proportions": [0.0, 0.43, 0.65, 0.87],
     "outline_width": 2,
     "outline_width_focus": 4,
     "fill_color_identifiable": "#66668A",
@@ -34,19 +34,19 @@
   "link":
   {
     "width": 8,
-    "arrowhead_length": 14,
-    "arrowhead_width": 14,
-    "arrowhead_to_node_distance": 3,
+    "head_len": 14,
+    "head_width": 14,
+    "head_to_node_dist": 3,
     "outline_width_focus": 3,
     "fill_color_identifiable": "#404060",
     "fill_color_unidentifiable": "#707070",
-    "fill_color_background": "#D0D0E0",
-    "fill_color_background_highlight": "#9090D0",
+    "fill_color_bg": "#D0D0E0",
+    "fill_color_bg_highlight": "#9090D0",
     "outline_color_focus": "#00C8FF"
   },
   "link_icon":
   {
-    "radius": 15,
+    "r": 15,
     "outline_width": 2,
     "fill_color_identifiable": "#404060",
     "fill_color_unidentifiable": "#707070",
@@ -55,33 +55,37 @@
   },
   "link_icon_on_link":
   {
-    "radius": 10
+    "r": 10
   },
   "use_icon":
   {
-    "radius": 15,
+    "r": 15,
     "outline_width": 2,
     "fill_color_normal": "#000000",
     "fill_color_unknown": "#C00000",
     "outline_color": "#000000"
   },
-  "options_icon_on_node":
+  "opts_icon":
   {
-    "radius": 10,
+    "image": "images/opts_icon.png"
+  },
+  "opts_icon_on_node":
+  {
+    "r": 10,
     "cx": 15,
     "cy": 15,
     "outline_width": 2,
     "fill_color": "#FFFFFF",
     "outline_color": "#000000"
   },
-  "options_icon_in_sidebar":
+  "opts_icon_in_panel":
   {
-    "radius": 20,
+    "r": 20,
     "outline_width": 2,
     "fill_color": "#FFFFFF",
     "outline_color": "#000000"
   },
-  "node_sidebar":
+  "node_panel":
   {
     "padding": 15,
     "width": 480,
@@ -91,7 +95,7 @@
     "fill_color_unidentifiable": "#F8F8F8",
     "outline_color_unidentifiable": "#B0B0B0"
   },
-  "link_sidebar":
+  "link_panel":
   {
     "padding": 15,
     "width": 480,
@@ -101,9 +105,9 @@
     "fill_color_unidentifiable": "#F8F8F8",
     "outline_color_unidentifiable": "#B0B0B0"
   },
-  "link_sidebar_graphic":
+  "link_panel_graphic":
   {
     "margin_bottom": 10,
-    "distance_between_nodes": 200
+    "dist_between_nodes": 200
   }
 }
