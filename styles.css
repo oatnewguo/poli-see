@@ -17,12 +17,12 @@ html
 .tool_container
 {
   overflow-x: auto;       /* force tool to scroll horizontally */
-  white-space: nowrap;
+  display: flex;
 }
 
-.tool_container *
+.tool_container > *
 {
-  white-space: normal;
+  flex-shrink: 0;
 }
 
 .node, .link, .background_link

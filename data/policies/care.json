@@ -1,6 +1,6 @@
 {
   "title": "Care Health Privacy Policy",
-  "intro_text": "",
+  "intro_text": "Please read the information contained in this privacy policy to learn about how Care Health handles your information when you use Care Health's website and other services. For more information, click <a>here</a>.",
   "primary_entity_name": "Care Health",
   "base_all_data_node_id": "all_1",
   "options_icon_image": "images/options_icon.png",
@@ -42,7 +42,7 @@
       "options": false,
       "options_text": "",
       "label": "All Data Care Health Collects about You",
-      "uses": ["use_provide_services", "use_ads", "use_research_services"],
+      "uses": ["use_provide_services", "use_ads"],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
       "text": "All of your data that Care Health collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that have arrows pointing to this circle."
@@ -115,15 +115,15 @@
       "options": true,
       "options_text": "Before you can upload health information to Care Health, you must give your explicit consent to the processing of that health information by Care Health. You can withdraw your consent to Care Health processing your health information at any time.",
       "label": "Health Information",
-      "uses": ["use_all_data"],
+      "uses": ["use_research_other", "use_all_data"],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
-      "text": ""
+      "text": "Health data you provide to us, including height, weight, heart rate, medications, and more."
     },
     { "id": "location_1",
       "successor_links":
       [
-        {"successor_id": "location_aggregated_1", "type": "link_aggregate", "text": ""}
+        {"successor_id": "location_aggregated_1", "type": "link_aggregate", "text": "Care Health may aggregate information about your location with information about other users' location, in order to analyze geographic patterns of use. Your name will not be included in aggregated data."}
       ],
       "layer": 1,
       "type": "node_location",
