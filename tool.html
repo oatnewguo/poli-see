@@ -21,10 +21,7 @@
 
 <div class="visualization_box">
   <svg id="canvas">
-    <defs id="node_pattern_defs"></defs>
-    <defs id="link_pattern_defs"></defs>
-    <defs id="use_pattern_defs"></defs>
-    <defs id="other_pattern_defs"></defs>
+    <defs></defs>
   </svg>
 
   <div id="node_panel_box" class="panel_box" style="display: none">
@@ -78,6 +75,7 @@ const element_types =
 }
 
 const NUM_LAYERS = 3;
+const OPTS_PAT_ID = "pat_opts";
 
 // objects for policy- and visual-related data
 var pol;
@@ -100,7 +98,7 @@ var svg_s = d3.select("#canvas");
 // selection of g to be placed at center of the graph
 var g_s = svg_s.append("g");
 
-// selections of div containers to contain panels and potentially other display elements accompanying panels
+// selections of div containers for panels and related display elements
 var node_panel_box_s = d3.select("#node_panel_box");
 var link_panel_box_s = d3.select("#link_panel_box");
 
@@ -108,13 +106,11 @@ var link_panel_box_s = d3.select("#link_panel_box");
 var node_panel_s = node_panel_box_s.select("#node_panel");
 var link_panel_s = link_panel_box_s.select("#link_panel");
 
-// selection of div for node options information
+// selections of divs to display information about options and uses in node panel
 var node_panel_opts_box_s = node_panel_s.select("#node_panel_opts_box");
-
-// selections of divs for uses
 var node_panel_uses_box_s = node_panel_s.select("#node_panel_uses_box");
 
-// selection of svg for link panel graphic
+// selection of svg to display graphic above link panel
 var link_panel_graphic_s = link_panel_box_s.select("#link_panel_graphic");
 
 // selection of panel close buttons
@@ -125,19 +121,11 @@ var bg_circles_rs;
 
 // node-mapping object to generate tree
 var root;
-
 // D3 tree to organize nodes
 var tree = d3.tree();
 
-// icon fill patterns
-var node_patterns;
-var link_patterns;
-var use_patterns;
-var other_patterns;
-
 // selection of nodes to represent personal data
 var nodes_s;
-
 // selection of links to connect nodes
 var links_s;
 
@@ -300,172 +288,161 @@ function getUseTypeOutlineColor(t)
   return vis.use_icon.outline_color;
 }
 
-// return the proper fill pattern of a node
-function getNodePattern(n)
+// return the fill pattern of a node
+function getNodePat(n)
 {
-  var url = "#" + n.type;
-
-  if(n.identifiable)
-  {
-    url += "_identifiable";
-  }
-  else
-  {
-    url += "_unidentifiable";
-  }
-  return "url(" + url + ")";
+  return n.identifiable ? "url(#pat_" + n.type + "_identifiable)"
+                        : "url(#pat_" + n.type + "_unidentifiable)";
 }
 
-// return the proper icon fill pattern of a link
-function getLinkPattern(l)
+// return the icon fill pattern of a link
+function getLinkPat(l)
 {
-  var id = l.type;
-
-  if(getNodeById(l.dest).identifiable)
-  {
-    id += "_identifiable";
-  }
-  else
-  {
-    id += "_unidentifiable";
-  }
-
-  return getLinkPatternById(id);
+  return getNodeById(l.dest).identifiable ? "url(#pat_" + l.type + "_identifiable)"
+                                          : "url(#pat_" + l.type + "_unidentifiable)";
 }
 
-// return the proper icon fill pattern of a link, given its id
-function getLinkPatternById(id)
+// return the icon fill pattern of a link, given its type id
+function getLinkPatByTypeId(id)
 {
-  var url = "#" + id;
-
-  return "url(" + url + ")";
+  return "url(#pat_" + id + ")";
 }
 
-// return the proper icon fill pattern of a use, given its id
-function getUsePatternById(id)
+// return the icon fill pattern of a use, given its type id
+function getUsePatByTypeId(id)
 {
-  var url = "#" + id;
+  return "url(#pat_" + id + ")";
+}
 
-  return "url(" + url + ")";
+// return the icon fill pattern of a use, given its type id
+function getOptsPat()
+{
+  return "url(#" + OPTS_PAT_ID + ")";
 }
 
 // set up patterns to fill nodes, link icons, use icons, and other svg elements
-function setUpPatterns()
+function setUpPats()
 {
-  // create one identifiable and one unidentifiable version of each node and link icon
-  {
-    let num_node_types = node_types.length;
-    for(let i = 0; i < num_node_types; i++)
-    {
-      if(node_types[i].all_data)
-      {
-        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image_unidentifiable, fill_color: vis.node.fill_color_all_data});
-        node_types[i].id = node_types[i].id + "_identifiable";
-        node_types[i].image = node_types[i].image_identifiable;
-        node_types[i].fill_color = vis.node.fill_color_all_data;
-      }
-      else
-      {
-        node_types.push({id: node_types[i].id + "_unidentifiable", image: node_types[i].image, fill_color: vis.node.fill_color_unidentifiable});
-        node_types[i].id = node_types[i].id + "_identifiable";
-        node_types[i].fill_color = vis.node.fill_color_identifiable;
-      }
-    }
-
-    let num_link_types = link_types.length;
-    for(let i = 0; i < num_link_types; i++)
-    {
-      if(link_types[i].all_data)
-      {
-        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image_unidentifiable, fill_color: vis.node.fill_color_all_data});
-        link_types[i].id = link_types[i].id + "_identifiable";
-        link_types[i].image = link_types[i].image_identifiable;
-        link_types[i].fill_color = vis.node.fill_color_all_data;
-      }
-      else
-      {
-        link_types.push({id: link_types[i].id + "_unidentifiable", image: link_types[i].image, fill_color: vis.link_icon.fill_color_unidentifiable});
-        link_types[i].id = link_types[i].id + "_identifiable";
-        link_types[i].fill_color = vis.link.fill_color_identifiable;
-      }
-    }
-  }
-
   // node patterns
-  node_patterns = svg_s.select("#node_pattern_defs").selectAll("pattern")
+  var node_pats_identifiable = svg_s.select("defs").selectAll(".node_pat_identifiable")
     .data(node_types)
     .enter()
     .append("pattern")
-      .attr("id", d => d.id)
+      .attr("id", d => "pat_" + d.id + "_identifiable")
+      .classed(".node_pat_identifiable", true)
       .attr("width", "1")
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
-  node_patterns.append("circle")
+  node_pats_identifiable.append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", d => d.fill_color);
-  node_patterns.append("image")
+    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.node.fill_color_identifiable);
+  node_pats_identifiable.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", d => d.image);
+    .attr("href", d => d.image_identifiable);
 
-  // link icon patterns
-  link_icon_patterns = svg_s.select("#link_pattern_defs").selectAll("pattern")
+  var node_pats_unidentifiable = svg_s.select("defs").selectAll(".node_pat_unidentifiable")
+    .data(node_types)
+    .enter()
+    .append("pattern")
+      .attr("id", d => "pat_" + d.id + "_unidentifiable")
+      .classed(".node_pat_unidentifiable", true)
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
+  node_pats_unidentifiable.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.node.fill_color_unidentifiable);
+  node_pats_unidentifiable.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", d => d.image_unidentifiable);
+
+  // link patterns
+  var link_pats_identifiable = svg_s.select("defs").selectAll(".link_pat_identifiable")
     .data(link_types)
     .enter()
     .append("pattern")
-      .attr("id", d => d.id)
+      .attr("id", d => "pat_" + d.id + "_identifiable")
+      .classed(".link_pat_identifiable", true)
       .attr("width", "1")
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
-  link_icon_patterns.append("circle")
+  link_pats_identifiable.append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", d => d.fill_color);
-  link_icon_patterns.append("image")
+    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.link.fill_color_identifiable);
+  link_pats_identifiable.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", d => d.image);
+    .attr("href", d => d.image_identifiable);
 
-  // use icon patterns
-  use_icon_patterns = svg_s.select("#use_pattern_defs").selectAll("pattern")
-    .data(use_types)
+  var link_pats_unidentifiable = svg_s.select("defs").selectAll(".link_pat_unidentifiable")
+    .data(link_types)
     .enter()
     .append("pattern")
-      .attr("id", d => d.id)
+      .attr("id", d => "pat_" + d.id + "_unidentifiable")
+      .classed(".link_pat_unidentifiable", true)
       .attr("width", "1")
       .attr("height", "1")
       .attr("patternContentUnits", "objectBoundingBox");
-  use_icon_patterns.append("circle")
+  link_pats_unidentifiable.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.link.fill_color_unidentifiable);
+  link_pats_unidentifiable.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("href", d => d.image_unidentifiable);
+
+  // use icon patterns
+  var use_pats = svg_s.select("defs").selectAll(".use_pat")
+    .data(use_types)
+    .enter()
+    .append("pattern")
+      .attr("id", d => "pat_" + d.id)
+      .classed(".use_pat", true)
+      .attr("width", "1")
+      .attr("height", "1")
+      .attr("patternContentUnits", "objectBoundingBox");
+  use_pats.append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
     .attr("fill", getUseTypeFillColor);
-  use_icon_patterns.append("image")
+  use_pats.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
     .attr("href", d => d.image);
 
-  // other patterns
-  other_patterns = svg_s.select("#other_pattern_defs").append("pattern")
-    .attr("id", "other_opts")
+  // options icon pattern
+  var opts_pat = svg_s.select("defs").append("pattern")
+    .attr("id", OPTS_PAT_ID)
     .attr("width", "1")
     .attr("height", "1")
     .attr("patternContentUnits", "objectBoundingBox");
-  other_patterns.append("circle")
+  opts_pat.append("circle")
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
     .attr("fill", vis.opts_icon_on_node.fill_color);
-  other_patterns.append("image")
+  opts_pat.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
     .attr("width", ".6")
@@ -628,15 +605,15 @@ function updateNodePanel(n)
       .attr("r", vis.use_icon.r)
       .attr("cx", d => getUseTypeById(d.type).all_data ? 4 * icon_r_with_outline : icon_r_with_outline)
       .attr("cy", icon_r_with_outline)
-      .attr("fill", d => getUseTypeById(d.type).all_data ? getNodePattern(getNodeById(pol.base_all_data_node_id))
-                                                         : getUsePatternById(d.type))
+      .attr("fill", d => getUseTypeById(d.type).all_data ? getNodePat(getNodeById(pol.base_all_data_node_id))
+                                                         : getUsePatByTypeId(d.type))
       .attr("stroke", d => getUseTypeOutlineColor(getUseTypeById(d.type)))
       .attr("stroke-width", vis.use_icon.outline_width);
     use_divs_link_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
       .attr("cx", 4 * icon_r_with_outline)
       .attr("cy", icon_r_with_outline)
-      .attr("fill", d => getNodePattern(getNodeById(d.successor_id)))
+      .attr("fill", d => getNodePat(getNodeById(d.successor_id)))
       .attr("stroke", d => getNodeOutlineColor(getNodeById(d.successor_id)))
       .attr("stroke-width", vis.use_icon.outline_width);
 
@@ -656,7 +633,7 @@ function updateNodePanel(n)
       .attr("stroke-width", 0);
 
     // add icons for special types of links
-    use_divs_link_svgs_s.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
+    use_divs_link_svgs_s.filter(d => getLinkTypeById(d.type).display_on_link).append("circle")
       .attr("transform", function(d)
       {
         let len_to_head = getLinkLen(0, icon_r_with_outline,
@@ -666,15 +643,15 @@ function updateNodePanel(n)
         return "translate(" + len_to_head/2 + "," + icon_r_with_outline + ")";
       })
       .attr("r", vis.link_icon_on_link.r)
-      .attr("fill", d => getNodeById(d.successor_id).identifiable ? getLinkPatternById(d.type + "_identifiable")
-                                                                  : getLinkPatternById(d.type + "_unidentifiable"))
+      .attr("fill", d => getNodeById(d.successor_id).identifiable ? getLinkPatByTypeId(d.type + "_identifiable")
+                                                                  : getLinkPatByTypeId(d.type + "_unidentifiable"))
       .attr("stroke", d => getLinkFillColorByDestId(d.successor_id))
       .attr("stroke-width", vis.link_icon.outline_width);
 
     use_divs_s.filter(d => d.elt_type == element_types.USE).append("p")
       .html(d => getUseTypeById(d.type).description);
     use_divs_s.filter(d => d.elt_type == element_types.LINK).append("p")
-      .html(d => getLinkTypeById(d.type + "_identifiable").description);
+      .html(d => getLinkTypeById(d.type).description);
   }
 
   // show the panel
@@ -714,19 +691,19 @@ function updateLinkPanel(l)
         node_r_with_outline, node_r_with_outline + vis.link.head_to_node_dist)))
       .attr("fill", getLinkFillColor(l));
   link_panel_graphic_s.select("circle")
-      .attr("fill", getNodePattern(source))
+      .attr("fill", getNodePat(source))
       .attr("stroke", getNodeOutlineColor(source));
   link_panel_graphic_s.select("circle:nth-child(3)")
-      .attr("fill", getNodePattern(dest))
+      .attr("fill", getNodePat(dest))
       .attr("stroke", getNodeOutlineColor(dest));
 
   // set the icon and title for the link panel
   link_panel_s.select("circle")
-    .attr("fill", getLinkPattern(l))
+    .attr("fill", getLinkPat(l))
     .attr("stroke", dest.id == pol.base_all_data_node_id ? getNodeOutlineColor(getNodeById(pol.base_all_data_node_id))
                                                             : getLinkFillColor(l));
   link_panel_s.select("h1")
-    .html(getLinkTypeById(l.type + "_identifiable").label);
+    .html(getLinkTypeById(l.type).label);
   link_panel_s.select("p")
     .html(l.text);
 
@@ -925,7 +902,7 @@ function main()
   d3.select("p").html(pol.intro_text);
 
   // set up patterns for background fills
-  setUpPatterns();
+  setUpPats();
 
   // set display variables and elements
   {
@@ -967,7 +944,7 @@ function main()
       .attr("cx", opts_icon_in_panel_r_with_outline)
       .attr("cy", opts_icon_in_panel_r_with_outline)
       .attr("r", vis.opts_icon_in_panel.r)
-      .attr("fill", "url(#other_opts)")
+      .attr("fill", getOptsPat())
       .attr("stroke", vis.opts_icon_in_panel.outline_color)
       .attr("stroke-width", vis.opts_icon_in_panel.outline_width);
 
@@ -1181,7 +1158,7 @@ function main()
     .attr("stroke-width", 0);
 
   // add icons for special types of links
-  links_s.filter(d => getLinkTypeById(d.type + "_identifiable").display_on_link).append("circle")
+  links_s.filter(d => getLinkTypeById(d.type).display_on_link).append("circle")
     .attr("transform", function(d)
     {
       let source = getNodeById(d.source);
@@ -1193,7 +1170,7 @@ function main()
       return "translate(0," + displacement + ") rotate(" + (-getLinkRotation(d)) + ")";
     })
     .attr("r", vis.link_icon_on_link.r)
-    .attr("fill", getLinkPattern)
+    .attr("fill", getLinkPat)
     .attr("stroke", getLinkFillColor)
     .attr("stroke-width", vis.link_icon.outline_width);
 
@@ -1226,7 +1203,7 @@ function main()
   // add circles to nodes
   nodes_s.append("circle")
     .attr("r", getNodeRadius)
-    .attr("fill", getNodePattern)
+    .attr("fill", getNodePat)
     .attr("stroke", getNodeOutlineColor)
     .attr("stroke-width", vis.node.outline_width);
 
@@ -1235,7 +1212,7 @@ function main()
     .attr("cx", vis.opts_icon_on_node.cx)
     .attr("cy", vis.opts_icon_on_node.cy)
     .attr("r", vis.opts_icon_on_node.r)
-    .attr("fill", "url(#other_opts)")
+    .attr("fill", getOptsPat())
     .attr("stroke", vis.opts_icon_on_node.outline_color)
     .attr("stroke-width", vis.opts_icon_on_node.outline_width);
 
@@ -1261,7 +1238,7 @@ function main()
       let c = clicked_elt;
       onClick(c);
       onMouseLeave(c);
-    })
+    });
 }
 
 
