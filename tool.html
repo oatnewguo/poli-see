@@ -431,7 +431,7 @@ function setUpPats()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", vis.opts_icon_on_node.fill_color);
+    .attr("fill", vis.opts_node_icon.fill_color);
   opts_pat.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
@@ -577,44 +577,44 @@ function updateNodePanel(n)
       .style("border-bottom", "none");
 
     // add icons and text to the use divs
-    var icon_r_with_outline = vis.use_icon.r + vis.use_icon.outline_width;
+    var icon_r_full = vis.use_icon.r + vis.use_icon.outline_width;
     var use_divs_svgs_s = use_divs_s.append("svg")
-      .attr("height", icon_r_with_outline * 2 + "px");
+      .attr("height", icon_r_full * 2 + "px");
     var use_divs_use_svgs_s = use_divs_svgs_s.filter(d => d.elt_type == element_types.USE);
     var use_divs_link_svgs_s = use_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
 
     use_divs_use_svgs_s
-      .style("flex-basis", d => useTypeById(d.type).all_data ? icon_r_with_outline * 5 + "px"
-                                                             : icon_r_with_outline * 2 + "px");
+      .style("flex-basis", d => useTypeById(d.type).all_data ? icon_r_full * 5 + "px"
+                                                             : icon_r_full * 2 + "px");
     use_divs_link_svgs_s
-      .style("flex-basis", icon_r_with_outline * 5 + "px");
+      .style("flex-basis", icon_r_full * 5 + "px");
 
     use_divs_use_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
-      .attr("cx", d => useTypeById(d.type).all_data ? 4 * icon_r_with_outline : icon_r_with_outline)
-      .attr("cy", icon_r_with_outline)
+      .attr("cx", d => useTypeById(d.type).all_data ? 4 * icon_r_full : icon_r_full)
+      .attr("cy", icon_r_full)
       .attr("fill", d => useTypeById(d.type).all_data ? getNodePat(nodeById(pol.base_all_data_node_id))
                                                       : getUsePatByTypeId(d.type))
       .attr("stroke", d => useTypeOutlineColor(useTypeById(d.type)))
       .attr("stroke-width", vis.use_icon.outline_width);
     use_divs_link_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
-      .attr("cx", 4 * icon_r_with_outline)
-      .attr("cy", icon_r_with_outline)
+      .attr("cx", 4 * icon_r_full)
+      .attr("cy", icon_r_full)
       .attr("fill", d => getNodePat(nodeById(d.successor_id)))
       .attr("stroke", d => nodeOutlineColor(nodeById(d.successor_id)))
       .attr("stroke-width", vis.use_icon.outline_width);
 
     use_divs_use_svgs_s.filter(d => useTypeById(d.type).all_data).append("polyline")
-      .attr("transform", "translate(" + 0 + "," + icon_r_with_outline + ") rotate(270)")
-      .attr("points", linkPointsFromLen(linkLen(0, icon_r_with_outline, 4 * icon_r_with_outline, icon_r_with_outline,
-        icon_r_with_outline + vis.link.head_to_node_dist)))
+      .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
+      .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
+        icon_r_full + vis.link.head_to_node_dist)))
       .attr("fill", vis.link.color_bg_highlight)
       .attr("stroke-width", 0);
     use_divs_link_svgs_s.append("polyline")
-      .attr("transform", "translate(" + 0 + "," + icon_r_with_outline + ") rotate(270)")
-      .attr("points", linkPointsFromLen(linkLen(0, icon_r_with_outline, 4 * icon_r_with_outline, icon_r_with_outline,
-        icon_r_with_outline + vis.link.head_to_node_dist)))
+      .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
+      .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
+        icon_r_full + vis.link.head_to_node_dist)))
       .attr("fill", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", 0);
 
@@ -622,9 +622,9 @@ function updateNodePanel(n)
     use_divs_link_svgs_s.filter(d => linkTypeById(d.type).display_on_link).append("circle")
       .attr("transform", function(d)
       {
-        let len_to_head = linkLen(0, icon_r_with_outline, 4 * icon_r_with_outline, icon_r_with_outline,
-          icon_r_with_outline + vis.link.head_to_node_dist) - vis.link.head_len;
-        return "translate(" + len_to_head/2 + "," + icon_r_with_outline + ")";
+        let len_to_head = linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
+          icon_r_full + vis.link.head_to_node_dist) - vis.link.head_len;
+        return "translate(" + len_to_head/2 + "," + icon_r_full + ")";
       })
       .attr("r", vis.link_icon_on_link.r)
       .attr("fill", d => nodeById(d.successor_id).identifiable ? getLinkPatByTypeId(d.type + "_identifiable")
@@ -666,13 +666,13 @@ function updateLinkPanel(l)
     .style("background-color", fill_color)
     .style("border-color", outline_color);
 
-  var node_r_with_outline = vis.node.r + vis.node.outline_width;
+  var node_r_full = vis.node.r + vis.node.outline_width;
 
   // update the link graphic
   link_panel_graphic_s.select("polyline")
-      .attr("points", linkPointsFromLen(linkLen(node_r_with_outline, node_r_with_outline,
-        vis.link_panel_graphic.dist_between_nodes + node_r_with_outline, node_r_with_outline,
-        node_r_with_outline + vis.link.head_to_node_dist)))
+      .attr("points", linkPointsFromLen(linkLen(node_r_full, node_r_full,
+        vis.link_panel_graphic.dist_between_nodes + node_r_full, node_r_full,
+        node_r_full + vis.link.head_to_node_dist)))
       .attr("fill", linkColor(l));
   link_panel_graphic_s.select("circle")
       .attr("fill", getNodePat(source))
@@ -893,14 +893,14 @@ function main()
   {
     let display_r = vis.display.r;
 
-    let node_r_with_outline = vis.node.r + vis.node.outline_width;
-    let link_icon_r_with_outline = vis.link_icon.r + vis.link_icon.outline_width;
-    let opts_icon_in_panel_r_with_outline = vis.opts_icon_in_panel.r + vis.opts_icon_in_panel.outline_width;
+    let node_r_full = vis.node.r + vis.node.outline_width;
+    let link_icon_r_full = vis.link_icon.r + vis.link_icon.outline_width;
+    let opts_panel_icon_r_full = vis.opts_panel_icon.r + vis.opts_panel_icon.outline_width;
 
     let node_panel_extra_space = 2 * (vis.node_panel.padding + vis.node_panel.outline_width);
     let node_panel_max_height = 2 * display_r - node_panel_extra_space;
 
-    let link_panel_graphic_height = 2 * node_r_with_outline;
+    let link_panel_graphic_height = 2 * node_r_full;
     let link_panel_extra_space = 2 * (vis.link_panel.padding + vis.link_panel.outline_width);
     let link_panel_max_height = 2 * display_r - link_panel_extra_space - link_panel_graphic_height -
       vis.link_panel_graphic.margin_bottom;
@@ -918,17 +918,17 @@ function main()
       .style("padding", vis.node_panel.padding + "px");
 
     node_panel_opts_box_s.select("svg")
-      .attr("width", 2 * opts_icon_in_panel_r_with_outline)
-      .attr("height", 2 * opts_icon_in_panel_r_with_outline);
+      .attr("width", 2 * opts_panel_icon_r_full)
+      .attr("height", 2 * opts_panel_icon_r_full);
     node_panel_opts_box_s.select("h2")
       .html("You have some control over this data.");
     node_panel_opts_box_s.select("circle")
-      .attr("cx", opts_icon_in_panel_r_with_outline)
-      .attr("cy", opts_icon_in_panel_r_with_outline)
-      .attr("r", vis.opts_icon_in_panel.r)
+      .attr("cx", opts_panel_icon_r_full)
+      .attr("cy", opts_panel_icon_r_full)
+      .attr("r", vis.opts_panel_icon.r)
       .attr("fill", getOptsPat())
-      .attr("stroke", vis.opts_icon_in_panel.outline_color)
-      .attr("stroke-width", vis.opts_icon_in_panel.outline_width);
+      .attr("stroke", vis.opts_panel_icon.outline_color)
+      .attr("stroke-width", vis.opts_panel_icon.outline_width);
 
     link_panel_s
       .style("border", vis.link_panel.outline_width + "px solid")
@@ -937,30 +937,30 @@ function main()
       .style("padding", vis.link_panel.padding + "px");
 
     link_panel_graphic_s
-      .attr("width", (vis.link_panel_graphic.dist_between_nodes + 2 * node_r_with_outline) + "px")
+      .attr("width", (vis.link_panel_graphic.dist_between_nodes + 2 * node_r_full) + "px")
       .attr("height", link_panel_graphic_height)
       .style("margin-bottom", vis.link_panel_graphic.margin_bottom);
     link_panel_graphic_s.select("polyline")
-      .attr("transform", "translate(" + node_r_with_outline + "," + node_r_with_outline + ") rotate(270)")
+      .attr("transform", "translate(" + node_r_full + "," + node_r_full + ") rotate(270)")
       .attr("stroke-width", 0);
     link_panel_graphic_s.select("circle")
       .attr("r", vis.node.r)
-      .attr("cx", node_r_with_outline)
-      .attr("cy", node_r_with_outline)
+      .attr("cx", node_r_full)
+      .attr("cy", node_r_full)
       .attr("stroke-width", vis.node.outline_width);
     link_panel_graphic_s.select("circle:nth-child(3)")
       .attr("r", vis.node.r)
-      .attr("cx", vis.link_panel_graphic.dist_between_nodes + node_r_with_outline)
-      .attr("cy", node_r_with_outline)
+      .attr("cx", vis.link_panel_graphic.dist_between_nodes + node_r_full)
+      .attr("cy", node_r_full)
       .attr("stroke-width", vis.node.outline_width);
 
     link_panel_s.select("svg")
-      .attr("width", 2 * link_icon_r_with_outline)
-      .attr("height", 2 * link_icon_r_with_outline)
+      .attr("width", 2 * link_icon_r_full)
+      .attr("height", 2 * link_icon_r_full)
       .select("circle")
         .attr("r", vis.link_icon.r)
-        .attr("cx", link_icon_r_with_outline)
-        .attr("cy", link_icon_r_with_outline)
+        .attr("cx", link_icon_r_full)
+        .attr("cy", link_icon_r_full)
         .attr("stroke-width", vis.link_icon.outline_width);
 
     tree
@@ -1034,9 +1034,9 @@ function main()
   {
     let n = nodes[i];
     let offset = vis.layer_title.space_in_pi_radians / 2 * Math.PI;
-    let matching_tree_node = tree_nodes.find(function(node) { return node.data.id == n.id; });
-    n.x = (matching_tree_node.y = +matching_tree_node.y) * Math.cos((matching_tree_node.x -= Math.PI / 2) + offset);
-    n.y = matching_tree_node.y * Math.sin(matching_tree_node.x + offset);
+    let tree_n = tree_nodes.find(function(node) { return node.data.id == n.id; });
+    n.x = (tree_n.y = +tree_n.y) * Math.cos((tree_n.x -= Math.PI / 2) + offset);
+    n.y = tree_n.y * Math.sin(tree_n.x + offset);
 
     // adjust the distance of nodes from the center, according to specified dimensions
     if(n.layer != 0)
@@ -1182,12 +1182,12 @@ function main()
 
   // add options icon to nodes that contain options
   nodes_s.filter(d => d.opts == true).append("circle")
-    .attr("cx", vis.opts_icon_on_node.cx)
-    .attr("cy", vis.opts_icon_on_node.cy)
-    .attr("r", vis.opts_icon_on_node.r)
+    .attr("cx", vis.opts_node_icon.cx)
+    .attr("cy", vis.opts_node_icon.cy)
+    .attr("r", vis.opts_node_icon.r)
     .attr("fill", getOptsPat())
-    .attr("stroke", vis.opts_icon_on_node.outline_color)
-    .attr("stroke-width", vis.opts_icon_on_node.outline_width);
+    .attr("stroke", vis.opts_node_icon.outline_color)
+    .attr("stroke-width", vis.opts_node_icon.outline_width);
 
   // mouse interactions for nodes
   nodes_s
@@ -1224,6 +1224,7 @@ if(v == null)
 {
   v = "default.json";
 }
+
 d3.json("data/policies/" + p).then(function(policy_json)
 {
   d3.json("data/visual_customizations/" + v).then(function(visual_json)
