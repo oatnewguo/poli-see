@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+action_divs<!DOCTYPE html>
 <html>
 <head>
 
@@ -37,7 +37,7 @@
           <p></p>
         </div>
       </div>
-      <div id="node_panel_uses_box" class="panel_list_box">
+      <div id="node_panel_actions_box" class="panel_list_box">
         <h2></h2>
       </div>
       <span class="close_btn"></span>
@@ -106,9 +106,10 @@ var link_panel_box_s = d3.select("#link_panel_box");
 var node_panel_s = node_panel_box_s.select("#node_panel");
 var link_panel_s = link_panel_box_s.select("#link_panel");
 
-// selections of divs to display information about options and uses in node panel
+// selections of divs to display information about options (for user) and permitted actions (for privacy policy
+// provider) in node panel
 var node_panel_opts_box_s = node_panel_s.select("#node_panel_opts_box");
-var node_panel_uses_box_s = node_panel_s.select("#node_panel_uses_box");
+var node_panel_actions_box_s = node_panel_s.select("#node_panel_actions_box");
 
 // selection of svg to display graphic above link panel
 var link_panel_graphic_s = link_panel_box_s.select("#link_panel_graphic");
@@ -549,47 +550,47 @@ function updateNodePanel(n)
   // if there are no uses to display, then hide the section
   if(n.layer == 0 || display_uses.length == 0)
   {
-    node_panel_uses_box_s
+    node_panel_actions_box_s
       .style("display", "none");
   }
   // if there are uses to display, then display them
   else
   {
-    node_panel_uses_box_s
+    node_panel_actions_box_s
       .style("display", "block");
 
     // update the heading
-    node_panel_uses_box_s.select("h2")
+    node_panel_actions_box_s.select("h2")
       .html(n.data_handler + " can use this data to...");
 
     // remove existing use divs
-    node_panel_uses_box_s.selectAll("div").remove();
+    node_panel_actions_box_s.selectAll("div").remove();
 
     // add use divs to the panel
-    var use_divs_s = node_panel_uses_box_s.selectAll("div")
+    var action_divs_s = node_panel_actions_box_s.selectAll("div")
       .data(display_uses)
       .enter().append("div")
         .classed("panel_list_item_box", true)
         .style("border-bottom", vis.node_panel.outline_width + "px solid " + outline_color);
 
     // remove bottom border from last use div
-    node_panel_uses_box_s.select("div:last-child")
+    node_panel_actions_box_s.select("div:last-child")
       .style("border-bottom", "none");
 
     // add icons and text to the use divs
     var icon_r_full = vis.use_icon.r + vis.use_icon.outline_width;
-    var use_divs_svgs_s = use_divs_s.append("svg")
+    var action_divs_svgs_s = action_divs_s.append("svg")
       .attr("height", icon_r_full * 2 + "px");
-    var use_divs_use_svgs_s = use_divs_svgs_s.filter(d => d.elt_type == element_types.USE);
-    var use_divs_link_svgs_s = use_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
+    var action_divs_use_svgs_s = action_divs_svgs_s.filter(d => d.elt_type == element_types.USE);
+    var action_divs_link_svgs_s = action_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
 
-    use_divs_use_svgs_s
+    action_divs_use_svgs_s
       .style("flex-basis", d => useTypeById(d.type).all_data ? icon_r_full * 5 + "px"
                                                              : icon_r_full * 2 + "px");
-    use_divs_link_svgs_s
+    action_divs_link_svgs_s
       .style("flex-basis", icon_r_full * 5 + "px");
 
-    use_divs_use_svgs_s.append("circle")
+    action_divs_use_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
       .attr("cx", d => useTypeById(d.type).all_data ? 4 * icon_r_full : icon_r_full)
       .attr("cy", icon_r_full)
@@ -597,7 +598,7 @@ function updateNodePanel(n)
                                                       : getUsePatByTypeId(d.type))
       .attr("stroke", d => useTypeOutlineColor(useTypeById(d.type)))
       .attr("stroke-width", vis.use_icon.outline_width);
-    use_divs_link_svgs_s.append("circle")
+    action_divs_link_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
       .attr("cx", 4 * icon_r_full)
       .attr("cy", icon_r_full)
@@ -605,13 +606,13 @@ function updateNodePanel(n)
       .attr("stroke", d => nodeOutlineColor(nodeById(d.successor_id)))
       .attr("stroke-width", vis.use_icon.outline_width);
 
-    use_divs_use_svgs_s.filter(d => useTypeById(d.type).all_data).append("polyline")
+    action_divs_use_svgs_s.filter(d => useTypeById(d.type).all_data).append("polyline")
       .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
       .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
         icon_r_full + vis.link.head_to_node_dist)))
       .attr("fill", vis.link.color_bg_highlight)
       .attr("stroke-width", 0);
-    use_divs_link_svgs_s.append("polyline")
+    action_divs_link_svgs_s.append("polyline")
       .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
       .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
         icon_r_full + vis.link.head_to_node_dist)))
@@ -619,7 +620,7 @@ function updateNodePanel(n)
       .attr("stroke-width", 0);
 
     // add icons for special types of links
-    use_divs_link_svgs_s.filter(d => linkTypeById(d.type).display_on_link).append("circle")
+    action_divs_link_svgs_s.filter(d => linkTypeById(d.type).display_on_link).append("circle")
       .attr("transform", function(d)
       {
         let len_to_head = linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
@@ -632,9 +633,9 @@ function updateNodePanel(n)
       .attr("stroke", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", vis.link_icon.outline_width);
 
-    use_divs_s.filter(d => d.elt_type == element_types.USE).append("p")
+    action_divs_s.filter(d => d.elt_type == element_types.USE).append("p")
       .html(d => useTypeById(d.type).description);
-    use_divs_s.filter(d => d.elt_type == element_types.LINK).append("p")
+    action_divs_s.filter(d => d.elt_type == element_types.LINK).append("p")
       .html(d => linkTypeById(d.type).description);
   }
 
