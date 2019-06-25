@@ -106,8 +106,8 @@ var link_panel_box_s = d3.select("#link_panel_box");
 var node_panel_s = node_panel_box_s.select("#node_panel");
 var link_panel_s = link_panel_box_s.select("#link_panel");
 
-// selections of divs to display information about options (for user) and permitted actions (for privacy policy
-// provider) in node panel
+// selections of divs to display information about options available to the user regarding the data as well as
+// permitted actions that can be performed by the entity handling the data
 var node_panel_opts_box_s = node_panel_s.select("#node_panel_opts_box");
 var node_panel_actions_box_s = node_panel_s.select("#node_panel_actions_box");
 
@@ -529,26 +529,26 @@ function updateNodePanel(n)
     node_panel_opts_box_s.style("display", "none");
   }
 
-  // combine uses and links into one array, used to display how data can be used
-  var display_uses = [];
+  // combine uses and links into one array of permitted actions that can be performed on data
+  var actions = [];
   // list to prevent the same types of links from being displayed multiple times
   var track_links = [];
   for(let i = 0; i < n.uses.length; i++)
   {
-    display_uses.push({type:n.uses[i], elt_type:element_types.USE});
+    actions.push({type:n.uses[i], elt_type:element_types.USE});
   }
   for(let i = 0; i < n.successor_links.length; i++)
   {
     if(! track_links.includes(n.successor_links[i].type))
     {
-      display_uses.push(n.successor_links[i]);
-      display_uses[display_uses.length - 1].elt_type = element_types.LINK;
+      actions.push(n.successor_links[i]);
+      actions[actions.length - 1].elt_type = element_types.LINK;
       track_links.push(n.successor_links[i].type);
     }
   }
 
   // if there are no uses to display, then hide the section
-  if(n.layer == 0 || display_uses.length == 0)
+  if(n.layer == 0 || actions.length == 0)
   {
     node_panel_actions_box_s
       .style("display", "none");
@@ -568,7 +568,7 @@ function updateNodePanel(n)
 
     // add use divs to the panel
     var action_divs_s = node_panel_actions_box_s.selectAll("div")
-      .data(display_uses)
+      .data(actions)
       .enter().append("div")
         .classed("panel_list_item_box", true)
         .style("border-bottom", vis.node_panel.outline_width + "px solid " + outline_color);
