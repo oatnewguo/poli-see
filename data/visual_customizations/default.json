@@ -40,8 +40,6 @@
     "outline_width_focus": 3,
     "color_identifiable": "#404060",
     "color_unidentifiable": "#707070",
-    "color_bg": "#D0D0E0",
-    "color_bg_highlight": "#9090D0",
     "outline_color_focus": "#00C8FF"
   },
   "link_icon":

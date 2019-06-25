@@ -2,39 +2,21 @@
   "title": "Care Health Privacy Policy",
   "intro": "Please read the information contained in this privacy policy to learn about how Care Health handles your information when you use Care Health's website and other services. For more information, click <a>here</a>.",
   "provider_name": "Care Health",
-  "base_all_data_node_id": "all_1",
   "nodes":
   [
-    { "id": "you",
-      "successor_links":
-      [
-        {"successor_id": "all_1", "type": "link_collect", "text": ""},
-        {"successor_id": "health_1", "type": "link_collect", "text": ""},
-        {"successor_id": "location_1", "type": "link_collect", "text": ""},
-        {"successor_id": "financial_1", "type": "link_share", "text": ""},
-        {"successor_id": "contact_1", "type": "link_share", "text": ""},
-        {"successor_id": "photos_1", "type": "link_share", "text": ""}
-      ],
-      "layer": 0,
-      "type": "node_user",
-      "all_data": false,
-      "identifiable": true,
-      "opts": false,
-      "opts_text": "",
-      "label": "You",
-      "uses": [],
-      "data_handler": "",
-      "data_handler_category": "",
-      "text": "This circle represents you. All the other circles represent data that we collect about you."
-    },
     { "id": "all_1",
       "successor_links":
       [
         {"successor_id": "all_2.1", "type": "link_share", "text": ""},
         {"successor_id": "all_2.2", "type": "link_share", "text": ""},
-        {"successor_id": "all_anonymized_1", "type": "link_anonymize", "text": ""}
+        {"successor_id": "all_anonymized_1", "type": "link_anonymize", "text": ""},
+        {"successor_id": "health_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "location_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "financial_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "contact_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "photos_1", "type": "link_all_data", "text": ""}
       ],
-      "layer": 1,
+      "layer": 0,
       "type": "node_all",
       "all_data": true,
       "identifiable": true,
@@ -44,7 +26,7 @@
       "uses": ["use_provide_services", "use_ads"],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
-      "text": "All of your data that Care Health collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that have arrows pointing to this circle."
+      "text": "All of your data that Care Health collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that are connected to this circle."
     },
     { "id": "all_2.1",
       "successor_links": [],
@@ -114,7 +96,7 @@
       "opts": true,
       "opts_text": "Before you can upload health information to Care Health, you must give your explicit consent to the processing of that health information by Care Health. You can withdraw your consent to Care Health processing your health information at any time.",
       "label": "Health Information",
-      "uses": ["use_research_other", "use_all_data"],
+      "uses": ["use_research_other"],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
       "text": "Health data you provide to us, including height, weight, heart rate, medications, and more."
@@ -131,7 +113,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Location Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
       "text": ""
@@ -148,7 +130,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Location Information, Aggregated",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
       "text": ""
@@ -176,7 +158,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Payment Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
       "text": ""
@@ -193,7 +175,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Contact Information",
-      "uses": ["use_communicate", "use_all_data"],
+      "uses": ["use_communicate"],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
       "text": ""
@@ -221,7 +203,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Photos",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Care Health",
       "data_handler_category": "Care Health",
       "text": ""
@@ -389,98 +371,77 @@
     { "id": "use_ads",
       "description": "Advertise or market to you",
       "image":"images/use_icons/ads.png",
-      "unknown": false,
-      "all_data": false
-    },
-    { "id": "use_all_data",
-      "description": "Do anything that this policy allows Care Health to do with all data it collects. Follow the arrow depicted for more.",
-      "image":"images/node_icons/all_identifiable.png",
-      "unknown": false,
-      "all_data": true
+      "unknown": false
     },
     { "id": "use_business",
       "description": "Conduct business operations",
       "image":"images/use_icons/business.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_communicate",
       "description": "Communicate with you",
       "image":"images/use_icons/communicate.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_detect_malicious",
       "description": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_detect_violations",
       "description": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_legal",
       "description": "Respond to legal requirements",
       "image":"images/use_icons/legal.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_personalize_marketing",
       "description": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_policy",
       "description": "Do anything that this privacy policy allows Care Health to do",
       "image":"images/use_icons/policy.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_promotions",
       "description": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_provide_services",
       "description": "Provide services to you",
       "image": "images/use_icons/provide_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_research_services",
       "description": "Conduct research and development on services",
       "image":"images/use_icons/research_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_research_other",
       "description": "Conduct research not related to services",
       "image":"images/use_icons/research_other.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_other",
       "description": "Fulfill some other purpose",
       "image":"images/generic_icon.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_unknown",
       "description": "Not limited by this privacy policy",
       "image":"images/use_icons/unknown.png",
-      "unknown": true,
-      "all_data": false
+      "unknown": true
     }
   ]
 }

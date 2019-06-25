@@ -132,12 +132,8 @@ var links_s;
 
 // central node
 var central_node;
-// array of primary nodes, direct successors of the central node in layer 1
+// array of primary nodes, direct successors of the central node in layer 1 that are not all-data nodes
 var primary_nodes = [];
-// array of links that should be drawn in the background
-var bg_links = [];
-// selection of links background links
-var bg_links_s;
 
 
 
@@ -145,6 +141,12 @@ var bg_links_s;
 function nodeById(id)
 {
   return nodes.find(n => n.id == id);
+}
+
+// return the link with a given id
+function linkById(id)
+{
+  return links.find(l => l.id == id);
 }
 
 // return the node type with a given id
@@ -176,23 +178,23 @@ function nodeRadius(n)
 }
 
 // return a string containing the points for a link polyline arrow pointing down, given a link
-function linkPoints(l)
+function linkArrowPoints(l)
 {
   var source = nodeById(l.source);
   var dest = nodeById(l.dest);
-  var len = linkLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
+  var len = linkArrowLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
     vis.link.head_to_node_dist);
-  return linkPointsFromLen(len);
+  return linkArrowPointsFromLen(len);
 }
 
 // return the length of a link polyline arrow, given relevant values
-function linkLen(source_x, source_y, dest_x, dest_y, subtract_len)
+function linkArrowLen(source_x, source_y, dest_x, dest_y, subtract_len)
 {
   return Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
 }
 
 // return a string containing the points for a link polyline arrow pointing down, given its length
-function linkPointsFromLen(len)
+function linkArrowPointsFromLen(len)
 {
   var len_to_head = len - vis.link.head_len;
   var w1 = vis.link.width / 2;
@@ -205,6 +207,34 @@ function linkPointsFromLen(len)
     -w2 + " " + len_to_head + ", " +
     -w1 + " " + len_to_head + ", " +
     -w1 + " 0, 0 0";
+}
+
+// return a string containing the points for a link connector path pointing down, given a link
+function linkConnectorPath(l)
+{
+  var source = nodeById(l.source);
+  var dest = nodeById(l.dest);
+  var len = linkConnectorLen(source.x, source.y, dest.x, dest.y, source.r + dest.r + 2 * vis.node.outline_width);
+
+  var ball_r = 8;
+  var width = 8;
+
+  return "M 0 " + (source.r + vis.node.outline_width - ball_r) + " " +
+    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (2 * ball_r) + " " +
+    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (-2 * ball_r) + " " +
+    "M " + (-width / 2) + " " + (source.r + vis.node.outline_width) + " " +
+    "l 0 " + len + " " +
+    "l " + width + " 0 " +
+    "l 0 " + (-len) + " " +
+    "M 0 " + (len + source.r + vis.node.outline_width - ball_r) + " " +
+    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (2 * ball_r) + " " +
+    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (-2 * ball_r);
+}
+
+// return the length of a link connector path, given relevant values
+function linkConnectorLen(source_x, source_y, dest_x, dest_y, subtract_len)
+{
+  return Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
 }
 
 // return the degrees by which a link needs to be rotated counterclockwise from pointing straight down in order to
@@ -220,11 +250,7 @@ function linkRotation(l)
 // return the color of a link
 function linkColor(l)
 {
-  if(l.dest == pol.base_all_data_node_id)
-  {
-    return vis.link.color_bg;
-  }
-  else if(nodeById(l.dest).identifiable)
+  if(nodeById(l.dest).identifiable)
   {
     return vis.link.color_identifiable;
   }
@@ -234,11 +260,7 @@ function linkColor(l)
 // return the color of a link, given its destination id
 function linkColorByDestId(id)
 {
-  if(id == pol.base_all_data_node_id)
-  {
-    return vis.link.color_bg;
-  }
-  else if(nodeById(id).identifiable)
+  if(nodeById(id).identifiable)
   {
     return vis.link.color_identifiable;
   }
@@ -251,10 +273,6 @@ function useTypeFillColor(t)
   if(t.unknown)
   {
     return vis.use_icon.fill_color_unknown;
-  }
-  else if(t.all_data)
-  {
-    return vis.node.fill_color_all_data;
   }
   return vis.use_icon.fill_color_normal;
 }
@@ -269,16 +287,6 @@ function nodeOutlineColor(n)
   return vis.node.outline_color_unidentifiable;
 }
 
-// return the outline color of a use type
-function useTypeOutlineColor(t)
-{
-  if(t.all_data)
-  {
-    return nodeOutlineColor(nodeById(pol.base_all_data_node_id));
-  }
-  return vis.use_icon.outline_color;
-}
-
 // return the fill pattern of a node
 function getNodePat(n)
 {
@@ -291,12 +299,6 @@ function getLinkPat(l)
 {
   return nodeById(l.dest).identifiable ? "url(#pat_" + l.type + "_identifiable)"
                                        : "url(#pat_" + l.type + "_unidentifiable)";
-}
-
-// return the icon fill pattern of a link, given its type id
-function getLinkPatByTypeId(id)
-{
-  return "url(#pat_" + id + ")";
 }
 
 // return the icon fill pattern of a use, given its type id
@@ -539,21 +541,22 @@ function updateNodePanel(n)
   }
   for(let i = 0; i < n.successor_links.length; i++)
   {
-    if(! track_links.includes(n.successor_links[i].type))
+    let l = n.successor_links[i];
+    if(! track_links.includes(l.type) && l.type != "link_all_data")
     {
-      actions.push(n.successor_links[i]);
+      actions.push(l);
       actions[actions.length - 1].elt_type = element_types.LINK;
-      track_links.push(n.successor_links[i].type);
+      track_links.push(l.type);
     }
   }
 
-  // if there are no uses to display, then hide the section
-  if(n.layer == 0 || actions.length == 0)
+  // if there are no actions to display, then hide the section
+  if(actions.length == 0)
   {
     node_panel_actions_box_s
       .style("display", "none");
   }
-  // if there are uses to display, then display them
+  // if there are actions to display, then display them
   else
   {
     node_panel_actions_box_s
@@ -563,21 +566,21 @@ function updateNodePanel(n)
     node_panel_actions_box_s.select("h2")
       .html(n.data_handler + " can use this data to...");
 
-    // remove existing use divs
+    // remove existing action divs
     node_panel_actions_box_s.selectAll("div").remove();
 
-    // add use divs to the panel
+    // add action divs to the panel
     var action_divs_s = node_panel_actions_box_s.selectAll("div")
       .data(actions)
       .enter().append("div")
         .classed("panel_list_item_box", true)
         .style("border-bottom", vis.node_panel.outline_width + "px solid " + outline_color);
 
-    // remove bottom border from last use div
+    // remove bottom border from last action div
     node_panel_actions_box_s.select("div:last-child")
       .style("border-bottom", "none");
 
-    // add icons and text to the use divs
+    // add icons and text to the action divs
     var icon_r_full = vis.use_icon.r + vis.use_icon.outline_width;
     var action_divs_svgs_s = action_divs_s.append("svg")
       .attr("height", icon_r_full * 2 + "px");
@@ -585,18 +588,16 @@ function updateNodePanel(n)
     var action_divs_link_svgs_s = action_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
 
     action_divs_use_svgs_s
-      .style("flex-basis", d => useTypeById(d.type).all_data ? icon_r_full * 5 + "px"
-                                                             : icon_r_full * 2 + "px");
+      .style("flex-basis", icon_r_full * 2 + "px");
     action_divs_link_svgs_s
       .style("flex-basis", icon_r_full * 5 + "px");
 
     action_divs_use_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
-      .attr("cx", d => useTypeById(d.type).all_data ? 4 * icon_r_full : icon_r_full)
+      .attr("cx", icon_r_full)
       .attr("cy", icon_r_full)
-      .attr("fill", d => useTypeById(d.type).all_data ? getNodePat(nodeById(pol.base_all_data_node_id))
-                                                      : getUsePatByTypeId(d.type))
-      .attr("stroke", d => useTypeOutlineColor(useTypeById(d.type)))
+      .attr("fill", d => getUsePatByTypeId(d.type))
+      .attr("stroke", vis.use_icon.outline_color)
       .attr("stroke-width", vis.use_icon.outline_width);
     action_divs_link_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
@@ -606,15 +607,9 @@ function updateNodePanel(n)
       .attr("stroke", d => nodeOutlineColor(nodeById(d.successor_id)))
       .attr("stroke-width", vis.use_icon.outline_width);
 
-    action_divs_use_svgs_s.filter(d => useTypeById(d.type).all_data).append("polyline")
-      .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
-      .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
-        icon_r_full + vis.link.head_to_node_dist)))
-      .attr("fill", vis.link.color_bg_highlight)
-      .attr("stroke-width", 0);
     action_divs_link_svgs_s.append("polyline")
       .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
-      .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
+      .attr("points", linkArrowPointsFromLen(linkArrowLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
         icon_r_full + vis.link.head_to_node_dist)))
       .attr("fill", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", 0);
@@ -623,13 +618,12 @@ function updateNodePanel(n)
     action_divs_link_svgs_s.filter(d => linkTypeById(d.type).display_on_link).append("circle")
       .attr("transform", function(d)
       {
-        let len_to_head = linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
+        let len_to_head = linkArrowLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
           icon_r_full + vis.link.head_to_node_dist) - vis.link.head_len;
         return "translate(" + len_to_head/2 + "," + icon_r_full + ")";
       })
       .attr("r", vis.link_icon_on_link.r)
-      .attr("fill", d => nodeById(d.successor_id).identifiable ? getLinkPatByTypeId(d.type + "_identifiable")
-                                                               : getLinkPatByTypeId(d.type + "_unidentifiable"))
+      .attr("fill", d => getLinkPat(linkById(n.id + "->" + d.successor_id)))
       .attr("stroke", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", vis.link_icon.outline_width);
 
@@ -671,7 +665,7 @@ function updateLinkPanel(l)
 
   // update the link graphic
   link_panel_graphic_s.select("polyline")
-      .attr("points", linkPointsFromLen(linkLen(node_r_full, node_r_full,
+      .attr("points", linkArrowPointsFromLen(linkArrowLen(node_r_full, node_r_full,
         vis.link_panel_graphic.dist_between_nodes + node_r_full, node_r_full,
         node_r_full + vis.link.head_to_node_dist)))
       .attr("fill", linkColor(l));
@@ -685,8 +679,7 @@ function updateLinkPanel(l)
   // set the icon and title for the link panel
   link_panel_s.select("circle")
     .attr("fill", getLinkPat(l))
-    .attr("stroke", dest.id == pol.base_all_data_node_id ? nodeOutlineColor(nodeById(pol.base_all_data_node_id))
-                                                         : linkColor(l));
+    .attr("stroke", linkColor(l));
   link_panel_s.select("h1")
     .html(linkTypeById(l.type).label);
   link_panel_s.select("p")
@@ -746,13 +739,13 @@ function focusElementOutline(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.s.select("circle")
+    elt.s.select("*")
       .attr("stroke", vis.node.outline_color_focus)
       .attr("stroke-width", vis.node.outline_width_focus);
   }
   else
   {
-    elt.s.select("polyline")
+    elt.s.select("*")
       .attr("stroke-width", vis.link.outline_width_focus);
   }
 }
@@ -762,33 +755,15 @@ function unfocusElementOutline(elt)
 {
   if(elt.type == element_types.NODE)
   {
-    elt.s.select("circle")
+    elt.s.select("*")
       .attr("stroke", nodeOutlineColor)
       .attr("stroke-width", vis.node.outline_width);
   }
   else if(clicked_elt.type == element_types.LINK)
   {
-    clicked_elt.s.select("polyline")
+    clicked_elt.s.select("*")
       .attr("stroke-width", 0);
   }
-}
-
-// highlight a node's background arrow, if it has one
-function highlightBgArrow(elt)
-{
-  var a = bg_links_s.filter(d => d.source == elt.data.id);
-  a.select("polyline")
-    .attr("fill", vis.link.color_bg_highlight);
-
-  // bring the highlighted arrow in front of other background arrows
-  a.raise();
-}
-
-// unhighlight a node's background arrow, if it has one
-function unhighlightBgArrow(elt)
-{
-  bg_links_s.filter(d => d.source == elt.data.id).select("polyline")
-    .attr("fill", vis.link.color_bg);
 }
 
 // handle interactions when the cursor enters an interactive element
@@ -802,7 +777,6 @@ function onMouseEnter(elt)
   if(elt.type == element_types.NODE)
   {
     increaseNodeRadius(elt);
-    highlightBgArrow(elt);
   }
 }
 
@@ -818,7 +792,6 @@ function onMouseLeave(elt)
     if(elt.type == element_types.NODE)
     {
       decreaseNodeRadius(elt);
-      unhighlightBgArrow(elt);
     }
   }
   // if there is a clicked element, then update the panel to display information about the clicked element
@@ -832,7 +805,6 @@ function onMouseLeave(elt)
       if(elt.type == element_types.NODE)
       {
         decreaseNodeRadius(elt);
-        unhighlightBgArrow(elt);
       }
     }
   }
@@ -861,7 +833,6 @@ function onClick(elt)
     if(clicked_elt.type == element_types.NODE)
     {
       decreaseNodeRadius(clicked_elt);
-      unhighlightBgArrow(clicked_elt);
     }
 
     // change outline of new clicked element to indicate focus
@@ -984,7 +955,7 @@ function main()
       for(let j = 0; j < n.successor_links.length; j++)
       {
         let s = nodeById(n.successor_links[j].successor_id);
-        if(s.layer == 1)
+        if(s.layer == 1 && ! s.all_data)
         {
           primary_nodes.push(s);
         }
@@ -998,21 +969,8 @@ function main()
     for(let j = 0; j < n.successor_links.length; j++)
     {
       let l = n.successor_links[j];
-      if(l.successor_id != pol.base_all_data_node_id)
-      {
-        links.push({ id: n.id + "->" + l.successor_id, source: n.id, dest: l.successor_id, type: l.type,
-          text: l.text });
-      }
-    }
-
-    // if the node is in layer one and not an all_data node, add a background link to the base all_data node
-    if(n.layer == 1 && ! n.all_data)
-    {
-      bg_links.push({ id: n.id + "->" + pol.base_all_data_node_id, source: n.id,
-        dest: pol.base_all_data_node_id, type: "link_all_data",
-        text: "These lighter-colored arrows point to a circle representing all your data that " +
-        pol.provider_name + " collects. Follow the arrow to that circle to see what " +
-        pol.provider_name + " can do with all data it collects." });
+      links.push({ id: n.id + "->" + l.successor_id, source: n.id, dest: l.successor_id, type: l.type,
+        text: l.text });
     }
 
     // move the node one node outward to accommodate for second sub-layer within layer 1 (center node and primary
@@ -1080,40 +1038,6 @@ function main()
 
 
 
-  // append background links
-  bg_links_s = g_s.append("g").selectAll(".bg_link")
-    .data(bg_links)
-    .enter().append("g")
-      .classed("bg_link", true)
-      .attr("transform", function(d)
-      {
-        let source = nodeById(d.source);
-        return "translate(" + source.x + "," + source.y + ")";
-      });
-
-  // add lines to background links
-  bg_links_s.append("polyline")
-    .attr("points", linkPoints)
-    .attr("transform", function(d) { return "rotate(" + linkRotation(d) + ")"; })
-    .attr("fill", vis.link.color_bg)
-    .attr("stroke", vis.link.outline_color_focus)
-    .attr("stroke-width", 0);
-
-  // mouse interactions for background links
-  bg_links_s
-    // display more information when the cursor hovers over links
-    .on("mouseenter", function(d)
-    {
-      onMouseEnter({type:element_types.LINK, data:d, s:d3.select(this)});
-      d3.select(this).raise();
-    })
-    // hide information when the cursor leaves a link
-    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, s:d3.select(this)}); })
-    // retain focus on an element when it is clicked
-    .on("click", function(d) { onClick({type:element_types.LINK, data:d, s:d3.select(this)}); });
-
-
-
   // append links
   links_s = g_s.append("g").selectAll(".link")
     .data(links)
@@ -1126,9 +1050,14 @@ function main()
       });
 
   // add lines to links
-  links_s.append("polyline")
-    .attr("points", linkPoints)
+  links_s.filter(d => ! linkTypeById(d.type).all_data).append("polyline")
+    .attr("points", linkArrowPoints)
     .attr("fill", linkColor)
+    .attr("stroke", vis.link.outline_color_focus)
+    .attr("stroke-width", 0);
+  links_s.filter(d => linkTypeById(d.type).all_data).append("path")
+    .attr("d", linkConnectorPath)
+    .attr("fill", "magenta")
     .attr("stroke", vis.link.outline_color_focus)
     .attr("stroke-width", 0);
 
@@ -1138,7 +1067,7 @@ function main()
     {
       let source = nodeById(d.source);
       let dest = nodeById(d.dest);
-      let len_to_head = linkLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
+      let len_to_head = linkArrowLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
         vis.link.head_to_node_dist) - vis.link.head_len;
       let displacement = (len_to_head + source.r) / 2;
       return "translate(0," + displacement + ") rotate(" + (-linkRotation(d)) + ")";
@@ -1169,10 +1098,6 @@ function main()
     .enter().append("g")
       .classed("node", true)
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-  // give the base all_data node an id
-  nodes_s.filter(d => d.id == pol.base_all_data_node_id)
-    .attr("id", pol.base_all_data_node_id)
 
   // add circles to nodes
   nodes_s.append("circle")

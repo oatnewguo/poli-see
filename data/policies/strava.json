@@ -2,41 +2,9 @@
   "title": "Strava Privacy Policy",
   "intro": "Your privacy is very important to us. This visualization of our privacy policy explains the information we collect, how we use and share it, how to manage your privacy controls and your rights in connection with Strava’s websites and the related mobile applications and services (collectively, the “Services”). To view the full privacy policy, click <a href=\"https://www.strava.com/legal/privacy\" target=\"_blank\">here</a>. To learn about how we protect information, click <a href=\"https://www.strava.com/legal/privacy#how-we-protect-information\" target=\"_blank\">here</a>. To learn about managing your settings, click <a href=\"https://www.strava.com/legal/privacy#managing-your-settings\" target=\"_blank\">here</a>.",
   "provider_name": "Strava",
-  "base_all_data_node_id": "all_1",
   "nodes":
   [
-    { "id": "you",
-      "successor_links":
-      [
-        {"successor_id": "all_1", "type": "link_collect", "text": ""},
-        {"successor_id": "account_1", "type": "link_collect", "text": "Strava collects basic account information to help secure and provide you with access to our Services."},
-        {"successor_id": "profile_1", "type": "link_collect", "text": "Strava collects activity information when you choose to upload content, join a challenge, add your equipment usage, view others’ activities, or otherwise use the Services."},
-        {"successor_id": "contacts_1", "type": "link_share", "text": "You can choose to add your contacts’ information by connecting your contacts from your mobile device or social networking accounts to Strava. In accordance with your instructions, Strava may then access and store your contacts’ information in order to identify connections and help you connect with them."},
-        {"successor_id": "connected_devices_1", "type": "link_collect", "text": "Strava collects information from devices and apps you connect to Strava."},
-        {"successor_id": "health_1", "type": "link_collect", "text": "Strava may collect health information. Before you can upload health information to Strava, you must give your explicit consent to the processing of that health information by Strava."},
-        {"successor_id": "content_1", "type": "link_share", "text": "Strava gathers information from content you share on the Services, including when you participate in partner events or create segments or routes."},
-        {"successor_id": "financial_1", "type": "link_share", "text": "When you make a payment on Strava, you may provide payment information to Strava."},
-        {"successor_id": "financial_2", "type": "link_share", "text": "When you make a payment on Strava, you may provide payment information to third parties."},
-        {"successor_id": "location_1", "type": "link_collect", "text": "Strava collects and processes location information when you sign up for and use the Services."},
-        {"successor_id": "third-party_accounts_1", "type": "link_collect", "text": "When you sign up and log in to the Services using accounts you create with third-party products and services, such as Facebook or Google (collectively, “Third-Party Accounts”), Strava may collect information provided to Strava under the Third-Party Account provider's privacy policies. You can generally control the information that we receive from these sources using the privacy controls in your Third-Party Account."},
-        {"successor_id": "contact_1", "type": "link_share", "text": "You can choose to provide us with your contact information so we can better respond to your support requests and comments."},
-        {"successor_id": "info_from_others_1", "type": "link_collect", "text": "Strava obtains additional third party information about our members from marketers, partners, researchers, and others. We may combine information that we collect from you with information obtained from other members, third parties and information derived from any other subscription, product, or service we provide. We may also collect information about you from other members such as when they give you kudos or comment on your activities."},
-        {"successor_id": "device_1", "type": "link_collect", "text": "Strava collects device information that provides us with technical information when you access or use the Services."},
-        {"successor_id": "logs_1", "type": "link_collect", "text": "Strava uses log files to collect additional information."}
-      ],
-      "layer": 0,
-      "type": "node_user",
-      "all_data": false,
-      "identifiable": true,
-      "opts": false,
-      "opts_text": "",
-      "label": "You",
-      "uses": [],
-      "data_handler": "",
-      "data_handler_category": "",
-      "text": "This circle represents you. All the other circles represent data that we collect about you."
-    },
-    { "id": "all_1",
+    { "id": "all_0",
       "successor_links":
       [
         {"successor_id": "all_aggregated_1", "type": "link_aggregate", "text": "Strava may aggregate the information you and others make available in connection with the Services and post it publicly or share it with third parties. To do this, we remove certain account information, such as your name, and combine the resulting information with similar information from other Strava athletes."},
@@ -45,9 +13,23 @@
         {"successor_id": "all_2.3", "type": "link_share", "text": "As a social network, Strava shares your information with other Strava members and the public in accordance with your privacy controls."},
         {"successor_id": "all_2.4", "type": "link_share", "text": "We may share your information with affiliates under common control with us, who are required to comply with the terms of this Privacy Policy with regard to your information. If Strava becomes involved in a business combination, securities offering, bankruptcy, reorganization, dissolution or other similar transaction, we may share or transfer your information in connection with such transaction."},
         {"successor_id": "all_2.5", "type": "link_share", "text": "We may preserve and share your information with third parties for legal requirements."},
-        {"successor_id": "all_2.6", "type": "link_share", "text": "We may share your information with third parties when we forward Digital Millennium Copyright Act (DMCA) notifications, which will be forwarded as submitted to us without any deletions."}
+        {"successor_id": "all_2.6", "type": "link_share", "text": "We may share your information with third parties when we forward Digital Millennium Copyright Act (DMCA) notifications, which will be forwarded as submitted to us without any deletions."},
+        {"successor_id": "account_1", "type": "link_all_data", "text": "Strava collects basic account information to help secure and provide you with access to our Services."},
+        {"successor_id": "profile_1", "type": "link_all_data", "text": "Strava collects activity information when you choose to upload content, join a challenge, add your equipment usage, view others’ activities, or otherwise use the Services."},
+        {"successor_id": "contacts_1", "type": "link_all_data", "text": "You can choose to add your contacts’ information by connecting your contacts from your mobile device or social networking accounts to Strava. In accordance with your instructions, Strava may then access and store your contacts’ information in order to identify connections and help you connect with them."},
+        {"successor_id": "connected_devices_1", "type": "link_all_data", "text": "Strava collects information from devices and apps you connect to Strava."},
+        {"successor_id": "health_1", "type": "link_all_data", "text": "Strava may collect health information. Before you can upload health information to Strava, you must give your explicit consent to the processing of that health information by Strava."},
+        {"successor_id": "content_1", "type": "link_all_data", "text": "Strava gathers information from content you share on the Services, including when you participate in partner events or create segments or routes."},
+        {"successor_id": "financial_1", "type": "link_all_data", "text": "When you make a payment on Strava, you may provide payment information to Strava."},
+        {"successor_id": "financial_2", "type": "link_share", "text": "When you make a payment on Strava, you may provide payment information to third parties."},
+        {"successor_id": "location_1", "type": "link_all_data", "text": "Strava collects and processes location information when you sign up for and use the Services."},
+        {"successor_id": "third-party_accounts_1", "type": "link_all_data", "text": "When you sign up and log in to the Services using accounts you create with third-party products and services, such as Facebook or Google (collectively, “Third-Party Accounts”), Strava may collect information provided to Strava under the Third-Party Account provider's privacy policies. You can generally control the information that we receive from these sources using the privacy controls in your Third-Party Account."},
+        {"successor_id": "contact_1", "type": "link_all_data", "text": "You can choose to provide us with your contact information so we can better respond to your support requests and comments."},
+        {"successor_id": "info_from_others_1", "type": "link_all_data", "text": "Strava obtains additional third party information about our members from marketers, partners, researchers, and others. We may combine information that we collect from you with information obtained from other members, third parties and information derived from any other subscription, product, or service we provide. We may also collect information about you from other members such as when they give you kudos or comment on your activities."},
+        {"successor_id": "device_1", "type": "link_all_data", "text": "Strava collects device information that provides us with technical information when you access or use the Services."},
+        {"successor_id": "logs_1", "type": "link_all_data", "text": "Strava uses log files to collect additional information."}
       ],
-      "layer": 1,
+      "layer": 0,
       "type": "node_all",
       "all_data": true,
       "identifiable": true,
@@ -57,7 +39,7 @@
       "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
-      "text": "All of your data that Strava collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that have arrows pointing to this circle."
+      "text": "All of your data that Strava collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that are connected to this circle."
     },
     { "id": "all_aggregated_1",
       "successor_links":
@@ -186,7 +168,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Basic Account Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Name, email address, date of birth, gender, username and password."
@@ -218,7 +200,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Profile, Activity and Use Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Pictures, activities (including date, time and geo-location information as well as your speed and pace) and posts, and other information about your use of the Services."
@@ -260,7 +242,7 @@
       "opts": true,
       "opts_text": "<a href=\"https://support.strava.com/hc/en-us/articles/360016371512\" target=\"_blank\">Learn more</a> about how we collect information about your contacts, how we use that information, and the controls available to you.",
       "label": "Your Contacts’ Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information about your contacts on your mobile device or social networking accounts."
@@ -277,7 +259,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Connected Devices and Apps",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information from devices and apps you connect to Strava. For example, you may connect your Garmin watch or Flywheel account to Strava and information from these devices and apps will be passed along to Strava."
@@ -308,7 +290,7 @@
       "opts": true,
       "opts_text": "Before you can upload health information to Strava, you must give your explicit consent to the processing of that health information by Strava. You can withdraw your consent to Strava processing your health information at any time.",
       "label": "Health Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Health information from sources such as heart rate, power, cadence, height and weight and other indicators."
@@ -322,7 +304,7 @@
       "opts": true,
       "opts_text": "You can withdraw your consent to Strava processing your health information at any time.",
       "label": "Inferred Health Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Health information inferred from other data."
@@ -339,7 +321,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Content You Share",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Photos, posts, comments, kudos and other content you share on the Services."
@@ -367,7 +349,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Payment Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Payment card and other payment details. We do not store your credit card information."
@@ -398,7 +380,7 @@
       "opts": true,
       "opts_text": "You can tell us about important locations, such as your home or work address, by enabling a <a href=\"https://strava.com/settings/privacy\" target=\"_blank\">Privacy Zone</a> in your settings. We will make private any portion of your activity that starts or ends in your Privacy Zone.",
       "label": "Location Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Physical location of your device including, data such as speed and direction. Processing of your location data is essential to the Services which we provide and a necessary part of our performance of the agreement we have with you."
@@ -426,7 +408,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Third-Party Account Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information that you have agreed to make available such as your name, email address, profile information and preferences with the applicable Third-Party Account."
@@ -440,7 +422,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Contact Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": ""
@@ -454,7 +436,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Information from Others",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information about you from third parties and other members."
@@ -468,7 +450,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Device Information",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
@@ -482,7 +464,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Data from Log Files",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
@@ -650,98 +632,77 @@
     { "id": "use_ads",
       "description": "Advertise or market to you",
       "image":"images/use_icons/ads.png",
-      "unknown": false,
-      "all_data": false
-    },
-    { "id": "use_all_data",
-      "description": "Do anything that this policy allows Strava to do with all data it collects. Follow the arrow depicted for more.",
-      "image":"images/node_icons/all_identifiable.png",
-      "unknown": false,
-      "all_data": true
+      "unknown": false
     },
     { "id": "use_business",
       "description": "Conduct business operations",
       "image":"images/use_icons/business.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_communicate",
       "description": "Communicate with you",
       "image":"images/use_icons/communicate.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_detect_malicious",
       "description": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_detect_violations",
       "description": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_legal",
       "description": "Respond to legal requirements",
       "image":"images/use_icons/legal.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_personalize_marketing",
       "description": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_policy",
-      "description": "Do anything that this privacy policy allows Strava to do",
+      "description": "Do anything that this privacy policy allows Care Health to do",
       "image":"images/use_icons/policy.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_promotions",
       "description": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_provide_services",
       "description": "Provide services to you",
       "image": "images/use_icons/provide_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_research_services",
       "description": "Conduct research and development on services",
       "image":"images/use_icons/research_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_research_other",
       "description": "Conduct research not related to services",
       "image":"images/use_icons/research_other.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_other",
       "description": "Fulfill some other purpose",
       "image":"images/generic_icon.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_unknown",
       "description": "Not limited by this privacy policy",
       "image":"images/use_icons/unknown.png",
-      "unknown": true,
-      "all_data": false
+      "unknown": true
     }
   ]
 }

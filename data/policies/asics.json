@@ -2,42 +2,9 @@
   "title": "ASICS Privacy Policy",
   "intro": "We value the trust that you place in us by sharing your personal data with us. ASICS takes your privacy seriously and is committed to handling your personal data in a way that is fair and worthy of that trust. ASICS will take all reasonable steps to protect your information from misuse and keep it secure. We believe it is important to inform you about how we will use your personal data. Therefore, we encourage you to read this privacy policy carefully. To view the full privacy policy, click <a href=\"https://www.asics.com/privacy/privacy/en-us/privacy-english.html\" target=\"_blank\">here</a>.",
   "provider_name": "ASICS",
-  "base_all_data_node_id": "all_1",
   "nodes":
   [
-    { "id": "you",
-      "successor_links":
-      [
-        {"successor_id": "all_1", "type": "link_collect", "text": ""},
-        {"successor_id": "contact_1", "type": "link_share", "text": ""},
-        {"successor_id": "account_1", "type": "link_share", "text": ""},
-        {"successor_id": "use_1", "type": "link_collect", "text": ""},
-        {"successor_id": "purchases_1", "type": "link_collect", "text": ""},
-        {"successor_id": "events_1", "type": "link_collect", "text": ""},
-        {"successor_id": "training_1", "type": "link_collect", "text": ""},
-        {"successor_id": "contest_1", "type": "link_collect", "text": ""},
-        {"successor_id": "reviews_1", "type": "link_collect", "text": ""},
-        {"successor_id": "communication_1", "type": "link_collect", "text": ""},
-        {"successor_id": "activity_1", "type": "link_collect", "text": ""},
-        {"successor_id": "running_specifics_1", "type": "link_collect", "text": ""},
-        {"successor_id": "tests_1", "type": "link_collect", "text": ""},
-        {"successor_id": "location_1", "type": "link_collect", "text": ""},
-        {"successor_id": "browsing_1", "type": "link_collect", "text": "We use cookies, clear GIFs/pixel tags, JavaScript, local storage, log files, and other mechanisms to automatically collect and record information about your browsing activities, and use of the Services."},
-        {"successor_id": "browsing_2", "type": "link_collect", "text": "Our third party providers use cookies, clear GIFs/pixel tags, JavaScript, local storage, log files, and other mechanisms to automatically collect and record information about your browsing activities, and use of the Services."}
-      ],
-      "layer": 0,
-      "type": "node_user",
-      "all_data": false,
-      "identifiable": true,
-      "opts": false,
-      "opts_text": "",
-      "label": "You",
-      "uses": [],
-      "data_handler": "",
-      "data_handler_category": "",
-      "text": "This circle represents you. All the other circles represent data that we collect about you."
-    },
-    { "id": "all_1",
+    { "id": "all_0",
       "successor_links":
       [
         {"successor_id": "all_aggregated_1", "type": "link_aggregate", "text": "We may use your personal data to generate aggregated statistics about the users of our products and Services."},
@@ -47,9 +14,24 @@
         {"successor_id": "all_2.3", "type": "link_share", "text": "Sometimes ASICS offers you a service or application in co-operation with partners. We may also disclose your personal data to those partners, but only where you have consented or requested that we do so."},
         {"successor_id": "all_2.4", "type": "link_share", "text": ""},
         {"successor_id": "all_2.5", "type": "link_share", "text": ""},
-        {"successor_id": "all_2.6", "type": "link_share", "text": "We may also disclose information about you, including personal data to any other third parties, where you have consented or requested that we do so."}
+        {"successor_id": "all_2.6", "type": "link_share", "text": "We may also disclose information about you, including personal data to any other third parties, where you have consented or requested that we do so."},
+        {"successor_id": "contact_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "account_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "use_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "purchases_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "events_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "training_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "contest_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "reviews_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "communication_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "activity_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "running_specifics_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "tests_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "location_1", "type": "link_all_data", "text": ""},
+        {"successor_id": "browsing_1", "type": "link_all_data", "text": "We use cookies, clear GIFs/pixel tags, JavaScript, local storage, log files, and other mechanisms to automatically collect and record information about your browsing activities, and use of the Services."},
+        {"successor_id": "browsing_2", "type": "link_share", "text": "Our third party providers use cookies, clear GIFs/pixel tags, JavaScript, local storage, log files, and other mechanisms to automatically collect and record information about your browsing activities, and use of the Services."}
       ],
-      "layer": 1,
+      "layer": 0,
       "type": "node_all",
       "all_data": true,
       "identifiable": true,
@@ -59,7 +41,7 @@
       "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
-      "text": "All of your data that ASICS collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that have arrows pointing to this circle."
+      "text": "All of your data that ASICS collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that are connected to this circle."
     },
     { "id": "all_aggregated_1",
       "successor_links":
@@ -244,7 +226,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Information Regarding Your Use of Our Online Services",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "This may include data regarding the pages you visit, the products and services you like and the content of your abandoned shopping cart."
@@ -258,7 +240,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Your Purchases in Our Stores and Online",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "The data we collect if you purchase a product or use a Service in one of our stores or online, such as the amount and date of your purchase, the product you purchase or Service you use, location of the store, the website or app through which you make your purchase, payment method, payment status, discount, delivery method and delivery address."
@@ -272,7 +254,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Your Leisure Activities, Interest and Events",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "This includes information regarding events we organize or sponsor, including your interest in and registration to those events (including the date and place of the event and your personal targets), as well as your reason for running and other fitness activities, whether you prefer to run alone or with friends and what other sports you enjoy."
@@ -286,7 +268,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Your Training and Running Data",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "The training and running data that you fill out on or generate through the use of our Services or that you import from other apps or services from our partners or third parties, including your running experience and current running abilities (the distance you can run and the time that you can run it in), your training goal (aimed distance and race time), performance (distance and race time, records), training schedule (date, duration and type), your type of running (trail running, natural running or speed running) and your fitness activities."
@@ -300,7 +282,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Your Details Regarding Contests",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "The data we collect if you participate in a contest."
@@ -314,7 +296,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Your Reviews",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "The opinions, experiences, preferences and interests, and product or event reviews that you publish on our websites or share with us online or through social media, such as your experiences and tips regarding gear, your race day and your training schedule."
@@ -328,7 +310,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Your Communication Data",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Your requests, any complaints you may have and any other data that we receive if we communicate with you via e-mail, online or via social media."
@@ -342,7 +324,7 @@
       "opts": true,
       "opts_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Activity Data and Other Information You Provide When Using the Services",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Your foot and clothes size and other personal measurement information and activity data that you voluntarily share with us through the use of the Services, such as weight, height, heartrate, calories burned, steps taken, nutritional information, sleep activities, other activity data (type, duration and frequency of fitness activities, distance, speed, pace, step count) and injuries."
@@ -356,7 +338,7 @@
       "opts": true,
       "opts_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Running Specifics",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Your current running shoe, which running type you are and the level of your running."
@@ -370,7 +352,7 @@
       "opts": true,
       "opts_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Test and Measurement Results",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Measurement data we collect if you participate in one of our tests or measurement programs, such as Foot ID, Motion ID, Running Lab, 3D foot shape measurement, leg alignment measurement, body composition measurement, leg strength test, running form test, aerobic test and similar measurement programs and tests. Measurement data that we collect during our tests may also include heartrate, blood pressure, oxygen level in blood, fat and muscle mass weight and percentage, BMI, BMR, strength and endurance."
@@ -384,7 +366,7 @@
       "opts": true,
       "opts_text": "We will only use location data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
       "label": "Your Location",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Exact information regarding your location, such as GPS, accelerometer, your running route (including precise location data that shows your geographical position)."
@@ -398,7 +380,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Your Browsing Activities and Use of the Services",
-      "uses": ["use_all_data"],
+      "uses": [],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Data collected using cookies, log files, and more."
@@ -580,98 +562,77 @@
     { "id": "use_ads",
       "description": "Advertise or market to you",
       "image":"images/use_icons/ads.png",
-      "unknown": false,
-      "all_data": false
-    },
-    { "id": "use_all_data",
-      "description": "Do anything that this policy allows ASICS to do with all data it collects. Follow the arrow depicted for more.",
-      "image":"images/node_icons/all_identifiable.png",
-      "unknown": false,
-      "all_data": true
+      "unknown": false
     },
     { "id": "use_business",
       "description": "Conduct business operations",
       "image":"images/use_icons/business.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_communicate",
       "description": "Communicate with you",
       "image":"images/use_icons/communicate.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_detect_malicious",
       "description": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_detect_violations",
       "description": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_legal",
       "description": "Respond to legal requirements",
       "image":"images/use_icons/legal.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_personalize_marketing",
       "description": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_policy",
-      "description": "Do anything that this privacy policy allows ASICS to do",
+      "description": "Do anything that this privacy policy allows Care Health to do",
       "image":"images/use_icons/policy.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_promotions",
       "description": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_provide_services",
       "description": "Provide services to you",
       "image": "images/use_icons/provide_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_research_services",
       "description": "Conduct research and development on services",
       "image":"images/use_icons/research_services.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_research_other",
       "description": "Conduct research not related to services",
       "image":"images/use_icons/research_other.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_other",
       "description": "Fulfill some other purpose",
       "image":"images/generic_icon.png",
-      "unknown": false,
-      "all_data": false
+      "unknown": false
     },
     { "id": "use_unknown",
       "description": "Not limited by this privacy policy",
       "image":"images/use_icons/unknown.png",
-      "unknown": true,
-      "all_data": false
+      "unknown": true
     }
   ]
 }
