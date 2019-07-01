@@ -198,7 +198,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Contact Details",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Your name, postal address and other contact details, such as your telephone number and e-mail address."
@@ -212,7 +212,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Account Data and Electronic Identification Data",
-      "uses": ["use_provide_services", "use_all_data"],
+      "uses": ["use_provide_services"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
       "text": "Your ASICS ID account or other ASICS account (if you have made such an account with us) and other electronic identification data (such as IDFA, GAID, IP address, MAC address) and the data you add to your ASICS ID account or other ASICS account, such as your password, your date of birth, your gender, your language of preference, the time zone you live in, your picture and other information you may share with us."

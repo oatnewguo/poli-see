@@ -91,7 +91,7 @@ var link_types;
 var use_types;
 
 // object for currently selected element
-var clicked_elt = null;
+var saved_elt = null;
 
 // selection of svg to contain the main body of the graph
 var svg_s = d3.select("#canvas");
@@ -172,7 +172,7 @@ function nodeRadius(n)
 {
   if(n.layer == 0)
   {
-    return vis.node.central_node_r;
+    return vis.display.r * vis.node.dist_from_center_proportions[1];
   }
   return vis.node.r;
 }
@@ -182,19 +182,19 @@ function linkArrowPoints(l)
 {
   var source = nodeById(l.source);
   var dest = nodeById(l.dest);
-  var len = linkArrowLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
+  var len = linkLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
     vis.link.head_to_node_dist);
-  return linkArrowPointsFromLen(len);
+  return linkPointsFromLen(len);
 }
 
 // return the length of a link polyline arrow, given relevant values
-function linkArrowLen(source_x, source_y, dest_x, dest_y, subtract_len)
+function linkLen(source_x, source_y, dest_x, dest_y, subtract_len)
 {
   return Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
 }
 
 // return a string containing the points for a link polyline arrow pointing down, given its length
-function linkArrowPointsFromLen(len)
+function linkPointsFromLen(len)
 {
   var len_to_head = len - vis.link.head_len;
   var w1 = vis.link.width / 2;
@@ -207,34 +207,6 @@ function linkArrowPointsFromLen(len)
     -w2 + " " + len_to_head + ", " +
     -w1 + " " + len_to_head + ", " +
     -w1 + " 0, 0 0";
-}
-
-// return a string containing the points for a link connector path pointing down, given a link
-function linkConnectorPath(l)
-{
-  var source = nodeById(l.source);
-  var dest = nodeById(l.dest);
-  var len = linkConnectorLen(source.x, source.y, dest.x, dest.y, source.r + dest.r + 2 * vis.node.outline_width);
-
-  var ball_r = 8;
-  var width = 8;
-
-  return "M 0 " + (source.r + vis.node.outline_width - ball_r) + " " +
-    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (2 * ball_r) + " " +
-    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (-2 * ball_r) + " " +
-    "M " + (-width / 2) + " " + (source.r + vis.node.outline_width) + " " +
-    "l 0 " + len + " " +
-    "l " + width + " 0 " +
-    "l 0 " + (-len) + " " +
-    "M 0 " + (len + source.r + vis.node.outline_width - ball_r) + " " +
-    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (2 * ball_r) + " " +
-    "a " + ball_r + " " + ball_r + " 0 0 0 0 " + (-2 * ball_r);
-}
-
-// return the length of a link connector path, given relevant values
-function linkConnectorLen(source_x, source_y, dest_x, dest_y, subtract_len)
-{
-  return Math.sqrt( Math.pow((dest_x - source_x), 2) + Math.pow((dest_y - source_y), 2)) - subtract_len;
 }
 
 // return the degrees by which a link needs to be rotated counterclockwise from pointing straight down in order to
@@ -609,7 +581,7 @@ function updateNodePanel(n)
 
     action_divs_link_svgs_s.append("polyline")
       .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
-      .attr("points", linkArrowPointsFromLen(linkArrowLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
+      .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
         icon_r_full + vis.link.head_to_node_dist)))
       .attr("fill", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", 0);
@@ -618,7 +590,7 @@ function updateNodePanel(n)
     action_divs_link_svgs_s.filter(d => linkTypeById(d.type).display_on_link).append("circle")
       .attr("transform", function(d)
       {
-        let len_to_head = linkArrowLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
+        let len_to_head = linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
           icon_r_full + vis.link.head_to_node_dist) - vis.link.head_len;
         return "translate(" + len_to_head/2 + "," + icon_r_full + ")";
       })
@@ -665,7 +637,7 @@ function updateLinkPanel(l)
 
   // update the link graphic
   link_panel_graphic_s.select("polyline")
-      .attr("points", linkArrowPointsFromLen(linkArrowLen(node_r_full, node_r_full,
+      .attr("points", linkPointsFromLen(linkLen(node_r_full, node_r_full,
         vis.link_panel_graphic.dist_between_nodes + node_r_full, node_r_full,
         node_r_full + vis.link.head_to_node_dist)))
       .attr("fill", linkColor(l));
@@ -712,28 +684,6 @@ function hidePanels()
     .style("display", "none");
 }
 
-// if the input element is a node, then gradually increase its radius to 1.3 times its normal value
-function increaseNodeRadius(elt)
-{
-  if(elt.type == element_types.NODE)
-  {
-    elt.s.select("circle")
-      .transition()
-      .attr("r", elt.data.r * 1.3);
-  }
-}
-
-// if the input element is a node, then gradually decrease its radius to its normal value
-function decreaseNodeRadius(elt)
-{
-  if(elt.type == element_types.NODE)
-  {
-    elt.s.select("circle")
-      .transition()
-      .attr("r", elt.data.r);
-  }
-}
-
 // change the input element's outline to indicate focus
 function focusElementOutline(elt)
 {
@@ -759,9 +709,9 @@ function unfocusElementOutline(elt)
       .attr("stroke", nodeOutlineColor)
       .attr("stroke-width", vis.node.outline_width);
   }
-  else if(clicked_elt.type == element_types.LINK)
+  else if(saved_elt.type == element_types.LINK)
   {
-    clicked_elt.s.select("*")
+    saved_elt.s.select("*")
       .attr("stroke-width", 0);
   }
 }
@@ -773,10 +723,25 @@ function onMouseEnter(elt)
   hidePanels();
   updatePanel(elt);
 
-  // if the cursor is over a node, then change its appearance
+  // if the cursor is over a node, then change its appearance, as well as the appearance of primary nodes if the
+  // cursor is over the central node
   if(elt.type == element_types.NODE)
   {
-    increaseNodeRadius(elt);
+    if(elt.data.layer == 0)
+    {
+      elt.s.select("circle")
+        .transition()
+        .attr("r", elt.data.r * 1.05);
+      nodes_s.filter(d => d.primary && (saved_elt == null || d.id != saved_elt.data.id)).select("circle")
+        .transition()
+        .attr("r", d => d.r * 1.1);
+    }
+    else
+    {
+      elt.s.select("circle")
+        .transition()
+        .attr("r", elt.data.r * 1.3);
+    }
   }
 }
 
@@ -786,25 +751,43 @@ function onMouseLeave(elt)
   // hide the panel
   hidePanels();
 
-  // if there is no clicked element, then if the cursor was over a node, then change its appearance back
-  if(clicked_elt == null)
+  // if there is no saved element, then if the cursor was over a node, then change its appearance back
+  if(saved_elt == null)
   {
     if(elt.type == element_types.NODE)
     {
-      decreaseNodeRadius(elt);
+      elt.s.select("circle")
+        .transition()
+        .attr("r", elt.data.r);
+
+      if(elt.data.layer == 0)
+      {
+        nodes_s.filter(d => d.primary).select("circle")
+          .transition()
+          .attr("r", d => d.r);
+      }
     }
   }
-  // if there is a clicked element, then update the panel to display information about the clicked element
+  // if there is a saved element, then update the panel to display information about the saved element
   else
   {
-    updatePanel(clicked_elt);
+    updatePanel(saved_elt);
 
-    // if the cursor was over a node, then unless the node is the clicked element, change its appearance back
-    if(elt.data.id != clicked_elt.data.id)
+    // if the cursor was over a node, then unless the node is the saved element, change its appearance back
+    if(elt.data.id != saved_elt.data.id)
     {
       if(elt.type == element_types.NODE)
       {
-        decreaseNodeRadius(elt);
+        elt.s.select("circle")
+          .transition()
+          .attr("r", saved_elt.data.layer == 0 && elt.data.primary ? elt.data.r * 1.05 : elt.data.r);
+
+        if(elt.data.layer == 0)
+        {
+          nodes_s.filter(d => d.primary && d.id != saved_elt.data.id).select("circle")
+            .transition()
+            .attr("r", d => d.r);
+        }
       }
     }
   }
@@ -813,40 +796,49 @@ function onMouseLeave(elt)
 // handle interactions when the cursor clicks on an interactive element
 function onClick(elt)
 {
-  // if there is no old clicked element, then focus on the new clicked element
-  if(clicked_elt == null)
+  // if there is no saved element, then focus on the new clicked element
+  if(saved_elt == null)
   {
     // change the outline of the new clicked element to indicate focus
     focusElementOutline(elt);
 
-    clicked_elt = elt;
+    saved_elt = elt;
   }
-  // if there is an old clicked element that is not the new clicked element, then focus away from the old and on the new
-  else if(elt.data.id != clicked_elt.data.id)
+  // if there is a saved element that is not the new clicked element, then focus away from the old and on the new
+  else if(elt.data.id != saved_elt.data.id)
   {
     // display the correct panel
     hidePanels();
     updatePanel(elt);
 
-    // change the outline of the old clicked element back to normal, and change its appearance otherwise back
-    unfocusElementOutline(clicked_elt);
-    if(clicked_elt.type == element_types.NODE)
+    // change the outline of the saved element back to normal, and change its appearance otherwise back
+    unfocusElementOutline(saved_elt);
+    if(saved_elt.type == element_types.NODE)
     {
-      decreaseNodeRadius(clicked_elt);
+      saved_elt.s.select("circle")
+        .transition()
+        .attr("r", saved_elt.data.r);
+
+      if(saved_elt.data.layer == 0)
+      {
+        nodes_s.filter(d => d.primary && d.id != elt.data.id).select("circle")
+          .transition()
+          .attr("r", d => d.r);
+      }
     }
 
     // change outline of new clicked element to indicate focus
     focusElementOutline(elt);
 
-    clicked_elt = elt;
+    saved_elt = elt;
   }
-  // if the new clicked element is the old clicked element, then focus away from it
+  // if the new clicked element is the saved element, then focus away from it
   else
   {
     // change outline of clicked element back to normal
     unfocusElementOutline(elt);
 
-    clicked_elt = null;
+    saved_elt = null;
   }
 }
 
@@ -958,6 +950,11 @@ function main()
         if(s.layer == 1 && ! s.all_data)
         {
           primary_nodes.push(s);
+          s.primary = true;
+        }
+        else
+        {
+          s.primary = false;
         }
       }
     }
@@ -1055,11 +1052,6 @@ function main()
     .attr("fill", linkColor)
     .attr("stroke", vis.link.outline_color_focus)
     .attr("stroke-width", 0);
-  links_s.filter(d => linkTypeById(d.type).all_data).append("path")
-    .attr("d", linkConnectorPath)
-    .attr("fill", "magenta")
-    .attr("stroke", vis.link.outline_color_focus)
-    .attr("stroke-width", 0);
 
   // add icons for special types of links
   links_s.filter(d => linkTypeById(d.type).display_on_link).append("circle")
@@ -1067,7 +1059,7 @@ function main()
     {
       let source = nodeById(d.source);
       let dest = nodeById(d.dest);
-      let len_to_head = linkArrowLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
+      let len_to_head = linkLen(source.x, source.y, dest.x, dest.y, dest.r + vis.node.outline_width +
         vis.link.head_to_node_dist) - vis.link.head_len;
       let displacement = (len_to_head + source.r) / 2;
       return "translate(0," + displacement + ") rotate(" + (-linkRotation(d)) + ")";
@@ -1097,7 +1089,7 @@ function main()
     .data(nodes)
     .enter().append("g")
       .classed("node", true)
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+      .attr("transform", d => "translate(" + d.x + "," + d.y + ")");
 
   // add circles to nodes
   nodes_s.append("circle")
@@ -1121,7 +1113,10 @@ function main()
     .on("mouseenter", function(d)
     {
       onMouseEnter({type:element_types.NODE, data:d, s:d3.select(this)});
-      d3.select(this).raise();
+      if(d.layer != 0)
+      {
+        d3.select(this).raise();
+      }
     })
     // update the node panel when the cursor leaves a node
     .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, s:d3.select(this)}); })
@@ -1134,7 +1129,7 @@ function main()
   panel_close_btns_s
     .on("click", function(d)
     {
-      let c = clicked_elt;
+      let c = saved_elt;
       onClick(c);
       onMouseLeave(c);
     });

@@ -20,7 +20,6 @@
   "node":
   {
     "r": 18,
-    "central_node_r": 40,
     "dist_from_center_proportions": [0.0, 0.43, 0.65, 0.87],
     "outline_width": 2,
     "outline_width_focus": 4,
