@@ -590,9 +590,9 @@ function updateNodePanel(n)
     var action_divs_link_svgs_s = action_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
 
     action_divs_use_svgs_s
-      .style("flex-basis", icon_r_full * 2 + "px");
+      .style("flex-basis", (icon_r_full * 2) + "px");
     action_divs_link_svgs_s
-      .style("flex-basis", icon_r_full * 5 + "px");
+      .style("flex-basis", (icon_r_full * 5 + vis.link.outline_width) + "px");
 
     action_divs_use_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
@@ -603,18 +603,19 @@ function updateNodePanel(n)
       .attr("stroke-width", vis.use_icon.outline_width);
     action_divs_link_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
-      .attr("cx", 4 * icon_r_full)
+      .attr("cx", 4 * icon_r_full + vis.link.outline_width)
       .attr("cy", icon_r_full)
       .attr("fill", d => getNodePat(nodeById(d.successor_id)))
       .attr("stroke", d => nodeOutlineColor(nodeById(d.successor_id)))
       .attr("stroke-width", vis.use_icon.outline_width);
 
     action_divs_link_svgs_s.append("polyline")
-      .attr("transform", "translate(" + 0 + "," + icon_r_full + ") rotate(270)")
+      .attr("transform", "translate(" + vis.link.outline_width + "," + icon_r_full + ") rotate(270)")
       .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
         icon_r_full + vis.link.head_to_node_dist)))
       .attr("fill", d => linkFillColorByDestId(d.successor_id))
-      .attr("stroke-width", 0);
+      .attr("stroke", d => linkOutlineColorByDestId(d.successor_id))
+      .attr("stroke-width", vis.link.outline_width);
 
     // add icons for special types of links
     action_divs_link_svgs_s.filter(d => linkTypeById(d.type).display_on_link).append("circle")
@@ -622,7 +623,7 @@ function updateNodePanel(n)
       {
         let len_to_head = linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
           icon_r_full + vis.link.head_to_node_dist) - vis.link.head_len;
-        return "translate(" + len_to_head/2 + "," + icon_r_full + ")";
+        return "translate(" + (len_to_head/2 + vis.link.outline_width) + "," + icon_r_full + ")";
       })
       .attr("r", vis.link_icon_on_link.r)
       .attr("fill", d => getLinkPat(linkById(n.id + "->" + d.successor_id)))
@@ -670,7 +671,9 @@ function updateLinkPanel(l)
       .attr("points", linkPointsFromLen(linkLen(node_r_full, node_r_full,
         vis.link_panel_graphic.dist_between_nodes + node_r_full, node_r_full,
         node_r_full + vis.link.head_to_node_dist)))
-      .attr("fill", linkFillColor(l));
+      .attr("fill", linkFillColor(l))
+      .attr("stroke", linkOutlineColor(l))
+      .attr("stroke-width", vis.link.outline_width);
   link_panel_graphic_s.select("circle")
       .attr("fill", getNodePat(source))
       .attr("stroke", nodeOutlineColor(source));
