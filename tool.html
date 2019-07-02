@@ -751,6 +751,14 @@ function unfocusElementOutline(elt)
   }
 }
 
+// transition a node selection's radius to the given value r
+function changeNodeSelectionRadius(s, r)
+{
+  s.select("circle")
+    .transition()
+    .attr("r", r);
+}
+
 // handle interactions when the cursor enters an interactive element
 function onMouseEnter(elt)
 {
@@ -764,18 +772,15 @@ function onMouseEnter(elt)
   {
     if(elt.data.layer == 0)
     {
-      elt.s.select("circle")
-        .transition()
-        .attr("r", elt.data.r * 1.05);
-      nodes_s.filter(d => d.primary && (saved_elt == null || d.id != saved_elt.data.id)).select("circle")
-        .transition()
-        .attr("r", d => d.r * 1.1);
+      changeNodeSelectionRadius(elt.s, elt.data.r * 1.05);
+
+      // primary nodes that are not the saved element
+      let s = nodes_s.filter(d => d.primary && (saved_elt == null || d.id != saved_elt.data.id));
+      changeNodeSelectionRadius(s, d => d.r * 1.1);
     }
     else
     {
-      elt.s.select("circle")
-        .transition()
-        .attr("r", elt.data.r * 1.3);
+      changeNodeSelectionRadius(elt.s, elt.data.r * 1.3);
     }
   }
 }
@@ -791,15 +796,13 @@ function onMouseLeave(elt)
   {
     if(elt.type == element_types.NODE)
     {
-      elt.s.select("circle")
-        .transition()
-        .attr("r", elt.data.r);
+      changeNodeSelectionRadius(elt.s, elt.data.r);
 
       if(elt.data.layer == 0)
       {
-        nodes_s.filter(d => d.primary).select("circle")
-          .transition()
-          .attr("r", d => d.r);
+        // primary nodes
+        let s = nodes_s.filter(d => d.primary);
+        changeNodeSelectionRadius(s, d => d.r);
       }
     }
   }
@@ -813,15 +816,14 @@ function onMouseLeave(elt)
     {
       if(elt.type == element_types.NODE)
       {
-        elt.s.select("circle")
-          .transition()
-          .attr("r", saved_elt.data.layer == 0 && elt.data.primary ? elt.data.r * 1.05 : elt.data.r);
+        changeNodeSelectionRadius(elt.s, saved_elt.data.layer == 0 && elt.data.primary ? elt.data.r * 1.05
+                                                                                       : elt.data.r);
 
         if(elt.data.layer == 0)
         {
-          nodes_s.filter(d => d.primary && d.id != saved_elt.data.id).select("circle")
-            .transition()
-            .attr("r", d => d.r);
+          // primary nodes that are not the saved element
+          let s = nodes_s.filter(d => d.primary && d.id != saved_elt.data.id);
+          changeNodeSelectionRadius(s, d => d.r);
         }
       }
     }
@@ -850,15 +852,14 @@ function onClick(elt)
     unfocusElementOutline(saved_elt);
     if(saved_elt.type == element_types.NODE)
     {
-      saved_elt.s.select("circle")
-        .transition()
-        .attr("r", saved_elt.data.r);
+      changeNodeSelectionRadius(saved_elt.s, elt.data.layer == 0 && saved_elt.data.primary ? saved_elt.data.r * 1.1
+                                                                                           : saved_elt.data.r);
 
       if(saved_elt.data.layer == 0)
       {
-        nodes_s.filter(d => d.primary && d.id != elt.data.id).select("circle")
-          .transition()
-          .attr("r", d => d.r);
+        // primary nodes that are not the new clicked element
+        let s = nodes_s.filter(d => d.primary && d.id != elt.data.id);
+        changeNodeSelectionRadius(s, d => d.r);
       }
     }
 
