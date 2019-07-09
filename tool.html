@@ -1147,7 +1147,7 @@ function main()
 
   // map nodes and create a d3 tree
   root = tree(d3.hierarchy(makeTree(central_node)));
-  tree_nodes = root.descendants();
+  let tree_nodes = root.descendants();
 
   // set the coordinates of nodes to the coordinates of nodes in the tree, altered to make a radial tree
   for(let i = 0; i < nodes.length; i++)
