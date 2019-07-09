@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "babel script.js --out-dir lib --presets=@babel/env"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0"
+  }
+}
