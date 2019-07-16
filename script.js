@@ -498,7 +498,7 @@ function updateNodePanel(n)
       track_links.push(l.type);
     }
   }
-  if(use_all_data != null)
+  if(use_all_data !== null)
   {
     actions.push({type:use_all_data, elt_type:element_types.USE});
   }
@@ -745,7 +745,7 @@ function onMouseEnter(elt)
   // cursor is over the central node
   if(elt.type === element_types.NODE)
   {
-    if(saved_elt === null || elt.data.id != saved_elt.data.id)
+    if(saved_elt === null || elt.data.id !== saved_elt.data.id)
     {
       let connected_nodes_s;
 
@@ -754,7 +754,7 @@ function onMouseEnter(elt)
         transitionNodeSelection(elt.s, elt.data.r * 1.05, vis.node.outline_color_focus, vis.node.outline_width_focus);
 
         // primary nodes that are not the saved element
-        connected_nodes_s = nodes_s.filter(d => d.primary && (saved_elt === null || d.id != saved_elt.data.id));
+        connected_nodes_s = nodes_s.filter(d => d.primary && (saved_elt === null || d.id !== saved_elt.data.id));
       }
       else
       {
@@ -763,7 +763,7 @@ function onMouseEnter(elt)
         let descendant_ids = findDescendantIds(elt.data);
         // descendant nodes that are not the saved element
         connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) &&
-          (saved_elt === null || d.id != saved_elt.data.id));
+          (saved_elt === null || d.id !== saved_elt.data.id));
       }
 
       transitionNodeSelection(connected_nodes_s, d => d.r * (d.id === central_node.id ? 1.02 : 1.1),
@@ -808,7 +808,7 @@ function onMouseLeave(elt)
     updatePanel(saved_elt);
 
     // if the cursor was over a node, then unless the node is the saved element, change its appearance back
-    if(elt.data.id != saved_elt.data.id)
+    if(elt.data.id !== saved_elt.data.id)
     {
       if(elt.type === element_types.NODE)
       {
@@ -827,14 +827,14 @@ function onMouseLeave(elt)
         if(saved_elt.data.layer === 0)
         {
           // primary nodes that are not the saved element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => d.primary && d.id != saved_elt.data.id &&
+          connected_nodes_s = nodes_s.filter(d => d.primary && d.id !== saved_elt.data.id &&
             ! saved_elt_connected_nodes_ids.includes(d.id));
         }
         else
         {
           let descendant_ids = findDescendantIds(elt.data);
           // descendant nodes that are not the saved element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) && d.id != saved_elt.data.id &&
+          connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) && d.id !== saved_elt.data.id &&
             ! saved_elt_connected_nodes_ids.includes(d.id));
         }
 
@@ -848,7 +848,7 @@ function onMouseLeave(elt)
 function onClick(elt)
 {
   // if the new clicked element is the saved element, then focus away from it
-  if(saved_elt != null && elt.data.id === saved_elt.data.id)
+  if(saved_elt !== null && elt.data.id === saved_elt.data.id)
   {
     // change outline of clicked element back to normal
     if(elt.type === element_types.LINK)
@@ -887,7 +887,7 @@ function onClick(elt)
 
 
     // if there is a saved element that is not the new clicked element, then focus away from the old and on the new
-    if(saved_elt != null)
+    if(saved_elt !== null)
     {
       // display the correct panel
       hidePanels();
@@ -930,14 +930,14 @@ function onClick(elt)
         if(saved_elt.data.layer === 0)
         {
           // primary nodes that are not the new clicked element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => d.primary && d.id != elt.data.id &&
+          connected_nodes_s = nodes_s.filter(d => d.primary && d.id !== elt.data.id &&
             ! new_saved_elt_connected_nodes_ids.includes(d.id));
         }
         else
         {
           let descendant_ids = findDescendantIds(saved_elt.data);
           // descendant nodes that are not the new clicked element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) && d.id != elt.data.id &&
+          connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) && d.id !== elt.data.id &&
             ! new_saved_elt_connected_nodes_ids.includes(d.id));
         }
 
@@ -1107,7 +1107,7 @@ function main()
     n.y = tree_n.y * Math.sin(tree_n.x + offset);
 
     // adjust the distance of nodes from the center, according to specified dimensions
-    if(n.layer != 0)
+    if(n.layer !== 0)
     {
       n.x = n.x * vis.node.dist_from_center_proportions[n.layer] / (n.layer / NUM_LAYERS);
       n.y = n.y * vis.node.dist_from_center_proportions[n.layer] / (n.layer / NUM_LAYERS);
@@ -1225,7 +1225,7 @@ function main()
     .on("mouseenter", function(d)
     {
       onMouseEnter({type:element_types.NODE, data:d, s:d3.select(this)});
-      if(d.layer != 0)
+      if(d.layer !== 0)
       {
         d3.select(this).raise();
       }
