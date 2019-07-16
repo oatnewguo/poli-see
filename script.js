@@ -766,7 +766,7 @@ function onMouseEnter(elt)
           (saved_elt == null || d.id != saved_elt.data.id));
       }
 
-      transitionNodeSelection(connected_nodes_s, d => d.r * (d.id == central_node.id ? 1.05 : 1.1),
+      transitionNodeSelection(connected_nodes_s, d => d.r * (d.id == central_node.id ? 1.02 : 1.1),
         vis.node.outline_color_focus, vis.node.outline_width_focus);
     }
   }
@@ -816,8 +816,8 @@ function onMouseLeave(elt)
 
         if(saved_elt_connected_nodes_ids.includes(elt.data.id))
         {
-          transitionNodeSelection(elt.s, elt.data.r * 1.05, vis.node.outline_color_focus,
-            vis.node.outline_width_focus);
+          transitionNodeSelection(elt.s, elt.data.r * (elt.data.id == central_node.id ? 1.02 : 1.1),
+            vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         else
         {
@@ -918,7 +918,7 @@ function onClick(elt)
 
         if(new_saved_elt_connected_nodes_ids.includes(saved_elt.data.id))
         {
-          transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.id == central_node.id ? 1.05 : 1.1),
+          transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.id == central_node.id ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         else
