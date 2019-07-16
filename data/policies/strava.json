@@ -168,7 +168,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Basic Account Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Name, email address, date of birth, gender, username and password."
@@ -200,7 +200,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Profile, Activity and Use Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Pictures, activities (including date, time and geo-location information as well as your speed and pace) and posts, and other information about your use of the Services."
@@ -242,7 +242,7 @@
       "opts": true,
       "opts_text": "<a href=\"https://support.strava.com/hc/en-us/articles/360016371512\" target=\"_blank\">Learn more</a> about how we collect information about your contacts, how we use that information, and the controls available to you.",
       "label": "Your Contacts’ Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information about your contacts on your mobile device or social networking accounts."
@@ -259,7 +259,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Connected Devices and Apps",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information from devices and apps you connect to Strava. For example, you may connect your Garmin watch or Flywheel account to Strava and information from these devices and apps will be passed along to Strava."
@@ -290,7 +290,7 @@
       "opts": true,
       "opts_text": "Before you can upload health information to Strava, you must give your explicit consent to the processing of that health information by Strava. You can withdraw your consent to Strava processing your health information at any time.",
       "label": "Health Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Health information from sources such as heart rate, power, cadence, height and weight and other indicators."
@@ -304,7 +304,7 @@
       "opts": true,
       "opts_text": "You can withdraw your consent to Strava processing your health information at any time.",
       "label": "Inferred Health Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Health information inferred from other data."
@@ -321,7 +321,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Content You Share",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Photos, posts, comments, kudos and other content you share on the Services."
@@ -349,7 +349,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Payment Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Payment card and other payment details. We do not store your credit card information."
@@ -380,7 +380,7 @@
       "opts": true,
       "opts_text": "You can tell us about important locations, such as your home or work address, by enabling a <a href=\"https://strava.com/settings/privacy\" target=\"_blank\">Privacy Zone</a> in your settings. We will make private any portion of your activity that starts or ends in your Privacy Zone.",
       "label": "Location Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Physical location of your device including, data such as speed and direction. Processing of your location data is essential to the Services which we provide and a necessary part of our performance of the agreement we have with you."
@@ -408,7 +408,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Third-Party Account Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information that you have agreed to make available such as your name, email address, profile information and preferences with the applicable Third-Party Account."
@@ -422,7 +422,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Contact Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": ""
@@ -436,7 +436,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Information from Others",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information about you from third parties and other members."
@@ -450,7 +450,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Device Information",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Information from your browser, computer, or mobile device, including device and network information, cookies, log files and analytics information."
@@ -464,7 +464,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Data from Log Files",
-      "uses": [],
+      "uses": ["use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "IP addresses, browser type, internet service provider (ISP), referring/exit pages, platform type, date/time stamp, and number of clicks."
@@ -632,76 +632,97 @@
     { "id": "use_ads",
       "description": "Advertise or market to you",
       "image":"images/use_icons/ads.png",
+      "all_data": false,
+      "unknown": false
+    },
+    { "id": "use_all_data",
+      "description": "Do anything that this policy allows Strava to do with all data it collects. For more, see the big circle in the middle.",
+      "image":"images/node_icons/all_identifiable.png",
+      "all_data": true,
       "unknown": false
     },
     { "id": "use_business",
       "description": "Conduct business operations",
       "image":"images/use_icons/business.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_communicate",
       "description": "Communicate with you",
       "image":"images/use_icons/communicate.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_detect_malicious",
       "description": "Detect and prevent malicious activity",
       "image":"images/use_icons/detect_malicious.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_detect_violations",
       "description": "Detect and prevent violations of the terms of service",
       "image":"images/use_icons/detect_violations.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_legal",
       "description": "Respond to legal requirements",
       "image":"images/use_icons/legal.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_personalize_marketing",
       "description": "Personalize marketing and ads",
       "image":"images/use_icons/personalize_marketing.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_personalize_services",
       "description": "Personalize services and content",
       "image":"images/use_icons/personalize_services.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_policy",
-      "description": "Do anything that this privacy policy allows Care Health to do",
+      "description": "Do anything that this privacy policy allows Strava to do",
       "image":"images/use_icons/policy.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_promotions",
       "description": "Allow you to participate in sweepstakes, contests, and other promotions",
       "image":"images/use_icons/promotions.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_provide_services",
       "description": "Provide services to you",
       "image": "images/use_icons/provide_services.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_research_services",
       "description": "Conduct research and development on services",
       "image":"images/use_icons/research_services.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_research_other",
       "description": "Conduct research not related to services",
       "image":"images/use_icons/research_other.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_other",
       "description": "Fulfill some other purpose",
       "image":"images/generic_icon.png",
+      "all_data": false,
       "unknown": false
     },
     { "id": "use_unknown",
       "description": "Not limited by this privacy policy",
       "image":"images/use_icons/unknown.png",
+      "all_data": false,
       "unknown": true
     }
   ]

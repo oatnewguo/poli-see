@@ -216,7 +216,11 @@ function linkOutlineColorByDestId(id)
 // return the fill color of a use type
 function useTypeFillColor(t)
 {
-  if(t.unknown)
+  if(t.all_data)
+  {
+    return vis.use_icon.fill_color_all_data;
+  }
+  else if(t.unknown)
   {
     return vis.use_icon.fill_color_unknown;
   }
@@ -471,19 +475,32 @@ function updateNodePanel(n)
   var actions = [];
   // list to prevent the same types of links from being displayed multiple times
   var track_links = [];
+  // string to record the id of the all-data use if found, and null otherwise
+  var use_all_data = null;
   for(let i = 0; i < n.uses.length; i++)
   {
-    actions.push({type:n.uses[i], elt_type:element_types.USE});
+    if(! useTypeById(n.uses[i]).all_data)
+    {
+      actions.push({type:n.uses[i], elt_type:element_types.USE});
+    }
+    else
+    {
+      use_all_data = n.uses[i];
+    }
   }
   for(let i = 0; i < n.successor_links.length; i++)
   {
     let l = n.successor_links[i];
-    if(! track_links.includes(l.type) && l.type != "link_all_data")
+    if(! track_links.includes(l.type) && ! linkTypeById(l.type).all_data)
     {
       actions.push(l);
       actions[actions.length - 1].elt_type = element_types.LINK;
       track_links.push(l.type);
     }
+  }
+  if(use_all_data != null)
+  {
+    actions.push({type:use_all_data, elt_type:element_types.USE});
   }
 
   // if there are no actions to display, then hide the section
@@ -885,7 +902,6 @@ function onClick(elt)
       {
         if(new_saved_elt_connected_nodes_ids.includes(saved_elt.data.id))
         {
-          console.log("hi");
           saved_elt.s.select("*")
             .attr("stroke", vis.node.outline_color_focus)
             .attr("stroke-width", vis.node.outline_width_focus);
