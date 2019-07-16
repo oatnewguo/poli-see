@@ -541,9 +541,9 @@ function updateNodePanel(n)
     var action_divs_link_svgs_s = action_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
 
     action_divs_use_svgs_s
-      .style("flex-basis", (icon_r_full * 2) + "px");
+      .style("width", (icon_r_full * 2) + "px");
     action_divs_link_svgs_s
-      .style("flex-basis", (icon_r_full * 5 + vis.link.outline_width) + "px");
+      .style("width", (icon_r_full * 5 + vis.link.outline_width) + "px");
 
     action_divs_use_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)

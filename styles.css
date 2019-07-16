@@ -22,7 +22,7 @@ html
 
 .visualization_box > *
 {
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 .node, .link, .bg_link
@@ -76,7 +76,7 @@ html
 
 #node_panel_opts_box svg
 {
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 #node_panel_opts_box div
@@ -114,12 +114,11 @@ html
 
 .panel_list_item_box svg
 {
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 .panel_list_item_box p
 {
-  flex-basis: 100%;
   margin: 0 0 0 5px;
   align-self: center;
 }
@@ -131,7 +130,7 @@ html
 
 #link_panel_header_box svg
 {
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 #link_panel_header_box h1
@@ -170,14 +169,13 @@ html
 
 .tutorial_box img
 {
-  flex-shrink: 0;
+  flex: 0 0 auto;
   width: 40px;
   height: 40px;
 }
 
 .tutorial_box h2
 {
-  flex-basis: 100%;
   margin: 0 0 0 5px;
   align-self: center;
   color: #66668A;
