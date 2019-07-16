@@ -74,37 +74,37 @@ var primary_nodes = [];
 // return the node with a given id
 function nodeById(id)
 {
-  return nodes.find(n => n.id == id);
+  return nodes.find(n => n.id === id);
 }
 
 // return the link with a given id
 function linkById(id)
 {
-  return links.find(l => l.id == id);
+  return links.find(l => l.id === id);
 }
 
 // return the node type with a given id
 function nodeTypeById(id)
 {
-  return node_types.find(t => t.id == id);
+  return node_types.find(t => t.id === id);
 }
 
 // return the link type with a given id
 function linkTypeById(id)
 {
-  return link_types.find(t => t.id == id);
+  return link_types.find(t => t.id === id);
 }
 
 // return the use type with a given id
 function useTypeById(id)
 {
-  return use_types.find(t => t.id == id);
+  return use_types.find(t => t.id === id);
 }
 
 // return the radius of a node
 function nodeRadius(n)
 {
-  if(n.layer == 0)
+  if(n.layer === 0)
   {
     return vis.display.r * vis.node.dist_from_center_proportions[1];
   }
@@ -397,7 +397,7 @@ function makeTree(root)
   var successor_links = root.successor_links.slice();
 
   // if there are no successor links, then return the root as a leaf
-  if(successor_links.length == 0)
+  if(successor_links.length === 0)
   {
     return { id: root.id, children: [], siblings: [] };
   }
@@ -417,7 +417,7 @@ function makeTree(root)
       if(s.layer > root.layer)
         children.push(makeStick(s_branch, s.layer - root.layer - 1));
       // else if the successor is in the same layer as the root, then add it as a sibling
-      else if(s.layer == root.layer)
+      else if(s.layer === root.layer)
         siblings.push(makeTree(s));
 
       // add the successor's siblings as children of the root
@@ -504,7 +504,7 @@ function updateNodePanel(n)
   }
 
   // if there are no actions to display, then hide the section
-  if(actions.length == 0)
+  if(actions.length === 0)
   {
     node_panel_actions_box_s
       .style("display", "none");
@@ -537,8 +537,8 @@ function updateNodePanel(n)
     var icon_r_full = vis.use_icon.r + vis.use_icon.outline_width;
     var action_divs_svgs_s = action_divs_s.append("svg")
       .attr("height", icon_r_full * 2 + "px");
-    var action_divs_use_svgs_s = action_divs_svgs_s.filter(d => d.elt_type == element_types.USE);
-    var action_divs_link_svgs_s = action_divs_svgs_s.filter(d => d.elt_type == element_types.LINK);
+    var action_divs_use_svgs_s = action_divs_svgs_s.filter(d => d.elt_type === element_types.USE);
+    var action_divs_link_svgs_s = action_divs_svgs_s.filter(d => d.elt_type === element_types.LINK);
 
     action_divs_use_svgs_s
       .style("width", (icon_r_full * 2) + "px");
@@ -581,9 +581,9 @@ function updateNodePanel(n)
       .attr("stroke", d => linkOutlineColorByDestId(d.successor_id))
       .attr("stroke-width", vis.link_icon.outline_width);
 
-    action_divs_s.filter(d => d.elt_type == element_types.USE).append("p")
+    action_divs_s.filter(d => d.elt_type === element_types.USE).append("p")
       .html(d => useTypeById(d.type).description);
-    action_divs_s.filter(d => d.elt_type == element_types.LINK).append("p")
+    action_divs_s.filter(d => d.elt_type === element_types.LINK).append("p")
       .html(d => linkTypeById(d.type).description);
   }
 
@@ -649,11 +649,11 @@ function updateLinkPanel(l)
 // update either the node or the link panel, based on an input element
 function updatePanel(elt)
 {
-  if(elt.type == element_types.NODE)
+  if(elt.type === element_types.NODE)
   {
     updateNodePanel(elt.data);
   }
-  else if(elt.type == element_types.LINK)
+  else if(elt.type === element_types.LINK)
   {
     updateLinkPanel(elt.data);
   }
@@ -671,7 +671,7 @@ function hidePanels()
 // change the input element's outline to indicate that it has been saved
 function saveElementOutline(elt)
 {
-  if(elt.type == element_types.NODE)
+  if(elt.type === element_types.NODE)
   {
     elt.s.select("*")
       .attr("stroke", vis.node.outline_color_saved)
@@ -688,13 +688,13 @@ function saveElementOutline(elt)
 // change the input element's outline to not indicate that it has been saved
 function unsaveElementOutline(elt)
 {
-  if(elt.type == element_types.NODE)
+  if(elt.type === element_types.NODE)
   {
     elt.s.select("*")
       .attr("stroke", nodeOutlineColor)
       .attr("stroke-width", vis.node.outline_width);
   }
-  else if(saved_elt.type == element_types.LINK)
+  else if(saved_elt.type === element_types.LINK)
   {
     saved_elt.s.select("*")
       .attr("stroke", linkOutlineColor(saved_elt.data))
@@ -743,18 +743,18 @@ function onMouseEnter(elt)
 
   // if the cursor is over a node, then change its appearance, as well as the appearance of primary nodes if the
   // cursor is over the central node
-  if(elt.type == element_types.NODE)
+  if(elt.type === element_types.NODE)
   {
-    if(saved_elt == null || elt.data.id != saved_elt.data.id)
+    if(saved_elt === null || elt.data.id != saved_elt.data.id)
     {
       let connected_nodes_s;
 
-      if(elt.data.layer == 0)
+      if(elt.data.layer === 0)
       {
         transitionNodeSelection(elt.s, elt.data.r * 1.05, vis.node.outline_color_focus, vis.node.outline_width_focus);
 
         // primary nodes that are not the saved element
-        connected_nodes_s = nodes_s.filter(d => d.primary && (saved_elt == null || d.id != saved_elt.data.id));
+        connected_nodes_s = nodes_s.filter(d => d.primary && (saved_elt === null || d.id != saved_elt.data.id));
       }
       else
       {
@@ -763,10 +763,10 @@ function onMouseEnter(elt)
         let descendant_ids = findDescendantIds(elt.data);
         // descendant nodes that are not the saved element
         connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) &&
-          (saved_elt == null || d.id != saved_elt.data.id));
+          (saved_elt === null || d.id != saved_elt.data.id));
       }
 
-      transitionNodeSelection(connected_nodes_s, d => d.r * (d.id == central_node.id ? 1.02 : 1.1),
+      transitionNodeSelection(connected_nodes_s, d => d.r * (d.id === central_node.id ? 1.02 : 1.1),
         vis.node.outline_color_focus, vis.node.outline_width_focus);
     }
   }
@@ -779,15 +779,15 @@ function onMouseLeave(elt)
   hidePanels();
 
   // if there is no saved element, then if the cursor was over a node, then change its appearance back
-  if(saved_elt == null)
+  if(saved_elt === null)
   {
-    if(elt.type == element_types.NODE)
+    if(elt.type === element_types.NODE)
     {
       let connected_nodes_s;
 
       transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
 
-      if(elt.data.layer == 0)
+      if(elt.data.layer === 0)
       {
         // primary nodes
         connected_nodes_s = nodes_s.filter(d => d.primary);
@@ -810,13 +810,13 @@ function onMouseLeave(elt)
     // if the cursor was over a node, then unless the node is the saved element, change its appearance back
     if(elt.data.id != saved_elt.data.id)
     {
-      if(elt.type == element_types.NODE)
+      if(elt.type === element_types.NODE)
       {
         let connected_nodes_s;
 
         if(saved_elt_connected_nodes_ids.includes(elt.data.id))
         {
-          transitionNodeSelection(elt.s, elt.data.r * (elt.data.id == central_node.id ? 1.02 : 1.1),
+          transitionNodeSelection(elt.s, elt.data.r * (elt.data.id === central_node.id ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         else
@@ -824,7 +824,7 @@ function onMouseLeave(elt)
           transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
         }
 
-        if(saved_elt.data.layer == 0)
+        if(saved_elt.data.layer === 0)
         {
           // primary nodes that are not the saved element or its connected nodes
           connected_nodes_s = nodes_s.filter(d => d.primary && d.id != saved_elt.data.id &&
@@ -848,10 +848,10 @@ function onMouseLeave(elt)
 function onClick(elt)
 {
   // if the new clicked element is the saved element, then focus away from it
-  if(saved_elt != null && elt.data.id == saved_elt.data.id)
+  if(saved_elt != null && elt.data.id === saved_elt.data.id)
   {
     // change outline of clicked element back to normal
-    if(elt.type == element_types.LINK)
+    if(elt.type === element_types.LINK)
     {
       unsaveElementOutline(elt);
     }
@@ -869,9 +869,9 @@ function onClick(elt)
   else
   {
     let new_saved_elt_connected_nodes_ids;
-    if(elt.type == element_types.NODE)
+    if(elt.type === element_types.NODE)
     {
-      if(elt.data.layer == 0)
+      if(elt.data.layer === 0)
       {
         new_saved_elt_connected_nodes_ids = primary_nodes.map(d => d.id);
       }
@@ -894,7 +894,7 @@ function onClick(elt)
       updatePanel(elt);
 
       // change the outline of the saved element back to normal, and change its appearance otherwise back
-      if(saved_elt.type == element_types.LINK)
+      if(saved_elt.type === element_types.LINK)
       {
         unsaveElementOutline(saved_elt);
       }
@@ -912,13 +912,13 @@ function onClick(elt)
         }
       }
 
-      if(saved_elt.type == element_types.NODE)
+      if(saved_elt.type === element_types.NODE)
       {
         let connected_nodes_s;
 
         if(new_saved_elt_connected_nodes_ids.includes(saved_elt.data.id))
         {
-          transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.id == central_node.id ? 1.02 : 1.1),
+          transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.id === central_node.id ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         else
@@ -927,7 +927,7 @@ function onClick(elt)
             vis.node.outline_width);
         }
 
-        if(saved_elt.data.layer == 0)
+        if(saved_elt.data.layer === 0)
         {
           // primary nodes that are not the new clicked element or its connected nodes
           connected_nodes_s = nodes_s.filter(d => d.primary && d.id != elt.data.id &&
@@ -1041,7 +1041,7 @@ function main()
 
     tree
       .size([(2 - vis.layer_title.space_in_pi_radians) * Math.PI, display_r])
-      .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+      .separation(function(a, b) { return (a.parent === b.parent ? 1 : 2) / a.depth; });
   }
 
 
@@ -1053,13 +1053,13 @@ function main()
     let n = nodes[i];
 
     // if the node is the central node, record it, and add its successor links in layer 1 to the array of primary nodes
-    if(n.layer == 0)
+    if(n.layer === 0)
     {
       central_node = n;
       for(let j = 0; j < n.successor_links.length; j++)
       {
         let s = nodeById(n.successor_links[j].successor_id);
-        if(s.layer == 1 && ! s.all_data)
+        if(s.layer === 1 && ! s.all_data)
         {
           primary_nodes.push(s);
           s.primary = true;
@@ -1102,7 +1102,7 @@ function main()
   {
     let n = nodes[i];
     let offset = vis.layer_title.space_in_pi_radians / 2 * Math.PI;
-    let tree_n = tree_nodes.find(function(node) { return node.data.id == n.id; });
+    let tree_n = tree_nodes.find(function(node) { return node.data.id === n.id; });
     n.x = (tree_n.y = +tree_n.y) * Math.cos((tree_n.x -= Math.PI / 2) + offset);
     n.y = tree_n.y * Math.sin(tree_n.x + offset);
 
@@ -1128,7 +1128,7 @@ function main()
       .attr("stroke-width", vis.bg_circle.outline_width);
 
     let r_for_text = r - vis.layer_title.font_size - vis.layer_title.dist_from_edge;
-    let text = i == 2 ? "Third parties" : pol.provider_name;
+    let text = i === 2 ? "Third parties" : pol.provider_name;
 
     g_s.append("path")
       .attr("id", "text_layer_" + i)
@@ -1211,7 +1211,7 @@ function main()
     .attr("stroke-width", vis.node.outline_width);
 
   // add options icon to nodes that contain options
-  nodes_s.filter(d => d.opts == true).append("circle")
+  nodes_s.filter(d => d.opts === true).append("circle")
     .attr("cx", vis.opts_node_icon.cx)
     .attr("cy", vis.opts_node_icon.cy)
     .attr("r", vis.opts_node_icon.r)
@@ -1253,7 +1253,7 @@ function main()
 var url = new URL(document.URL);
 var p = url.searchParams.get("policy");
 var v = url.searchParams.get("visual");
-if(v == null)
+if(v === null)
 {
   v = "default.json";
 }
