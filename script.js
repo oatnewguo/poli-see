@@ -276,7 +276,7 @@ function setUpPats()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", d => d.image_identifiable);
+    .attr("xlink:href", d => d.image_identifiable);
 
   var node_pats_unidentifiable = svg_s.select("defs").selectAll(".node_pat_unidentifiable")
     .data(node_types)
@@ -297,7 +297,7 @@ function setUpPats()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", d => d.image_unidentifiable);
+    .attr("xlink:href", d => d.image_unidentifiable);
 
   // link patterns
   var link_pats_identifiable = svg_s.select("defs").selectAll(".link_pat_identifiable")
@@ -319,7 +319,7 @@ function setUpPats()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", d => d.image_identifiable);
+    .attr("xlink:href", d => d.image_identifiable);
 
   var link_pats_unidentifiable = svg_s.select("defs").selectAll(".link_pat_unidentifiable")
     .data(link_types)
@@ -340,7 +340,7 @@ function setUpPats()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", d => d.image_unidentifiable);
+    .attr("xlink:href", d => d.image_unidentifiable);
 
   // use icon patterns
   var use_pats = svg_s.select("defs").selectAll(".use_pat")
@@ -362,7 +362,7 @@ function setUpPats()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", d => d.image);
+    .attr("xlink:href", d => d.image);
 
   // options icon pattern
   var opts_pat = svg_s.select("defs").append("pattern")
@@ -380,7 +380,7 @@ function setUpPats()
     .attr("y", ".2")
     .attr("width", ".6")
     .attr("height", ".6")
-    .attr("href", vis.opts_icon.image);
+    .attr("xlink:href", vis.opts_icon.image);
 }
 
 // helper function to recursively create a stick with the child at the bottom and num_ancestors ancestors
