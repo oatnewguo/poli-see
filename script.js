@@ -26,6 +26,9 @@ var use_types;
 var saved_elt = null;
 // array of ids of nodes connected with the saved element
 var saved_elt_connected_nodes_ids = [];
+// array of ids of nodes connected with the currently hovered element
+var hovered_elt_connected_nodes_ids = [];
+
 
 // selection of svg to contain the main body of the graph
 var svg_s = d3.select("#canvas");
@@ -712,26 +715,46 @@ function transitionNodeSelection(s, r, outline_color, outline_width)
     .attr("stroke-width", outline_width);
 }
 
-// find a node's descendants' ids
-function findDescendantIds(n)
+// find a node's connected nodes' ids
+function findConnectedNodeIds(n)
 {
-  var descendant_ids = [];
+  var connected_ids = [];
 
-  // iterate through successors and recursively add their descendants
-  for(let i = 0; i < n.successor_links.length; i++)
+  // if n is the central node, then add all-data successors and their descendants, as well as primary nodes
+  if(n.layer === 0)
   {
-    let s = nodeById(n.successor_links[i].successor_id);
+    for(let i = 0; i < n.successor_links.length; i++)
+    {
+      let s = nodeById(n.successor_links[i].successor_id);
 
-    descendant_ids.push(s.id);
-    descendant_ids = descendant_ids.concat(findDescendantIds(s));
+      if(s.all_data)
+      {
+        connected_ids.push(s.id);
+        connected_ids = connected_ids.concat(findConnectedNodeIds(s));
+      }
+    }
+
+    connected_ids = connected_ids.concat(primary_nodes.map(n => n.id));
+  }
+  // if n is not the central node, add successors and their descendants
+  else
+  {
+    for(let i = 0; i < n.successor_links.length; i++)
+    {
+      let s = nodeById(n.successor_links[i].successor_id);
+
+      connected_ids.push(s.id);
+      connected_ids = connected_ids.concat(findConnectedNodeIds(s));
+    }
   }
 
+  // if n is a primary node, add the central node
   if(n.primary)
   {
-    descendant_ids.push(central_node.id);
+    connected_ids.push(central_node.id);
   }
 
-  return descendant_ids;
+  return connected_ids;
 }
 
 // handle interactions when the cursor enters an interactive element
@@ -745,28 +768,24 @@ function onMouseEnter(elt)
   // cursor is over the central node
   if(elt.type === element_types.NODE)
   {
+    hovered_elt_connected_nodes_ids = findConnectedNodeIds(elt.data);
+
     if(saved_elt === null || elt.data.id !== saved_elt.data.id)
     {
-      let connected_nodes_s;
-
       if(elt.data.layer === 0)
       {
         transitionNodeSelection(elt.s, elt.data.r * 1.05, vis.node.outline_color_focus, vis.node.outline_width_focus);
-
-        // primary nodes that are not the saved element
-        connected_nodes_s = nodes_s.filter(d => d.primary && (saved_elt === null || d.id !== saved_elt.data.id));
       }
       else
       {
         transitionNodeSelection(elt.s, elt.data.r * 1.3, vis.node.outline_color_focus, vis.node.outline_width_focus);
-
-        let descendant_ids = findDescendantIds(elt.data);
-        // descendant nodes that are not the saved element
-        connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) &&
-          (saved_elt === null || d.id !== saved_elt.data.id));
       }
 
-      transitionNodeSelection(connected_nodes_s, d => d.r * (d.id === central_node.id ? 1.02 : 1.1),
+      // selection of connected nodes that are not the saved element
+      let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id) &&
+        (saved_elt === null || d.id !== saved_elt.data.id));
+
+      transitionNodeSelection(connected_nodes_s, d => d.r * (d.layer === 0 ? 1.02 : 1.1),
         vis.node.outline_color_focus, vis.node.outline_width_focus);
     }
   }
@@ -783,22 +802,10 @@ function onMouseLeave(elt)
   {
     if(elt.type === element_types.NODE)
     {
-      let connected_nodes_s;
-
       transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
 
-      if(elt.data.layer === 0)
-      {
-        // primary nodes
-        connected_nodes_s = nodes_s.filter(d => d.primary);
-      }
-      else
-      {
-        let descendant_ids = findDescendantIds(elt.data);
-        // descendant nodes
-        connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id));
-      }
-
+      // selection of connected nodes
+      let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id));
       transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
     }
   }
@@ -812,11 +819,9 @@ function onMouseLeave(elt)
     {
       if(elt.type === element_types.NODE)
       {
-        let connected_nodes_s;
-
         if(saved_elt_connected_nodes_ids.includes(elt.data.id))
         {
-          transitionNodeSelection(elt.s, elt.data.r * (elt.data.id === central_node.id ? 1.02 : 1.1),
+          transitionNodeSelection(elt.s, elt.data.r * (elt.data.layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         else
@@ -824,24 +829,15 @@ function onMouseLeave(elt)
           transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
         }
 
-        if(saved_elt.data.layer === 0)
-        {
-          // primary nodes that are not the saved element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => d.primary && d.id !== saved_elt.data.id &&
-            ! saved_elt_connected_nodes_ids.includes(d.id));
-        }
-        else
-        {
-          let descendant_ids = findDescendantIds(elt.data);
-          // descendant nodes that are not the saved element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) && d.id !== saved_elt.data.id &&
-            ! saved_elt_connected_nodes_ids.includes(d.id));
-        }
-
+        // selection of connected nodes that are not the saved element
+        let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id) &&
+          ! saved_elt_connected_nodes_ids.includes(d.id));
         transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
       }
     }
   }
+
+  hovered_elt_connected_nodes_ids = null;
 }
 
 // handle interactions when the cursor clicks on an interactive element
@@ -871,14 +867,7 @@ function onClick(elt)
     let new_saved_elt_connected_nodes_ids;
     if(elt.type === element_types.NODE)
     {
-      if(elt.data.layer === 0)
-      {
-        new_saved_elt_connected_nodes_ids = primary_nodes.map(d => d.id);
-      }
-      else
-      {
-        new_saved_elt_connected_nodes_ids = findDescendantIds(elt.data);
-      }
+      new_saved_elt_connected_nodes_ids = hovered_elt_connected_nodes_ids;
     }
     else
     {
@@ -914,11 +903,9 @@ function onClick(elt)
 
       if(saved_elt.type === element_types.NODE)
       {
-        let connected_nodes_s;
-
         if(new_saved_elt_connected_nodes_ids.includes(saved_elt.data.id))
         {
-          transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.id === central_node.id ? 1.02 : 1.1),
+          transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         else
@@ -927,19 +914,9 @@ function onClick(elt)
             vis.node.outline_width);
         }
 
-        if(saved_elt.data.layer === 0)
-        {
-          // primary nodes that are not the new clicked element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => d.primary && d.id !== elt.data.id &&
-            ! new_saved_elt_connected_nodes_ids.includes(d.id));
-        }
-        else
-        {
-          let descendant_ids = findDescendantIds(saved_elt.data);
-          // descendant nodes that are not the new clicked element or its connected nodes
-          connected_nodes_s = nodes_s.filter(d => descendant_ids.includes(d.id) && d.id !== elt.data.id &&
-            ! new_saved_elt_connected_nodes_ids.includes(d.id));
-        }
+        // connected nodes of the old saved element that are not the new clicked element or its connected nodes
+        let connected_nodes_s = nodes_s.filter(d => saved_elt_connected_nodes_ids.includes(d.id) &&
+          d.id !== elt.data.id && ! new_saved_elt_connected_nodes_ids.includes(d.id));
 
         transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
       }
