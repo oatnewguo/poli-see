@@ -28,6 +28,10 @@ var saved_elt = null;
 var saved_elt_connected_nodes_ids = [];
 // array of ids of nodes connected with the currently hovered element
 var hovered_elt_connected_nodes_ids = [];
+// array of ids of links connected with the saved element
+var saved_elt_connected_links_ids = [];
+// array of ids of links connected with the currently hovered element
+var hovered_elt_connected_links_ids = [];
 
 
 // selection of svg to contain the main body of the graph
@@ -671,48 +675,31 @@ function hidePanels()
     .style("display", "none");
 }
 
-// change the input element's outline to indicate that it has been saved
-function saveElementOutline(elt)
+// change a node or link selection's outline color and outline width
+function changeSelectionOutline(s, outline_color, outline_width)
 {
-  if(elt.type === element_types.NODE)
-  {
-    elt.s.select("*")
-      .attr("stroke", vis.node.outline_color_saved)
-      .attr("stroke-width", vis.node.outline_width_saved);
-  }
-  else
-  {
-    elt.s.select("*")
-      .attr("stroke", vis.link.outline_color_saved)
-      .attr("stroke-width", vis.link.outline_width_saved);
-  }
-}
-
-// change the input element's outline to not indicate that it has been saved
-function unsaveElementOutline(elt)
-{
-  if(elt.type === element_types.NODE)
-  {
-    elt.s.select("*")
-      .attr("stroke", nodeOutlineColor)
-      .attr("stroke-width", vis.node.outline_width);
-  }
-  else if(saved_elt.type === element_types.LINK)
-  {
-    saved_elt.s.select("*")
-      .attr("stroke", linkOutlineColor(saved_elt.data))
-      .attr("stroke-width", vis.link.outline_width);
-  }
+  s.select("*")
+    .attr("stroke", outline_color)
+    .attr("stroke-width", outline_width);
 }
 
 // transition a node selection's radius, outline color, and outline width
 function transitionNodeSelection(s, r, outline_color, outline_width)
 {
-  s.select("circle")
+  s.select("*")
     .transition()
-    .attr("r", r)
-    .attr("stroke", outline_color)
-    .attr("stroke-width", outline_width);
+      .attr("r", r)
+      .attr("stroke", outline_color)
+      .attr("stroke-width", outline_width);
+}
+
+// transition a link selection's outline color and outline width
+function transitionLinkSelection(s, outline_color, outline_width)
+{
+  s.select("*")
+    .transition()
+      .attr("stroke", outline_color)
+      .attr("stroke-width", outline_width);
 }
 
 // find a node's connected nodes' ids
@@ -764,27 +751,22 @@ function onMouseEnter(elt)
   hidePanels();
   updatePanel(elt);
 
-  // if the cursor is over a node, then change its appearance, as well as the appearance of primary nodes if the
-  // cursor is over the central node
+  // if the cursor is over a node
   if(elt.type === element_types.NODE)
   {
+    // find nodes connected to the hovered node
     hovered_elt_connected_nodes_ids = findConnectedNodeIds(elt.data);
 
+    // if the hovered node is not the saved element
     if(saved_elt === null || elt.data.id !== saved_elt.data.id)
     {
-      if(elt.data.layer === 0)
-      {
-        transitionNodeSelection(elt.s, elt.data.r * 1.05, vis.node.outline_color_focus, vis.node.outline_width_focus);
-      }
-      else
-      {
-        transitionNodeSelection(elt.s, elt.data.r * 1.3, vis.node.outline_color_focus, vis.node.outline_width_focus);
-      }
+      // change the appearance of the hovered node to indicate focus
+      transitionNodeSelection(elt.s, elt.data.r * (elt.data.layer === 0 ? 1.05 : 1.3), vis.node.outline_color_focus,
+        vis.node.outline_width_focus);
 
-      // selection of connected nodes that are not the saved element
+      // change the appearance of connected nodes that are not the saved element to indicate focus
       let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id) &&
         (saved_elt === null || d.id !== saved_elt.data.id));
-
       transitionNodeSelection(connected_nodes_s, d => d.r * (d.layer === 0 ? 1.02 : 1.1),
         vis.node.outline_color_focus, vis.node.outline_width_focus);
     }
@@ -797,137 +779,125 @@ function onMouseLeave(elt)
   // hide the panel
   hidePanels();
 
-  // if there is no saved element, then if the cursor was over a node, then change its appearance back
+  // if there is no saved element
   if(saved_elt === null)
   {
+    // if the cursor was over a node
     if(elt.type === element_types.NODE)
     {
+      // change the appearance of the node back to normal
       transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
 
-      // selection of connected nodes
+      // change the appearance of connected nodes back to normal
       let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id));
       transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
     }
   }
-  // if there is a saved element, then update the panel to display information about the saved element
+  // if there is a saved element
   else
   {
+    // update the panel to display information about the saved element
     updatePanel(saved_elt);
 
-    // if the cursor was over a node, then unless the node is the saved element, change its appearance back
+    // if the cursor was over the saved element
     if(elt.data.id !== saved_elt.data.id)
     {
+      // if the element was a node
       if(elt.type === element_types.NODE)
       {
+        // if the node was connected to the saved element, then change its appearance to indicate focus
         if(saved_elt_connected_nodes_ids.includes(elt.data.id))
         {
           transitionNodeSelection(elt.s, elt.data.r * (elt.data.layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
+        // else, change its appearance back to normal
         else
         {
           transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
         }
 
-        // selection of connected nodes that are not the saved element
+        // change appearance of connected nodes that are not the saved element or its connected nodes back to normal
         let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id) &&
-          ! saved_elt_connected_nodes_ids.includes(d.id));
+          saved_elt.data.id !== d.id && ! saved_elt_connected_nodes_ids.includes(d.id));
         transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
       }
     }
   }
 
+  // clear the array of the hovered element's connected nodes
   hovered_elt_connected_nodes_ids = null;
 }
 
 // handle interactions when the cursor clicks on an interactive element
 function onClick(elt)
 {
-  // if the new clicked element is the saved element, then focus away from it
+  // if the new clicked element is the saved element, then unsave it
   if(saved_elt !== null && elt.data.id === saved_elt.data.id)
   {
     // change outline of clicked element back to normal
-    if(elt.type === element_types.LINK)
-    {
-      unsaveElementOutline(elt);
-    }
-    else
-    {
-      elt.s.select("*")
-        .attr("stroke", vis.node.outline_color_focus)
-        .attr("stroke-width", vis.node.outline_width_focus);
-    }
+    changeSelectionOutline(elt.s,
+      elt.type === element_types.NODE ? vis.node.outline_color_focus : vis.link.outline_color_focus,
+      elt.type === element_types.NODE ? vis.node.outline_width_focus : vis.link.outline_width_focus);
 
+    // clear the saved element and its array of connected nodes
     saved_elt = null;
     saved_elt_connected_nodes_ids = [];
   }
-  // else, focus on the new clicked element
+  // if the new clicked element is not the saved element, then save it
   else
   {
-    let new_saved_elt_connected_nodes_ids;
+    // set nodes connected to the new clicked element
+    let new_clicked_elt_connected_nodes_ids;
     if(elt.type === element_types.NODE)
     {
-      new_saved_elt_connected_nodes_ids = hovered_elt_connected_nodes_ids;
+      new_clicked_elt_connected_nodes_ids = hovered_elt_connected_nodes_ids;
     }
     else
     {
-      new_saved_elt_connected_nodes_ids = [];
+      new_clicked_elt_connected_nodes_ids = [];
     }
 
-
-    // if there is a saved element that is not the new clicked element, then focus away from the old and on the new
+    // if there is an old saved element, then unsave it
     if(saved_elt !== null)
     {
-      // display the correct panel
-      hidePanels();
-      updatePanel(elt);
-
-      // change the outline of the saved element back to normal, and change its appearance otherwise back
-      if(saved_elt.type === element_types.LINK)
-      {
-        unsaveElementOutline(saved_elt);
-      }
-      else
-      {
-        if(new_saved_elt_connected_nodes_ids.includes(saved_elt.data.id))
-        {
-          saved_elt.s.select("*")
-            .attr("stroke", vis.node.outline_color_focus)
-            .attr("stroke-width", vis.node.outline_width_focus);
-        }
-        else
-        {
-          unsaveElementOutline(saved_elt);
-        }
-      }
-
+      // if the saved element is a node
       if(saved_elt.type === element_types.NODE)
       {
-        if(new_saved_elt_connected_nodes_ids.includes(saved_elt.data.id))
+        // if the saved node is connected to the new clicked element, then change its appearance to indicate focus
+        if(new_clicked_elt_connected_nodes_ids.includes(saved_elt.data.id))
         {
           transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
+        // else, change its appearance back to normal
         else
         {
           transitionNodeSelection(saved_elt.s, saved_elt.data.r, nodeOutlineColor(saved_elt.data),
             vis.node.outline_width);
         }
 
-        // connected nodes of the old saved element that are not the new clicked element or its connected nodes
+        // change the appearance of connected nodes of the old saved element that are not the new clicked element or
+        // its connected nodes back to normal
         let connected_nodes_s = nodes_s.filter(d => saved_elt_connected_nodes_ids.includes(d.id) &&
-          d.id !== elt.data.id && ! new_saved_elt_connected_nodes_ids.includes(d.id));
-
+          d.id !== elt.data.id && ! new_clicked_elt_connected_nodes_ids.includes(d.id));
         transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
+      }
+      // if the saved element is a link, change its appearance back to normal
+      else
+      {
+        changeSelectionOutline(saved_elt.s, linkOutlineColor(saved_elt.data), vis.link.outline_width);
       }
     }
 
     // change outline of new clicked element to indicate focus
-    saveElementOutline(elt);
+    changeSelectionOutline(elt.s,
+      elt.type === element_types.NODE ? vis.node.outline_color_saved : vis.link.outline_color_saved,
+      elt.type === element_types.NODE ? vis.node.outline_width_saved : vis.link.outline_width_saved);
 
+    // update the saved element and its array of connected nodes
     saved_elt = elt;
-
-    saved_elt_connected_nodes_ids = new_saved_elt_connected_nodes_ids;
+    saved_elt_connected_nodes_ids = new_clicked_elt_connected_nodes_ids;
   }
 }
 
