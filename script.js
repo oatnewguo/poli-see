@@ -22,8 +22,8 @@ var node_types;
 var link_types;
 var use_types;
 
-// object for the saved element
-var saved_elt = null;
+// selection of the saved element
+var saved_elt_s = null;
 // array of ids of nodes connected with the saved element
 var saved_elt_connected_nodes_ids = [];
 // array of ids of nodes connected with the currently hovered element
@@ -653,16 +653,16 @@ function updateLinkPanel(l)
     .style("display", "inline-block");
 }
 
-// update either the node or the link panel, based on an input element
-function updatePanel(elt)
+// update either the node or the link panel, based on an input selection
+function updatePanel(s)
 {
-  if(elt.type === element_types.NODE)
+  if(s.classed("node"))
   {
-    updateNodePanel(elt.data);
+    updateNodePanel(s.datum());
   }
-  else if(elt.type === element_types.LINK)
+  else if(s.classed("link"))
   {
-    updateLinkPanel(elt.data);
+    updateLinkPanel(s.datum());
   }
 }
 
@@ -745,28 +745,28 @@ function findConnectedNodeIds(n)
 }
 
 // handle interactions when the cursor enters an interactive element
-function onMouseEnter(elt)
+function onMouseEnter(s)
 {
   // display the correct panel
   hidePanels();
-  updatePanel(elt);
+  updatePanel(s);
 
   // if the cursor is over a node
-  if(elt.type === element_types.NODE)
+  if(s.classed("node"))
   {
     // find nodes connected to the hovered node
-    hovered_elt_connected_nodes_ids = findConnectedNodeIds(elt.data);
+    hovered_elt_connected_nodes_ids = findConnectedNodeIds(s.datum());
 
     // if the hovered node is not the saved element
-    if(saved_elt === null || elt.data.id !== saved_elt.data.id)
+    if(saved_elt_s === null || s.datum().id !== saved_elt_s.datum().id)
     {
       // change the appearance of the hovered node to indicate focus
-      transitionNodeSelection(elt.s, elt.data.r * (elt.data.layer === 0 ? 1.05 : 1.3), vis.node.outline_color_focus,
+      transitionNodeSelection(s, s.datum().r * (s.datum().layer === 0 ? 1.05 : 1.3), vis.node.outline_color_focus,
         vis.node.outline_width_focus);
 
       // change the appearance of connected nodes that are not the saved element to indicate focus
       let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id) &&
-        (saved_elt === null || d.id !== saved_elt.data.id));
+        (saved_elt_s === null || d.id !== saved_elt_s.datum().id));
       transitionNodeSelection(connected_nodes_s, d => d.r * (d.layer === 0 ? 1.02 : 1.1),
         vis.node.outline_color_focus, vis.node.outline_width_focus);
     }
@@ -774,19 +774,19 @@ function onMouseEnter(elt)
 }
 
 // handle interactions when the cursor leaves an interactive element
-function onMouseLeave(elt)
+function onMouseLeave(s)
 {
   // hide the panel
   hidePanels();
 
   // if there is no saved element
-  if(saved_elt === null)
+  if(saved_elt_s === null)
   {
     // if the cursor was over a node
-    if(elt.type === element_types.NODE)
+    if(s.classed("node"))
     {
       // change the appearance of the node back to normal
-      transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
+      transitionNodeSelection(s, s.datum().r, nodeOutlineColor(s.datum()), vis.node.outline_width);
 
       // change the appearance of connected nodes back to normal
       let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id));
@@ -797,29 +797,29 @@ function onMouseLeave(elt)
   else
   {
     // update the panel to display information about the saved element
-    updatePanel(saved_elt);
+    updatePanel(saved_elt_s);
 
     // if the cursor was over the saved element
-    if(elt.data.id !== saved_elt.data.id)
+    if(s.datum().id !== saved_elt_s.datum().id)
     {
       // if the element was a node
-      if(elt.type === element_types.NODE)
+      if(s.classed("node"))
       {
         // if the node was connected to the saved element, then change its appearance to indicate focus
-        if(saved_elt_connected_nodes_ids.includes(elt.data.id))
+        if(saved_elt_connected_nodes_ids.includes(s.datum().id))
         {
-          transitionNodeSelection(elt.s, elt.data.r * (elt.data.layer === 0 ? 1.02 : 1.1),
+          transitionNodeSelection(s, s.datum().r * (s.datum().layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         // else, change its appearance back to normal
         else
         {
-          transitionNodeSelection(elt.s, elt.data.r, nodeOutlineColor(elt.data), vis.node.outline_width);
+          transitionNodeSelection(s, s.datum().r, nodeOutlineColor(s.datum()), vis.node.outline_width);
         }
 
         // change appearance of connected nodes that are not the saved element or its connected nodes back to normal
         let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_nodes_ids.includes(d.id) &&
-          saved_elt.data.id !== d.id && ! saved_elt_connected_nodes_ids.includes(d.id));
+          saved_elt_s.datum().id !== d.id && ! saved_elt_connected_nodes_ids.includes(d.id));
         transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
       }
     }
@@ -830,18 +830,17 @@ function onMouseLeave(elt)
 }
 
 // handle interactions when the cursor clicks on an interactive element
-function onClick(elt)
+function onClick(s)
 {
   // if the new clicked element is the saved element, then unsave it
-  if(saved_elt !== null && elt.data.id === saved_elt.data.id)
+  if(saved_elt_s !== null && s.datum().id === saved_elt_s.datum().id)
   {
     // change outline of clicked element back to normal
-    changeSelectionOutline(elt.s,
-      elt.type === element_types.NODE ? vis.node.outline_color_focus : vis.link.outline_color_focus,
-      elt.type === element_types.NODE ? vis.node.outline_width_focus : vis.link.outline_width_focus);
+    changeSelectionOutline(s, s.classed("node") ? vis.node.outline_color_focus : vis.link.outline_color_focus,
+      s.classed("node") ? vis.node.outline_width_focus : vis.link.outline_width_focus);
 
     // clear the saved element and its array of connected nodes
-    saved_elt = null;
+    saved_elt_s = null;
     saved_elt_connected_nodes_ids = [];
   }
   // if the new clicked element is not the saved element, then save it
@@ -849,7 +848,7 @@ function onClick(elt)
   {
     // set nodes connected to the new clicked element
     let new_clicked_elt_connected_nodes_ids;
-    if(elt.type === element_types.NODE)
+    if(s.classed("node"))
     {
       new_clicked_elt_connected_nodes_ids = hovered_elt_connected_nodes_ids;
     }
@@ -859,44 +858,43 @@ function onClick(elt)
     }
 
     // if there is an old saved element, then unsave it
-    if(saved_elt !== null)
+    if(saved_elt_s !== null)
     {
       // if the saved element is a node
-      if(saved_elt.type === element_types.NODE)
+      if(saved_elt_s.classed("node"))
       {
         // if the saved node is connected to the new clicked element, then change its appearance to indicate focus
-        if(new_clicked_elt_connected_nodes_ids.includes(saved_elt.data.id))
+        if(new_clicked_elt_connected_nodes_ids.includes(saved_elt_s.datum().id))
         {
-          transitionNodeSelection(saved_elt.s, saved_elt.data.r * (saved_elt.data.layer === 0 ? 1.02 : 1.1),
+          transitionNodeSelection(saved_elt_s, saved_elt_s.datum().r * (saved_elt_s.datum().layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
         // else, change its appearance back to normal
         else
         {
-          transitionNodeSelection(saved_elt.s, saved_elt.data.r, nodeOutlineColor(saved_elt.data),
+          transitionNodeSelection(saved_elt_s, saved_elt_s.datum().r, nodeOutlineColor(saved_elt_s.datum()),
             vis.node.outline_width);
         }
 
         // change the appearance of connected nodes of the old saved element that are not the new clicked element or
         // its connected nodes back to normal
         let connected_nodes_s = nodes_s.filter(d => saved_elt_connected_nodes_ids.includes(d.id) &&
-          d.id !== elt.data.id && ! new_clicked_elt_connected_nodes_ids.includes(d.id));
+          d.id !== s.datum().id && ! new_clicked_elt_connected_nodes_ids.includes(d.id));
         transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
       }
       // if the saved element is a link, change its appearance back to normal
       else
       {
-        changeSelectionOutline(saved_elt.s, linkOutlineColor(saved_elt.data), vis.link.outline_width);
+        changeSelectionOutline(saved_elt_s, linkOutlineColor(saved_elt_s.datum()), vis.link.outline_width);
       }
     }
 
     // change outline of new clicked element to indicate focus
-    changeSelectionOutline(elt.s,
-      elt.type === element_types.NODE ? vis.node.outline_color_saved : vis.link.outline_color_saved,
-      elt.type === element_types.NODE ? vis.node.outline_width_saved : vis.link.outline_width_saved);
+    changeSelectionOutline(s, s.classed("node") ? vis.node.outline_color_saved : vis.link.outline_color_saved,
+      s.classed("node") ? vis.node.outline_width_saved : vis.link.outline_width_saved);
 
     // update the saved element and its array of connected nodes
-    saved_elt = elt;
+    saved_elt_s = s;
     saved_elt_connected_nodes_ids = new_clicked_elt_connected_nodes_ids;
   }
 }
@@ -1133,13 +1131,13 @@ function main()
     // display more information when the cursor hovers over links
     .on("mouseenter", function(d)
     {
-      onMouseEnter({type:element_types.LINK, data:d, s:d3.select(this)});
+      onMouseEnter(d3.select(this));
       d3.select(this).raise();
     })
     // hide information when the cursor leaves a link
-    .on("mouseleave", function(d) { onMouseLeave({type:element_types.LINK, data:d, s:d3.select(this)}); })
+    .on("mouseleave", function(d) { onMouseLeave(d3.select(this)); })
     // retain focus on an element when it is clicked
-    .on("click", function(d) { onClick({type:element_types.LINK, data:d, s:d3.select(this)}); });
+    .on("click", function(d) { onClick(d3.select(this)); });
 
 
 
@@ -1171,16 +1169,16 @@ function main()
     // display more information in the node panel when the cursor hovers over nodes
     .on("mouseenter", function(d)
     {
-      onMouseEnter({type:element_types.NODE, data:d, s:d3.select(this)});
+      onMouseEnter(d3.select(this));
       if(d.layer !== 0)
       {
         d3.select(this).raise();
       }
     })
     // update the node panel when the cursor leaves a node
-    .on("mouseleave", function(d) { onMouseLeave({type:element_types.NODE, data:d, s:d3.select(this)}); })
+    .on("mouseleave", function(d) { onMouseLeave(d3.select(this)); })
     // retain focus on an element when it is clicked
-    .on("click", function(d) { onClick({type:element_types.NODE, data:d, s:d3.select(this)}); });
+    .on("click", function(d) { onClick(d3.select(this)); });
 
 
 
@@ -1188,9 +1186,9 @@ function main()
   panel_close_btns_s
     .on("click", function(d)
     {
-      let c = saved_elt;
-      onClick(c);
-      onMouseLeave(c);
+      let s = saved_elt_s;
+      onClick(s);
+      onMouseLeave(s);
     });
 }
 
