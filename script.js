@@ -1223,6 +1223,7 @@ function main()
     .on("click", function(d)
     {
       let s = saved_elt_s;
+      onMouseEnter(s);
       onClick(s);
       onMouseLeave(s);
     });
