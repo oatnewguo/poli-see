@@ -675,6 +675,9 @@ function hidePanels()
 function changeSelectionOutline(s, outline_color, outline_width)
 {
   s.selectAll("*")
+    .interrupt()
+    .transition();
+  s.selectAll("*")
     .attr("stroke", outline_color)
     .attr("stroke-width", outline_width);
 }
