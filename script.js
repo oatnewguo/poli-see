@@ -674,7 +674,7 @@ function hidePanels()
 // change a node or link selection's outline color and outline width
 function changeSelectionOutline(s, outline_color, outline_width)
 {
-  s.select("*")
+  s.selectAll("*")
     .attr("stroke", outline_color)
     .attr("stroke-width", outline_width);
 }
@@ -687,12 +687,16 @@ function transitionNodeSelection(s, r, outline_color, outline_width)
       .attr("r", r)
       .attr("stroke", outline_color)
       .attr("stroke-width", outline_width);
+  s.select("*:nth-child(2)")
+    .transition()
+      .attr("stroke", outline_color)
+      .attr("stroke-width", outline_width);
 }
 
 // transition a link selection's outline color and outline width
 function transitionLinkSelection(s, outline_color, outline_width)
 {
-  s.select("*")
+  s.selectAll("*")
     .transition()
       .attr("stroke", outline_color)
       .attr("stroke-width", outline_width);
