@@ -1015,7 +1015,7 @@ function main()
       for(let j = 0; j < n.successor_links.length; j++)
       {
         let s = nodeById(n.successor_links[j].successor_id);
-        if(s.layer === 1 && ! s.all_data)
+        if(s.layer === 1 && n.successor_links[j].type === "link_all_data")
         {
           primary_nodes.push(s);
           s.primary = true;
