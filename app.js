@@ -171,54 +171,21 @@ function nodeOutlineColor(n)
   return vis.node.outline_color_unidentifiable;
 }
 
-// return the fill color of a link
-function linkFillColor(l)
+// return the color of a link
+function linkColor(l)
 {
-  var n = nodeById(l.dest);
-  if(n.all_data)
-  {
-    return vis.link.fill_color_all_data;
-  }
-  if(n.identifiable)
-  {
-    return vis.link.fill_color_identifiable;
-  }
-  return vis.link.fill_color_unidentifiable;
+  return linkColorByDestId(l.dest);
 }
 
-// return the fill color of a link, given its destination id
-function linkFillColorByDestId(id)
+// return the color of a link, given its destination id
+function linkColorByDestId(id)
 {
   var n = nodeById(id);
-  if(n.all_data)
-  {
-    return vis.link.fill_color_all_data;
-  }
   if(n.identifiable)
   {
-    return vis.link.fill_color_identifiable;
+    return vis.link.color_identifiable;
   }
-  return vis.link.fill_color_unidentifiable;
-}
-
-// return the outline color of a link
-function linkOutlineColor(l)
-{
-  if(nodeById(l.dest).identifiable)
-  {
-    return vis.link.outline_color_identifiable;
-  }
-  return vis.link.outline_color_unidentifiable;
-}
-
-// return the outline color of a link, given its destination id
-function linkOutlineColorByDestId(id)
-{
-  if(nodeById(id).identifiable)
-  {
-    return vis.link.outline_color_identifiable;
-  }
-  return vis.link.outline_color_unidentifiable;
+  return vis.link.color_unidentifiable;
 }
 
 // return the fill color of a use type
@@ -321,7 +288,7 @@ function setUpPats()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.link.fill_color_identifiable);
+    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.link.color_identifiable);
   link_pats_identifiable.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
@@ -342,7 +309,7 @@ function setUpPats()
     .attr("cx", ".5")
     .attr("cy", ".5")
     .attr("r", ".5")
-    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.link.fill_color_unidentifiable);
+    .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.link.color_unidentifiable);
   link_pats_unidentifiable.append("image")
     .attr("x", ".2")
     .attr("y", ".2")
@@ -572,8 +539,8 @@ function updateNodePanel(n)
       .attr("transform", "translate(" + vis.link.outline_width + "," + icon_r_full + ") rotate(270)")
       .attr("points", linkPointsFromLen(linkLen(0, icon_r_full, 4 * icon_r_full, icon_r_full,
         icon_r_full + vis.link.head_to_node_dist)))
-      .attr("fill", d => linkFillColorByDestId(d.successor_id))
-      .attr("stroke", d => linkOutlineColorByDestId(d.successor_id))
+      .attr("fill", d => linkColorByDestId(d.successor_id))
+      .attr("stroke", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", vis.link.outline_width);
 
     // add icons for special types of links
@@ -586,7 +553,7 @@ function updateNodePanel(n)
       })
       .attr("r", vis.link_icon_on_link.r)
       .attr("fill", d => getLinkPat(linkById(n.id + "->" + d.successor_id)))
-      .attr("stroke", d => linkOutlineColorByDestId(d.successor_id))
+      .attr("stroke", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", vis.link_icon.outline_width);
 
     action_divs_s.filter(d => d.elt_type === element_types.USE).append("p")
@@ -630,8 +597,8 @@ function updateLinkPanel(l)
       .attr("points", linkPointsFromLen(linkLen(node_r_full, node_r_full,
         vis.link_panel_graphic.dist_between_nodes + node_r_full, node_r_full,
         node_r_full + vis.link.head_to_node_dist)))
-      .attr("fill", linkFillColor(l))
-      .attr("stroke", linkOutlineColor(l))
+      .attr("fill", linkColor(l))
+      .attr("stroke", linkColor(l))
       .attr("stroke-width", vis.link.outline_width);
   link_panel_graphic_s.select("circle")
       .attr("fill", getNodePat(source))
@@ -643,7 +610,7 @@ function updateLinkPanel(l)
   // set the icon and title for the link panel
   link_panel_s.select("circle")
     .attr("fill", getLinkPat(l))
-    .attr("stroke", linkOutlineColor(l));
+    .attr("stroke", linkColor(l));
   link_panel_s.select("h1")
     .html(linkTypeById(l.type).label);
   link_panel_s.select("p")
@@ -814,14 +781,14 @@ function onMouseLeave(s)
     }
     else
     {
-      transitionLinkSelection(s, linkOutlineColor(s.datum()), vis.link.outline_width);
+      transitionLinkSelection(s, linkColor(s.datum()), vis.link.outline_width);
     }
 
     // change the appearance of connected elements back to normal
     let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_elts_ids.includes(d.id));
     let connected_links_s = links_s.filter(d => hovered_elt_connected_elts_ids.includes(d.id));
     transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
-    transitionLinkSelection(connected_links_s, linkOutlineColor, vis.link.outline_width);
+    transitionLinkSelection(connected_links_s, linkColor, vis.link.outline_width);
   }
   // if there is a saved element
   else
@@ -854,7 +821,7 @@ function onMouseLeave(s)
         }
         else
         {
-          transitionLinkSelection(s, linkOutlineColor(s.datum()), vis.link.outline_width);
+          transitionLinkSelection(s, linkColor(s.datum()), vis.link.outline_width);
         }
       }
 
@@ -865,7 +832,7 @@ function onMouseLeave(s)
       let connected_links_s = links_s.filter(d => hovered_elt_connected_elts_ids.includes(d.id) &&
         saved_elt_s.datum().id !== d.id && ! saved_elt_connected_elts_ids.includes(d.id));
       transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
-      transitionLinkSelection(connected_links_s, linkOutlineColor, vis.link.outline_width);
+      transitionLinkSelection(connected_links_s, linkColor, vis.link.outline_width);
     }
   }
 
@@ -919,7 +886,7 @@ function onClick(s)
         }
         else
         {
-          transitionLinkSelection(saved_elt_s, linkOutlineColor(saved_elt_s.datum()), vis.link.outline_width);
+          transitionLinkSelection(saved_elt_s, linkColor(saved_elt_s.datum()), vis.link.outline_width);
         }
       }
 
@@ -930,7 +897,7 @@ function onClick(s)
       let connected_links_s = links_s.filter(d => saved_elt_connected_elts_ids.includes(d.id) &&
         d.id !== s.datum().id && ! new_clicked_elt_connected_nodes_ids.includes(d.id));
       transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
-      transitionLinkSelection(connected_links_s, linkOutlineColor, vis.link.outline_width);
+      transitionLinkSelection(connected_links_s, linkColor, vis.link.outline_width);
     }
 
     // change outline of new clicked element to indicate focus
@@ -1150,8 +1117,8 @@ function main()
   // add lines to links
   links_s.filter(d => ! linkTypeById(d.type).all_data).append("polyline")
     .attr("points", linkArrowPoints)
-    .attr("fill", linkFillColor)
-    .attr("stroke", linkOutlineColor)
+    .attr("fill", linkColor)
+    .attr("stroke", linkColor)
     .attr("stroke-width", vis.link.outline_width);
 
   // add icons for special types of links
@@ -1167,7 +1134,7 @@ function main()
     })
     .attr("r", vis.link_icon_on_link.r)
     .attr("fill", getLinkPat)
-    .attr("stroke", linkOutlineColor)
+    .attr("stroke", linkColor)
     .attr("stroke-width", vis.link_icon.outline_width);
 
   // mouse interactions for links

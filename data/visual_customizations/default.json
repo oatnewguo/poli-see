@@ -41,11 +41,8 @@
     "outline_width": 2,
     "outline_width_saved": 4,
     "outline_width_focus": 4,
-    "fill_color_identifiable": "#404060",
-    "fill_color_unidentifiable": "#707070",
-    "fill_color_all_data": "#FFFFFF",
-    "outline_color_identifiable": "#404060",
-    "outline_color_unidentifiable": "#707070",
+    "color_identifiable": "#404060",
+    "color_unidentifiable": "#707070",
     "outline_color_saved": "#00C8FF",
     "outline_color_focus": "#FF88FF"
   },
