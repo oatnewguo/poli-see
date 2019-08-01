@@ -213,39 +213,39 @@ function useTypeFillColor(t)
 }
 
 // return the fill pattern of a node
-function getNodePat(n)
+function nodePat(n)
 {
   return n.identifiable ? "url(#pat_" + n.type + "_identifiable)"
                         : "url(#pat_" + n.type + "_unidentifiable)";
 }
 
 // return the identifiable version of the fill pattern of a node, given its type id
-function getNodePatByTypeId(id)
+function nodePatByTypeId(id)
 {
   return "url(#pat_" + id + "_identifiable)";
 }
 
 // return the icon fill pattern of a link
-function getLinkPat(l)
+function linkPat(l)
 {
   return nodeById(l.dest).identifiable ? "url(#pat_" + l.type + "_identifiable)"
                                        : "url(#pat_" + l.type + "_unidentifiable)";
 }
 
 // return the icon fill pattern of a use, given its type id
-function getUsePatByTypeId(id)
+function usePatByTypeId(id)
 {
   return "url(#pat_" + id + ")";
 }
 
 // return the fill pattern of an options icon
-function getOptsPat()
+function optsPat()
 {
   return "url(#" + OPTS_PAT_ID + ")";
 }
 
 // return the fill pattern of the help icon
-function getHelpPat()
+function helpPat()
 {
   return "url(#" + HELP_PAT_ID + ")";
 }
@@ -563,14 +563,14 @@ function updateNodePanel(n)
       .attr("r", vis.use_icon.r)
       .attr("cx", icon_r_full)
       .attr("cy", icon_r_full)
-      .attr("fill", d => getUsePatByTypeId(d.type))
+      .attr("fill", d => usePatByTypeId(d.type))
       .attr("stroke", vis.use_icon.outline_color)
       .attr("stroke-width", vis.use_icon.outline_width);
     action_divs_link_svgs_s.append("circle")
       .attr("r", vis.use_icon.r)
       .attr("cx", 4 * icon_r_full + vis.link.outline_width)
       .attr("cy", icon_r_full)
-      .attr("fill", d => getNodePat(nodeById(d.successor_id)))
+      .attr("fill", d => nodePat(nodeById(d.successor_id)))
       .attr("stroke", d => nodeOutlineColor(nodeById(d.successor_id)))
       .attr("stroke-width", vis.use_icon.outline_width);
 
@@ -591,7 +591,7 @@ function updateNodePanel(n)
         return "translate(" + (len_to_head/2 + vis.link.outline_width) + "," + icon_r_full + ")";
       })
       .attr("r", vis.link_icon_on_link.r)
-      .attr("fill", d => getLinkPat(linkById(n.id + "->" + d.successor_id)))
+      .attr("fill", d => linkPat(linkById(n.id + "->" + d.successor_id)))
       .attr("stroke", d => linkColorByDestId(d.successor_id))
       .attr("stroke-width", vis.link_icon.outline_width);
 
@@ -640,15 +640,15 @@ function updateLinkPanel(l)
       .attr("stroke", linkColor(l))
       .attr("stroke-width", vis.link.outline_width);
   link_panel_graphic_s.select("circle")
-      .attr("fill", getNodePat(source))
+      .attr("fill", nodePat(source))
       .attr("stroke", nodeOutlineColor(source));
   link_panel_graphic_s.select("circle:nth-child(3)")
-      .attr("fill", getNodePat(dest))
+      .attr("fill", nodePat(dest))
       .attr("stroke", nodeOutlineColor(dest));
 
   // set the icon and title for the link panel
   link_panel_s.select("circle")
-    .attr("fill", getLinkPat(l))
+    .attr("fill", linkPat(l))
     .attr("stroke", linkColor(l));
   link_panel_s.select("h1")
     .html(linkTypeById(l.type).label);
@@ -1056,7 +1056,7 @@ function main()
       .attr("cx", opts_panel_icon_r_full)
       .attr("cy", opts_panel_icon_r_full)
       .attr("r", vis.opts_panel_icon.r)
-      .attr("fill", getOptsPat())
+      .attr("fill", optsPat())
       .attr("stroke", vis.opts_panel_icon.outline_color)
       .attr("stroke-width", vis.opts_panel_icon.outline_width);
 
@@ -1156,7 +1156,7 @@ function main()
       .attr("r", vis.node.r)
       .attr("cx", icon_r_full)
       .attr("cy", icon_r_full)
-      .attr("fill", getNodePatByTypeId)
+      .attr("fill", nodePatByTypeId)
       .attr("stroke", vis.node.outline_color_identifiable)
       .attr("stroke-width", vis.node.outline_width);
 
@@ -1180,7 +1180,7 @@ function main()
       .attr("r", 20)
       .attr("cx", icon_r_full)
       .attr("cy", icon_r_full)
-      .attr("fill", getHelpPat())
+      .attr("fill", helpPat())
       .attr("stroke", vis.help_icon.outline_color)
       .attr("stroke-width", vis.help_icon.outline_width);
     help_button_s.append("text")
@@ -1330,7 +1330,7 @@ function main()
       return "translate(0," + displacement + ") rotate(" + (-linkRotation(d)) + ")";
     })
     .attr("r", vis.link_icon_on_link.r)
-    .attr("fill", getLinkPat)
+    .attr("fill", linkPat)
     .attr("stroke", linkColor)
     .attr("stroke-width", vis.link_icon.outline_width);
 
@@ -1359,7 +1359,7 @@ function main()
   // add circles to nodes
   nodes_s.append("circle")
     .attr("r", nodeRadius)
-    .attr("fill", getNodePat)
+    .attr("fill", nodePat)
     .attr("stroke", nodeOutlineColor)
     .attr("stroke-width", vis.node.outline_width);
 
@@ -1368,7 +1368,7 @@ function main()
     .attr("cx", vis.opts_node_icon.cx)
     .attr("cy", vis.opts_node_icon.cy)
     .attr("r", vis.opts_node_icon.r)
-    .attr("fill", getOptsPat())
+    .attr("fill", optsPat())
     .attr("stroke", vis.opts_node_icon.outline_color)
     .attr("stroke-width", vis.opts_node_icon.outline_width);
 
