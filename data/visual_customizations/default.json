@@ -112,5 +112,25 @@
   {
     "margin_bottom": 10,
     "dist_between_nodes": 200
+  },
+  "help_panel":
+  {
+    "padding": 15,
+    "width": 480,
+    "outline_width": 2,
+    "fill_color": "#FFFFFF",
+    "outline_color": "#000000"
+  },
+  "help_icon":
+  {
+    "r": 18,
+    "outline_width": 2,
+    "outline_width_saved": 4,
+    "outline_width_focus": 4,
+    "fill_color": "#66668A",
+    "outline_color": "#404060",
+    "outline_color_saved": "#00C8FF",
+    "outline_color_focus": "#FF88FF",
+    "image": "images/help.png"
   }
 }

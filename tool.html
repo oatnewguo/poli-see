@@ -14,14 +14,10 @@
 <h1></h1>
 <p></p>
 
-<a class="tutorial_box" href="tutorial.html" target="_blank">
-  <img src="images/tutorial.png" alt="tutorial icon">
-  <h2 style="display:inline-block">Tutorial</h2>
-</a>
-
 <div class="visualization_box">
   <svg id="canvas">
     <defs></defs>
+    <g class="help_button"></g>
   </svg>
 
   <div id="node_panel_box" class="panel_box" style="display: none">
@@ -61,6 +57,21 @@
       <span class="close_btn"></span>
     </div>
   </div>
+
+  <div id="help_panel_box" class="panel_box" style="display: none">
+    <div id="help_panel" class="panel">
+      <h1>Help</h1>
+      <p>Click <a href="tutorial.html">here</a> for a tutorial on how to use Privacy Poli-See.</p>
+      <div id="help_panel_colors_box" class="panel_list_box">
+        <h2>Colors</h2>
+      </div>
+      <div id="help_panel_node_types_box" class="panel_list_box">
+        <h2>Types of Data</h2>
+      </div>
+      <span class="close_btn"></span>
+    </div>
+  </div>
+
 </div>
 
 <script src="build/app.bundle.js"></script>

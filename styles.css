@@ -25,7 +25,7 @@ html
   flex: 0 0 auto;
 }
 
-.node, .link, .bg_link
+.node, .link, .bg_link, .help_button
 {
   cursor: pointer;
 }
@@ -101,23 +101,23 @@ html
   font-size: 1.3em;
 }
 
-.panel_list_item_box
+.panel_list_box div
 {
   display: flex;
   padding: 5px 0 5px 0;
 }
 
-.panel_list_item_box:last-child
+.panel_list_box div:last-child
 {
   padding-bottom: 0;
 }
 
-.panel_list_item_box svg
+.panel_list_box div svg
 {
   flex: 0 0 auto;
 }
 
-.panel_list_item_box p
+.panel_list_box div p
 {
   margin: 0 0 0 5px;
   align-self: center;
@@ -160,23 +160,4 @@ html
 .close_btn:after
 {
   content: "\00D7"; /* X symbol */
-}
-
-.tutorial_box
-{
-  display: inline-flex;
-}
-
-.tutorial_box img
-{
-  flex: 0 0 auto;
-  width: 40px;
-  height: 40px;
-}
-
-.tutorial_box h2
-{
-  margin: 0 0 0 5px;
-  align-self: center;
-  color: #66668A;
 }

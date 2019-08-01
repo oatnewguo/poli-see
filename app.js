@@ -13,6 +13,7 @@ const element_types =
 
 const NUM_LAYERS = 3;
 const OPTS_PAT_ID = "pat_opts";
+const HELP_PAT_ID = "pat_help";
 
 // objects for policy- and visual-related data
 var pol;
@@ -36,17 +37,22 @@ var hovered_elt_connected_elts_ids = [];
 
 
 // selection of svg to contain the main body of the graph
-var svg_s = d3.select("#canvas");
+var canvas_s = d3.select("#canvas");
 // selection of g to be placed at center of the graph
-var g_s = svg_s.append("g");
+var center_g_s = canvas_s.append("g");
+
+// selection of help button
+var help_button_s = canvas_s.select(".help_button");
 
 // selections of div containers for panels and related display elements
 var node_panel_box_s = d3.select("#node_panel_box");
 var link_panel_box_s = d3.select("#link_panel_box");
+var help_panel_box_s = d3.select("#help_panel_box");
 
 // selections of div panels to display additional information about nodes and links
 var node_panel_s = node_panel_box_s.select("#node_panel");
 var link_panel_s = link_panel_box_s.select("#link_panel");
+var help_panel_s = help_panel_box_s.select("#help_panel");
 
 // selections of divs to display information about options available to the user regarding the data as well as
 // permitted actions that can be performed by the entity handling the data
@@ -55,6 +61,10 @@ var node_panel_actions_box_s = node_panel_s.select("#node_panel_actions_box");
 
 // selection of svg to display graphic above link panel
 var link_panel_graphic_s = link_panel_box_s.select("#link_panel_graphic");
+
+// selections of divs to display legends in the help panel
+var help_panel_colors_box_s = help_panel_s.select("#help_panel_colors_box");
+var help_panel_node_types_box_s = help_panel_s.select("#help_panel_node_types_box");
 
 // selection of panel close buttons
 var panel_close_btns_s = d3.selectAll(".close_btn");
@@ -209,6 +219,12 @@ function getNodePat(n)
                         : "url(#pat_" + n.type + "_unidentifiable)";
 }
 
+// return the identifiable version of the fill pattern of a node, given its type id
+function getNodePatByTypeId(id)
+{
+  return "url(#pat_" + id + "_identifiable)";
+}
+
 // return the icon fill pattern of a link
 function getLinkPat(l)
 {
@@ -228,11 +244,17 @@ function getOptsPat()
   return "url(#" + OPTS_PAT_ID + ")";
 }
 
+// return the fill pattern of the help icon
+function getHelpPat()
+{
+  return "url(#" + HELP_PAT_ID + ")";
+}
+
 // set up patterns to fill nodes, link icons, use icons, and other svg elements
 function setUpPats()
 {
   // node patterns
-  var node_pats_identifiable = svg_s.select("defs").selectAll(".node_pat_identifiable")
+  var node_pats_identifiable = canvas_s.select("defs").selectAll(".node_pat_identifiable")
     .data(node_types)
     .enter()
     .append("pattern")
@@ -253,7 +275,7 @@ function setUpPats()
     .attr("height", ".6")
     .attr("xlink:href", d => d.image_identifiable);
 
-  var node_pats_unidentifiable = svg_s.select("defs").selectAll(".node_pat_unidentifiable")
+  var node_pats_unidentifiable = canvas_s.select("defs").selectAll(".node_pat_unidentifiable")
     .data(node_types)
     .enter()
     .append("pattern")
@@ -275,7 +297,7 @@ function setUpPats()
     .attr("xlink:href", d => d.image_unidentifiable);
 
   // link patterns
-  var link_pats_identifiable = svg_s.select("defs").selectAll(".link_pat_identifiable")
+  var link_pats_identifiable = canvas_s.select("defs").selectAll(".link_pat_identifiable")
     .data(link_types)
     .enter()
     .append("pattern")
@@ -296,7 +318,7 @@ function setUpPats()
     .attr("height", ".6")
     .attr("xlink:href", d => d.image_identifiable);
 
-  var link_pats_unidentifiable = svg_s.select("defs").selectAll(".link_pat_unidentifiable")
+  var link_pats_unidentifiable = canvas_s.select("defs").selectAll(".link_pat_unidentifiable")
     .data(link_types)
     .enter()
     .append("pattern")
@@ -318,7 +340,7 @@ function setUpPats()
     .attr("xlink:href", d => d.image_unidentifiable);
 
   // use icon patterns
-  var use_pats = svg_s.select("defs").selectAll(".use_pat")
+  var use_pats = canvas_s.select("defs").selectAll(".use_pat")
     .data(use_types)
     .enter()
     .append("pattern")
@@ -340,7 +362,7 @@ function setUpPats()
     .attr("xlink:href", d => d.image);
 
   // options icon pattern
-  var opts_pat = svg_s.select("defs").append("pattern")
+  var opts_pat = canvas_s.select("defs").append("pattern")
     .attr("id", OPTS_PAT_ID)
     .attr("width", "1")
     .attr("height", "1")
@@ -356,6 +378,24 @@ function setUpPats()
     .attr("width", ".6")
     .attr("height", ".6")
     .attr("xlink:href", vis.opts_icon.image);
+
+  // help icon pattern
+  var help_pat = canvas_s.select("defs").append("pattern")
+    .attr("id", HELP_PAT_ID)
+    .attr("width", "1")
+    .attr("height", "1")
+    .attr("patternContentUnits", "objectBoundingBox");
+  help_pat.append("circle")
+    .attr("cx", ".5")
+    .attr("cy", ".5")
+    .attr("r", ".5")
+    .attr("fill", vis.help_icon.fill_color);
+  help_pat.append("image")
+    .attr("x", ".2")
+    .attr("y", ".2")
+    .attr("width", ".6")
+    .attr("height", ".6")
+    .attr("xlink:href", vis.help_icon.image);
 }
 
 // helper function to recursively create a stick with the child at the bottom and num_ancestors ancestors
@@ -501,7 +541,6 @@ function updateNodePanel(n)
     var action_divs_s = node_panel_actions_box_s.selectAll("div")
       .data(actions)
       .enter().append("div")
-        .classed("panel_list_item_box", true)
         .style("border-bottom", vis.node_panel.outline_width + "px solid " + outline_color);
 
     // remove bottom border from last action div
@@ -621,6 +660,13 @@ function updateLinkPanel(l)
     .style("display", "inline-block");
 }
 
+// show the help panel
+function showHelpPanel()
+{
+  help_panel_box_s
+    .style("display", "inline-block");
+}
+
 // update either the node or the link panel, based on an input selection
 function updatePanel(s)
 {
@@ -628,9 +674,13 @@ function updatePanel(s)
   {
     updateNodePanel(s.datum());
   }
-  else
+  else if(s.classed("link"))
   {
     updateLinkPanel(s.datum());
+  }
+  else
+  {
+    showHelpPanel();
   }
 }
 
@@ -641,21 +691,37 @@ function hidePanels()
     .style("display", "none");
   link_panel_box_s
     .style("display", "none");
+  help_panel_box_s
+    .style("display", "none");
 }
 
-// change a node or link selection's outline color and outline width
-function changeSelectionOutline(s, outline_color, outline_width)
+// change a selection's outline color and outline width
+function changeOutline(s, outline_color, outline_width)
 {
   s.selectAll("*")
     .interrupt()
     .transition();
-  s.selectAll("*")
+  s.selectAll(":not(text)")
     .attr("stroke", outline_color)
     .attr("stroke-width", outline_width);
+  s.select("text")
+    .attr("fill", outline_color);
+}
+
+// transition a selection's outline color and outline width
+function transitionOutline(s, outline_color, outline_width)
+{
+  s.selectAll(":not(text)")
+    .transition()
+      .attr("stroke", outline_color)
+      .attr("stroke-width", outline_width);
+  s.select("text")
+    .transition()
+      .attr("fill", outline_color);
 }
 
 // transition a node selection's radius, outline color, and outline width
-function transitionNodeSelection(s, r, outline_color, outline_width)
+function transitionNode(s, r, outline_color, outline_width)
 {
   s.select("*")
     .transition()
@@ -663,15 +729,6 @@ function transitionNodeSelection(s, r, outline_color, outline_width)
       .attr("stroke", outline_color)
       .attr("stroke-width", outline_width);
   s.select("*:nth-child(2)")
-    .transition()
-      .attr("stroke", outline_color)
-      .attr("stroke-width", outline_width);
-}
-
-// transition a link selection's outline color and outline width
-function transitionLinkSelection(s, outline_color, outline_width)
-{
-  s.selectAll("*")
     .transition()
       .attr("stroke", outline_color)
       .attr("stroke-width", outline_width);
@@ -738,7 +795,8 @@ function onMouseEnter(s)
 
   // find elements connected to the hovered element
   hovered_elt_connected_elts_ids = s.classed("node") ? findNodeConnectedEltIds(s.datum())
-                                                     : findLinkConnectedEltIds(s.datum());
+                                 : s.classed("link") ? findLinkConnectedEltIds(s.datum())
+                                 : [];
 
   // if the hovered element is not the saved element
   if(saved_elt_s === null || s.datum().id !== saved_elt_s.datum().id)
@@ -746,12 +804,16 @@ function onMouseEnter(s)
     // change the appearance of the hovered element to indicate focus
     if(s.classed("node"))
     {
-      transitionNodeSelection(s, s.datum().r * (s.datum().layer === 0 ? 1.05 : 1.3), vis.node.outline_color_focus,
+      transitionNode(s, s.datum().r * (s.datum().layer === 0 ? 1.05 : 1.3), vis.node.outline_color_focus,
         vis.node.outline_width_focus);
+    }
+    else if(s.classed("link"))
+    {
+      transitionOutline(s, vis.link.outline_color_focus, vis.link.outline_width_focus);
     }
     else
     {
-      transitionLinkSelection(s, vis.link.outline_color_focus, vis.link.outline_width_focus);
+      transitionOutline(s, vis.help_icon.outline_color_focus, vis.help_icon.outline_width_focus);
     }
   }
 
@@ -760,9 +822,9 @@ function onMouseEnter(s)
     (saved_elt_s === null || d.id !== saved_elt_s.datum().id));
   let connected_links_s = links_s.filter(d => hovered_elt_connected_elts_ids.includes(d.id) &&
     (saved_elt_s === null || d.id !== saved_elt_s.datum().id));
-  transitionNodeSelection(connected_nodes_s, d => d.r * (d.layer === 0 ? 1.02 : 1.1),
+  transitionNode(connected_nodes_s, d => d.r * (d.layer === 0 ? 1.02 : 1.1),
     vis.node.outline_color_focus, vis.node.outline_width_focus);
-  transitionLinkSelection(connected_links_s, vis.link.outline_color_focus, vis.link.outline_width_focus);
+  transitionOutline(connected_links_s, vis.link.outline_color_focus, vis.link.outline_width_focus);
 }
 
 // handle interactions when the cursor leaves an interactive element
@@ -777,18 +839,22 @@ function onMouseLeave(s)
     // change the appearance of the node back to normal
     if(s.classed("node"))
     {
-      transitionNodeSelection(s, s.datum().r, nodeOutlineColor(s.datum()), vis.node.outline_width);
+      transitionNode(s, s.datum().r, nodeOutlineColor(s.datum()), vis.node.outline_width);
+    }
+    else if(s.classed("link"))
+    {
+      transitionOutline(s, linkColor(s.datum()), vis.link.outline_width);
     }
     else
     {
-      transitionLinkSelection(s, linkColor(s.datum()), vis.link.outline_width);
+      transitionOutline(s, vis.help_icon.outline_color, vis.help_icon.outline_width);
     }
 
     // change the appearance of connected elements back to normal
     let connected_nodes_s = nodes_s.filter(d => hovered_elt_connected_elts_ids.includes(d.id));
     let connected_links_s = links_s.filter(d => hovered_elt_connected_elts_ids.includes(d.id));
-    transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
-    transitionLinkSelection(connected_links_s, linkColor, vis.link.outline_width);
+    transitionNode(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
+    transitionOutline(connected_links_s, linkColor, vis.link.outline_width);
   }
   // if there is a saved element
   else
@@ -804,12 +870,12 @@ function onMouseLeave(s)
       {
         if(s.classed("node"))
         {
-          transitionNodeSelection(s, s.datum().r * (s.datum().layer === 0 ? 1.02 : 1.1),
+          transitionNode(s, s.datum().r * (s.datum().layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
-        else
+        else if(s.classed("link"))
         {
-          transitionLinkSelection(s, vis.link.outline_color_focus, vis.link.outline_width_focus);
+          transitionOutline(s, vis.link.outline_color_focus, vis.link.outline_width_focus);
         }
       }
       // else, change its appearance back to normal
@@ -817,11 +883,15 @@ function onMouseLeave(s)
       {
         if(s.classed("node"))
         {
-          transitionNodeSelection(s, s.datum().r, nodeOutlineColor(s.datum()), vis.node.outline_width);
+          transitionNode(s, s.datum().r, nodeOutlineColor(s.datum()), vis.node.outline_width);
+        }
+        else if(s.classed("link"))
+        {
+          transitionOutline(s, linkColor(s.datum()), vis.link.outline_width);
         }
         else
         {
-          transitionLinkSelection(s, linkColor(s.datum()), vis.link.outline_width);
+          transitionOutline(s, vis.help_icon.outline_color, vis.help_icon.outline_width);
         }
       }
 
@@ -831,8 +901,8 @@ function onMouseLeave(s)
         saved_elt_s.datum().id !== d.id && ! saved_elt_connected_elts_ids.includes(d.id));
       let connected_links_s = links_s.filter(d => hovered_elt_connected_elts_ids.includes(d.id) &&
         saved_elt_s.datum().id !== d.id && ! saved_elt_connected_elts_ids.includes(d.id));
-      transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
-      transitionLinkSelection(connected_links_s, linkColor, vis.link.outline_width);
+      transitionNode(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
+      transitionOutline(connected_links_s, linkColor, vis.link.outline_width);
     }
   }
 
@@ -847,8 +917,19 @@ function onClick(s)
   if(saved_elt_s !== null && s.datum().id === saved_elt_s.datum().id)
   {
     // change outline of clicked element back to normal
-    changeSelectionOutline(s, s.classed("node") ? vis.node.outline_color_focus : vis.link.outline_color_focus,
-      s.classed("node") ? vis.node.outline_width_focus : vis.link.outline_width_focus);
+    if(s.classed("node"))
+    {
+      changeOutline(s, vis.node.outline_color_focus, vis.node.outline_width_focus);
+    }
+    else if(s.classed("link"))
+    {
+      changeOutline(s, vis.link.outline_color_focus, vis.link.outline_width_focus);
+    }
+    else
+    {
+      changeOutline(s, vis.help_icon.outline_color_focus, vis.help_icon.outline_width_focus);
+    }
+
 
     // clear the saved element and its array of connected nodes
     saved_elt_s = null;
@@ -868,12 +949,12 @@ function onClick(s)
       {
         if(saved_elt_s.classed("node"))
         {
-          transitionNodeSelection(saved_elt_s, saved_elt_s.datum().r * (saved_elt_s.datum().layer === 0 ? 1.02 : 1.1),
+          transitionNode(saved_elt_s, saved_elt_s.datum().r * (saved_elt_s.datum().layer === 0 ? 1.02 : 1.1),
             vis.node.outline_color_focus, vis.node.outline_width_focus);
         }
-        else
+        else if(saved_elt_s.classed("link"))
         {
-          transitionLinkSelection(saved_elt_s, vis.link.outline_color_focus, vis.link.outline_width_focus);
+          transitionOutline(saved_elt_s, vis.link.outline_color_focus, vis.link.outline_width_focus);
         }
       }
       // else, change its appearance back to normal
@@ -881,12 +962,16 @@ function onClick(s)
       {
         if(saved_elt_s.classed("node"))
         {
-          transitionNodeSelection(saved_elt_s, saved_elt_s.datum().r, nodeOutlineColor(saved_elt_s.datum()),
+          transitionNode(saved_elt_s, saved_elt_s.datum().r, nodeOutlineColor(saved_elt_s.datum()),
             vis.node.outline_width);
+        }
+        else if(saved_elt_s.classed("link"))
+        {
+          transitionOutline(saved_elt_s, linkColor(saved_elt_s.datum()), vis.link.outline_width);
         }
         else
         {
-          transitionLinkSelection(saved_elt_s, linkColor(saved_elt_s.datum()), vis.link.outline_width);
+          transitionOutline(saved_elt_s, vis.help_icon.outline_color, vis.help_icon.outline_width);
         }
       }
 
@@ -896,13 +981,23 @@ function onClick(s)
         d.id !== s.datum().id && ! new_clicked_elt_connected_nodes_ids.includes(d.id));
       let connected_links_s = links_s.filter(d => saved_elt_connected_elts_ids.includes(d.id) &&
         d.id !== s.datum().id && ! new_clicked_elt_connected_nodes_ids.includes(d.id));
-      transitionNodeSelection(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
-      transitionLinkSelection(connected_links_s, linkColor, vis.link.outline_width);
+      transitionNode(connected_nodes_s, d => d.r, nodeOutlineColor, vis.node.outline_width);
+      transitionOutline(connected_links_s, linkColor, vis.link.outline_width);
     }
 
     // change outline of new clicked element to indicate focus
-    changeSelectionOutline(s, s.classed("node") ? vis.node.outline_color_saved : vis.link.outline_color_saved,
-      s.classed("node") ? vis.node.outline_width_saved : vis.link.outline_width_saved);
+    if(s.classed("node"))
+    {
+      changeOutline(s, vis.node.outline_color_saved, vis.node.outline_width_saved);
+    }
+    else if(s.classed("link"))
+    {
+      changeOutline(s, vis.link.outline_color_saved, vis.link.outline_width_saved);
+    }
+    else
+    {
+      changeOutline(s, vis.help_icon.outline_color_saved, vis.help_icon.outline_width_saved);
+    }
 
     // update the saved element and its array of connected nodes
     saved_elt_s = s;
@@ -937,11 +1032,14 @@ function main()
     let link_panel_max_height = 2 * display_r - link_panel_extra_space - link_panel_graphic_height -
       vis.link_panel_graphic.margin_bottom;
 
+    let help_panel_extra_space = 2 * (vis.help_panel.padding + vis.help_panel.outline_width);
+    let help_panel_max_height = 2 * display_r - help_panel_extra_space;
+
     bg_circles_rs = vis.bg_circle.r_proportions.map(function(x) { return x * display_r; });
-    svg_s
+    canvas_s
       .attr("width", 2 * display_r)
       .attr("height", 2 * display_r);
-    g_s.attr("transform", "translate(" + display_r + "," + display_r + ")");
+    center_g_s.attr("transform", "translate(" + display_r + "," + display_r + ")");
 
     node_panel_s
       .style("border", vis.node_panel.outline_width + "px solid")
@@ -995,9 +1093,108 @@ function main()
         .attr("cy", link_icon_r_full)
         .attr("stroke-width", vis.link_icon.outline_width);
 
+    help_panel_s
+      .style("border", vis.help_panel.outline_width + "px solid " + vis.help_panel.outline_color)
+      .style("background-color", vis.help_panel.fill_color)
+      .style("width", vis.help_panel.width + "px")
+      .style("max-height", help_panel_max_height + "px")
+      .style("padding", vis.help_panel.padding + "px");
+
+    let colors = [{color:vis.node.fill_color_identifiable, text:"identifiable data"},
+                  {color:vis.node.fill_color_unidentifiable, text:"unidentifiable (anonymized) data"}];
+
+    let color_divs_s = help_panel_colors_box_s.selectAll("div")
+      .data(colors)
+      .enter().append("div")
+        .style("border-bottom", vis.help_panel.outline_width + "px solid " + vis.help_panel.outline_color);
+
+    // remove bottom border from last color
+    help_panel_colors_box_s.select("div:last-child")
+      .style("border-bottom", "none");
+
+    // add icons and text to the color divs
+    let icon_r_full = vis.node.r + vis.node.outline_width;
+    let color_divs_svgs_s = color_divs_s.append("svg")
+      .attr("width", icon_r_full * 2 + "px")
+      .attr("height", icon_r_full * 2 + "px");
+
+    color_divs_svgs_s.append("rect")
+      .attr("width", icon_r_full * 2 + "px")
+      .attr("height", icon_r_full * 2 + "px")
+      .attr("fill", d => d.color)
+      .attr("stroke", vis.help_panel.outline_color)
+      .attr("stroke-width", vis.node.outline_width);
+
+    color_divs_s.append("p")
+      .html(d => d.text);
+
+    let local_node_types = [];
+    for(let i = 0; i < nodes.length; i++)
+    {
+      let t = nodes[i].type;
+      if(! local_node_types.includes(t))
+      {
+        local_node_types.push(t);
+      }
+    }
+
+    let node_type_divs_s = help_panel_node_types_box_s.selectAll("div")
+      .data(local_node_types)
+      .enter().append("div")
+        .style("border-bottom", vis.help_panel.outline_width + "px solid " + vis.help_panel.outline_color);
+
+    // remove bottom border from last node type
+    help_panel_node_types_box_s.select("div:last-child")
+      .style("border-bottom", "none");
+
+    // add icons and text to the node type divs
+    let node_type_divs_svgs_s = node_type_divs_s.append("svg")
+      .attr("width", icon_r_full * 2 + "px")
+      .attr("height", icon_r_full * 2 + "px");
+
+    node_type_divs_svgs_s.append("circle")
+      .attr("r", vis.node.r)
+      .attr("cx", icon_r_full)
+      .attr("cy", icon_r_full)
+      .attr("fill", getNodePatByTypeId)
+      .attr("stroke", vis.node.outline_color_identifiable)
+      .attr("stroke-width", vis.node.outline_width);
+
+    node_type_divs_s.append("p")
+      .html(d => nodeTypeById(d).description);
+
     tree
       .size([(2 - vis.layer_title.space_in_pi_radians) * Math.PI, display_r])
       .separation(function(a, b) { return (a.parent === b.parent ? 1 : 2) / a.depth; });
+  }
+
+
+
+  // set up mouse interactions for the help button
+  {
+    let icon_r_full = 20 + vis.node.outline_width;
+
+    help_button_s
+      .datum({id:"?help_button"});
+    help_button_s.append("circle")
+      .attr("r", 20)
+      .attr("cx", icon_r_full)
+      .attr("cy", icon_r_full)
+      .attr("fill", getHelpPat())
+      .attr("stroke", vis.help_icon.outline_color)
+      .attr("stroke-width", vis.help_icon.outline_width);
+    help_button_s.append("text")
+      .text("Help")
+      .attr("x", 2 * icon_r_full + 5)
+      .attr("y", icon_r_full)
+      .attr("alignment-baseline", "central")
+      .attr("fill", vis.help_icon.outline_color)
+      .attr("font-weight", "bold")
+      .attr("font-size", "1.8em");
+    help_button_s
+      .on("mouseenter", function(d){ onMouseEnter(d3.select(this)); })
+      .on("mouseleave", function(d){ onMouseLeave(d3.select(this)); })
+      .on("click", function(d){ onClick(d3.select(this)); });
   }
 
 
@@ -1077,7 +1274,7 @@ function main()
   {
     let r = bg_circles_rs[i];
 
-    g_s.append("circle")
+    center_g_s.append("circle")
       .attr("r", r)
       .attr("fill", vis.bg_circle.fill_color)
       .attr("stroke", vis.bg_circle.outline_color)
@@ -1086,11 +1283,11 @@ function main()
     let r_for_text = r - vis.layer_title.font_size - vis.layer_title.dist_from_edge;
     let text = i === 2 ? "Third parties" : pol.provider_name;
 
-    g_s.append("path")
+    center_g_s.append("path")
       .attr("id", "text_layer_" + i)
       .attr("d", "M-" + r_for_text + ",0 a" + r_for_text + "," + r_for_text + " 0 0 1 " + (2 * r_for_text) + ",0")
       .attr("fill", "none");
-    g_s.append("text")
+    center_g_s.append("text")
       .classed("layer_title", true)
       .attr("text-anchor", "middle")
       .style("font-size", vis.layer_title.font_size + "px")
@@ -1104,7 +1301,7 @@ function main()
 
 
   // append links
-  links_s = g_s.append("g").selectAll(".link")
+  links_s = center_g_s.append("g").selectAll(".link")
     .data(links)
     .enter().append("g")
       .classed("link", true)
@@ -1153,7 +1350,7 @@ function main()
 
 
   // append nodes
-  nodes_s = g_s.append("g").selectAll(".node")
+  nodes_s = center_g_s.append("g").selectAll(".node")
     .data(nodes)
     .enter().append("g")
       .classed("node", true)
