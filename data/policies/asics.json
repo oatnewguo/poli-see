@@ -46,8 +46,7 @@
     { "id": "all_anonymized_1",
       "successor_links":
       [
-        {"successor_id": "all_anonymized_2", "type": "link_share", "text": "We may share aggregate or de-identified data with third parties for research, marketing, analytics and other purposes, provided such data does not identify a particular individual."},
-        {"successor_id": "all_aggregated_1", "type": "link_aggregate", "text": "We may aggregate your data with other people's data."}
+        {"successor_id": "all_anonymized_2", "type": "link_share", "text": "We may share aggregate or de-identified data with third parties for research, marketing, analytics and other purposes, provided such data does not identify a particular individual."}
       ],
       "layer": 1,
       "type": "node_all",
@@ -74,37 +73,6 @@
       "data_handler": "Third parties",
       "data_handler_category": "third parties",
       "text": "De-identified data about you."
-    },
-    { "id": "all_aggregated_1",
-      "successor_links":
-      [
-        {"successor_id": "all_aggregated_2", "type": "link_share", "text": "We may share aggregate or de-identified data with third parties for research, marketing, analytics and other purposes, provided such data does not identify a particular individual."}
-      ],
-      "layer": 1,
-      "type": "node_all",
-      "all_data": true,
-      "identifiable": false,
-      "opts": false,
-      "opts_text": "",
-      "label": "Data Aggregated from Multiple People",
-      "uses": ["use_legal", "use_communicate", "use_ads", "use_research_services", "use_personalize_services", "use_personalize_marketing", "use_detect_malicious", "use_business"],
-      "data_handler": "ASICS",
-      "data_handler_category": "ASICS",
-      "text": "Anonymized and aggregated data, including data about you."
-    },
-    { "id": "all_aggregated_2",
-      "successor_links": [],
-      "layer": 2,
-      "type": "node_all",
-      "all_data": true,
-      "identifiable": false,
-      "opts": false,
-      "opts_text": "",
-      "label": "Data Aggregated from Multiple People",
-      "uses": ["use_unknown"],
-      "data_handler": "Third parties",
-      "data_handler_category": "third parties",
-      "text": "Anonymized and aggregated data, including data about you."
     },
     { "id": "all_2.1",
       "successor_links": [],
@@ -191,7 +159,10 @@
       "text": "Data where you have consented or requested that we share."
     },
     { "id": "stats_1",
-      "successor_links": [],
+      "successor_links":
+      [
+        {"successor_id": "stats_2", "type": "link_share", "text": "We may share aggregate or de-identified data with third parties for research, marketing, analytics and other purposes, provided such data does not identify a particular individual."}
+      ],
       "layer": 1,
       "type": "node_stats",
       "all_data": false,
@@ -202,6 +173,20 @@
       "uses": ["use_all_data"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
+      "text": "Aggregated statistics about the users of our products and Services."
+    },
+    { "id": "stats_2",
+      "successor_links": [],
+      "layer": 2,
+      "type": "node_stats",
+      "all_data": false,
+      "identifiable": false,
+      "opts": false,
+      "opts_text": "",
+      "label": "Data Aggregated from Multiple People",
+      "uses": ["use_unknown"],
+      "data_handler": "Third parties",
+      "data_handler_category": "third parties",
       "text": "Aggregated statistics about the users of our products and Services."
     },
     { "id": "contact_1",
