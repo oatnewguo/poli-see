@@ -1172,7 +1172,7 @@ function main()
 
 
 
-  // set up mouse interactions for the help button
+  // set up the help button
   {
     let icon_r_full = 20 + vis.node.outline_width;
 
@@ -1189,7 +1189,7 @@ function main()
       .text("Help")
       .attr("x", 2 * icon_r_full + 5)
       .attr("y", icon_r_full)
-      .attr("alignment-baseline", "central")
+      .attr("dominant-baseline", "central")
       .attr("fill", vis.help_icon.outline_color)
       .attr("font-weight", "bold")
       .attr("font-size", "1.8em");
