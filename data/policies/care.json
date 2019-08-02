@@ -1,7 +1,7 @@
 {
   "title": "Care+ Privacy Policy",
-  "intro": "Please read the information contained in this privacy policy to learn about how Care Health handles your data when you use Care Health's website and other services. For more information, click <a href=\"https://github.com/oatnewguo/privacy-transparency\" target=\"_blank\">here</a>.",
-  "provider_name": "Care Health",
+  "intro": "Please read the information contained in this privacy policy to learn about how Care+ handles your data when you use Care+'s website and other services. For more information, click <a href=\"https://github.com/oatnewguo/privacy-transparency\" target=\"_blank\">here</a>.",
+  "provider_name": "Care+",
   "nodes":
   [
     { "id": "all_1",
@@ -22,11 +22,11 @@
       "identifiable": true,
       "opts": false,
       "opts_text": "",
-      "label": "All Data Care Health Collects about You",
+      "label": "All Data Care+ Collects about You",
       "uses": ["use_provide_services", "use_ads"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
-      "text": "All of your data that Care Health collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that are connected to this circle."
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
+      "text": "All of your data that Care+ collects. This is made up of many different kinds of data, which are shown in other circles in the diagram that are connected to this circle."
     },
     { "id": "all_2.1",
       "successor_links": [],
@@ -36,7 +36,7 @@
       "identifiable": true,
       "opts": false,
       "opts_text": "",
-      "label": "All Data Care Health Collects about You",
+      "label": "All Data Care+ Collects about You",
       "uses": ["use_provide_services"],
       "data_handler": "Third-party service providers",
       "data_handler_category": "third parties",
@@ -50,7 +50,7 @@
       "identifiable": true,
       "opts": false,
       "opts_text": "",
-      "label": "All Data Care Health Collects about You",
+      "label": "All Data Care+ Collects about You",
       "uses": ["use_unknown"],
       "data_handler": "Doctors and physicians",
       "data_handler_category": "third parties",
@@ -59,7 +59,7 @@
     { "id": "all_anonymized_1",
       "successor_links":
       [
-        {"successor_id": "all_anonymized_2", "type": "link_share", "text": "Care Health may use, sell, license, and share aggregated data with third parties for research, business or other purposes such as to improve walking, running or riding in cities via Care Health Metro or to help our partners understand more about athletes, including the people who use their products and services."}
+        {"successor_id": "all_anonymized_2", "type": "link_share", "text": "Care+ may use, sell, license, and share aggregated data with third parties for research, business or other purposes such as to improve walking, running or riding in cities via Care+ Metro or to help our partners understand more about athletes, including the people who use their products and services."}
       ],
       "layer": 1,
       "type": "node_all",
@@ -69,8 +69,8 @@
       "opts_text": "",
       "label": "Anonymized Data about You",
       "uses": ["use_provide_services", "use_ads", "use_research_services", "use_research_other"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
       "text": ""
     },
     { "id": "all_anonymized_2",
@@ -94,17 +94,17 @@
       "all_data": false,
       "identifiable": true,
       "opts": true,
-      "opts_text": "Before you can upload health data to Care Health, you must give your explicit consent to the processing of that health data by Care Health. You can withdraw your consent to Care Health processing your health data at any time.",
+      "opts_text": "Before you can upload health data to Care+, you must give your explicit consent to the processing of that health data by Care+. You can withdraw your consent to Care+ processing your health data at any time.",
       "label": "Health Data",
       "uses": ["use_research_other", "use_all_data"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
       "text": "Health data you provide to us, including height, weight, heart rate, medications, and more."
     },
     { "id": "location_1",
       "successor_links":
       [
-        {"successor_id": "location_aggregated_1", "type": "link_aggregate", "text": "Care Health may aggregate data about your location with data about other users' location, in order to analyze geographic patterns of use. Your name will not be included in aggregated data."}
+        {"successor_id": "location_aggregated_1", "type": "link_aggregate", "text": "Care+ may aggregate data about your location with data about other users' location, in order to analyze geographic patterns of use. Your name will not be included in aggregated data."}
       ],
       "layer": 1,
       "type": "node_location",
@@ -114,8 +114,8 @@
       "opts_text": "",
       "label": "Location Data",
       "uses": ["use_all_data"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
       "text": ""
     },
     { "id": "location_aggregated_1",
@@ -131,8 +131,8 @@
       "opts_text": "",
       "label": "Location Data Aggregated from Multiple People",
       "uses": ["use_all_data"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
       "text": ""
     },
     { "id": "location_aggregated_2",
@@ -159,8 +159,8 @@
       "opts_text": "",
       "label": "Payment Data",
       "uses": ["use_all_data"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
       "text": ""
     },
     { "id": "contact_1",
@@ -176,8 +176,8 @@
       "opts_text": "",
       "label": "Contact Data",
       "uses": ["use_communicate", "use_all_data"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
       "text": ""
     },
     { "id": "contact_2",
@@ -204,8 +204,8 @@
       "opts_text": "",
       "label": "Photos",
       "uses": ["use_all_data"],
-      "data_handler": "Care Health",
-      "data_handler_category": "Care Health",
+      "data_handler": "Care+",
+      "data_handler_category": "Care+",
       "text": ""
     }
   ],
@@ -223,7 +223,7 @@
     { "id": "node_all",
       "image_identifiable": "images/node_icons/all_identifiable.png",
       "image_unidentifiable": "images/node_icons/all_unidentifiable.png",
-      "description": "All data Care Health collects about you",
+      "description": "All data Care+ collects about you",
       "all_data": true
     },
     { "id": "node_basic",
@@ -235,7 +235,7 @@
     { "id": "node_central",
       "image_identifiable": "images/node_icons/all_identifiable_care.png",
       "image_unidentifiable": "images/node_icons/all_identifiable_care.png",
-      "description": "All data Care Health collects about you",
+      "description": "All data Care+ collects about you",
       "all_data": true
     },
     { "id": "node_connections",
@@ -395,7 +395,7 @@
       "unknown": false
     },
     { "id": "use_all_data",
-      "description": "Do anything that this policy allows Care Health to do with all data it collects. For more, see the big circle in the middle.",
+      "description": "Do anything that this policy allows Care+ to do with all data it collects. For more, see the big circle in the middle.",
       "image":"images/node_icons/all_identifiable.png",
       "all_data": true,
       "unknown": false
@@ -443,7 +443,7 @@
       "unknown": false
     },
     { "id": "use_policy",
-      "description": "Do anything that this privacy policy allows Care Health to do",
+      "description": "Do anything that this privacy policy allows Care+ to do",
       "image":"images/use_icons/policy.png",
       "all_data": false,
       "unknown": false
