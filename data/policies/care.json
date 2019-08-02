@@ -1,5 +1,5 @@
 {
-  "title": "Care Health Privacy Policy",
+  "title": "Care+ Privacy Policy",
   "intro": "Please read the information contained in this privacy policy to learn about how Care Health handles your data when you use Care Health's website and other services. For more information, click <a href=\"https://github.com/oatnewguo/privacy-transparency\" target=\"_blank\">here</a>.",
   "provider_name": "Care Health",
   "nodes":
@@ -17,7 +17,7 @@
         {"successor_id": "photos_1", "type": "link_all_data", "text": ""}
       ],
       "layer": 0,
-      "type": "node_all",
+      "type": "node_central",
       "all_data": true,
       "identifiable": true,
       "opts": false,
@@ -231,6 +231,12 @@
       "image_unidentifiable": "images/node_icons/basic.png",
       "description": "Basic information about you",
       "all_data": false
+    },
+    { "id": "node_central",
+      "image_identifiable": "images/node_icons/all_identifiable_care.png",
+      "image_unidentifiable": "images/node_icons/all_identifiable_care.png",
+      "description": "All data Care Health collects about you",
+      "all_data": true
     },
     { "id": "node_connections",
       "image_identifiable": "images/node_icons/connections.png",

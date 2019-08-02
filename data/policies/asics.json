@@ -32,7 +32,7 @@
         {"successor_id": "browsing_2", "type": "link_share", "text": "Our third party providers use cookies, clear GIFs/pixel tags, JavaScript, local storage, log files, and other mechanisms to automatically collect and record data about your browsing activities, and use of the Services."}
       ],
       "layer": 0,
-      "type": "node_all",
+      "type": "node_central",
       "all_data": true,
       "identifiable": true,
       "opts": false,
@@ -437,6 +437,12 @@
       "image_unidentifiable": "images/node_icons/basic.png",
       "description": "Basic information about you",
       "all_data": false
+    },
+    { "id": "node_central",
+      "image_identifiable": "images/node_icons/all_identifiable_asics.png",
+      "image_unidentifiable": "images/node_icons/all_identifiable_asics.png",
+      "description": "All data ASICS collects about you",
+      "all_data": true
     },
     { "id": "node_connections",
       "image_identifiable": "images/node_icons/connections.png",

@@ -269,10 +269,10 @@ function setUpPats()
     .attr("r", ".5")
     .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.node.fill_color_identifiable);
   node_pats_identifiable.append("image")
-    .attr("x", ".2")
-    .attr("y", ".2")
-    .attr("width", ".6")
-    .attr("height", ".6")
+    .attr("x", d => d.id === "node_central" ? ".1" : ".2")
+    .attr("y", d => d.id === "node_central" ? ".1" : ".2")
+    .attr("width", d => d.id === "node_central" ? ".8" : ".6")
+    .attr("height", d => d.id === "node_central" ? ".8" : ".6")
     .attr("xlink:href", d => d.image_identifiable);
 
   var node_pats_unidentifiable = canvas_s.select("defs").selectAll(".node_pat_unidentifiable")
@@ -290,10 +290,10 @@ function setUpPats()
     .attr("r", ".5")
     .attr("fill", d => d.all_data ? vis.node.fill_color_all_data : vis.node.fill_color_unidentifiable);
   node_pats_unidentifiable.append("image")
-    .attr("x", ".2")
-    .attr("y", ".2")
-    .attr("width", ".6")
-    .attr("height", ".6")
+    .attr("x", d => d.id === "node_central" ? ".1" : ".2")
+    .attr("y", d => d.id === "node_central" ? ".1" : ".2")
+    .attr("width", d => d.id === "node_central" ? ".8" : ".6")
+    .attr("height", d => d.id === "node_central" ? ".8" : ".6")
     .attr("xlink:href", d => d.image_unidentifiable);
 
   // link patterns
@@ -1100,8 +1100,10 @@ function main()
       .style("max-height", help_panel_max_height + "px")
       .style("padding", vis.help_panel.padding + "px");
 
-    let colors = [{color:vis.node.fill_color_identifiable, text:"identifiable data"},
-                  {color:vis.node.fill_color_unidentifiable, text:"unidentifiable (anonymized) data"}];
+    let colors = [{color:vis.node.fill_color_identifiable,
+                   text:"identifiable data (for example, data that includes your name)"},
+                  {color:vis.node.fill_color_unidentifiable,
+                   text:"unidentifiable data (for example, data that has been anonymized)"}];
 
     let color_divs_s = help_panel_colors_box_s.selectAll("div")
       .data(colors)
@@ -1132,7 +1134,7 @@ function main()
     for(let i = 0; i < nodes.length; i++)
     {
       let t = nodes[i].type;
-      if(! local_node_types.includes(t))
+      if(! local_node_types.includes(t) && t !== "node_central")
       {
         local_node_types.push(t);
       }

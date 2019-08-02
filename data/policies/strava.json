@@ -30,7 +30,7 @@
         {"successor_id": "logs_1", "type": "link_all_data", "text": "Strava uses log files to collect additional data."}
       ],
       "layer": 0,
-      "type": "node_all",
+      "type": "node_central",
       "all_data": true,
       "identifiable": true,
       "opts": false,
@@ -509,6 +509,12 @@
       "image_unidentifiable": "images/node_icons/basic.png",
       "description": "Basic information about you",
       "all_data": false
+    },
+    { "id": "node_central",
+      "image_identifiable": "images/node_icons/all_identifiable_strava.png",
+      "image_unidentifiable": "images/node_icons/all_identifiable_strava.png",
+      "description": "All data Strava collects about you",
+      "all_data": true
     },
     { "id": "node_connections",
       "image_identifiable": "images/node_icons/connections.png",
