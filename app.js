@@ -737,53 +737,17 @@ function transitionNode(s, r, outline_color, outline_width)
 // find a node's connected elements' ids
 function findNodeConnectedEltIds(n)
 {
-  var connected_ids = [];
-
-  // if n is the central node, then add all-data successors and their descendants, as well as primary nodes
+  // if n is the central node, then return nodes in the first layer
   if(n.layer === 0)
   {
-    for(let i = 0; i < n.successor_links.length; i++)
-    {
-      let s = nodeById(n.successor_links[i].successor_id);
-
-      if(s.all_data)
-      {
-        connected_ids.push(n.id + "->" + s.id);
-        connected_ids.push(s.id);
-        connected_ids = connected_ids.concat(findNodeConnectedEltIds(s));
-      }
-    }
-
-    connected_ids = connected_ids.concat(primary_nodes.map(n => n.id));
+    return nodes_s.data().filter(d => d.layer === 1 || d.layer === 2).map(n => n.id);
   }
-  // if n is not the central node, add successors and their descendants
-  else
+  // else if n is in layer 1, then return the central node
+  else if(n.layer === 1 || n.layer === 2)
   {
-    for(let i = 0; i < n.successor_links.length; i++)
-    {
-      let s = nodeById(n.successor_links[i].successor_id);
-
-      connected_ids.push(n.id + "->" + s.id);
-      connected_ids.push(s.id);
-      connected_ids = connected_ids.concat(findNodeConnectedEltIds(s));
-    }
+    return [central_node.id];
   }
-
-  // if n is a primary node, add the central node
-  if(n.primary)
-  {
-    connected_ids.push(central_node.id);
-  }
-
-  return connected_ids;
-}
-
-// find a link's connected elements' ids
-function findLinkConnectedEltIds(l)
-{
-  var connected_ids = findNodeConnectedEltIds(nodeById(l.dest));
-  connected_ids.push(l.dest);
-  return connected_ids;
+  return [];
 }
 
 // handle interactions when the cursor enters an interactive element
@@ -794,9 +758,7 @@ function onMouseEnter(s)
   updatePanel(s);
 
   // find elements connected to the hovered element
-  hovered_elt_connected_elts_ids = s.classed("node") ? findNodeConnectedEltIds(s.datum())
-                                 : s.classed("link") ? findLinkConnectedEltIds(s.datum())
-                                 : [];
+  hovered_elt_connected_elts_ids = s.classed("node") ? findNodeConnectedEltIds(s.datum()) : [];
 
   // if the hovered element is not the saved element
   if(saved_elt_s === null || s.datum().id !== saved_elt_s.datum().id)

@@ -323,7 +323,7 @@
       "identifiable": true,
       "opts": true,
       "opts_text": "We will only use health data you voluntarily provide us and such only with your prior consent or under your direction to do so and only for the purposes set out in this Privacy Policy. You may refuse or revoke your consent at any time, as set out below (see ‘<a href=\"https://runkeeper.com/privacypolicy#your-rights\" target=\"_blank\">Your Rights</a>’).",
-      "label": "Activity Data and Self-Recorded Data",
+      "label": "Activity Data and Self-Reported Data",
       "uses": ["use_provide_services", "use_all_data"],
       "data_handler": "ASICS",
       "data_handler_category": "ASICS",
