@@ -137,7 +137,7 @@
       "opts": false,
       "opts_text": "",
       "label": "Aggregated Statistics about Users",
-      "uses": ["use_provide_services", "use_personalize_services", "use_detect_malicious", "use_detect_violations", "use_communicate", "use_ads", "use_research_services", "use_legal", "use_research_other"],
+      "uses": ["use_research_other", "use_all_data"],
       "data_handler": "Strava",
       "data_handler_category": "Strava",
       "text": "Aggregated information about users, with names removed. Examples include data about equipment, usage, demographics, routes and performance."
