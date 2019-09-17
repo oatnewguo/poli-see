@@ -740,7 +740,7 @@ function findNodeConnectedEltIds(n)
   // if n is the central node, then return nodes in the first layer
   if(n.layer === 0)
   {
-    return nodes_s.data().filter(d => d.layer === 1 || d.layer === 2).map(n => n.id);
+    return nodes_s.data().filter(d => (d.layer === 1 || d.layer === 2) && ! d.all_data).map(n => n.id);
   }
   // else if n is in layer 1, then return the central node
   else if(n.layer === 1 || n.layer === 2)
